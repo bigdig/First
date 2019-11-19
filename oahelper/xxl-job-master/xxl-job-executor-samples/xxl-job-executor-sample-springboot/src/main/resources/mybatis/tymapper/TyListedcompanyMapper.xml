@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.typlat.mapper.TyListedcompanyMapper">
+	<resultMap id="BaseResultMap" type="com.tfzq.typlat.entity.TyListedcompany">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="trd_code" jdbcType="VARCHAR" property="stockCode" />
+		<result column="typ_desc" jdbcType="VARCHAR" property="marketKind" />
+		<result column="secu_sht" jdbcType="VARCHAR" property="stockShortname" />
+		<result column="chi_name" jdbcType="VARCHAR" property="stockName" />
+		<result column="name_sht" jdbcType="VARCHAR" property="companyShortname" />
+		<result column="exch_code" jdbcType="VARCHAR" property="marketNo" />
+		<result column="exch_name" jdbcType="VARCHAR" property="marketName" />
+		<result column="indu_code" jdbcType="VARCHAR" property="induCode" />
+		<result column="indu_name" jdbcType="VARCHAR" property="induName" />
+		<result column="ent_time" jdbcType="DATE" property="createTime" />
+		<result column="upd_time" jdbcType="DATE" property="updateTime" />
+	</resultMap>
+
+	<select id="findByCondition" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select a.secu_id as id,a.trd_code ,a.typ_desc ,a.secu_sht
+		,a.chi_name ,a.name_sht ,a.exch_code , a.exch_name ,
+		d.code as indu_code,d.name as indu_name,a.ent_time,a.upd_time
+		from bas_secu_info a
+		join bas_cst_info b on a.typ_codei = b.cst_num
+		join
+		uf_base_stkinfo c on to_char(a.secu_id)=c.secu_id
+		left join
+		uf_base_industry d on c.indu_id=d.requestid
+		where b.cst_typ = 10008 and
+		a.exch_code in(101,105,111,161)
+		and a.typ_codei =10 and a.lst_sts_code in (1,2,5,9)
+        <if test="lastestTime != null and lastestTime != ''"> and a.upd_time <![CDATA[>]]> to_date(#{lastestTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')</if>
+	    order by upd_time asc,a.secu_id asc
+	</select>
+
+</mapper>

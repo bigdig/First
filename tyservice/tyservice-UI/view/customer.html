@@ -1,0 +1,870 @@
+<div class="out">
+    <form name="search"
+          ng-submit="searchCustomer()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <input type="search"
+                       ng-model="customer.custName"
+                       maxlength="16"
+                       placeholder="客户名称"/>
+            </li>
+            <li>
+                <search model="customer"
+                        value="customer.orgName"
+                        name="orgName"
+                        maxlength="20"
+                        servicelist="searchOrgs"
+                        placeholder="所属机构"></search>
+            </li>
+            <li>
+                <search model="customer"
+                        value="customer.serviceSaler"
+                        name="serviceSaler"
+                        maxlength="20"
+                        servicelist="searchStafflist"
+                        placeholder="对口销售"></search>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.department"
+                       maxlength="16"
+                       placeholder="部门"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.title"
+                       maxlength="16"
+                       placeholder="职位"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.industry"
+                       placeholder="研究行业"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.domain"
+                       placeholder="关注领域"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.custMobile"
+                       maxlength="18"
+                       placeholder="手机号"/>
+            </li>
+            <li>
+                <search model="customer"
+                        value="customer.area"
+                        name="area"
+                        maxlength="16"
+                        servicelist="searchArea"
+                        placeholder="所在地"></search>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.custEmail"
+                       placeholder="邮箱"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.idNo"
+                       maxlength="18"
+                       placeholder="身份证号"/>
+            </li>
+            <li ng-show="!searchT.more">
+                <a href="javascript:void(0)"
+                   ng-click="showMore()">标签</a>
+
+            </li>
+        </ul>
+        <ul class="charts" style="margin-bottom: 20px"
+            ng-show="searchT.more">
+            <li>
+                <ul ng-if="tagList.length">
+                    <li class="bg-blue-dark text-white mark_t padding10 margin-right"
+                        style="margin-bottom: 10px"
+                        ng-repeat="label in tagList track by $index">
+                        <span ng-bind="label"></span>
+                        &nbsp;<i class="icon-cross"
+                                 ng-click="removeTag($index, 0)"></i>
+                    </li>
+                </ul>
+            </li>
+            <li class="margin-right">
+                <search model="customer"
+                        value="customer.mark"
+                        name="mark"
+                        servicelist="searchTags"
+                        callback="searchTag"
+                        placeholder="标签"></search>
+            </li>
+            <li class="margin-right" ng-if="tagList.length">
+                <a href="javascript:void(0)"
+                   class="refresh padding10"
+                   ng-click="markChart.event()">
+                  <i bo-class="markChart.icon" class="font-20 text-purple"></i>
+                </a>
+            </li>
+            <li>
+            &nbsp;&nbsp;&nbsp;
+                <a href="javascript:void(0)"
+                   ng-click="showMore()">收起</a>
+            </li>
+        </ul>
+    </form>
+    <div class="text-right lh30">
+        <span class="fl font-12">注：默认情况下在列表中勾选的客户将被记录。如不需记录可去掉勾选的客户或在列表中点击 <i class="icon icon-cw"></i> 来清除全部记录。</span>
+        <a href="javascript:void(0)"
+           bo-if="meetingCust.isShow"
+           ng-click="prepCust()"
+           class="text-blue">
+            <i class="icon icon-user-plus font-16"></i>
+            潜在客户审核
+        </a>
+    </div>
+    <div class="btn-search"
+         ng-show="groupTools.isShow"
+         style="margin-top: 5px">
+        <label ng-show="groupTools.isEdit">
+            <input type="button"
+                   value="编辑"
+                   ng-disabled="groupTools.isSubmit"
+                   ng-click="editGroup()"
+                   class="light text-orange"/>
+            <input type="button"
+                   value="删除"
+                   ng-disabled="groupTools.isSubmit"
+                   ng-click="deleteGroup()"
+                   class="padding10 light"/>
+        </label>
+        <label ng-hide="groupTools.isEdit">
+            <input type="button"
+                   value="保存"
+                   ng-disabled="groupTools.disabled || groupTools.isSubmit"
+                   ng-click="saveGroup()"
+                   class="light text-orange"/>
+            <input type="button"
+                   value="取消"
+                   ng-disabled="groupTools.isSubmit"
+                   ng-click="cancelGroup()"
+                   class="light text-orange padding10"/>
+        </label>
+    </div>
+    <div class="scroll">
+        <ul class="groups">
+            <li ng-repeat="group in groups"
+                repeat-finish="finish()"
+                class="font-16 text-center padding20"
+                ng-class="{'active':group.active}"
+                ng-keyup="keyup($event)"
+                ng-keydown="keydown($event)"
+                contenteditable="{{group.active &&group.isEditable}}"
+                bo-text="group.custGroupname"
+                ng-click="showGroup(group)">
+                <!--<span bo-text="group.custGroupname"></span>-->
+                <!--<span ng-if="dataModel.selectedCount && $first"-->
+                <!--ng-bind="'('+dataModel.selectedCount+')'"></span>-->
+            </li>
+        </ul>
+    </div>
+</div>
+
+<table width="100%"
+       class="panel-head"
+       cellpadding="10"
+       cellspacing="0">
+    <tr>
+        <td ng-if="dataModel.data.length">
+            <span class="text-red"
+                  ng-bind="dataModel.data.length+'/'+dataModel.pageInfo.total"></span>
+            项
+            <label ng-hide="dataModel.hidePages">&nbsp;&nbsp;每页
+                <select ng-model="searchModel.pageSize"
+                        ng-change="changePageSize()"
+                        ng-options="p for p in pageNo.pages"
+                        style="display: inline; width: 80px">
+                </select>
+                &nbsp;
+                <a href="javascript:void(0)" ng-click="changePageSize('refresh')"
+                   class="refresh"
+                   title="刷新">
+                    <i class="icon icon-cw font-20"></i>
+                </a>
+                &nbsp;&nbsp;&nbsp;
+            </label>
+            <span ng-if="dataModel.selectedCount">
+            已选中：<span ng-bind="dataModel.selectedCount"></span> 项
+            </span>
+            <a href="javascript:void(0)" ng-if="dataModel.charts"
+               ng-repeat="chart in dataModel.charts"
+               bo-title="chart.title"
+               class="refresh padding10"
+               ng-click="chart.event()">
+                <i bo-class="chart.icon" class="font-20 text-purple"></i>
+            </a>
+        </td>
+        <td class="text-right"
+            ng-if="dataModel.toolsBar">
+            <!--<input ng-if="dataModel.checkAll && dataModel.data.length"-->
+            <!--type="checkbox"-->
+            <!--ng-model="messageInfo.isAll"-->
+            <!--ng-checked="messageInfo.isAll"><label></label>-->
+            <!--<span class="text-blue-menu"-->
+            <!--ng-bind="dataModel.checkAll.value"-->
+            <!--ng-if="dataModel.checkAll && dataModel.data.length"></span>-->
+            <input type="button"
+                   class="font-16 padding20"
+                   bo-title="bar.title"
+                   ng-class="{'margin-right': !$last}"
+                   bo-class="bar.bgStyle"
+                   value="{{bar.btnName}}"
+                   ng-click="bar.event()"
+                   ng-disabled="bar.isDisabled && !messageInfo.isAll"
+                   ng-hide="bar.isHide"
+                   ng-repeat="bar in dataModel.toolsBar">
+            <label ng-if="dataModel.menu && dataModel.menu.isEnable && dataModel.menu.isShow && dataModel.data.length"
+                   class="font-24"
+                   bo-title="dataModel.menu.title">
+                <a href="javascript:void(0)" class="icon icon-menu"
+                   ng-click="toggleMenu()"></a>
+            </label>
+            <div id="tag_menu"
+                 style="width: 90px; right: 30px; margin-top: -10px; text-align: left;z-index: 99;"
+                 class="lenovo border-blue-dark-color bg-white">
+                <ul class="op">
+                    <li class="padding10"
+                        ng-repeat="menu in dataModel.menu.list"
+                        bo-text="menu.name"
+                        ng-click="menu.callback()">
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+</table>
+<div class="dataCp"></div>
+<div class="data"
+     style="overflow-x: hidden;">
+    <table cellpadding="10"
+           cellspacing="0"
+           width="100%"
+           ng-if="dataModel.data.length">
+        <thead ng-show="dataModel.dataHead">
+        <th class="th"
+            ng-show="dataModel.hasAllChecked">
+            <input type="checkbox"
+                   ng-checked="dataModel.selectAll"
+                   ng-show="dataModel.selectedAll"
+                   ng-model="dataModel.selectAll"
+                   ng-click="selectAll()"><label ng-show="dataModel.selectedAll"></label>
+        </th>
+        <th class="th" ng-repeat="head in dataModel.dataHead"
+            style="min-width: {{head.width+'px'}};"
+            ng-if="!head.hide"
+            bo-text="head.title"></th>
+        <th ng-show="dataModel.hasControl"
+            class="ctl_h"
+            style="min-width: {{dataModel.controlWidth+'px'}};">
+            操作
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dataItem in dataModel.data"
+            repeat-finish="copyDataToTable()">
+            <td ng-show="dataItem.hasCheckBox">
+                <input type="checkbox"
+                       ng-model="dataItem.hasCheckBox.isChecked"
+                       ng-checked="dataItem.hasCheckBox.isChecked"
+                       ng-click="dataItem.hasCheckBox.check(dataItem)"><label></label>
+            </td>
+            <td ng-repeat="it in dataItem.item"
+                bo-hide="it.hide"
+                title="{{it.text | deleteHtml}}"
+                ng-bind-html="it.text"></td>
+            <td ng-show="dataItem.controls"
+                class="ctl">
+                <a ng-if="dataModel.controlAsMenu"
+                   title="菜单"
+                   href="javascript:void(0)"
+                   class="icon icon-menu font-18"
+                   ng-click="toggleMenuById('menu'+$index)"></a>
+                <div ng-if="dataModel.controlAsMenu"
+                     id="menu{{$index}}"
+                     style="width: 90px; right: 30px; text-align: left"
+                     class="lenovo border-blue-dark-color bg-white">
+                    <ul class="op">
+                        <li class="padding10"
+                            ng-repeat="ctrl in dataItem.controls"
+                            bo-text="ctrl.name"
+                            ng-show="ctrl.isShow"
+                            ng-click="ctrl.event(dataItem)">
+                        </li>
+                    </ul>
+                </div>
+                <a ng-if="!dataModel.controlAsMenu"
+                   href="javascript:void(0)"
+                   ng-repeat="ctrl in dataItem.controls"
+                   class="text-orange"
+                   ng-show="ctrl.isShow"
+                   bo-text="ctrl.name"
+                   ng-click="ctrl.event(dataItem)"
+                   style="width: {{ctrl.width+'px'}}"
+                   bo-class="{'space-left':!$first}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4 class="text-center"
+    ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+<img src="../img/loading.gif"
+     width="26"
+     class="loading"
+     ng-show="loading.isShow">
+<br>
+<nav aria-label="Page navigation" class="clearfix" ng-if="dataModel.data.length!=0">
+     <ul class="pagination pagination-sm pagination1 fl" style="margin:0 0 30px 0;width:800px;">
+       <li ng-class="{disabled:page==1}">
+         <a href="javascript:void(0)" aria-label="Previous" ng-click="sub(page-1<1?1:page-1)" ng-disabled="page==1">
+           <span aria-hidden="true"><</span>
+         </a>
+       </li>
+       <li ng-if="page >= pageNum && lastPage !== pageNum" ng-click="sub(1)" ng-class="{pageActive:item==1}">
+         <a href="javascript:void(0)">1</a>
+       </li>
+       <li ng-if="page >= pageNum && lastPage !== pageNum">
+         <a href="javascript:void(0)">...</a>
+       </li>
+       <li ng-click="sub(item)" ng-class="{pageActive:item==page}" ng-repeat="item in pages">
+         <a href="javascript:void(0)">{{item}}</a>
+       </li>
+       <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum">
+         <a href="javascript:void(0)">...</a>
+       </li>
+       <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum" ng-click="sub(lastPage)" ng-class="{pageActive:item==page}">
+         <a href="javascript:void(0)">{{lastPage}}</a>
+       </li>
+       <li ng-class="{disabled:page==lastPage}">
+         <a href="javascript:void(0)" aria-label="Next" ng-click="sub(page+1>lastPage?page:page+1)">
+           <span aria-hidden="true">></span>
+        </a>
+       </li>
+     </ul>
+</nav>
+<br><br>
+<div class="back bg-red-opacity">
+    <a href="javascript:void(0)" ng-click="backTop()">
+        <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+    </a>
+</div>
+
+
+<script type="text/ng-template"
+        id="editCustomerTemplate">
+    <form name="cus_form"
+          ng-click="closeSearch();hide($event)"
+          ng-submit="editCustomer()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="customerInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_name.$dirty && cus_form.cus_name.$invalid">
+                        <span ng-show="cus_form.cus_name.$error.required">
+                            请输入客户名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_name"
+                           ng-model="customerInfo.custName"
+                           maxlength="16"
+                           required
+                           placeholder="客户名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_mobile.$dirty && cus_form.cus_mobile.$invalid">
+                        <span ng-show="cus_form.cus_mobile.$error.required">
+                            请输入手机
+                        </span>
+                        <span ng-show="cus_form.cus_mobile.$error.pattern">
+                            无效的手机号码格式;例如15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_mobile"
+                           ng-model="customerInfo.custMobile"
+                           maxlength="15"
+                           ng-pattern="/^\d{11,15}$/"
+                           required
+                           placeholder="手机(格式:大陆11位，其他12-15位)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cut_org.$dirty && cus_form.cut_org.$invalid">
+                        <span ng-show="cus_form.cut_org.$error.required">
+                            请选择所属机构
+                        </span>
+                        <span ng-show="cus_form.cut_org.$error.unique">
+                            无效的机构
+                        </span>
+                    </div>
+                    <combobox name="cut_org"
+                              placeholder="所属机构"
+                              model="customerInfo"
+                              value="customerInfo.orgName"
+                              id="orgId"
+                              no="orgName"
+                              callback="setSaler"
+                              required="true"
+                              servicelist="tyServiceorgs"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_sale.$dirty && cus_form.cus_sale.$invalid">
+                        <span ng-show="cus_form.cus_sale.$error.select">
+                            请选择对口销售
+                        </span>
+                    </div>
+                    <select name="cus_sale"
+                            ng-model="customerInfo.salerId"
+                            option-select="cus_sale">
+                        <option value="">对口销售</option>
+                        <option ng-repeat="saler in servieSalers"
+                                ng-selected="saler.id==customerInfo.salerId"
+                                value="{{saler.id}}">{{saler.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_dept.$dirty && cus_form.cus_dept.$invalid">
+                        <span ng-show="cus_form.cus_dept.$error.required">
+                            请输入部门
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_dept"
+                           ng-model="customerInfo.department"
+                           maxlength="16"
+                           required
+                           placeholder="部门"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_title.$dirty && cus_form.cus_title.$invalid">
+                        <span ng-show="cus_form.cus_title.$error.required">
+                            请输入职位
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_title"
+                           ng-model="customerInfo.title"
+                           maxlength="64"
+                           required
+                           placeholder="职位"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_email.$dirty && cus_form.cus_email.$invalid">
+                        <span ng-show="cus_form.cus_email.$error.required">
+                            请输入邮箱
+                        </span>
+                        <span ng-show="cus_form.cus_email.$error.pattern">
+                            无效的邮箱格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_email"
+                           ng-model="customerInfo.custEmail"
+                           ng-pattern="/^((([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6}\;))*(([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})))$/"
+                           maxlength="50"
+                           required
+                           placeholder="邮箱"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_id.$dirty && cus_form.cus_id.$invalid">
+                        <span ng-show="cus_form.cus_id.$error.pattern">
+                            无效的身份证号格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_id"
+                           ng-model="customerInfo.idNo"
+                           maxlength="20"
+                           ng-pattern="/^\d{15,18}$/"
+                           placeholder="身份证号"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_tel.$dirty && cus_form.cus_tel.$invalid">
+                        <span ng-show="cus_form.cus_tel.$error.pattern">
+                            无效的坐机号码格式；例如027-8388914或00852-89376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_tel"
+                           ng-model="customerInfo.custTel"
+                           maxlength="20"
+                           ng-pattern="/^\d{3,5}-\d{7,8}(-\d{2,4})?$/"
+                           placeholder="坐机(格式：区号-直拨号)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_area.$dirty && cus_form.cus_area.$invalid">
+                        <span ng-show="cus_form.cus_area.$error.pattern">
+                            不被接受的字符
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="cus_area"
+                           ng-model="customerInfo.area"
+                           maxlength="16"
+                           placeholder="所在地"/>
+                </li>
+                <li>
+                    <input type="search"
+                           name="cus_domain"
+                           ng-model="customerInfo.domain"
+                           maxlength="50"
+                           placeholder="关注领域"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cut_accept.$dirty && cus_form.cut_accept.$invalid">
+                        <span ng-show="cus_form.cut_accept.$error.required">
+                            请输入是否接受研报
+                        </span>
+                    </div>
+                    <select name="cut_accept"
+                            ng-model="customerInfo.isAcceptRpt">
+                        <option value="">是否接受报告</option>
+                        <option ng-repeat="accept in searchIsAcceptRpt"
+                                ng-selected="accept.id==customerInfo.isAcceptRpt"
+                                value="{{accept.id}}">{{accept.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <!--<select name="cus_send_group"
+                            ng-model="customerInfo.rptSendGroup">
+                        <option value="">报告发送组类型</option>
+                        <option ng-repeat="sendGroup in searchRptSendGroup"
+                                ng-selected="sendGroup.id==customerInfo.rptSendGroup"
+                                value="{{sendGroup.id}}">{{sendGroup.text}}
+                        </option>
+                    </select>-->
+                    <combobox name="cus_send_group"
+                              placeholder="配置报告发送组"
+                              model="customerInfo"
+                              value="customerInfo.rptSendGroupName"
+                              id="rptSendGroupId"
+                              no="rptSendGroupName"
+                              multiple="true"
+                              servicelist="searchRptSendGroup"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cut_industry.$dirty && cus_form.cut_industry.$invalid">
+                        <span ng-show="cus_form.cut_industry.$error.unique">
+                            无效的研究行业
+                        </span>
+                    </div>
+                    <combobox name="cut_industry"
+                              placeholder="研究行业-按行业发送报告"
+                              model="customerInfo"
+                              value="customerInfo.industry"
+                              id="industryId"
+                              no="industry"
+                              multiple="true"
+                              servicelist="searchIndustry"></combobox>
+                    <!--<input type="search"-->
+                    <!--name="cus_industry"-->
+                    <!--ng-model="customerInfo.industry"-->
+                    <!--maxlength="50"-->
+                    <!--placeholder="研究行业"/>-->
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="customerInfo.recEmail"
+                           ng-checked="customerInfo.recEmail"/><label></label>
+                    接受邮件通知
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="customerInfo.recSms"
+                           ng-checked="customerInfo.recSms"/><label></label>
+                    接受短信通知
+                </li>
+            </ul>
+            <div class="label customer-list border-gray-color bg-white"
+                 ng-if="labelList.length && customerInfo.label">
+                <span ng-repeat="label in labelList">
+                    &nbsp;
+                    <a href="javascript:void(0)" ng-click="setLabel(label.labelName, customerInfo, 'cus_lable')"
+                       ng-bind="label.labelName"></a>
+                    &nbsp;
+                </span>
+            </div>
+            <div class="customer-list border-blue-color"
+                 style="max-height: 200px; height: auto !important;">
+                <ul class="search">
+                    <li class="bg-cyan-dark text-blue-lit mark auto-width padding10"
+                        ng-repeat="label in customerInfo.labels track by $index">
+                        <span ng-bind="label"></span>
+                        &nbsp;<i class="icon-cross"
+                                 ng-click="removeMark($index)"></i>
+                    </li>
+                    <li class="mark auto-width">
+                        <input type="search"
+                               class="auto-width"
+                               name="cus_lable"
+                               ng-model="customerInfo.label"
+                               maxlength="16"
+                               placeholder="输入标签"
+                               ng-keydown="keydown($event)"
+                               ng-keyup="searchKey($event, customerInfo)"/>
+                        <span class="text-red"
+                              ng-show="cus_form.cus_lable.$dirty && cus_form.cus_lable.$invalid">
+                            不被接受的字符
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="customerInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{customerInfo.btnName}}"
+                   ng-disabled="cus_form.$invalid || customerInfo.loading"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="addGroupTemplate">
+    <form ng-submit="addGroup()"
+          name="group_form">
+        <div class="ngdialog-message">
+            <h3 class="text-center">
+                添加分组
+            </h3>
+            <p>已选中：<span ng-bind="messageInfo.total"></span>个客户</p>
+            <div class="border-gray-color">
+                <div class="padding10 text-gray lh30">
+                    <input type="radio"
+                           ng-value="false"
+                           ng-model="newGroup.new"
+                           name="group_radio"/><label></label>
+                    添加到：<span ng-bind="newGroup.selectedGroup.custGroupname"></span>
+                </div>
+                <div class="line-gray-light bg-gray"></div>
+                <ul class="tag-List" style="height: 200px">
+                    <li ng-repeat="group in newGroup.groups"
+                        class="padding10"
+                        ng-class="{'active': group.active}"
+                        bo-text="group.custGroupname"
+                        ng-click="setGroup(group)">
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <div class="border-gray-color">
+                <div class="padding10 text-gray lh30">
+                    <input type="radio"
+                           ng-value="true"
+                           ng-model="newGroup.new"
+                           name="group_radio"/><label></label>
+                    添加到：新分组
+                </div>
+                <div class="line-gray-light bg-gray"></div>
+                <div>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="group_form.group_name.$dirty && group_form.group_name.$invalid">
+                        <span ng-show="group_form.group_name.$error.required">
+                            请输入组名称
+                        </span>
+                        <span ng-show="group_form.group_name.$error.pattern">
+                            不被接受的字符
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="group_name"
+                           maxlength="8"
+                           placeholder="分组名称"
+                           ng-pattern="/^(\w|[\u4e00-\u9fa5]){1,8}$/"
+                           ng-disabled="!newGroup.new"
+                           ng-required="newGroup.new"
+                           ng-model="newGroup.custGroupname"
+                           style="width: 100%; border: none; border-radius: 0"/>
+                </div>
+            </div>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="(group_form.$invalid && newGroup.new) || (!newGroup.selectedGroup && !newGroup.new) || newGroup.loading"
+                   value="{{newGroup.btnName}}"/>
+            &nbsp;&nbsp;
+            <input type="reset"
+                   class="text-orange padding40 light border-gray-color"
+                   ng-click="closeThisDialog()"
+                   value="取消"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="moveGroupTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">移组</h3>
+        <div class="border-gray-color">
+            <div class="padding10 text-gray"
+                 style="line-height: 30px">
+                移动到：<span ng-bind="newGroup.selectedGroup.custGroupname"></span>
+            </div>
+            <div class="line-gray-light bg-gray"></div>
+            <ul class="tag-List">
+                <li ng-repeat="group in newGroup.groups"
+                    class="padding10"
+                    ng-class="{'active': group.active}"
+                    bo-text="group.custGroupname"
+                    ng-click="setGroup(group)">
+                </li>
+            </ul>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-disabled="newGroup.loading || !newGroup.selectedGroup"
+               ng-click="moveGroup()"
+               value="{{newGroup.btnName}}"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+<script type="text/ng-template"
+        id="reportTemplate">
+    <div class="ngdialog-message">
+        <div class="res-head">
+            <ul class="tag">
+                <li ng-repeat="menu in reportMenu">
+                    <a href="javascript:void(0)"
+                       ng-click="tabReport(menu.name)"
+                       ng-class="{'active':menu.active}"
+                       class="text-blue-light font-16"
+                       bo-text="menu.name"></a>
+                </li>
+            </ul>
+            <div id="report_chart"
+                 class="template"></div>
+        </div>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="countermarkTemplate">
+    <div class="ngdialog-message container" style="padding:0 5px;">
+        <div style="width:100%;overflow: hidden;margin-bottom: 10px;">
+          <div style="width:80px;line-height: 37px;" class="fl">
+            计算模式：
+          </div>
+          <ul style="overflow: hidden;width: calc(100% - 100px);" class="fl">
+            <li style="overflow: hidden;padding:0 10px 0 2px;display:inline-block;min-width:120px;">
+                <select ng-model="customer.markCal">
+                    <option value="or">标签集合或计算</option>
+                    <option value="and">标签集合且计算</option>
+                </select>
+           </li>
+          </ul>
+        </div>
+        <div style="width:100%;overflow: hidden;margin-bottom: 10px;">
+          <div style="width:80px;line-height: 37px;" class="fl">
+            筛选标签：
+          </div>
+          <ul style="overflow: hidden;width: calc(100% - 100px);" class="fl">
+            <li ng-repeat="item in tagData" style="overflow: hidden;padding:0 10px 0 2px;display:inline-block;min-width:120px;">
+              <input type="checkbox"
+                 ng-model="item.check"
+                 ng-checked="item.check"/><label></label> <div style="max-width: 330px;display: inline-block;white-space:nowrap;text-overflow: ellipsis;overflow: hidden;height: 25px;line-height: 36px;cursor: pointer;" title="{{item.text}}">{{item.text}}</div>
+            </li>
+          </ul>
+        </div>
+        <div style="overflow: hidden;">
+          <div class="fl width50" style="margin:0 5px;">
+              <div class="bg-gray padding10 lh30">子孙标签</div>
+              <div style="max-height: 220px;overflow-y: auto;">
+                <ul style="overflow: hidden;width: 100%;">
+                  <li ng-repeat="item in markData" style="overflow: hidden;padding:0 10px 0 2px;display:inline-block;min-width:120px;">
+                    <input type="checkbox"
+                       ng-model="item.check"
+                       ng-checked="item.check"/><label></label> <div style="max-width: 330px;display: inline-block;white-space:nowrap;text-overflow: ellipsis;overflow: hidden;height: 25px;line-height: 36px;cursor: pointer;" title="{{item.labelName}}">{{item.labelName}}</div>
+                  </li>
+                </ul>
+              </div>
+              <div class="text-center"  style="margin:20px 0" ng-if="markData.length==0">暂无数据</div>
+          </div>
+          <div class="fr width50" style="margin:0 5px;">
+              <div class="bg-gray padding10 lh30">相关标签</div>
+              <div style="max-height: 220px;overflow-y: auto;">
+                <ul style="overflow: hidden;width: 100%;">
+                  <li ng-repeat="item1 in markData1" style="overflow: hidden;padding:0 10px 0 2px;display:inline-block;min-width:120px;">
+                    <input type="checkbox"
+                       ng-model="item1.check"
+                       ng-checked="item1.check"/><label></label> <div style="max-width: 330px;display: inline-block;white-space:nowrap;text-overflow: ellipsis;overflow: hidden;height: 25px;line-height: 36px;cursor: pointer;" title="{{item1.labelName}}">{{item1.labelName}}</div>
+                  </li>
+                </ul>
+              </div>
+              <div class="text-center" style="margin:20px 0" ng-if="markData1.length==0">暂无数据</div>
+          </div>
+        </div>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button" ng-if="(markData.length!=0) || (markData1.length!=0)"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="clearmark()"
+               value="清除过滤"/>
+        <input type="button" ng-if="(markData.length!=0) || (markData1.length!=0)"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="marksub()"
+               value="确定"/>
+        <input type="button" ng-if="(markData.length==0) && (markData1.length==0)"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

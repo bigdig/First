@@ -1,0 +1,21 @@
+<view class="box">
+    <view class='box_search'>
+      <input type='text' class='font24 box_search_input' placeholder="搜索" placeholder-style='color:#ACAFC4' value="{{inputVal}}" bindblur='inputBlur'/>
+      <icon type="search" size="15" class='box_search_icon'/>
+      <text class='font24 box_search_add' bindtap='add'>新增</text>
+    </view>
+    <view wx:if="{{searchLabel}}">
+        <view class='box_add'>
+            <text class='boxRecommend'>推荐:</text>
+            <text class='box_add_label' wx:key="{{item}}" wx:for="{{recommendLabel}}" bindtap='addSelect' data-labelName="{{item.labelName}}">{{item.labelName}}</text>
+        </view>
+    </view>
+    <view wx:if="{{existenceLabel}}">
+        <view class='box_add'>
+            <text class='boxRecommend'>已选择:</text>
+            <text class='box_add_label' wx:key="{{item}}" wx:for="{{addLabel}}" bindtap='deleteLabel' data-labelName="{{item}}">{{item}}</text>
+        </view>
+    </view>
+</view>
+<button class='submit font30' bindtap='submit' hidden="{{addActLabel}}">添加</button>
+<button class='submit font30' bindtap='addActLabel' wx:if="{{addActLabel}}">确定</button>

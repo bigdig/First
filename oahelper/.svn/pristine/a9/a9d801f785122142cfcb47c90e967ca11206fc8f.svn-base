@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.InfChannelcontentMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.InfChannelcontent">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+      <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+      <result column="channel_number" jdbcType="VARCHAR" property="channelNumber" />
+      <result column="content_id" jdbcType="VARCHAR" property="contentId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="publish_count" jdbcType="INTEGER" property="publishCount" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="use_status" jdbcType="VARCHAR" property="useStatus" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.pr.entity.InfChannelcontent">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+      <result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+      <result column="channel_number" jdbcType="VARCHAR" property="channelNumber" />
+      <result column="content_id" jdbcType="VARCHAR" property="contentId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="publish_count" jdbcType="INTEGER" property="publishCount" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="use_status" jdbcType="VARCHAR" property="useStatus" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from inf_channelcontent where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.InfChannelcontent">
+    insert into inf_channelcontent (
+    id
+	,channel_id
+	,channel_name
+	,channel_number
+	,content_id
+	,create_by
+	,create_time
+	,publish_count
+	,update_by
+	,update_time
+	,use_status
+	,company_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{channelId,jdbcType=VARCHAR}
+    	,#{channelName,jdbcType=VARCHAR}
+    	,#{channelNumber,jdbcType=VARCHAR}
+    	,#{contentId,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{publishCount,jdbcType=INTEGER}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{useStatus,jdbcType=VARCHAR}
+    	,#{companyId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.InfChannelcontent">
+    update inf_channelcontent
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="channelId != null ">
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="channelName != null ">
+        channel_name = #{channelName,jdbcType=VARCHAR},
+      </if>
+      <if test="channelNumber != null ">
+        channel_number = #{channelNumber,jdbcType=INTEGER},
+      </if>
+      <if test="contentId != null ">
+        content_id = #{contentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="publishCount != null ">
+        publish_count = #{publishCount,jdbcType=INTEGER},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="useStatus != null ">
+        use_status = #{useStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null ">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,channel_id,channel_name,channel_number,content_id,create_by,create_time,publish_count,update_by,update_time,use_status,company_id
+    from inf_channelcontent
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,channel_id,channel_name,channel_number,content_id,create_by,create_time,publish_count,update_by,update_time,use_status,company_id
+    from inf_channelcontent
+    order by id
+  </select>
+  <select id="getRecordsBycondition" resultMap="ExResultMap" parameterType="com.tfzq.pr.entity.InfChannelcontent">
+    select id,channel_id,channel_name,channel_number,content_id,create_by,create_time,publish_count,update_by,update_time,use_status,company_id
+    from inf_channelcontent a where 1=1
+    <if test="contentId != null and contentId != ''">and content_id = #{contentId}</if>
+	<if test="channelNumber != null and channelNumber != ''">and channel_number = #{channelNumber,jdbcType=INTEGER}</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from inf_channelcontent a where 1=1
+	<if test="channelNumber != null and channelNumber != ''">and channel_number = #{channelNumber,jdbcType=INTEGER}</if>
+	<if test="channelId != null and channelId != ''">and channel_id = #{channelId}</if>
+	<if test="contentId != null and contentId != ''">and content_id = #{contentId}</if>
+	<if test="title != null and title != ''">and exists (select 1 from inf_content b where a.content_id=b.id and b.title like '%'||#{title}||'%') </if>
+	<if test="calMonth != null and calMonth != ''">
+		and to_char(update_time,'yyyy-mm') = #{calMonth}
+	</if>
+	<if test="calDay != null and calDay != ''">
+		and to_char(update_time,'yyyy-mm-dd') = #{calDay}
+	</if>
+	<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+  </select>
+</mapper>

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoAudityRecordMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoAudityRecord">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="audity_id" jdbcType="VARCHAR" property="audityId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="is_passed" jdbcType="VARCHAR" property="isPassed" />
+      <result column="audity_comment" jdbcType="VARCHAR" property="audityComment" />
+      <result column="audity_picture" jdbcType="VARCHAR" property="audityPicture" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoAudityRecordBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="audity_id" jdbcType="VARCHAR" property="audityId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="is_passed" jdbcType="VARCHAR" property="isPassed" />
+      <result column="audity_comment" jdbcType="VARCHAR" property="audityComment" />
+      <result column="audity_picture" jdbcType="VARCHAR" property="audityPicture" />
+      <result column="audity_title" jdbcType="VARCHAR" property="audityTitle" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_audity_record where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoAudityRecord">
+    insert into go_audity_record (
+    id
+	,audity_id
+	,user_id
+	,user_name
+	,is_passed
+	,audity_comment
+	,audity_picture
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{audityId,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{isPassed,jdbcType=VARCHAR}
+    	,#{audityComment,jdbcType=VARCHAR}
+    	,#{audityPicture,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoAudityRecord">
+    update go_audity_record
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="audityId != null ">
+        audity_id = #{audityId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null ">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="isPassed != null ">
+        is_passed = #{isPassed,jdbcType=VARCHAR},
+      </if>
+      <if test="audityComment != null ">
+        audity_comment = #{audityComment,jdbcType=VARCHAR},
+      </if>
+      <if test="audityPicture != null ">
+        audity_picture = #{audityPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,audity_id,user_id,user_name,is_passed,audity_comment,audity_picture,create_by,create_time,update_by,update_time
+    from go_audity_record
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,audity_id,user_id,user_name,is_passed,audity_comment,audity_picture,create_by,create_time,update_by,update_time
+    from go_audity_record
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select 
+    	t.id,t.audity_id,t.user_id,t.user_name,t.is_passed,t.audity_comment,t.audity_picture,t.create_by,t.create_time,t.update_by,t.update_time
+    	,t2.audity_title
+    from go_audity_record t
+    inner join go_audity t2 on t2.id = t.audity_id 
+    where 1=1
+	<if test="audityId != null and audityId != ''">and t.audity_id =#{audityId}</if>
+	<if test="isPassed != null and isPassed != ''">and t.is_passed=#{isPassed}</if>
+	<if test="userId != null and userId != ''">and exists(select 1 from go_audity t1 where t1.user_id = #{userId} and t1.id = t.audity_id)</if>
+	<if test="userName != null and userName != ''">and exists(select 1 from go_audity t1 where t1.user_name like '%'||#{userName}||'%' and t1.id = t.audity_id)</if>
+	<if test="audityTitle != null and audityTitle != ''">and exists(select 1 from go_audity t1 where t1.audity_title like '%'||#{audityTitle}||'%' and t1.id = t.audity_id)</if>
+	<if test="audityStatus != null and audityStatus != ''">and exists(select 1 from go_audity t1 where t1.audity_status=#{audityStatus} and t1.id = t.audity_id)</if>	
+	<if test="beginDate != null and beginDate != ''">and exists(select 1 from go_audity t1 where to_char(t1.create_time,'yyyy-mm-dd') <![CDATA[>=]]> #{beginDate} and t1.id = t.audity_id)</if>
+	<if test="endDate != null and endDate != ''">and exists(select 1 from go_audity t1 where to_char(t1.create_time,'yyyy-mm-dd') <![CDATA[<=]]> #{endDate} and t1.id = t.audity_id)</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_audity_record where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="audityId != null and audityId != ''">and audity_id like '%'||#{audityId}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="isPassed != null and isPassed != ''">and is_passed=#{isPassed}</if>
+	<if test="audityComment != null and audityComment != ''">and audity_comment like '%'||#{audityComment}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or audity_id like '%'||#{keyword}||'%' or user_id like '%'||#{keyword}||'%' or user_name like '%'||#{keyword}||'%' or is_passed like '%'||#{keyword}||'%' or audity_comment like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

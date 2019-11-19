@@ -1,0 +1,234 @@
+<form name="search"
+      ng-submit="searchMeeting()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <ng-datepicker value="meeting.startDateTime"
+                           name="beginDateStart"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="false"
+                           limitdate="{{meeting.endDateTime}}"
+                           placeholder="起始日期"></ng-datepicker>
+        </li>
+        <li>
+            <ng-datepicker value="meeting.endDateTime"
+                           name="beginDateEnd"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="true"
+                           limitdate="{{meeting.startDateTime}}"
+                           placeholder="截止日期"></ng-datepicker>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="meeting.title"
+                   maxlength="16"
+                   placeholder="服务内容">
+        </li>
+        <li>
+            <search model="meeting"
+                    value="meeting.deptName"
+                    name="deptName"
+                    maxlength="20"
+                    servicelist="researchTeams"
+                    placeholder="研究团队"></search>
+        </li>
+        <li>
+            <search model="meeting"
+                    value="meeting.staffName"
+                    name="staffName"
+                    maxlength="20"
+                    servicelist="researchers"
+                    placeholder="研究员"></search>
+        </li>
+        <li>
+            <input type="search"
+                   placeholder="地点"
+                   ng-model="meeting.locale"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editMeetingTemplate">
+    <form name="meeting_form"
+          ng-submit="editMeeting()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="meetingInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="meetingInfo.dirty && meeting_form.sal_date.$invalid">
+                        <span ng-show="meeting_form.sal_date.$error.required">
+                            请选择日期
+                        </span>
+                    </div>
+                    <ng-datepicker name="sal_date"
+                                   dirty="meetingInfo.dirty"
+                                   value="meetingInfo.meetingDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   required="true"
+                                   placeholder="日期"></ng-datepicker>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="meeting_form.met_startTime.$dirty && meeting_form.met_startTime.$invalid">
+                        <span ng-show="meeting_form.met_startTime.$error.required">
+                            请输入开始时间
+                        </span>
+                        <span ng-show="meeting_form.met_startTime.$error.pattern">
+                            无效的时间格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="met_startTime"
+                           placeholder="开始时间(hh:mm:ss)"
+                           ng-pattern="/^([0-1]?\d|2[0-3]):[0-5]\d:[0-5]\d$/"
+                           ng-model="meetingInfo.metStartTime"
+                           required/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="meeting_form.met_endTime.$dirty && meeting_form.met_endTime.$invalid">
+                        <span ng-show="meeting_form.met_endTime.$error.required">
+                            请输入结束时间
+                        </span>
+                        <span ng-show="meeting_form.met_endTime.$error.pattern">
+                            无效的时间格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="met_endTime"
+                           placeholder="结束时间(hh:mm:ss)"
+                           ng-pattern="/^([0-1]?\d|2[0-3]):[0-5]\d:[0-5]\d$/"
+                           ng-model="meetingInfo.metEndTime"
+                           required/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="meeting_form.sal_researcher.$dirty && meeting_form.sal_researcher.$invalid">
+                        <span ng-show="meeting_form.sal_researcher.$error.required">
+                            请选择研究员
+                        </span>
+                        <span ng-show="meeting_form.sal_researcher.$error.unique">
+                            无效的研究员
+                        </span>
+                    </div>
+                    <combobox name="sal_researcher"
+                              placeholder="研究员"
+                              model="meetingInfo"
+                              id="researcherId"
+                              no="researchers"
+                              value="meetingInfo.researchers"
+                              multiple="true"
+                              required="true"
+                              servicelist="salResearchers"></combobox>
+                </li>
+                <li>
+                    <input type="search"
+                           maxlength="50"
+                           placeholder="地点"
+                           name="sal_area"
+                           ng-model="meetingInfo.locale">
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="meeting_form.sal_content.$dirty && meeting_form.sal_content.$invalid">
+                <span class="error"
+                      ng-show="meeting_form.sal_content.$error.required">
+                     请输入服务内容
+                </span>
+                <span class="error"
+                      ng-show="meeting_form.sal_content.$error.maxlength">
+                     总字数不超过1000
+                </span>
+            </div>
+            <textarea name="sal_content"
+                      ng-maxlength="1000"
+                      rows="5"
+                      ng-model="meetingInfo.title"
+                      required
+                      placeholder="服务内容"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="meetingInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="meeting_form.$invalid || meetingInfo.loading"
+                   value="{{meetingInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="meetingCustomerTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">已参与客户</h3>
+        <table width="100%"
+               cellpadding="8"
+               cellspacing="0"
+               class="data">
+            <tr>
+                <th>客户名称</th>
+                <th>手机号</th>
+                <th>机构</th>
+                <th>参会时间</th>
+                <th>离开时间</th>
+                <th>总时长</th>
+            </tr>
+            <tr ng-repeat="cust in custList">
+                <td bo-text="cust.custName"></td>
+                <td bo-text="cust.custMobile"></td>
+                <td bo-text="cust.orgName"></td>
+                <td bo-text="cust.arriveTime"></td>
+                <td bo-text="cust.leaveTime"></td>
+                <td bo-text="cust.totalDuration"></td>
+            </tr>
+        </table>
+        <p class="text-center"
+           ng-if="!custList.length">暂无数据</p>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               value="客户批量添加"
+               ng-dialog="uploadExcelTemplate"
+               ng-dialog-show-close="false"
+               ng-dialog-close-by-escape="false"
+               ng-dialog-close-by-document="false"
+               ng-dialog-scope="this.$parent"
+               ng-dialog-class="ngdialog-theme-default"
+               ng-dialog-pre-close-callback="uploadPreCloseCallback"
+               ng-dialog-on-open-callback="uploadOpenedCallback"
+               ng-dialog-close-previous
+               class="btn-search text-orange light font-18">
+        <input type="button"
+               value="关闭"
+               ng-click="closeThisDialog()"
+               class="text-orange padding60 light border-gray-color"/>
+    </div>
+</script>

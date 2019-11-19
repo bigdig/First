@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoNoticeMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoNotice">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle" />
+      <result column="notice_type" jdbcType="VARCHAR" property="noticeType" />
+      <result column="notice_url" jdbcType="VARCHAR" property="noticeUrl" />
+      <result column="is_inform" jdbcType="VARCHAR" property="isInform" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="inform_group" jdbcType="VARCHAR" property="informGroup" />
+      <result column="notice_content" jdbcType="CLOB" property="noticeContent" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoNoticeBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="notice_title" jdbcType="VARCHAR" property="noticeTitle" />
+      <result column="notice_type" jdbcType="VARCHAR" property="noticeType" />
+       <result column="notice_url" jdbcType="VARCHAR" property="noticeUrl" />
+      <result column="is_inform" jdbcType="VARCHAR" property="isInform" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="inform_group" jdbcType="VARCHAR" property="informGroup" />
+      <result column="notice_content" jdbcType="CLOB" property="noticeContent" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_notice where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoNotice">
+    insert into go_notice (
+    id
+	,notice_title
+	,notice_type
+	,notice_url
+	,is_inform
+	,inform_id
+	,inform_group
+	,notice_content
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{noticeTitle,jdbcType=VARCHAR}
+    	,#{noticeType,jdbcType=VARCHAR}
+    	,#{noticeUrl,jdbcType=VARCHAR}
+    	,#{isInform,jdbcType=VARCHAR}
+    	,#{informId,jdbcType=VARCHAR}
+    	,#{informGroup,jdbcType=VARCHAR}
+    	,#{noticeContent,jdbcType=CLOB}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoNotice">
+    update go_notice
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeTitle != null ">
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeType != null ">
+        notice_type = #{noticeType,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeUrl != null ">
+        notice_url = #{noticeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isInform != null ">
+        is_inform = #{isInform,jdbcType=VARCHAR},
+      </if>
+      <if test="informId != null ">
+        inform_id = #{informId,jdbcType=VARCHAR},
+      </if>
+      <if test="informGroup != null ">
+        inform_group = #{informGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null ">
+        notice_content = #{noticeContent,jdbcType=CLOB},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,notice_title,notice_type,notice_url,is_inform,inform_id,inform_group,notice_content,create_by,create_time,update_by,update_time
+    from go_notice
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,notice_title,notice_type,notice_url,is_inform,inform_id,inform_group,notice_content,create_by,create_time,update_by,update_time
+    from go_notice
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,notice_title,notice_type,is_inform,inform_id,inform_group,notice_content,create_by,create_time,update_by,update_time
+    from go_notice
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="noticeTitle != null and noticeTitle != ''">and notice_title like '%'||#{noticeTitle}||'%'</if>
+	<if test="noticeType != null and noticeType != ''">and notice_type=#{noticeType}</if>
+	<if test="noticeUrl != null and noticeUrl != ''">and notice_url=#{noticeUrl}</if>
+	<if test="isInform != null and isInform != ''">and is_inform=#{isInform}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_notice where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="noticeTitle != null and noticeTitle != ''">and notice_title like '%'||#{noticeTitle}||'%'</if>
+	<if test="noticeType != null and noticeType != ''">and notice_type=#{noticeType}</if>
+	<if test="noticeUrl != null and noticeUrl != ''">and notice_url=#{noticeUrl}</if>
+	<if test="isInform != null and isInform != ''">and is_inform=#{isInform}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or notice_title like '%'||#{keyword}||'%' or notice_type like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

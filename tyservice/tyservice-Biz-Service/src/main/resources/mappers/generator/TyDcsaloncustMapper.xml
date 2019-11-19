@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDcsaloncustMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDcsaloncust">
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+      <result column="salon_id" jdbcType="VARCHAR" property="salonId" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyDcsaloncustBean">
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+      <result column="salon_id" jdbcType="VARCHAR" property="salonId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dcsaloncust where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteBySalonId" parameterType="java.lang.String">
+    delete from ty_dcsaloncust where salon_id = #{salonId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDcsaloncust">
+    insert into ty_dcsaloncust (
+    cust_id
+	,salon_id
+    )values (
+    #{custId,jdbcType=VARCHAR}
+    	,#{salonId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDcsaloncust">
+    update ty_dcsaloncust
+    <trim prefix="set" suffixOverrides=",">
+      <if test="custId != null ">
+        cust_id = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="salonId != null ">
+        salon_id = #{salonId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select cust_id,salon_id
+    from ty_dcsaloncust
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryBySalonId" parameterType="java.lang.String" resultMap="ExResultMap">
+    select cust_id,salon_id
+    from ty_dcsaloncust
+    where salon_id = #{salonId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select cust_id,salon_id
+    from ty_dcsaloncust
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dcsaloncust where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

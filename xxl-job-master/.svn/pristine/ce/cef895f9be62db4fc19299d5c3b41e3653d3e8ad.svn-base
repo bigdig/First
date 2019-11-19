@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.tycrm.mapper.TyCrmListedcompanyMapper">
+	<resultMap id="BaseResultMap" type="com.tfzq.tycrm.entity.TyCrmListedcompany">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+      <result column="market_kind" jdbcType="VARCHAR" property="marketKind" />
+      <result column="stock_shortname" jdbcType="VARCHAR" property="stockShortname" />
+      <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+      <result column="company_shortname" jdbcType="VARCHAR" property="companyShortname" />
+      <result column="market_no" jdbcType="VARCHAR" property="marketNo" />
+      <result column="market_name" jdbcType="VARCHAR" property="marketName" />
+      <result column="indu_code" jdbcType="VARCHAR" property="induCode" />
+      <result column="indu_name" jdbcType="VARCHAR" property="induName" />
+      <result column="data_src" jdbcType="VARCHAR" property="dataSrc" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+	</resultMap>
+	<insert id="insert" parameterType="com.tfzq.tycrm.entity.TyCrmListedcompany">
+		MERGE INTO ty_listedcompany lc
+		USING (SELECT #{id} id FROM dual) d ON (lc.id = d.id )
+		WHEN matched THEN
+		UPDATE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="stockCode != null ">
+				lc.stock_code = #{stockCode,jdbcType=VARCHAR},
+			</if>
+			<if test="marketKind != null ">
+				lc.market_kind = #{marketKind,jdbcType=VARCHAR},
+			</if>
+			<if test="stockShortname != null ">
+				lc.stock_shortname = #{stockShortname,jdbcType=VARCHAR},
+			</if>
+			<if test="stockName != null ">
+				lc.stock_name = #{stockName,jdbcType=VARCHAR},
+			</if>
+			<if test="companyShortname != null ">
+				lc.company_shortname = #{companyShortname,jdbcType=VARCHAR},
+			</if>
+			<if test="marketNo != null ">
+				lc.market_no = #{marketNo,jdbcType=VARCHAR},
+			</if>
+			<if test="marketName != null ">
+				lc.market_name = #{marketName,jdbcType=VARCHAR},
+			</if>
+			<if test="induCode != null ">
+				lc.indu_code = #{induCode,jdbcType=VARCHAR},
+			</if>
+			<if test="induName != null ">
+				lc.indu_name = #{induName,jdbcType=VARCHAR},
+			</if>
+			<if test="dataSrc != null ">
+				lc.data_src = #{dataSrc,jdbcType=VARCHAR},
+			</if>
+			<if test="updateBy != null ">
+				lc.update_by = #{updateBy,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null ">
+				lc.update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+		WHEN not matched THEN
+		INSERT (
+		id
+		,stock_code
+		,market_kind
+		,stock_shortname
+		,stock_name
+		,company_shortname
+		,market_no
+		,market_name
+		,indu_code
+		,indu_name
+		,data_src
+		,create_by
+		,create_time
+		,update_by
+		,update_time
+		)VALUES(
+		#{id,jdbcType=VARCHAR}
+		,#{stockCode,jdbcType=VARCHAR}
+		,#{marketKind,jdbcType=VARCHAR}
+		,#{stockShortname,jdbcType=VARCHAR}
+		,#{stockName,jdbcType=VARCHAR}
+		,#{companyShortname,jdbcType=VARCHAR}
+		,#{marketNo,jdbcType=VARCHAR}
+		,#{marketName,jdbcType=VARCHAR}
+		,#{induCode,jdbcType=VARCHAR}
+		,#{induName,jdbcType=VARCHAR}
+		,#{dataSrc,jdbcType=VARCHAR}
+		,#{createBy,jdbcType=VARCHAR}
+		,#{createTime,jdbcType=TIMESTAMP}
+		,#{updateBy,jdbcType=VARCHAR}
+		,#{updateTime,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+        id
+		,stock_code
+		,market_kind
+		,stock_shortname
+		,stock_name
+		,company_shortname
+		,market_no
+		,market_name
+		,indu_code
+		,indu_name
+		,data_src
+		,create_by
+		,create_time
+		,update_by
+		,update_time
+		from ty_listedcompany
+    </select>
+    
+	<select id="selectMaxUpdateTime" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select max(update_time) as update_time from ty_listedcompany
+    </select>
+	
+</mapper>

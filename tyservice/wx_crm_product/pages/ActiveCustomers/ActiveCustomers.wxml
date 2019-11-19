@@ -1,0 +1,6 @@
+<view class="box">
+   <view wx:for="{{activeCustomerList}}" wx:key="{{item}}" class="box-list">
+      <text class='box-list-text font28'>{{item.custName}}</text>
+      <text class='box-list-num font28'>{{item.signNum}}次</text> 
+   </view>
+</view>

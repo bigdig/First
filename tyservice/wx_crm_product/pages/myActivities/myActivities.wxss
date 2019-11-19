@@ -1,0 +1,59 @@
+/* pages/customer/customer.wxss */
+.tab{
+  padding-top: 10rpx; 
+  height: 70rpx;
+  background: #fff;
+}
+.tab_customer{
+  margin-left: 44rpx;
+  height: 47rpx;
+  display: inline-block;
+}
+.tab_mechanism{
+  margin-left: 46rpx;
+  height: 47rpx;
+  display: inline-block;
+}
+.box{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #F3F2F7; 
+  padding-top: 15rpx;
+}
+.box_list{
+  width: 620rpx;
+  height: 140rpx;
+  background-color: #ffffff;
+  margin: 20rpx auto 0rpx;
+   /* border-left: 6rpx solid #fff;  */
+   /* border-color: #FC6D51;   */
+   box-sizing: border-box;
+  border-radius: 6rpx;
+}
+.box_list_item{
+  margin-left: 45rpx;
+}
+.box_list_title{
+  padding-top: 20rpx;
+  display: block;
+  height: 28rpx;
+  color: #282C3F;
+}
+.box_list_pattern{
+  display: inline-block;
+  height: 27rpx;
+  color: #9FA3BB;
+}
+.box_list_Rnumber{
+  display: inline-block;
+  height: 27rpx;
+  color: #9FA3BB;
+  margin-left: 20rpx;
+}
+.box_list_time{
+  display: block;
+  height: 27rpx;
+  color: #9FA3BB;
+  margin-top: 5rpx;
+}

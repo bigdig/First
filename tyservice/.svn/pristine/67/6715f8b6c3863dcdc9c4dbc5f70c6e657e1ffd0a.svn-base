@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyLabelMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyLabel">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+      <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+      <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+      <result column="pre_id" jdbcType="VARCHAR" property="preId" />
+      <result column="next_id" jdbcType="VARCHAR" property="nextId" />
+      <result column="label_level" jdbcType="VARCHAR" property="labelLevel" />
+      <result column="p_id" jdbcType="VARCHAR" property="pid" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyLabelBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+      <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+      <result column="order_num" jdbcType="VARCHAR" property="orderNum" />
+      <result column="pre_id" jdbcType="VARCHAR" property="preId" />
+      <result column="next_id" jdbcType="VARCHAR" property="nextId" />
+      <result column="label_level" jdbcType="VARCHAR" property="labelLevel" />
+      <result column="p_id" jdbcType="VARCHAR" property="pid" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_label where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyLabel">
+    insert into ty_label (
+    id
+	,cat_id
+	,cat_name
+	,label_name
+	,order_num
+	,pre_id
+	,next_id
+	,label_level
+	,p_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{catId,jdbcType=VARCHAR}
+    	,#{catName,jdbcType=VARCHAR}
+    	,#{labelName,jdbcType=VARCHAR}
+    	,#{orderNum,jdbcType=VARCHAR}
+    	,#{preId,jdbcType=VARCHAR}
+    	,#{nextId,jdbcType=VARCHAR}
+    	,#{labelLevel,jdbcType=VARCHAR}
+    	,#{pid,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyLabel">
+    update ty_label
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="catId != null ">
+        cat_id = #{catId,jdbcType=VARCHAR},
+      </if>
+      <if test="catName != null ">
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null ">
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null ">
+        order_num = #{orderNum,jdbcType=VARCHAR},
+      </if>
+      <if test="preId != null ">
+        pre_id = #{preId,jdbcType=VARCHAR},
+      </if>
+      <if test="nextId != null ">
+        next_id = #{nextId,jdbcType=VARCHAR},
+      </if>
+      <if test="labelLevel != null ">
+        label_level = #{labelLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null ">
+        p_id = #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateCustomerlabel" parameterType="com.tfzq.ty.model.generator.TyLabel">
+    update ty_customerlabel set label_name = #{labelName,jdbcType=VARCHAR}
+    where label_id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByLabelName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label
+    where label_name = #{labelName,jdbcType=VARCHAR}
+  </select>
+  <select id="getCatListByCustomerId" parameterType="java.lang.String" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.id in 
+    	(select distinct cat_id from ty_label t2 where t2.id in
+    		(select label_id from ty_customerlabel t3 where t3.customer_id= #{custId,jdbcType=VARCHAR})
+    	)
+  </select>
+  <select id="getBindLabels" parameterType="java.lang.String" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.id in (select label_id_to from ty_labelnet t2 where t2.label_id_from = #{labelId,jdbcType=VARCHAR} )
+  </select>
+  <select id="getBindRelatedLabels" parameterType="java.lang.String" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.id in 
+      (select label_id_to from ty_labelnet t2 where t2.label_id_from = #{labelId,jdbcType=VARCHAR} 
+        union 
+       select label_id_from from ty_labelnet t2 where t2.label_id_to = #{labelId,jdbcType=VARCHAR})
+  </select>
+  <select id="getCatListByOrgId" parameterType="java.lang.String" resultMap="ExResultMap">    
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.id in 
+    	(select distinct cat_id from ty_label t2 where t2.id in
+    		(select label_id from ty_serviceorglabel t3 where t3.org_id= #{orgId,jdbcType=VARCHAR})
+    	)
+  </select>
+  <select id="getcurrentSubLabels" parameterType="java.lang.String" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1  start with p_id = #{id,jdbcType=VARCHAR} connect by nocycle prior id = p_id
+  </select>
+  <select id="getCustSubList" parameterType="java.util.Map" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.cat_id = #{catId,jdbcType=VARCHAR}  and t1.id in 
+    	(select label_id from ty_customerlabel t2 where t2.customer_id= #{customerId,jdbcType=VARCHAR})
+    	
+  </select>
+  <select id="getOrgSubList" parameterType="java.util.Map" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t1
+    where t1.cat_id = #{catId,jdbcType=VARCHAR}  and t1.id in 
+    	(select label_id from ty_serviceorglabel t2 where t2.org_id= #{orgId,jdbcType=VARCHAR})
+    	
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label
+    order by id
+  </select>
+  <select id="getAllSubRecords" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t where t.cat_id !='0'
+    order by id
+  </select>
+  <select id="getSubRecordsByCondition" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t where t.cat_id !='0'
+    <if test="labelIdList != null and labelIdList.size>0">
+		and id not in
+		<foreach collection="labelIdList" item="labelId" index="index"
+            open="(" close=")" separator=",">
+            #{labelId,jdbcType=VARCHAR}
+        </foreach>
+	</if>
+	<if test="catId != null and catId != ''">and cat_id = #{catId}</if>
+	<if test="pid != null and pid != ''">and p_id = #{pid} </if>
+    order by id
+  </select>
+  <select id="getRecordsByCondition" resultMap="BaseResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t where 1=1
+    <if test="catId != null and catId != ''">and cat_id = #{catId}</if>
+    <if test="pid != null and pid != ''">and p_id = #{pid}</if>
+	<if test="catName != null and catName != ''">and cat_name like '%'||#{catName}||'%'</if>
+	<if test="labelName != null and labelName != ''">and label_name like '%'||#{labelName}||'%'</if>
+	<if test="accurateLabelName != null and accurateLabelName != ''">and label_name = #{accurateLabelName}</if>
+  </select>
+  <select id="getLabelCat" resultMap="ExResultMap">
+    select id,cat_id,cat_name,label_name,order_num,pre_id,next_id,label_level,p_id
+    from ty_label t where t.cat_id='0'
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from 
+		<choose>
+			<when test="pids != null and pids.size()> 0">
+				(select * from ty_label where p_id in <foreach collection="pids" index="index" item="item" open="(" separator="," close=")">
+					#{item}
+				</foreach>)
+			</when>
+			<otherwise>
+				ty_label
+			</otherwise>
+		</choose>
+    where 1=1
+	<if test="catId != null and catId != ''">and cat_id = #{catId}</if>
+	<if test="labelLevel != null and labelLevel != ''">and label_level = #{labelLevel}</if>
+	<if test="catName != null and catName != ''">and cat_name like '%'||#{catName}||'%'</if>
+	<if test="labelName != null and labelName != ''">and label_name like '%'||#{labelName}||'%'</if>
+	<if test="keyword != null">
+		and (cat_name like '%'||#{keyword}||'%'  or label_name like '%'||#{keyword}||'%')
+	</if>
+  </select>
+  
+    <select  id="querySubLabel" resultMap = "ExResultMap">
+		select t1.* from ty_label t1 where 1=1
+		<if test="catId != null and catId != ''">and t1.cat_id = #{catId}</if>
+		<if test="labelLevel != null and labelLevel != ''">and t1.label_level = #{labelLevel}</if>
+		<if test="levelMargin == 1">
+			<if test="pid != null and pid != ''">and t1.P_ID = #{pid}</if>
+		</if>
+		<if test="levelMargin == 2">
+			<if test="pid != null and pid != ''">
+				and exists (select 1 from ty_label t2 where t1.p_id = t2.id and t2.p_id = #{pid})
+			</if>
+		</if>
+	</select>
+  
+</mapper>

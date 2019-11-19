@@ -1,0 +1,285 @@
+package com.xxl.job.executor.service.jobhandler;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.alibaba.fastjson.JSONObject;
+import com.crm.com.bigdata.tfzq.webservice.service.crm.Contacts;
+import com.crm.com.bigdata.tfzq.webservice.service.crm.impl.CrmSynchroImplServiceTestCase;
+import com.ddfc.util.DateUtil;
+import com.ddfc.util.DateUtil.DATE_PATTERN;
+import com.tfzq.tycrm.entity.SysUser;
+import com.tfzq.tycrm.entity.TyOrgcustomer;
+import com.tfzq.tycrm.service.SysUserService;
+import com.tfzq.tycrm.service.TyOrgcustomerService;
+import com.tfzq.utils.Constants;
+import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.handler.IJobHandler;
+import com.xxl.job.core.handler.annotation.JobHandler;
+import com.xxl.job.core.log.XxlJobLogger;
+
+/**
+ * 任务Handler示例（Bean模式）
+ *
+ * 开发步骤： 1、继承"IJobHandler"：“com.xxl.job.core.handler.IJobHandler”；
+ * 2、注册到Spring容器：添加“@Component”注解，被Spring容器扫描为Bean实例；
+ * 3、注册到执行器工厂：添加“@JobHandler(value="自定义jobhandler名称")”注解，
+ * 注解value值对应的是调度中心新建任务的JobHandler属性的值。 4、执行日志：需要通过 "XxlJobLogger.log" 打印执行日志；
+ *
+ * @author xuxueli 2015-12-19 19:43:36
+ */
+@JobHandler(value = "synchronizeOrgCustomer")
+@Component
+public class SynchronizeOrgCustomerJobHandler extends IJobHandler {
+	
+	@Autowired
+	private TyOrgcustomerService tyOrgcustomerService;
+	@Autowired
+	private SysUserService sysUserService;
+
+	@Override
+	public ReturnT<String> execute(String param) throws Exception {
+		XxlJobLogger.log("同步客户数据!");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("platFlag", "KMC");
+		List<TyOrgcustomer> results = tyOrgcustomerService.findByCondition(params);
+		XxlJobLogger.log("推送客户数据到KT，条数：" + results.size());
+		Map<String,Integer> returnMap = new HashMap<>();
+		boolean succ = true;
+		for (TyOrgcustomer lc : results) {
+			String remark =null;
+			String dealFlag="1";
+			try {
+				returnMap = addOrgcustomerToKM(lc,returnMap);
+				if(returnMap.get("andOrUpdate")!=-1){					
+					XxlJobLogger.log("推送客户返回值：" + returnMap.get("andOrUpdate")+" 客户姓名："+lc.getCustName());
+				}
+				if(returnMap.get("delete")!=-1){					
+					XxlJobLogger.log("推送删除客户返回值：" + returnMap.get("delete")+" 客户姓名："+lc.getCustName());
+				}
+			} catch (Exception e) {
+				succ = false;
+				e.printStackTrace();
+				remark = e.getMessage();
+				dealFlag="2";
+				XxlJobLogger.log("推送失败客户[" + lc.toString() + "]到KT会议失败：" + e.getMessage());				
+			}
+			TyOrgcustomer result = new TyOrgcustomer();
+			result.setPushId(lc.getPushId());
+			result.setRemark(remark);
+			result.setDealFlag(dealFlag);
+			tyOrgcustomerService.update(result);
+		}
+		if(succ){
+			return SUCCESS;
+		}else{
+			return FAIL;
+		}
+	}
+
+	private Map<String,Integer> addOrgcustomerToKM(TyOrgcustomer tyOrgcustomer,Map<String,Integer> returnMap) throws Exception {
+		// Contacts对应我们的TyOrgcustomer
+		Contacts contacts = setObjectOfContacts(tyOrgcustomer);
+		XxlJobLogger.log("推送客户内容[" + JSONObject.toJSONString(contacts) + "]");
+		
+		int returnResult=-1,returnResultDel=-1;
+		CrmSynchroImplServiceTestCase crm = new CrmSynchroImplServiceTestCase();
+		if(StringUtils.equals(tyOrgcustomer.getDeleteFlag(), "0")){			
+			returnResult = crm.test4CrmSynchroImplPortSaveOrUpdateContacts(contacts);
+			returnMap.put("andOrUpdate", returnResult);
+			returnMap.put("delete",returnResultDel);
+		}
+		if(StringUtils.equals(tyOrgcustomer.getDeleteFlag(), "1")){			
+			returnResultDel = crm.test2CrmSynchroImplPortDeleteContacts(contacts.getId());
+			returnMap.put("delete",returnResultDel);
+			returnMap.put("andOrUpdate", returnResult);
+		}
+		return returnMap;
+	}
+
+	private Contacts setObjectOfContacts(TyOrgcustomer tyOrgcustomer) {
+		SysUser sysUserCreate = null;
+		SysUser sysUserUpdate = null;
+		String serviceSaler = "";
+		if(StringUtils.isNotBlank(tyOrgcustomer.getCreateBy())){
+			sysUserCreate = sysUserService.selectByPrimaryKey(tyOrgcustomer.getCreateBy());
+		}
+		if(StringUtils.isNotBlank(tyOrgcustomer.getUpdateBy())){
+			sysUserUpdate = sysUserService.selectByPrimaryKey(tyOrgcustomer.getUpdateBy());
+		}
+		if(StringUtils.isNotBlank(tyOrgcustomer.getServiceSaler())
+				&&StringUtils.isNotBlank(tyOrgcustomer.getSalerId())){
+			String[] salerIds = tyOrgcustomer.getSalerId().split(",");
+			int count = 0;
+			if(salerIds!=null&&salerIds.length>0){
+				for(String ids : salerIds){
+					if(count>0&&count<salerIds.length){
+						serviceSaler = serviceSaler+",";
+					}
+					SysUser sysUserSaler = sysUserService.selectByPrimaryKey(ids);
+					serviceSaler = serviceSaler+sysUserSaler.getAccount();
+					count++;
+				}
+			}
+			
+		}
+		Contacts contacts = new Contacts();
+		contacts.setId(tyOrgcustomer.getId());
+		contacts.setSource(442595874);
+		contacts.setName(tyOrgcustomer.getCustName());
+		contacts.setMobile(tyOrgcustomer.getCustMobile());
+		contacts.setCustomerID(tyOrgcustomer.getOrgId());
+		contacts.setContCustMgr(serviceSaler!=""?serviceSaler:tyOrgcustomer.getServiceSaler());
+		contacts.setDept(tyOrgcustomer.getDepartment());
+		contacts.setPosi(tyOrgcustomer.getTitle());
+		contacts.setEmail(tyOrgcustomer.getCustEmail());
+		contacts.setTel(tyOrgcustomer.getCustTel());
+		contacts.setResearchIndustryIds(transIndustry(tyOrgcustomer.getIndustry()));
+		contacts.setCreateTime(DateUtil.format(tyOrgcustomer.getCreateTime(), DATE_PATTERN.YYYYMMDDHHMMSS));
+		contacts.setCreater(sysUserCreate!=null?sysUserCreate.getAccount():tyOrgcustomer.getCreateBy());
+		contacts.setUpdateTime(DateUtil.format(tyOrgcustomer.getUpdateTime(), DATE_PATTERN.YYYYMMDDHHMMSS));
+		contacts.setUpdatePerson(sysUserUpdate!=null?sysUserUpdate.getAccount():tyOrgcustomer.getUpdateBy());
+		if(StringUtils.isNotBlank(tyOrgcustomer.getIsAcceptRpt())){			
+			contacts.setIsAcceptReport(Integer.parseInt(tyOrgcustomer.getIsAcceptRpt()));
+		}
+		contacts.setReportSendGroup(transRptSendGroup(tyOrgcustomer.getRptSendGroupName()));		
+		return contacts;
+	}
+	
+	private String transRptSendGroup(String rptSendGroupName) {
+		String rpt = "";
+		if(StringUtils.isNotBlank(rptSendGroupName)){
+			String[] rptSendGroupArray = rptSendGroupName.split(",");
+			int count = 0;
+			for(String send : rptSendGroupArray){
+				if(count>0&&count<rptSendGroupArray.length){
+					rpt = rpt+",";
+				}
+				if ("晨会纪要专用发送组".equals(send)) {
+					rpt += Constants.SENDGROUP_1;
+				} else if ("天风默认宏观（只发送宏观报告）".equals(send)) {
+					rpt += Constants.SENDGROUP_2;
+				} else if ("天风默认除公司（除公司报告）".equals(send)) {
+					rpt += Constants.SENDGROUP_3;
+				} else if ("天风默认固定收益（只发送固定收益报告）".equals(send)) {
+					rpt += Constants.SENDGROUP_4;
+				} else if ("天风默认宏观策略（宏观、策略报告）".equals(send)) {
+					rpt += Constants.SENDGROUP_5;
+				} else if ("天风默认全部报告-研究所定制（全部报告）".equals(send)) {
+					rpt += Constants.SENDGROUP_6;
+				} else if ("资讯终端（Wind）".equals(send))  {
+					rpt += Constants.SENDGROUP_7;
+				} else if ("天风默认基金（全部报告）".equals(send))  {
+					rpt += Constants.SENDGROUP_8;
+				} else if ("富国基金".equals(send))  {
+					rpt += Constants.SENDGROUP_9;
+				} else if ("天风默认公司行业（公司、行业报告）".equals(send))  {
+					rpt += Constants.SENDGROUP_10;
+				} else if ("易方达".equals(send))  {
+					rpt += Constants.SENDGROUP_11;
+				} else if ("资讯终端（同花顺）".equals(send))  {
+					rpt += Constants.SENDGROUP_12;
+				} else if ("富国终端接收报告".equals(send))  {
+					rpt += Constants.SENDGROUP_13;
+				} else {
+					rpt += send;
+				}
+				count++;
+			}
+		}
+		return rpt;
+	}
+
+	private String transIndustry(String industryString) {
+		String indu = "";
+		if(StringUtils.isNotBlank(industryString)){					
+			String[] industryArray = industryString.split(",");
+			int count = 0;
+			for(String industry : industryArray){	
+				if(count>0&&count<industryArray.length){
+					indu = indu+",";
+				}
+				if ("传媒互联网".equals(industry)) {
+					indu += Constants.INDUSTRY_1;
+				} else if ("电新".equals(industry)) {
+					indu += Constants.INDUSTRY_2;
+				} else if ("电子".equals(industry)) {
+					indu += Constants.INDUSTRY_3;
+				} else if ("房地产".equals(industry)) {
+					indu += Constants.INDUSTRY_4;
+				} else if ("纺织服装".equals(industry)) {
+					indu += Constants.INDUSTRY_5;
+				} else if ("非银".equals(industry)) {
+					indu += Constants.INDUSTRY_6;
+				} else if ("钢铁".equals(industry)) {
+					indu += Constants.INDUSTRY_7;
+				} else if ("固定收益".equals(industry)) {
+					indu += Constants.INDUSTRY_8;
+				} else if ("海外研究".equals(industry)) {
+					indu += Constants.INDUSTRY_9;
+				} else if ("宏观".equals(industry)) {
+					indu += Constants.INDUSTRY_10;
+				} else if ("环保公用".equals(industry)) {
+					indu += Constants.INDUSTRY_11;
+				} else if ("机械军工".equals(industry)) {
+					indu += Constants.INDUSTRY_12;
+				} else if ("基础化工".equals(industry)) {
+					indu += Constants.INDUSTRY_13;
+				} else if ("计算机".equals(industry)) {
+					indu += Constants.INDUSTRY_14;
+				} else if ("家电".equals(industry)) {
+					indu += Constants.INDUSTRY_15;
+				} else if ("建筑材料".equals(industry)) {
+					indu += Constants.INDUSTRY_16;
+				} else if ("建筑工程".equals(industry)) {
+					indu += Constants.INDUSTRY_17;
+				} else if ("交通运输".equals(industry)) {
+					indu += Constants.INDUSTRY_18;
+				} else if ("金融工程".equals(industry)) {
+					indu += Constants.INDUSTRY_19;
+				} else if ("煤炭".equals(industry)) {
+					indu += Constants.INDUSTRY_20;
+				} else if ("农林牧渔".equals(industry)) {
+					indu += Constants.INDUSTRY_21;
+				} else if ("汽车".equals(industry)) {
+					indu += Constants.INDUSTRY_22;
+				} else if ("轻工".equals(industry)) {
+					indu += Constants.INDUSTRY_23;
+				} else if ("商社".equals(industry)) {
+					indu += Constants.INDUSTRY_24;
+				} else if ("石油化工".equals(industry)) {
+					indu += Constants.INDUSTRY_25;
+				} else if ("食品饮料".equals(industry)) {
+					indu += Constants.INDUSTRY_26;
+				} else if ("通信".equals(industry)) {
+					indu += Constants.INDUSTRY_27;
+				} else if ("投资策略".equals(industry)) {
+					indu += Constants.INDUSTRY_28;
+				} else if ("医药".equals(industry)) {
+					indu += Constants.INDUSTRY_29;
+				} else if ("银行".equals(industry)) {
+					indu += Constants.INDUSTRY_30;
+				} else if ("有色金属".equals(industry)) {
+					indu += Constants.INDUSTRY_31;
+				} else if ("中小市值".equals(industry)) {
+					indu += Constants.INDUSTRY_32;
+				} else if ("所有行业".equals(industry)) {
+					indu += Constants.INDUSTRY_33;
+				} else {
+					indu += industry;
+				}
+				count++;
+			}
+		}
+		return indu;
+	}
+	
+	
+	
+
+}

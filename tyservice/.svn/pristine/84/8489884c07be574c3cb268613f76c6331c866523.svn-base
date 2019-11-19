@@ -1,0 +1,308 @@
+<div class="padding20">
+    <form name="search"
+          ng-submit="searchCustomer()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <input type="search"
+                       ng-model="customer.custName"
+                       maxlength="16"
+                       placeholder="客户名称"/>
+            </li>
+            <li>
+                <input type="search"
+                       maxlength="20"
+                       placeholder="所属机构"
+                       ng-model="customer.orgName"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.serviceSaler"
+                       maxlength="20"
+                       placeholder="对口销售"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.department"
+                       maxlength="16"
+                       placeholder="部门"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.title"
+                       maxlength="16"
+                       placeholder="职位"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.industry"
+                       placeholder="研究行业"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.custMobile"
+                       maxlength="11"
+                       placeholder="手机号"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.area"
+                       maxlength="16"
+                       placeholder="所在地"/>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="customer.custEmail"
+                       maxlength="50"
+                       placeholder="邮箱"/>
+            </li>
+            <li>
+                <select ng-model="customer.prepcustStatus">
+                    <option value="">状态</option>
+                    <option ng-repeat="status in prepCustStatus"
+                            ng-selected="customer.prepcustStatus==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="customer.existMobileFlag">
+                    <option value="">手机是否存在</option>
+                    <option ng-repeat="status in existMobileFlag"
+                            ng-selected="customer.existMobileFlag==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editMeetCustomerTemplate">
+    <form name="cus_form"
+          ng-click="closeSearch();hide($event)"
+          ng-submit="editCustomer(1)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="customerInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_name.$dirty && cus_form.cus_name.$invalid">
+                        <span ng-show="cus_form.cus_name.$error.required">
+                            请输入客户名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_name"
+                           ng-model="customerInfo.custName"
+                           maxlength="16"
+                           required
+                           placeholder="客户名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cut_org.$dirty && cus_form.cut_org.$invalid">
+                        <span ng-show="cus_form.cut_org.$error.required">
+                            请选择所属机构
+                        </span>
+                        <span ng-show="cus_form.cut_org.$error.pattern">
+                            不被接受的字符
+                        </span>
+                        <span ng-show="cus_form.cut_org.$error.unique">
+                            无效的机构
+                        </span>
+                    </div>
+                    <combobox name="cut_org"
+                              placeholder="所属机构"
+                              model="customerInfo"
+                              value="customerInfo.orgName"
+                              id="orgId"
+                              no="orgName"
+                              callback="setSaler"
+                              pattern="customerInfo.pattern"
+                              disabled="customerInfo.prepcustStatus!='0'"
+                              required="true"
+                              servicelist="tyServiceorgs"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_sale.$dirty && cus_form.cus_sale.$invalid">
+                        <span ng-show="cus_form.cus_sale.$error.select">
+                            请选择对口销售
+                        </span>
+                    </div>
+                    <select name="cus_sale"
+                            ng-disabled="customerInfo.prepcustStatus!='0'"
+                            ng-model="customerInfo.salerId"
+                            option-select="cus_sale">
+                        <option value="">对口销售</option>
+                        <option ng-repeat="saler in servieSalers"
+                                ng-selected="saler.selected"
+                                value="{{saler.id}}">{{saler.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_dept.$dirty && cus_form.cus_dept.$invalid">
+                        <span ng-show="cus_form.cus_dept.$error.required">
+                            请输入部门
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_dept"
+                           ng-model="customerInfo.department"
+                           maxlength="16"
+                           required
+                           placeholder="部门"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_title.$dirty && cus_form.cus_title.$invalid">
+                        <span ng-show="cus_form.cus_title.$error.required">
+                            请输入职位
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_title"
+                           ng-model="customerInfo.title"
+                           maxlength="16"
+                           required
+                           placeholder="职位"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_mobile.$dirty && cus_form.cus_mobile.$invalid">
+                        <span ng-show="cus_form.cus_mobile.$error.required">
+                            请输入手机
+                        </span>
+                        <span ng-show="cus_form.cus_mobile.$error.pattern">
+                            无效的手机号码格式;例如15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_mobile"
+                           ng-model="customerInfo.custMobile"
+                           maxlength="15"
+                           ng-pattern="/^\d{11,15}$/"
+                           required
+                           placeholder="手机(格式:大陆11位，其他12-15位)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_tel.$dirty && cus_form.cus_tel.$invalid">
+                        <span ng-show="cus_form.cus_tel.$error.pattern">
+                            无效的坐机号码格式;例如027-8388914或00852-89376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_tel"
+                           ng-model="customerInfo.custTel"
+                           maxlength="20"
+                           ng-pattern="/^\d{3,5}-\d{7,8}(-\d{2,4})?$/"
+                           placeholder="坐机(格式：区号-直拨号)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cus_email.$dirty && cus_form.cus_email.$invalid">
+                        <span ng-show="cus_form.cus_email.$error.pattern">
+                            无效的邮箱码格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_email"
+                           ng-model="customerInfo.custEmail"
+                           ng-pattern="/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/"
+                           placeholder="邮箱"/>
+                </li>
+                <li>
+                    <input type="search"
+                           ng-disabled="customerInfo.prepcustStatus!='0'"
+                           name="cus_area"
+                           ng-model="customerInfo.area"
+                           maxlength="16"
+                           placeholder="所在地"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="cus_form.cut_industry.$dirty && cus_form.cut_industry.$invalid">
+                        <span ng-show="cus_form.cut_industry.$error.unique">
+                            无效的研究行业
+                        </span>
+                    </div>
+                    <combobox name="cut_industry"
+                              placeholder="研究行业"
+                              model="customerInfo"
+                              value="customerInfo.industry"
+                              id="industryId"
+                              no="industry"
+                              multiple="true"
+                              disabled="customerInfo.prepcustStatus!='0'"
+                              servicelist="searchIndustry"></combobox>
+                </li>
+            </ul>
+            <div class="label customer-list border-gray-color bg-white"
+                 ng-if="labelList.length && customerInfo.label">
+                <span ng-repeat="label in labelList">
+                    &nbsp;
+                    <a href="javascript:void(0)" ng-click="setLabel(label.labelName, customerInfo, 'cus_lable')"
+                       ng-bind="label.labelName"></a>
+                    &nbsp;
+                </span>
+            </div>
+            <div class="customer-list border-blue-color"
+                 style="max-height: 200px; height: auto !important;">
+                <ul class="search">
+                    <li class="bg-cyan-dark text-blue-lit mark auto-width padding10"
+                        ng-repeat="label in customerInfo.labels track by $index">
+                        <span ng-bind="label"></span>
+                        &nbsp;<i class="icon-cross"
+                                 ng-click="removeMark($index)"></i>
+                    </li>
+                    <li class="mark auto-width">
+                        <input type="search"
+                               class="auto-width"
+                               name="cus_lable"
+                               ng-model="customerInfo.label"
+                               maxlength="16"
+                               placeholder="输入标签"
+                               ng-disabled="customerInfo.prepcustStatus!='0'"
+                               ng-keydown="keydown($event)"
+                               ng-keyup="searchKey($event, customerInfo)"/>
+                        <span class="text-red"
+                              ng-show="cus_form.cus_lable.$dirty && cus_form.cus_lable.$invalid">
+                            不被接受的字符
+                        </span>
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center"
+             ng-show="customerInfo.prepcustStatus=='0'">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="通过"
+                   ng-disabled="cus_form.$invalid || customerInfo.loading"/>
+            &nbsp;&nbsp;
+            <input type="reset"
+                   class="text-orange light border-gray-color"
+                   ng-click="editCustomer(2)"
+                   value="不通过"
+                   ng-disabled="customerInfo.loading"/>
+        </div>
+    </form>
+</script>

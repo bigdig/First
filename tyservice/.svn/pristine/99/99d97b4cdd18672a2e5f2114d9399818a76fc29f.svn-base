@@ -1,0 +1,692 @@
+<div class="menu-head"
+     ng-if="tabMenus.length">
+     <form name="search"
+          ng-submit="searchLabel()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"
+               style="left:460px;"/>
+        <input type="search"
+             id="searchLabelName"
+             maxlength="16"
+             placeholder="标签名称" style="width:210px;"/>
+			
+			<span style="margin-left:160px;" ng-if="batchLabel.length>1">已批量选择<i class="text-red border-red-color padding10" style="border-radius: 20px;font-style: normal;">{{batchLabel.length}}</i>个：</span>
+		    <i class="icon icon-loop text-orange" title="批量移动" style="margin-left:10px;cursor:pointer;" ng-click="openBatchReplace()" ng-if="batchLabel.length>1"></i>
+		    <i class="icon icon-minus text-orange" title="批量删除" style="margin-left:10px;cursor:pointer;" ng-click="openBatchDelete()" ng-if="batchLabel.length>1"></i>
+		   
+    </form>
+    <div class="btn-search">
+        <sup ng-show="menuLabel.hasEditable">
+            <input type="button"
+                   value="{{menuLabel.edit}}"
+                   ng-click="editMenu('update')"
+                   ng-disabled="menuLabel.submit || menuLabel.isExpTest"
+                   class="text-blue-normal light"/>
+            <input type="button"
+                   ng-click="cancelMenu()"
+                   ng-disabled="menuLabel.submit"
+                   value="取消"
+                   class="text-blue-normal light"/>
+            &nbsp;
+        </sup>
+        <label class="font-24"
+               style="line-height: 44px"
+               title="菜单">
+            <a href="javascript:void(0)" class="icon icon-menu"
+               ng-click="toggleMenu()"></a>
+        </label>
+        <div id="tag_menu"
+             style="width: 80px; right: 0; margin-top: -10px"
+             class="lenovo border-blue-dark-color bg-white">
+            <ul class="op">
+                <li class="padding10"
+                    ng-click="focus('menu_name');toggleMenu()">
+                    添加菜单
+                </li>
+                <li class="padding10"
+                    ng-click="openSortMenus();">
+                    菜单排序
+                </li>
+                <li class="padding10"
+                    ng-click="modifyMenu();">
+                    修改
+                </li>
+            </ul>
+        </div>
+    </div>
+    <ul class="tag tagScroll" style="padding-right: 10px;">
+        <li ng-repeat="menu in tabMenus"
+            repeat-Finish="btnEvent()">
+            <a href="javascript:void(0)"
+               ng-click="tabMenu(menu)"
+               contenteditable="{{menu.active && menuLabel.hasEditable}}"
+               class="text-blue-light font-16"
+               ng-class="{'active':menu.active}"
+               ng-keyup="keyup($event, 'menu')"
+               ng-keydown="keydown($event)"
+               bo-text="menu.catName" id="{{menu.id}}"></a>
+        </li>
+        <li class="hide"
+            style="border-bottom: none">
+            <form name="menu_form"
+                  novalidate>
+                <div class="error text-white bg-red-opacity"
+                     ng-show="menu_form.menu_name.$dirty && menu_form.menu_name.$invalid">
+                    <span ng-show="menu_form.menu_name.$error.pattern">
+                        不被接受的字符
+                    </span>
+                </div>
+                <input type="search"
+                       name="menu_name"
+                       placeholder="输入菜单"
+                       ng-model="tagData.name"
+                       maxlength="16"
+                       ng-pattern="/^(\w|[\u4e00-\u9fa5]){1,16}$/"
+                       ng-keyup="add($event, menu_form.menu_name.$invalid, 'menu', 0)"
+                       ng-blur="blur(tagData)"/>
+            </form>
+        </li>
+    </ul>
+</div>
+<br>
+<ul ng-if="tabMenus.length"
+    class="tag-reference">
+    <li class="border-gray-color">
+        <div class="bg-gray padding10 lh30">
+            <span ng-if="menuTitle" class="text-orange selectLabel" title="{{menuTitle}}" >{{menuTitle}}</span><span class="por"><span ng-if="menuTitle" class="labaltext1"> 的</span><span class="labaltext2">一级标签: </span></span><span ng-if="selectLabel1" title="{{selectLabel1}}" class="text-orange selectLabel labaltext3">{{selectLabel1}}</span>
+            <span  class="fr hide editLv1" style="margin-right: 5px;cursor: pointer;"
+               ng-click="modify(1)"
+               title="修改">
+                <i class="icon icon-edit text-orange"></i>
+            </span>
+            <span  class="fr hide editLv1" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(1)"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <a href="javascript:void(0)" class="fr plusLv1"  style="margin-right: 5px;cursor: pointer;"
+               title="添加">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </a>
+            <span  class="fr hide editLv1" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openReplace(1)"
+               title="移动">
+                <i class="icon icon-loop text-orange"></i>
+            </span>
+        </div>
+        <div class="form hide bg-white">
+            <form name="tag_form_lv1"
+                  novalidate>
+                <div class="error text-white bg-red-opacity"
+                     ng-show="tag_form_lv1.tag_name.$dirty && tag_form_lv1.tag_name.$invalid">
+                    <span ng-show="tag_form_lv1.tag_name.$error.pattern">
+                        不被接受的字符
+                    </span>
+                </div>
+                <input type="search"
+                       name="tag_name"
+                       placeholder="输入标签"
+                       ng-model="tagData.label"
+                       maxlength="64"
+                       ng-pattern="/^((?!,).)*$/"
+                       ng-keyup="add($event, tag_form_lv1.tag_name.$invalid, 'tag', 1)"
+                       ng-blur="blur(tagData)"/>
+            </form>
+        </div>
+        <div id="lv1"
+             class="tags">
+            <a href="javascript:void(0)"
+               id="lv1_{{tag.id}}"
+               ng-if="menuTags.tagsLv1.length"
+               ng-repeat="tag in menuTags.tagsLv1"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-red border-red-dotted':tag.active1,'text-blue-spe':!tag.active}"
+               contenteditable="{{tag.hasEditable}}"
+               ng-click="activeTag($event,$index,tag, 1)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(1)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv1.length && !menuTags.loadingLv1">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv1">
+        </div>
+    </li>
+    <li class="border-gray-color">
+        <div class="bg-gray padding10 lh30">
+            <span ng-if="selectLabel4" class="text-orange selectLabel">{{selectLabel4}}</span><span class="por"><span ng-if="selectLabel4" class="labaltext1"> 的</span><span class="labaltext2">二级标签: </span></span><span ng-if="selectLabel2" class="text-orange selectLabel labaltext3">{{selectLabel2}}</span>
+            <span class="fr hide editLv2" style="margin-right: 5px;cursor: pointer;"
+               ng-click="modify(2)"
+               title="修改">
+                <i class="icon icon-edit text-orange"></i>
+            </span>
+            <span class="fr hide editLv2" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(2)"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <a href="javascript:void(0)" class="fr hide plusLv2" style="margin-right: 5px;cursor: pointer;"
+               title="添加">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </a>
+            <span class="fr hide editLv2" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openReplace(2)"
+               title="移动">
+                <i class="icon icon-loop text-orange"></i>
+            </span>
+        </div>
+        <div class="form hide bg-white">
+            <form name="tag_form_lv2"
+                  novalidate>
+                <div class="error text-white bg-red-opacity"
+                     ng-show="tag_form_lv2.tag_name.$dirty && tag_form_lv2.tag_name.$invalid">
+                    不被接受的字符
+                </div>
+                <input type="search"
+                       name="tag_name"
+                       placeholder="输入标签"
+                       ng-model="tagData.label"
+                       maxlength="64"
+                       ng-pattern="/^((?!,).)*$/"
+                       ng-keyup="add($event, tag_form.tagData.$invalid, 'tag', 2)"
+                       ng-blur="blur(tagData)"/>
+            </form>
+        </div>
+        <div id="lv2"
+             class="tags">
+            <a href="javascript:void(0)"
+               id="lv2_{{tag.id}}"
+               ng-if="menuTags.tagsLv2.length"
+               ng-repeat="tag in menuTags.tagsLv2"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-red border-red-dotted':tag.active1,'text-blue-spe':!tag.active}"
+               contenteditable="{{tag.hasEditable}}"
+               ng-click="activeTag($event,$index,tag, 2)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(2)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv2.length && !menuTags.loadingLv2">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv2">
+        </div>
+    </li>
+    <li class="border-gray-color">
+        <div class="bg-gray padding10 lh30">
+            <span ng-if="selectLabel5" class="text-orange selectLabel">{{selectLabel5}}</span><span class="por"><span ng-if="selectLabel5" class="labaltext1"> 的</span><span class="labaltext2">三级标签: </span></span><span ng-if="selectLabel3" class="text-orange selectLabel labaltext3">{{selectLabel3}}</span>
+            <span class="fr hide editLv3" style="margin-right: 5px;cursor: pointer;"
+               ng-click="modify(3)"
+               title="修改">
+                <i class="icon icon-edit text-orange"></i>
+            </span>
+            <span class="fr hide editLv3" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(3)"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <a href="javascript:void(0)" class="fr hide plusLv3" style="margin-right: 5px;cursor: pointer;"
+               title="添加">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </a>
+            <span class="fr hide editLv3" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openReplace(3)"
+               title="移动">
+                <i class="icon icon-loop text-orange"></i>
+            </span>
+        </div>
+        <div class="form hide bg-white">
+            <form name="tag_form_lv3"
+                  novalidate>
+                <div class="error text-white bg-red-opacity"
+                     ng-show="tag_form_lv3.tag_name.$dirty && tag_form_lv3.tag_name.$invalid">
+                    不被接受的字符
+                </div>
+                <input type="search"
+                       name="tag_name"
+                       placeholder="输入标签"
+                       ng-model="tagData.label"
+                       maxlength="64"
+                       ng-pattern="/^((?!,).)*$/"
+                       ng-keyup="add($event, tag_form.tagData.$invalid, 'tag', 3)"
+                       ng-blur="blur(tagData)"/>
+            </form>
+        </div>
+        <div id="lv3"
+             class="tags">
+            <a href="javascript:void(0)"
+               id="lv3_{{tag.id}}"
+               ng-if="menuTags.tagsLv3.length"
+               ng-repeat="tag in menuTags.tagsLv3"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-red border-red-dotted':tag.active1,'text-blue-spe':!tag.active}"
+               contenteditable="{{tag.hasEditable}}"
+               ng-click="activeTag($event,$index,tag, 3)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(3)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv3.length && !menuTags.loadingLv3">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv3">
+        </div>
+    </li>
+    <li style="visibility:hidden;" ng-if="relationLabalShow5">
+    </li>
+    <li class="border-gray-color" style="margin-top:15px;" ng-if="relationLabalShow1">
+        <div class="bg-gray padding10 lh30">
+            <span class="por"><span  style="width:25px;position:absolute;top:-7px;">与 "</span></span><span class="text-orange selectLabel" style="margin-left: 25px;" title="{{selectLabel1}}">{{selectLabel1}}</span><span class="por"><span style="width:82px;position:absolute;top:-7px;">" 相关的标签</span></span>
+            <span class="fr" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(11)" ng-if="delShow1"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <span  class="fr" style="margin-right: 5px;cursor: pointer;"
+               title="添加" ng-click="openAdd(11)">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </span>
+        </div>
+        <div  class="tags" style="height:130px;padding-top: 5px;padding-bottom: 40px;">
+            <a href="javascript:void(0)"
+               id="lv1_{{tag.id}}"
+               ng-if="menuTags.tagsLv11.length"
+               ng-repeat="tag in menuTags.tagsLv11"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-blue-spe':!tag.active}"
+               ng-click="activeTag($event,$index,tag, 11)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(1)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv11.length && !menuTags.loadingLv11">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv1">
+        </div>
+    </li>
+    <li style="visibility:hidden;" ng-if="relationLabalShow4">
+    </li>
+    <li class="border-gray-color" ng-if="relationLabalShow2">
+        <div class="bg-gray padding10 lh30">
+            <span class="por"><span  style="width:25px;position:absolute;top:-7px;">与 "</span></span><span class="text-orange selectLabel" style="margin-left: 25px;" title="{{selectLabel2}}">{{selectLabel2}}</span><span class="por"><span style="width:82px;position:absolute;top:-7px;">" 相关的标签</span></span>
+            <span class="fr" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(21)" ng-if="relationLabalName1"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <span class="fr" style="margin-right: 5px;cursor: pointer;"
+               title="添加" ng-click="openAdd(21)">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </span>
+        </div>
+        <div  class="tags" style="height:130px;padding-top: 5px;padding-bottom: 40px;">
+            <a href="javascript:void(0)"
+               id="lv2_{{tag.id}}"
+               ng-if="menuTags.tagsLv21.length"
+               ng-repeat="tag in menuTags.tagsLv21"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-blue-spe':!tag.active}"
+               ng-click="activeTag($event,$index,tag, 21)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(2)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv21.length && !menuTags.loadingLv21">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv2">
+        </div>
+    </li>
+    <li class="border-gray-color" ng-if="relationLabalShow3">
+        <div class="bg-gray padding10 lh30">
+            <span class="por"><span  style="width:25px;position:absolute;top:-7px;">与 "</span></span><span class="text-orange selectLabel" style="margin-left: 25px;" title="{{selectLabel3}}">{{selectLabel3}}</span><span class="por"><span style="width:82px;position:absolute;top:-7px;">" 相关的标签</span></span>
+            <span class="fr" style="margin-right: 5px;cursor: pointer;"
+               ng-click="openDelete(31)" ng-if="delShow3"
+               title="删除">
+                <i class="icon icon-minus text-orange"></i>
+            </span>
+            <span class="fr" style="margin-right: 5px;cursor: pointer;"
+               title="添加" ng-click="openAdd(31)">
+                <i class="icon icon-plus text-orange" style="font-weight: 600;"></i>
+            </span>
+        </div>
+        <div class="tags" style="height:130px;padding-top: 5px;padding-bottom: 40px;">
+            <a href="javascript:void(0)"
+               id="lv3_{{tag.id}}"
+               ng-if="menuTags.tagsLv31.length"
+               ng-repeat="tag in menuTags.tagsLv31"
+               draggable="false"
+               class="bg-blue-hightLight padding10"
+               ng-class="{'text-red border-red-color':tag.active,'text-blue-spe':!tag.active}"
+               ng-click="activeTag($event,$index,tag, 31)"
+               ng-keyup="keyup($event, 'tag')"
+               ng-keydown="keydown($event)"
+               bo-text="tag.labelName"
+               repeat-Finish="finish(3)"></a>
+            <p class="text-center"
+               ng-if="!menuTags.tagsLv31.length && !menuTags.loadingLv31">暂无数据</p>
+            <img src="../img/loading.gif"
+                 width="26"
+                 class="loading"
+                 ng-show="menuTags.loadingLv3">
+        </div>
+    </li>
+</ul>
+<div class="bottom bg-red-opacity">
+    <div class="btn-search">
+        <button ng-click="edit()"
+                ng-disabled="menuTags.isExpTest || menuTags.submit"
+                class="light text-white">
+            <i class="icon icon-save"></i>
+            <span ng-bind="menuTags.btnText"></span>
+        </button>
+        <button ng-click="cancel()"
+                ng-disabled="menuTags.submit"
+                class="light text-white">
+            <i class="icon icon-blocked"></i>
+            取消
+        </button>
+    </div>
+    &nbsp;
+</div>
+<script type="text/ng-template"
+        id="sortMenuTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">菜单排序</h3>
+        <div class="border-gray-color wrap">
+            <ul class="tag-List">
+                <li class="padding20"
+                    data="{{menu.id}}"
+                    ng-repeat="menu in tabMenus"
+                    ng-bind="menu.catName">
+                </li>
+            </ul>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-disabled="menuTags.submit"
+               ng-click="sortMenu()"
+               value="{{menuTags.btnText}}"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="replaceMenuTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">移动标签到</h3>
+        <div class="border-gray-color wrap">
+            <input type="text" id="searchInput" ng-keyup="replaceSelect($event)"
+            style = "display:block;width:100%;border: solid 1px #F6F7F8;">
+            <div ng-if="selectLabelList.length">
+              <div style="margin: 10px 0;" >请从以下标签选择一个：</div>
+              <div style="max-height: 200px;overflow-y: auto;" class="tags">
+                <a href="javascript:void(0)"
+                 id="{{data.id}}"
+                 ng-repeat="data in selectLabelList"
+                 draggable="false"
+                 class="bg-blue-hightLight padding10"
+                 ng-class="{'text-red border-red-color':data.active,'text-blue-spe':!data.active}"
+                 ng-click="activeLabel(data)"
+                 bo-text="data.labelName"></a>
+              </div>
+            </div>
+            <h4 class="text-center"
+    ng-if="!selectLabelList.length">暂无数据</h4>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-click="replaceLabel()"
+               value="确定"/>
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="addMenuTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">添加关联标签</h3>
+        <div class="border-gray-color wrap">
+            <input type="text" id="searchInput" ng-keyup="addRelSelect($event)" ng-model="menuAddSelect"
+            style = "display:block;width:100%;border: solid 1px #F6F7F8;">
+            <div ng-if="selectLabelList.length">
+              <div style="margin: 10px 0;" >请从以下标签选择一个：</div>
+              <div style="max-height: 200px;overflow-y: auto;" class="tags">
+                <a href="javascript:void(0)"
+                 id="{{data.id}}"
+                 ng-repeat="data in selectLabelList"
+                 draggable="false"
+                 class="bg-blue-hightLight padding10"
+                 ng-class="{'text-red border-red-color':data.active,'text-blue-spe':!data.active}"
+                 ng-click="activeLabel(data)"
+                 bo-text="data.labelName"></a>
+              </div>
+            </div>
+            <h4 class="text-center"
+    ng-if="!selectLabelList.length">暂无数据</h4>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-disabled="menuTags.submit"
+               ng-click="addRelLabel()"
+               value="保存"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="delLabalTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">提示</h3>
+        <div ng-if="delLevel==1">此操作将永久删除该标签以及它的二级标签、三级标签, 是否继续?</div>
+        <div ng-if="delLevel==2">此操作将永久删除该标签以及它的三级标签, 是否继续?</div>
+        <div ng-if="delLevel==3">此操作将永久删除该标签, 是否继续?</div>
+        <div ng-if="delLevel==11">此操作将永久删除标签 “{{selectLabel1}}” 与标签 “{{relationLabalName1}}” 的关联关系, 是否继续?</div>
+        <div ng-if="delLevel==21">此操作将永久删除标签 “{{selectLabel2}}” 与标签 “{{relationLabalName2}}” 的关联关系, 是否继续?</div>
+        <div ng-if="delLevel==31">此操作将永久删除标签 “{{selectLabel3}}” 与标签 “{{relationLabalName3}}” 的关联关系, 是否继续?</div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-disabled="menuTags.submit"
+               ng-click="deleteLabel()"
+               value="确定"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="searchLabalTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">标签筛选</h3>
+        <div style="width:100%;max-height:300px;overflow-y: auto;" ng-if="searchLabelList.length">
+          <table style="width:100%;" cellpadding="10"
+           cellspacing="0" class="data">
+            <thead>
+              <th class="text-center">标签类别</th>
+              <th class="text-center">标签名称</th>
+              <th class="text-center">标签级别</th>
+            </thead>
+            <tbody >
+              <tr ng-repeat="dataItem in searchLabelList">
+                <td style="text-align:center!important;cursor:pointer;" ng-click="searchLName(dataItem)">{{dataItem.catName}}</td>
+                <td style="text-align:center!important;cursor:pointer;" ng-click="searchLName(dataItem)">{{dataItem.labelName}}</td>
+                <td style="text-align:center!important;cursor:pointer;">{{dataItem.labelLevelText}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <table style="width:100%;" cellpadding="10"
+           cellspacing="0" class="data" ng-if="!searchLabelList.length">
+            <thead>
+              <th class="text-center">标签类别</th>
+              <th class="text-center">标签名称</th>
+              <th class="text-center">标签级别</th>
+            </thead>
+        </table>
+        <h4 class="text-center"
+    ng-if="!searchLabelList.length">暂无数据</h4>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="batchReplaceTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">批量移动标签到</h3>
+        <div style="overflow: hidden;">
+          <div style="width:calc(50% - 10px);float:left;margin-right: 20px;" class="border-gray-color">
+            <div style="height: 38px;line-height: 38px;border-bottom: 1px solid #F6F7F8;font-size: 14px;">请选择批量移动标签：<div class="fr" style="margin-right:15px;"><span style="cursor: pointer;position: relative;" class="padding10 text-red" ng-click="replaceClearClick()">全部清除</span></div></div>
+            <div style="max-height: 200px;overflow-y: auto;padding:20px 0;" class="tags" ng-if="batchLabel.length"> 
+              <div style="position: relative;display: inline-block;margin: 0 5px 10px 5px;" ng-repeat="data in batchLabel" ng-mouseenter="enterReplaceLabel(data)" ng-mouseleave="leaveReplaceLabel(data)">
+                <i style="position: absolute;left:4px;top:4px;padding:0 5px;cursor: pointer;font-style: normal;" class="text-orange font-14" ng-if="data.active2"  ng-click="deleteReplaceLabel(data)">x</i>
+                <a href="javascript:void(0)"
+                 id="{{data.id}}"
+                 draggable="false"
+                 class="bg-blue-hightLight padding10"
+                 ng-class="{'text-red border-red-color pl20':data.active2,'text-blue-spe':!data.active2}"
+                 bo-text="data.labelName" style="cursor: default!important;margin:0!important;"></a>
+               </div>
+            </div>
+          </div>
+          <div class="border-gray-color wrap" style="width:calc(50% - 10px);float: left;">
+              <input type="text" id="searchInput" placeholder="请输入目标标签" ng-keyup="replaceSelect($event)"
+              style = "display:block;width:100%;border: solid 1px #F6F7F8;">
+              <div ng-if="selectLabelList.length">
+                <div style="margin: 10px 0;" >请从以下标签选择一个：</div>
+                <div style="max-height: 200px;overflow-y: auto;" class="tags">
+                  <a href="javascript:void(0)"
+                   id="{{data.id}}"
+                   ng-repeat="data in selectLabelList"
+                   draggable="false"
+                   class="bg-blue-hightLight padding10"
+                   ng-class="{'text-red border-red-color':data.active,'text-blue-spe':!data.active}"
+                   ng-click="activeLabel(data)"
+                   bo-text="data.labelName"></a>
+                </div>
+              </div>
+              <h4 class="text-center" ng-if="!selectLabelList.length">暂无数据</h4>
+          </div>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-click="batchReplace()"
+               value="确定"/>
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="batchDeleteTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">此操作将永久删除以下标签, 是否继续？</h3>
+        <div style="height: 38px;line-height: 38px;border-bottom: 1px solid #F6F7F8;font-size: 14px;">请选择批量删除标签：<div class="fr" style="margin-right:5px;"><span style="cursor: pointer;position: relative;" class="padding10 text-red" ng-click="replaceClearClick()">全部清除</span></div></div>
+        <div style="max-height: 200px;overflow-y: auto;padding:20px 0;margin-left: 1px;" class="tags border-gray-color" ng-if="batchLabel.length">
+          <div style="position: relative;display: inline-block;margin: 0 5px 10px 5px;" ng-repeat="data in batchLabel" ng-mouseenter="enterReplaceLabel(data)" ng-mouseleave="leaveReplaceLabel(data)">
+            <i style="position: absolute;left:0;top:4px;padding:0 5px;cursor: pointer;font-style: normal;" class="text-orange font-14" ng-if="data.active2"  ng-click="deleteReplaceLabel(data)">x</i>
+            <a href="javascript:void(0)"
+             id="{{data.id}}"
+             draggable="false"
+             class="bg-blue-hightLight padding10"
+             ng-class="{'text-red border-red-color pl20':data.active2,'text-blue-spe':!data.active2}"
+             bo-text="data.labelName" style="cursor: default!important;margin:0!important;"></a>
+           </div>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-click="batchDelete()"
+               value="确定"/>
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
+
+<script type="text/ng-template"
+        id="promptTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">提示</h3>
+        <div style="max-height: 200px;overflow-y: auto;"  ng-if="errorData.length||successCodeData.length">
+          <ul>
+            <li ng-repeat="data in errorData">{{data}}：移动失败</li>
+          </ul>
+          <ul>
+            <li ng-repeat="data1 in successCodeData">{{data1.labelName}}：{{data1.msg}}</li>
+          </ul>
+        </div>
+        <div style="max-height: 200px;overflow-y: auto;"  ng-if="errorData1.length||successCodeData1.length">
+          <ul>
+            <li ng-repeat="data in errorData1">{{data}}：删除失败</li>
+          </ul>
+          <ul>
+            <li ng-repeat="data1 in successCodeData1">{{data1.labelName}}：{{data1.msg}}</li>
+          </ul>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="reset"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

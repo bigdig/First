@@ -1,0 +1,237 @@
+<form name="search"
+      ng-submit="searchDelegate()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <ng-datepicker value="delegate.startDateTime"
+                           name="beginDateStart"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="false"
+                           limitdate="{{delegate.endDateTime}}"
+                           placeholder="起始日期"></ng-datepicker>
+        </li>
+        <li>
+            <ng-datepicker value="delegate.endDateTime"
+                           name="beginDateEnd"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="true"
+                           limitdate="{{delegate.startDateTime}}"
+                           placeholder="截止日期"></ng-datepicker>
+        </li>
+        <!--<li>-->
+            <!--<select ng-model="delegate.topicType">-->
+                <!--<option value="">服务类型</option>-->
+                <!--<option ng-repeat="type in serviceTypes"-->
+                        <!--ng-selected="delegate.topicType==type.id"-->
+                        <!--value="{{type.id}}">{{type.text}}-->
+                <!--</option>-->
+            <!--</select>-->
+        <!--</li>-->
+        <li>
+            <input type="search"
+                   ng-model="delegate.title"
+                   maxlength="16"
+                   placeholder="服务内容">
+        </li>
+        <li>
+            <search model="delegate"
+                    value="delegate.deptName"
+                    name="deptName"
+                    maxlength="20"
+                    servicelist="researchTeams"
+                    placeholder="研究团队"></search>
+        </li>
+        <li>
+            <search model="delegate"
+                    value="delegate.staffName"
+                    name="staffName"
+                    maxlength="20"
+                    servicelist="researchers"
+                    placeholder="研究员"></search>
+        </li>
+        <li>
+            <select ng-model="delegate.teamCat">
+                <option value="">所属区域</option>
+                <option ng-repeat="area in areas"
+                        ng-selected="delegate.teamCat==area.text"
+                        value="{{area.text}}">{{area.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <search model="delegate"
+                    value="delegate.orgName"
+                    name="orgName"
+                    maxlength="64"
+                    servicelist="institutionals"
+                    placeholder="机构名称"></search>
+        </li>
+        <li>
+            <search model="delegate"
+                    value="delegate.serviceSaler"
+                    name="serviceSaler"
+                    maxlength="16"
+                    servicelist="salers"
+                    placeholder="对口销售"></search>
+        </li>
+        <li>
+            <input type="search"
+                   placeholder="参与客户"
+                   maxlength="16"
+                   ng-model="delegate.custName"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editDelegateTemplate">
+    <form name="delegate_form"
+          ng-submit="editDelegate()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="delegateInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="delegateInfo.dirty && delegate_form.del_date.$invalid">
+                        <span ng-show="delegate_form.del_date.$error.required">
+                            请选择日期
+                        </span>
+                    </div>
+                    <ng-datepicker name="del_date"
+                                   dirty="delegateInfo.dirty"
+                                   value="delegateInfo.topicDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   required="true"
+                                   placeholder="日期"></ng-datepicker>
+                </li>
+                <!--<li>-->
+                    <!--<div class="error text-white bg-red-opacity"-->
+                         <!--ng-show="delegate_form.del_type.$dirty && delegate_form.del_type.$invalid">-->
+                        <!--<span ng-show="delegate_form.del_type.$error.select">-->
+                            <!--请选择服务类型-->
+                        <!--</span>-->
+                    <!--</div>-->
+                    <!--<select name="del_type"-->
+                            <!--ng-model="delegateInfo.topicType"-->
+                            <!--option-select="del_type">-->
+                        <!--<option value="">服务类型</option>-->
+                        <!--<option ng-repeat="type in serviceTypes"-->
+                                <!--ng-selected="type.id==delegateInfo.topicType"-->
+                                <!--value="{{type.id}}">{{type.text}}-->
+                        <!--</option>-->
+                    <!--</select>-->
+                <!--</li>-->
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="delegate_form.del_institutional.$dirty && delegate_form.del_institutional.$invalid">
+                        <span ng-show="delegate_form.del_institutional.$error.required">
+                            请选择机构
+                        </span>
+                        <span ng-show="delegate_form.del_institutional.$error.unique">
+                            无效的机构
+                        </span>
+                    </div>
+                    <combobox name="del_institutional"
+                              placeholder="机构名称"
+                              model="delegateInfo"
+                              value="delegateInfo.orgName"
+                              id="orgId"
+                              no="orgName"
+                              callback="setSaler"
+                              required="true"
+                              servicelist="institutionals"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="delegate_form.del_customer.$dirty && delegate_form.del_customer.$invalid">
+                        <span ng-show="delegate_form.del_customer.$error.required">
+                            请选择参与客户
+                        </span>
+                        <span ng-show="delegate_form.del_customer.$error.unique">
+                            无效的客户
+                        </span>
+                    </div>
+                    <combobox name="del_customer"
+                              placeholder="参与客户"
+                              model="delegateInfo"
+                              value="delegateInfo.customers"
+                              id="custId"
+                              no="customers"
+                              multiple="true"
+                              required="true"
+                              servicelist="delCustomers"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="delegate_form.del_researcher.$dirty && delegate_form.del_researcher.$invalid">
+                        <span ng-show="delegate_form.del_researcher.$error.required">
+                            请选择研究员
+                        </span>
+                        <span ng-show="delegate_form.del_researcher.$error.unique">
+                            无效的研究员
+                        </span>
+                    </div>
+                    <combobox name="del_researcher"
+                              placeholder="研究员"
+                              model="delegateInfo"
+                              id="researcherId"
+                              no="researchers"
+                              value="delegateInfo.researchers"
+                              multiple="true"
+                              required="true"
+                              servicelist="delResearchers"></combobox>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="delegate_form.del_content.$dirty && delegate_form.del_content.$invalid">
+                <span class="error"
+                      ng-show="delegate_form.del_content.$error.required">
+                     请输入服务内容
+                </span>
+                <span class="error"
+                      ng-show="delegate_form.del_content.$error.maxlength">
+                     总字数不超过1000
+                </span>
+            </div>
+            <textarea name="del_content"
+                      ng-maxlength="1000"
+                      rows="5"
+                      ng-model="delegateInfo.title"
+                      required
+                      placeholder="服务内容"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="delegateInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="delegate_form.$invalid || delegateInfo.loading"
+                   value="{{delegateInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

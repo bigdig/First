@@ -1,0 +1,54 @@
+简单来说就是用Formdata方法，将表单数据和文件流一并处理，请求后台
+示例如下：
+表单：
+<Modal v-model="modify" title="修改任务" @on-ok="modifyOk" @on-cancel = "modifyCancel" :loading = 'loading'>
+    <Form :model="modifyItem" ref="modifyItem" :label-width="80"  :rules="modifyItemRule">
+    <FormItem label="任务名称" prop="tasks">
+       <Input v-model="modifyItem.tasks"></Input>
+    </FormItem>
+    <FormItem label="导入">
+       <Upload :before-upload="beforeUpload" action="">
+        <Button type="ghost" icon="ios-cloud-upload-outline">点击上传文件</Button>
+       </Upload>
+       <div v-if="modifyItem.exam !== null">上传文件:{{modifyItem.exam.name}}</div>
+    </FormItem>
+    </Form>
+</Modal>
+提交方法:
+modifyOk(){
+    this.$refs.modifyItem.validate(valid => {
+        var formdata = new FormData();
+        formdata.append("exam",this.modifyItem.exam)
+        formdata.append("taskname",this.modifyItem.tasks)
+        formdata.append("taskid",this.selected[0].taskid)
+        this.$http.post(this.path+'/storeadmin/task/updateTaskOverWrite.action',formdata,{
+        headers: {
+               "Content-Type": "multipart/form-data"
+             }
+             }).then(res=>{
+                 if(res.data.status == 1){
+                this.$Message.success({
+                   content: '修改成功',
+                    })
+                this.modifyItem.exam='';
+                 }else{
+                this.$Message.error({
+                    content: res.data.errorMsg,
+                })
+                 }
+        })
+    })
+}
+定义变量：
+modifyItem: {
+        taskid: "",
+        taskname: "",
+        exam: null,
+        }
+java后台接收：
+若exam可为空则方法参数无需@RequestParam MultipartFile exam，直接从 HttpServletRequest request中获取，但是要进行以下判断
+boolean isMultipart = ServletFileUpload.isMultipartContent(request);
+if (isMultipart){
+      MultipartHttpServletRequest multipartRequest = WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class);
+      MultipartFile exam = multipartRequest.getFile("exam");
+}

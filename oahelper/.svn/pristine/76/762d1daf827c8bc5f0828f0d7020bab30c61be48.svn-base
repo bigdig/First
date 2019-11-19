@@ -1,0 +1,142 @@
+<!--pages/8mingpianshenqing/index.wxml-->
+<view class='center'>
+
+  <view class='send_item'>
+    <view>姓名</view>
+    <input placeholder-class="phcolor" data-type='name' bindinput='bindInputVal' placeholder="姓名" />
+  </view>
+  <view class='send_item'>
+    <view></view>
+    <input placeholder-class="phcolor" data-type='en_name' bindinput='bindInputVal' placeholder="英文名" />
+  </view>
+
+  <view class='send_item choose_num'>
+    <view>部门</view>
+    <picker bindchange="bindbumenPickerChange" value="{{bumenIndex}}" range="{{bumen}}">
+      <view class="picker">
+        {{bumen[bumenIndex]}}
+      </view>
+    </picker>
+    </view>
+  <view class='send_item choose_num'>
+    <view></view>
+    <picker bindchange="bindbumenPickerChange" value="{{bumenIndex}}" range="{{en_bumen}}">
+      <view class="picker">
+        {{en_bumen[bumenIndex]}}
+      </view>
+    </picker>
+  </view>
+
+  <view class='send_item choose_num'>
+    <view>行业</view>
+    <picker bindchange="bindhangyePickerChange" value="{{hangyeIndex}}" range="{{hangye}}">
+      <view class="picker">
+        {{hangye[hangyeIndex]}}
+      </view>
+    </picker>
+    <view wx:if="{{hangyeIndex == hangye.length-1}}">
+        <input  placeholder-class="phcolor" data-type='hangyeText' bindinput='bindInputVal' placeholder="行业" />
+    </view>
+    </view>
+  <view class='send_item choose_num'>
+    <view></view>
+   <picker bindchange="bindhangyePickerChange" value="{{hangyeIndex}}" range="{{en_hangye}}">
+      <view class="picker">
+        {{en_hangye[hangyeIndex]}}
+      </view>
+    </picker>
+    <view  wx:if="{{hangyeIndex == hangye.length-1}}">
+        <input placeholder-class="phcolor" data-type='en_hangyeText' bindinput='bindInputVal' placeholder="英文行业" />
+    </view>
+
+  </view>
+
+  <view class='send_item choose_num'>
+    <view>职务</view>
+   <picker bindchange="bindzhiwuPickerChange" value="{{zhiwuIndex}}" range="{{zhiwu}}">
+      <view class="picker">
+        {{zhiwu[zhiwuIndex]}}
+      </view>
+    </picker>
+    <view  wx:if="{{zhiwuIndex == zhiwu.length-1}}">
+      <input placeholder-class="phcolor" data-type='zhiwuText' bindinput='bindInputVal' placeholder="职务" />
+    </view>
+  </view>
+  <view class='send_item choose_num'>
+    <view></view>
+    <picker bindchange="bindzhiwuPickerChange" value="{{zhiwuIndex}}" range="{{en_zhiwu}}">
+      <view class="picker">
+        {{en_zhiwu[zhiwuIndex]}}
+      </view>
+    </picker>
+    <view  wx:if="{{zhiwuIndex == zhiwu.length-1}}">
+      <input placeholder-class="phcolor" data-type='en_zhiwuText' bindinput='bindInputVal' placeholder="英文职务" />
+    </view>
+  </view>
+
+  <view class='send_item'>
+    <view>手机</view>
+    <input placeholder-class="phcolor" data-type='phone' bindinput='bindInputVal' placeholder="请输入手机号码" type='number' maxlength='11' />
+  </view>
+
+  <view class='send_item'>
+    <view>电话</view>
+    <input placeholder-class="phcolor" data-type='tel' bindinput='bindInputVal' placeholder="请输入电话" />
+  </view>
+
+  <view class='send_item choose_num'>
+    <view>传真</view>
+    <picker bindchange="bindfaxPickerChange" value="{{faxIndex}}" range="{{fax}}">
+      <view class="picker">
+        {{fax[faxIndex]}}
+      </view>
+    </picker>
+  </view>
+
+  <view class='send_item'>
+    <view>Email</view>
+    <input placeholder-class="phcolor" data-type='email' bindinput='bindInputVal' placeholder="Email" />
+  </view>
+
+  <view class='send_item choose_num'>
+    <view>地址</view>
+    <picker bindchange="bindaddressPickerChange" value="{{addressIndex}}" range="{{address}}">
+      <view class="picker" style='text-overflow: ellipsis;white-space: nowrap;width:50rpx'>
+        {{address[addressIndex]}}
+      </view>
+    </picker>
+  </view>
+
+  <view class='send_item no_line'>微信二维码</view>
+  <view>
+    <view wx:if='{{imgURL!=null&&imgURL!=""}}' class='choose_img_show'>
+      <image src='{{imgURL}}' mode='widthFix'></image>
+    </view>
+  </view>
+  <image style="width:58px;height:58px;" src='../../img/uploadFile.png' bindtap="chooseImg"></image>
+
+
+</view>
+
+<view class='center'>
+
+  <view class='send_item choose_num'>
+    <view>数量(盒)</view>
+
+    <picker bindchange="bindcardNumberPickerChange" value="{{cardNumberIndex}}" range="{{cardNumber}}">
+      <view class="picker">
+        {{cardNumber[cardNumberIndex]}}
+      </view>
+    </picker>
+  </view>
+  <!-- 
+  <view class='send_item no_line'>
+    <view>备注</view>
+    <textarea data-type='note' bindinput="bindInputVal" placeholder="请输入" />
+  </view> -->
+
+</view>
+
+
+
+<button bindtap='sendData' class='send_btn'>提交</button>

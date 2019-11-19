@@ -1,0 +1,49 @@
+<div class="data">
+    <table cellpadding="10"
+           cellspacing="1"
+           width="100%"
+           style="z-index: 100; position: relative"
+           class="bg-blue-light th"
+           ng-if="dataModel.data.length">
+        <thead>
+        <th class="bg-white text-center font-12"
+            ng-repeat="head in dataModel.dataHead">
+        <span bo-if="!$first && head.type"
+              bo-class="'text_act_'+head.type">■</span>
+            <span bo-text="head.title"></span>
+        </th>
+        </thead>
+    </table>
+</div>
+<br>
+<ul class="list">
+    <li ng-repeat="dataItem in dataModel.data">
+        <div class="bg-blue-light"></div>
+        <i bo-if="dataItem.source.type"
+           class="lh30"
+           bo-class="'text_act_'+dataItem.source.type">■</i>
+        <label class="lh30">
+            <a ng-repeat="ctrl in dataItem.controls"
+               class="text-orange fr"
+               href="javascript:void(0)"
+               ng-show="ctrl.isShow"
+               bo-text="ctrl.name"
+               ng-click="ctrl.event(dataItem)"></a>
+            <span class="sp"
+                  bo-title="dataItem.source.text"
+                  bo-text="dataItem.source.text"></span>
+        </label>
+    </li>
+</ul>
+<h4 class="text-center"
+    ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+<img src="../img/loading.gif"
+     width="26"
+     class="loading"
+     ng-show="loading.isShow">
+<br><br><br><br>
+<div class="back bg-red-opacity">
+    <a href="javascript:void(0)" ng-click="backTop()">
+        <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+    </a>
+</div>

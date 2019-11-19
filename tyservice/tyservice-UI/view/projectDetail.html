@@ -1,0 +1,106 @@
+<div class="padding20">
+    <table width="100%" cellpadding="5" cellspacing="1"
+           class="text-blue-light">
+        <tr valign="top">
+            <td class="text-right"
+                width="85">项目类型：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.projectTypeText"></td>
+            <td class="text-right" width="85">项目角色：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.projectRoleText"></td>
+            <td class="text-right" width="85">项目主体：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.projectName"></td>
+        </tr>
+        <tr valign="top">
+            <td class="text-right">所属团队：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.deptName"></td>
+            <td class="text-right">提供者：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.brokerName"></td>
+            <td class="text-right">关联客户：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.orgCustName"></td>
+        </tr>
+        <tr valign="top">
+            <td class="text-right">关联公司：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.companyName"></td>
+            <td class="text-right">关联专家：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.expertStaffName"></td>
+            <td class="text-right">截至日期：</td>
+            <td class="text-dark"
+                ng-bind="projectDetail.endTime"></td>
+        </tr>
+        <tr valign="top">
+            <td class="text-right">附件：</td>
+            <td colspan="5"
+                class="text-dark">
+                <div ng-if="uploadFile.files.length">
+                    <label ng-repeat="file in uploadFile.files">
+                        <a bo-href="'uploadfile/downActFile?fileUrl='+file.addAttachs+'&fileName='+file.addAttachNames"
+                           target="_blank"
+                           bo-text="file.addAttachNames"></a>
+                        &nbsp;
+                    </label>
+                </div>
+                <span ng-if="!uploadFile.files.length">-</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="text-right">需求及进展：</td>
+            <td colspan="5"
+                class="text-dark"
+                ng-bind="projectDetail.projectDemand"></td>
+        </tr>
+    </table>
+    <div class="res-head">
+        <ul class="tag">
+            <li ng-repeat="menu in tabMenus">
+                <a href="javascript:void(0)"
+                   ng-click="tabMenu(menu)"
+                   ng-class="{'active':menu.active}"
+                   class="text-blue-light font-16"
+                   bo-text="menu.name"></a>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div ui-view="detail-main"></div>
+    <div ui-view="detail-data"></div>
+</div>
+<script type="text/ng-template"
+        id="editDetailTemplate">
+    <form name="det_form"
+          ng-submit="editProjectTrack()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="detailInfo.pageTitle"></h2>
+            <br>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="det_form.pro_track.$dirty && exp_form.pro_track.$invalid">
+                <span class="error"
+                      ng-show="det_form.pro_track.$error.maxlength">
+                    总字数不超过1000
+                </span>
+            </div>
+            <textarea rows="5"
+                      name="pro_track"
+                      ng-model="detailInfo.projectTrack"
+                      ng-maxlength="1000"
+                      placeholder="追踪信息"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="det_form.$invalid || detailInfo.loading"
+                   value="{{detailInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

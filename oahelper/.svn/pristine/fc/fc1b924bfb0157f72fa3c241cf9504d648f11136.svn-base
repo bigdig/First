@@ -1,0 +1,46 @@
+<!--pages/35wode_baoxiao/index.wxml-->
+<view class='center'>
+  <!-- 公共搜索框配置 start -->
+  <!--
+  <import src="/common/search.wxml"/>
+  <template is="search" data="{{search_text: search_text,if_search: if_search}}"/>
+  -->
+  <!-- 公共搜索框配置 end -->
+
+
+  <view class='list_box'>
+
+
+    <view wx:if="{{listData[0]}}">
+
+      <view wx:for="{{listData}}">
+
+        <navigator class='list' url="/pages/27baoxiao_detail/index?id={{item.id}}" hover-class="list_hover">
+          <view>
+            <view class='f_right'>{{item.createTime}}</view>
+            {{item.remindTitle}}
+          </view>
+          <view>
+            <view class='f_right'>{{item.remindStatusText}}</view>
+            <!-- 金额：￥<text>{{item.money}}</text> -->
+          </view>
+        </navigator>
+
+      </view>
+
+
+
+      <button bindtap='nextPage' class='get_more' wx:if="{{ifHaveMore}}">加载更多</button>
+
+    </view>
+    
+    <view class='no_list' wx:else>
+      <view><image src='/img/shenpi_none.png' mode='widthFix'></image></view>
+      <view>暂无相关数据</view>
+    </view>
+
+
+
+  </view>
+
+</view>

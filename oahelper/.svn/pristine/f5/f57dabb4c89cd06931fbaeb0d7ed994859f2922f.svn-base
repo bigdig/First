@@ -1,0 +1,77 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/43shenpilaoshi_list/index",
+    "pages/44shenpilaoshi_detail/index",
+    "pages/45wode_billcheck/index",
+    "pages/46billcheck_detail/index",
+    "pages/42wode_toupiao/index",
+    "pages/40wode_huodong/index",
+    "pages/39wode_kaoqin/index",
+    "pages/38wode_mingpianshenqing/index",
+    "pages/37wode_chenhuijilu/index",
+    "pages/36wode_shoucang/index",
+    "pages/35wode_baoxiao/index",
+    "pages/34wode_shenpi/index",
+    "pages/33wode/index",
+    "pages/32kaoqin_detail/index",
+    "pages/27baoxiao_detail/index",
+    "pages/26mingpian_detail/index",
+    "pages/23xinxishenpi_detail/index",
+    "pages/22xinxishenpi/index",
+    "pages/21xiaoxi_detail/index",
+    "pages/19xiaoxi/index",
+    "pages/17wenjian_list/index",
+    "pages/16wenjian/index",
+    "pages/15toupiao_detail/index",
+    "pages/14huodong_detail/index",
+    "pages/13tongzhi_detail/index",
+    "pages/10tongzhi_list/index",
+    "pages/9tongzhi/index",
+    "pages/8mingpianshenqing/index",
+    "pages/7tijiaoshenpi/index",
+    "pages/4chenhui/index",
+    "pages/index/index",
+    "pages/logs/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#FFAA00",
+    "navigationBarTitleText": "办公小助手",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f6f6",
+    "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "tabbar_img/tab_bar1.png",
+        "selectedIconPath": "tabbar_img/tab_bar1_in.png"
+      },
+      {
+        "pagePath": "pages/16wenjian/index",
+        "text": "文件",
+        "iconPath": "tabbar_img/tab_bar2.png",
+        "selectedIconPath": "tabbar_img/tab_bar2_in.png"
+      },
+      {
+        "pagePath": "pages/19xiaoxi/index",
+        "text": "消息",
+        "iconPath": "tabbar_img/tab_bar3.png",
+        "selectedIconPath": "tabbar_img/tab_bar3_in.png"
+      },
+      {
+        "pagePath": "pages/33wode/index",
+        "text": "我的",
+        "iconPath": "tabbar_img/tab_bar4.png",
+        "selectedIconPath": "tabbar_img/tab_bar4_in.png"
+      }
+    ],
+    "color": "#D1D1D1",
+    "selectedColor": "#FBA703",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff"
+  }
+}

@@ -1,0 +1,24 @@
+package com.tfzq.pr.provider;
+
+import java.util.Map;
+import java.util.List;
+
+import org.ibase4j.core.base.BaseProvider;
+
+import com.github.pagehelper.PageInfo;
+import com.tfzq.pr.model.generator.GoInformUser;
+import com.tfzq.pr.model.pr.GoInformUserBean;
+/**
+ *   @author yuzhitao 
+ */
+
+public interface GoInformUserProvider extends BaseProvider<GoInformUser> {
+	
+	public PageInfo<GoInformUserBean> queryBeans(Map<String, Object> params);
+	
+	public List<GoInformUserBean> queryByCondition(Map<String, Object> params);
+
+	public void updateByFormId(Map<String, Object> params);
+	
+	//其他自定义的方法
+}

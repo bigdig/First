@@ -1,0 +1,144 @@
+<view class='box'>
+    <view class='box_type'>
+        <view class='font28'>请选择活动类型</view>
+        <checkbox-group bindchange="serviceValChange">  
+          <view class="service_selection flex font28">  
+            <block wx:key="{{item}}" wx:for="{{allGoodsFilte}}">  
+              <view class=" item font24 {{item.checked?'is_checked':''}}">
+                <label class="checkbox">  
+                  <checkbox value="{{item.id}}" checked="{{item.checked}}" hidden="false" />
+                  <text>{{item.text}}</text>
+                </label>  
+              </view>  
+            </block>  
+          </view>  
+        </checkbox-group>
+       <!-- <view class='box_type_limit'>
+             <text class='box_type_limit_text'>人数限制</text>
+             <input type="number" placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="personLimitInput"></input>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>-->
+    </view>
+    <view class='box_title font28'>
+          <textarea value="{{actInfo.title}}" bindinput="bindActTitleInput" placeholder="请输入活动标题" placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;'/>
+    </view>
+    <view class='box_information font28'>
+        <view class='box_information_people'> 
+             <text>活动发起人</text>
+             <text class='box_information_people_text'>我</text>
+              <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>
+        <view class='box_information_people'> 
+             <text>参会客户</text>
+             <text class='box_information_people_text' bindtap="toSelectCustomers">{{selCustomers.length > 0 ? selCustomers.length  : "请选择"}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{selCustomers}}">{{item.custName}}</view>
+        </view>
+        <view class='box_information_people'> 
+             <text>活动开始时间</text>
+             <picker mode="time" value="{{beginTime}}" start="00:00" end="23:59" bindchange="bindTimeChange">
+                <view class="picker" hidden="{{beginTimeHidFlag}}">
+                    {{actInfo.beginTimeText == null || actInfo.beginTimeText == "" ? '请选择时间' : actInfo.beginTimeText}}
+                </view>
+                 <view class="picker" hidden="{{!beginTimeHidFlag}}">
+                     {{beginTime}}
+                </view>
+             </picker>
+             <picker mode="date" value="{{beginDate}}" start="2010-01-01" end="2110-01-01" bindchange="bindDateChange">
+                <view class="picker" hidden="{{beginDateHidFlag}}">
+                    {{actInfo.beginDateText == null  ||actInfo.beginDateText == "" ? '请选择日期' : actInfo.beginDateText}}   
+                </view>
+                <view class="picker" hidden="{{!beginDateHidFlag}}">
+                    {{beginDate}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>
+         <view class='box_information_people'> 
+             <text>活动结束时间</text>
+             <picker mode="time" value="{{endTime}}" start="00:00" end="23:59" bindchange="bindEndTimeChange">
+                <view class="picker" hidden="{{endTimeHidFlag}}">
+                    {{actInfo.endTimeText == null || actInfo.endTimeText == "" ? '请选择时间' : actInfo.endTimeText}}
+                </view>
+                 <view class="picker" hidden="{{!endTimeHidFlag}}">
+                     {{endTime}}
+                </view>
+             </picker>
+             <picker mode="date" value="{{endDate}}" start="2010-01-01" end="2110-01-01" bindchange="bindEndDateChange">
+                <view class="picker" hidden="{{endDateHidFlag}}">
+                    {{actInfo.endDateText == null || actInfo.endDateText == "" ? '请选择日期' : actInfo.endDateText}}
+                </view>
+                <view class="picker" hidden="{{!endDateHidFlag}}">
+                    {{endDate}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>
+    </view>
+    <view class='displayAll font28' wx:if="{{displayAll}}" bindtap='displayAll'>显示全部</view>
+    <view class='box_show font28' wx:else>
+    <view class='box_information_people'> 
+             <text>活动专家</text>
+             <text bindtap="tochooseExpert" class='box_information_people_text'>{{actExperts == null  || actExperts.length == 0 ? "请选择" : actExperts.length}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{actExperts}}">{{item.expertName}}</view>
+        </view>
+        <view class='box_information_people'> 
+             <text>活动上市公司</text>
+             <text bindtap="tochooseListedComp" class='box_information_people_text'>{{actListedComps == null  || actListedComps.length == 0 ? "请选择" : actListedComps.length}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{actListedComps}}">{{item.stockShortname}}</view>
+        </view>
+         <view class='box_information_people'> 
+             <text>活动地址</text>
+             <picker bindchange="bindAddrChange" value="{{value}}" range="{{SysWorkAreas}}" range-key="text">
+                <view class="picker" hidden="{{actAddrHidFlag}}">
+                    {{actInfo.locale == null || actInfo.locale == "" ? '请选择地址' : actInfo.locale}}
+                </view>
+                 <view class="picker" hidden="{{!actAddrHidFlag}}">
+                      {{actAddr}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <textarea value="{{actInfo.detailAddr}}" bindinput="bindDetailAddrInput"  placeholder="请输入详细地址..." placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;'/>
+        </view> 
+        <view class='box_information_people'> 
+             <textarea value="{{actInfo.content}}" bindinput="bindActContentInput" placeholder="请输入活动内容..."  placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;margin-top:20rpx;'/>
+        </view>
+        <view class='box_information_people'> 
+             <text>优先度</text>
+             <picker bindchange="bindPriorityChange" value="{{value}}" range="{{PRIORITYLEVEL}}" range-key="text">
+                <view class="picker" hidden="{{priorityHidFlag}}">
+                    {{actInfo.priorityLevelText == null || actInfo.priorityLevelText == "" ? '请选择优先级' : actInfo.priorityLevelText}}
+                </view>
+                 <view class="picker" hidden="{{!priorityHidFlag}}">
+                      {{priorityLevelText}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>
+        <view class='box_information_people'> 
+             <text>添加标签</text>
+             <text bindtap="tochooseLabels" class='box_information_people_text' >{{actLabels == null  || actLabels.length == 0 ? "请选择" : actLabels.length}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view wx:for-index="idx" style="background-color :{{labelBackColor[idx%5]}}; color :{{labelColor[idx%5]}}" class='box_information_people_kuai' wx:for="{{actLabels}}">{{item}}</view>
+        </view>
+         <view class='box_information_people'> 
+             <text>附件</text>
+             <text class='box_information_people_text' bindtap="openMyFile">请选择</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{addAttachs}}" wx:for-index="idx">图片{{idx}}：{{item}}</view>
+        </view>
+        <view style='height:20rpx;background-color:#F3F2F7;margin-left:-40rpx;'></view>
+        <view class='box_information_people'> 
+             <text>备注</text>
+             <textarea value="{{actInfo.remark}}" bindinput="bindRemarkInput"  placeholder="请输入您的备注..." placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;'/>
+        </view>
+    </view>
+</view>
+<button class='submit font30' bindtap="submitMyAct" disabled="{{disableSubAct}}">完成</button>

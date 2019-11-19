@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoMorningMeetingMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoMorningMeeting">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="meeting_date" jdbcType="VARCHAR" property="meetingDate" />
+      <result column="meeting_content" jdbcType="VARCHAR" property="meetingContent" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoMorningMeetingBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="meeting_date" jdbcType="VARCHAR" property="meetingDate" />
+      <result column="meeting_content" jdbcType="VARCHAR" property="meetingContent" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_morning_meeting where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoMorningMeeting">
+    insert into go_morning_meeting (
+    id
+	,meeting_date
+	,meeting_content
+	,inform_id
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{meetingDate,jdbcType=VARCHAR}
+    	,#{meetingContent,jdbcType=VARCHAR}
+    	,#{informId,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoMorningMeeting">
+    update go_morning_meeting
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingDate != null ">
+        meeting_date = #{meetingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingContent != null ">
+        meeting_content = #{meetingContent,jdbcType=VARCHAR},
+      </if>
+      <if test="informId != null ">
+        inform_id = #{informId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,meeting_date,meeting_content,inform_id,create_by,create_time,update_by,update_time
+    from go_morning_meeting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,meeting_date,meeting_content,inform_id,create_by,create_time,update_by,update_time
+    from go_morning_meeting
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,meeting_date,meeting_content,inform_id,create_by,create_time,update_by,update_time
+    from go_morning_meeting
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="meetingDate != null and meetingDate != ''">and meeting_date like '%'||#{meetingDate}||'%'</if>
+	<if test="meetingContent != null and meetingContent != ''">and meeting_content like '%'||#{meetingContent}||'%'</if>
+	<if test="informId != null and informId != ''">and inform_id like '%'||#{informId}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_morning_meeting where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="meetingDate != null and meetingDate != ''">and meeting_date like '%'||#{meetingDate}||'%'</if>
+	<if test="meetingContent != null and meetingContent != ''">and meeting_content like '%'||#{meetingContent}||'%'</if>
+	<if test="informId != null and informId != ''">and inform_id like '%'||#{informId}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or meeting_date like '%'||#{keyword}||'%' or meeting_content like '%'||#{keyword}||'%' or inform_id like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

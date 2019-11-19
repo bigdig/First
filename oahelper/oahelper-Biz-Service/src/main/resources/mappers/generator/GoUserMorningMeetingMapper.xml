@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoUserMorningMeetingMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoUserMorningMeeting">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="meeting_date" jdbcType="VARCHAR" property="meetingDate" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="attendence_way" jdbcType="VARCHAR" property="attendenceWay" />
+      <result column="present_way" jdbcType="VARCHAR" property="presentWay" />
+      <result column="absence_way" jdbcType="VARCHAR" property="absenceWay" />
+      <result column="absence_picture" jdbcType="VARCHAR" property="absencePicture" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoUserMorningMeetingBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="meeting_date" jdbcType="VARCHAR" property="meetingDate" />
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="attendence_way" jdbcType="VARCHAR" property="attendenceWay" />
+      <result column="present_way" jdbcType="VARCHAR" property="presentWay" />
+      <result column="absence_way" jdbcType="VARCHAR" property="absenceWay" />
+      <result column="absence_picture" jdbcType="VARCHAR" property="absencePicture" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_user_morning_meeting where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoUserMorningMeeting">
+    insert into go_user_morning_meeting (
+    id
+	,meeting_date
+	,inform_id
+	,user_id
+	,user_name
+	,attendence_way
+	,present_way
+	,absence_way
+	,absence_picture
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{meetingDate,jdbcType=VARCHAR}
+    	,#{informId,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{attendenceWay,jdbcType=VARCHAR}
+    	,#{presentWay,jdbcType=VARCHAR}
+    	,#{absenceWay,jdbcType=VARCHAR}
+    	,#{absencePicture,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoUserMorningMeeting">
+    update go_user_morning_meeting
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingDate != null ">
+        meeting_date = #{meetingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="informId != null ">
+        inform_id = #{informId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null ">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="attendenceWay != null ">
+        attendence_way = #{attendenceWay,jdbcType=VARCHAR},
+      </if>
+      <if test="presentWay != null ">
+        present_way = #{presentWay,jdbcType=VARCHAR},
+      </if>
+      <if test="absenceWay != null ">
+        absence_way = #{absenceWay,jdbcType=VARCHAR},
+      </if>
+      <if test="absencePicture != null ">
+        absence_picture = #{absencePicture,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,meeting_date,inform_id,user_id,user_name,attendence_way,present_way,absence_way,absence_picture,create_by,create_time,update_by,update_time
+    from go_user_morning_meeting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,meeting_date,inform_id,user_id,user_name,attendence_way,present_way,absence_way,absence_picture,create_by,create_time,update_by,update_time
+    from go_user_morning_meeting
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,meeting_date,inform_id,user_id,user_name,attendence_way,present_way,absence_way,absence_picture,create_by,create_time,update_by,update_time
+    from go_user_morning_meeting
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="meetingDate != null and meetingDate != ''">and meeting_date like '%'||#{meetingDate}||'%'</if>
+	<if test="beginDate != null and beginDate != ''">and meeting_date <![CDATA[>=]]> #{beginDate}</if>
+	<if test="endDate != null and endDate != ''">and meeting_date <![CDATA[<=]]> #{endDate}</if>
+	<if test="informId != null and informId != ''">and inform_id like '%'||#{informId}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="attendenceWay != null and attendenceWay != ''">and attendence_way=#{attendenceWay}</if>
+	<if test="presentWay != null and presentWay != ''">and present_way=#{presentWay}</if>
+	<if test="absenceWay != null and absenceWay != ''">and absence_way=#{absenceWay}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_user_morning_meeting where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="meetingDate != null and meetingDate != ''">and meeting_date like '%'||#{meetingDate}||'%'</if>
+	<if test="informId != null and informId != ''">and inform_id like '%'||#{informId}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="attendenceWay != null and attendenceWay != ''">and attendence_way=#{attendenceWay}</if>
+	<if test="presentWay != null and presentWay != ''">and present_way=#{presentWay}</if>
+	<if test="absenceWay != null and absenceWay != ''">and absence_way=#{absenceWay}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or meeting_date like '%'||#{keyword}||'%' or inform_id like '%'||#{keyword}||'%' or user_id like '%'||#{keyword}||'%' or user_name like '%'||#{keyword}||'%' or attendence_way like '%'||#{keyword}||'%' or present_way like '%'||#{keyword}||'%' or absence_way like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

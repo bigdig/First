@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.dao.sys.SysDeptExpandMapper">
+	<select id="query" parameterType="java.util.Map" resultType="java.lang.String">
+		select id from sys_dept where 1=1
+		<if test="enable != null">
+			and enable_ = #{enable}
+		</if>
+		<if test="id != null">
+			and id = #{id}
+		</if>
+		<if test="parentId != null and parentId != ''">
+			and parent_id = #{parentId}
+		</if>
+		<if test="deptNo != null">
+			and dept_no = #{deptNo}
+		</if>
+		<if test="rootNode != null">
+			and id in(select id from sys_dept start with id=#{rootNode} connect by prior id = parent_id)
+		</if>
+		<if test="deptName != null">
+			and (dept_name like '%'||#{deptName}||'%')
+		</if>
+		order by dept_no
+	</select>
+	<select id="getComapnyIdByDeptId" parameterType="java.lang.String" resultType="java.lang.String">
+		select id from (
+			select * from (
+				select level as dlevel, t.id FROM sys_dept T 
+					START WITH T.id =#{id,jdbcType=VARCHAR} CONNECT BY PRIOR T.parent_id = T.id)
+			where id<![CDATA[<>]]>'0' order by dlevel desc )
+		where rownum=1
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyActivityMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyActivity">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="begin_date" jdbcType="INTEGER" property="beginDate" />
+      <result column="begin_time" jdbcType="INTEGER" property="beginTime" />
+      <result column="end_date" jdbcType="INTEGER" property="endDate" />
+      <result column="end_time" jdbcType="INTEGER" property="endTime" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="avg_duration" jdbcType="INTEGER" property="avgDuration" />
+      <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
+      <result column="priority_level" jdbcType="VARCHAR" property="priorityLevel" />
+      <result column="total_limit" jdbcType="INTEGER" property="totalLimit" />
+      <result column="per_limit" jdbcType="INTEGER" property="perLimit" />
+      <result column="locale" jdbcType="VARCHAR" property="locale" />
+      <result column="labels" jdbcType="VARCHAR" property="labels" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="activity_status" jdbcType="VARCHAR" property="activityStatus" />
+      <result column="topic_type" jdbcType="VARCHAR" property="topicType" />
+      <result column="attachs" jdbcType="VARCHAR" property="attachs" />
+      <result column="attachs_name" jdbcType="VARCHAR" property="attachsName" />
+      <result column="data_src" jdbcType="VARCHAR" property="dataSrc" />
+      <result column="data_srcname" jdbcType="VARCHAR" property="dataSrcname" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="create_name" jdbcType="VARCHAR" property="createName" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="contact_id" jdbcType="VARCHAR" property="contactId" />
+      <result column="detail_addr" jdbcType="VARCHAR" property="detailAddr" />
+      <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+      <result column="activity_cate" jdbcType="VARCHAR" property="activityCate" />
+      <result column="create_dept_id" jdbcType="VARCHAR" property="createDeptId" />
+      <result column="contact_dept_id" jdbcType="VARCHAR" property="contactDeptId" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="sub_act_flag" jdbcType="VARCHAR" property="subActFlag" />
+      <result column="parent_act_id" jdbcType="VARCHAR" property="parentActId" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyActivityBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="begin_date" jdbcType="INTEGER" property="beginDate" />
+      <result column="begin_time" jdbcType="INTEGER" property="beginTime" />
+      <result column="end_date" jdbcType="INTEGER" property="endDate" />
+      <result column="end_time" jdbcType="INTEGER" property="endTime" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="avg_duration" jdbcType="INTEGER" property="avgDuration" />
+      <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
+      <result column="priority_level" jdbcType="VARCHAR" property="priorityLevel" />
+      <result column="total_limit" jdbcType="INTEGER" property="totalLimit" />
+      <result column="per_limit" jdbcType="INTEGER" property="perLimit" />
+      <result column="locale" jdbcType="VARCHAR" property="locale" />
+      <result column="labels" jdbcType="VARCHAR" property="labels" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="activity_status" jdbcType="VARCHAR" property="activityStatus" />
+      <result column="topic_type" jdbcType="VARCHAR" property="topicType" />
+      <result column="attachs" jdbcType="VARCHAR" property="attachs" />
+      <result column="attachs_name" jdbcType="VARCHAR" property="attachsName" />
+      <result column="data_src" jdbcType="VARCHAR" property="dataSrc" />
+      <result column="data_srcname" jdbcType="VARCHAR" property="dataSrcname" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="create_name" jdbcType="VARCHAR" property="createName" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="contact_id" jdbcType="VARCHAR" property="contactId" />
+      <result column="detail_addr" jdbcType="VARCHAR" property="detailAddr" />
+      <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+      <result column="activity_cate" jdbcType="VARCHAR" property="activityCate" />
+      <result column="create_dept_id" jdbcType="VARCHAR" property="createDeptId" />
+      <result column="contact_dept_id" jdbcType="VARCHAR" property="contactDeptId" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="sub_act_flag" jdbcType="VARCHAR" property="subActFlag" />
+      <result column="parent_act_id" jdbcType="VARCHAR" property="parentActId" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_activity where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyActivity">
+    insert into ty_activity (
+    id
+	,title
+	,content
+	,begin_date
+	,begin_time
+	,end_date
+	,end_time
+	,total_duration
+	,avg_duration
+	,activity_type
+	,priority_level
+	,total_limit
+	,per_limit
+	,locale
+	,labels
+	,remark
+	,activity_status
+	,topic_type
+	,attachs
+	,attachs_name
+	,data_src
+	,data_srcname
+	,org_id
+	,create_name
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,contact_id
+	,detail_addr
+	,contact_name
+	,activity_cate
+	,notify_flag
+	,create_dept_id
+	,contact_dept_id
+	,delete_flag
+	,sub_act_flag
+	,parent_act_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{content,jdbcType=VARCHAR}
+    	,#{beginDate,jdbcType=INTEGER}
+    	,#{beginTime,jdbcType=INTEGER}
+    	,#{endDate,jdbcType=INTEGER}
+    	,#{endTime,jdbcType=INTEGER}
+    	,#{totalDuration,jdbcType=INTEGER}
+    	,#{avgDuration,jdbcType=INTEGER}
+    	,#{activityType,jdbcType=VARCHAR}
+    	,#{priorityLevel,jdbcType=VARCHAR}
+    	,#{totalLimit,jdbcType=INTEGER}
+    	,#{perLimit,jdbcType=INTEGER}
+    	,#{locale,jdbcType=VARCHAR}
+    	,#{labels,jdbcType=VARCHAR}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{activityStatus,jdbcType=VARCHAR}
+    	,#{topicType,jdbcType=VARCHAR}
+    	,#{attachs,jdbcType=VARCHAR}
+    	,#{attachsName,jdbcType=VARCHAR}
+    	,#{dataSrc,jdbcType=VARCHAR}
+    	,#{dataSrcname,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    	,#{createName,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{contactId,jdbcType=VARCHAR}
+    	,#{detailAddr,jdbcType=VARCHAR}
+    	,#{contactName,jdbcType=VARCHAR}
+    	,#{activityCate,jdbcType=VARCHAR}
+    	,#{notifyFlag,jdbcType=VARCHAR}
+    	,#{createDeptId,jdbcType=VARCHAR}
+    	,#{contactDeptId,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{subActFlag,jdbcType=VARCHAR}
+    	,#{parentActId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyActivity">
+    update ty_activity
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null ">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="beginDate != null ">
+        begin_date = #{beginDate,jdbcType=INTEGER},
+      </if>
+      <if test="beginTime != null ">
+        begin_time = #{beginTime,jdbcType=INTEGER},
+      </if>
+      <if test="endDate != null ">
+        end_date = #{endDate,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null ">
+        end_time = #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalDuration != null ">
+        total_duration = #{totalDuration,jdbcType=INTEGER},
+      </if>
+      <if test="avgDuration != null ">
+        avg_duration = #{avgDuration,jdbcType=INTEGER},
+      </if>
+      <if test="activityType != null ">
+        activity_type = #{activityType,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityLevel != null ">
+        priority_level = #{priorityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="totalLimit != null ">
+        total_limit = #{totalLimit,jdbcType=INTEGER},
+      </if>
+      <if test="perLimit != null ">
+        per_limit = #{perLimit,jdbcType=INTEGER},
+      </if>
+      <if test="locale != null ">
+        locale = #{locale,jdbcType=VARCHAR},
+      </if>
+      <if test="labels != null ">
+        labels = #{labels,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null ">
+        activity_status = #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="topicType != null ">
+        topic_type = #{topicType,jdbcType=VARCHAR},
+      </if>
+      <if test="attachs != null ">
+        attachs = #{attachs,jdbcType=VARCHAR},
+      </if>
+      <if test="attachsName != null ">
+        attachs_name = #{attachsName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSrc != null ">
+        data_src = #{dataSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSrcname != null ">
+        data_srcname = #{dataSrcname,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="createName != null ">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="contactId != null ">
+        contact_id = #{contactId,jdbcType=VARCHAR},
+      </if>
+       <if test="detailAddr != null ">
+        detail_addr = #{detailAddr,jdbcType=VARCHAR},
+      </if>
+       <if test="contactName != null ">
+        contact_name = #{contactName,jdbcType=VARCHAR},
+      </if>
+       <if test="activityCate != null ">
+        activity_cate = #{activityCate,jdbcType=VARCHAR},
+      </if>
+       <if test="contactDeptId != null ">
+        contact_dept_id = #{contactDeptId,jdbcType=VARCHAR},
+      </if>
+       <if test="createDeptId != null ">
+        create_dept_id = #{createDeptId,jdbcType=VARCHAR},
+      </if>
+       <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+       <if test="parentActId != null ">
+        parent_act_id = #{parentActId,jdbcType=VARCHAR},
+      </if>
+       <if test="subActFlag != null ">
+        sub_act_flag = #{subActFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,title,content,begin_date,begin_time,end_date,end_time,total_duration,avg_duration,activity_type,priority_level,total_limit,per_limit,locale,labels,remark,activity_status,topic_type,attachs,attachs_name,data_src,data_srcname,org_id,create_name,create_by,create_time,update_by,update_time,contact_id,detail_addr,contact_name,activity_cate,create_dept_id,contact_dept_id,delete_flag,sub_act_flag,parent_act_id
+    from ty_activity
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,title,content,begin_date,begin_time,end_date,end_time,total_duration,avg_duration,activity_type,priority_level,total_limit,per_limit,locale,labels,remark,activity_status,topic_type,attachs,attachs_name,data_src,data_srcname,org_id,create_name,create_by,create_time,update_by,update_time,contact_id,detail_addr,contact_name,activity_cate,create_dept_id,contact_dept_id,delete_flag,sub_act_flag,parent_act_id
+    from ty_activity
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,title,content,begin_date,begin_time,end_date,end_time,total_duration,avg_duration,activity_type,priority_level,total_limit,per_limit,locale,labels,remark,activity_status,topic_type,attachs,attachs_name,data_src,data_srcname,org_id,create_name,create_by,create_time,update_by,update_time,contact_id,detail_addr,contact_name,activity_cate,create_dept_id,contact_dept_id,delete_flag,sub_act_flag,parent_act_id
+    from ty_activity
+    where 1=1
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="titleAccurate != null and titleAccurate != ''">and title =#{titleAccurate}</if>
+	<if test="content != null and content != ''">and content like '%'||#{content}||'%'</if>
+	<if test="beginDateStart != null and beginDateStart != ''">and begin_date<![CDATA[>=]]>#{beginDateStart}</if>
+	<if test="beginDateEnd != null and beginDateEnd != ''">and begin_date<![CDATA[<=]]> #{beginDateEnd}</if>
+	<if test="beginDate != null and beginDate != ''">and begin_date<![CDATA[>=]]>#{beginDate}</if>
+	<if test="beginDateAccurate != null and beginDateAccurate != ''">and begin_date=#{beginDateAccurate}</if>
+	<if test="endDate != null and endDate != ''">and end_date<![CDATA[<=]]>#{endDate}</if>
+	<if test="activityType != null and activityType != ''">and activity_type=#{activityType}</if>
+	<if test="activityStatus != null and activityStatus != ''">and activity_status=#{activityStatus}</if>
+	<if test="priorityLevel != null and priorityLevel != ''">and priority_level=#{priorityLevel}</if>
+	<if test="topicType != null and topicType != ''">and topic_type=#{topicType}</if>
+	<if test="activityCate != null and activityCate != ''">and activity_cate=#{activityCate}</if>
+	<if test="dataSrc != null and dataSrc != ''">and data_src = #{dataSrc}</if>
+	<if test="orgId != null and orgId != ''">and org_id like '%'||#{orgId}||'%'</if>
+	<if test="staffId != null and staffId != ''">
+		and exists (select * from ty_activitystaff t6 where t6.activity_id=t.id and t6.staff_id =#{staffId})
+	</if>
+	<if test="orgName != null and orgName != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.org_name like '%'||#{orgName}||'%')
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.team_cat like '%'||#{teamCat}||'%')
+	</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.service_saler like '%'||#{serviceSaler}||'%')
+	</if>
+	<if test="custName != null and custName != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.cust_name like '%'||#{custName}||'%')
+	</if>
+	<if test="custId != null and custId != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.cust_id =#{custId})
+	</if>
+	<if test="signId != null and signId != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.sign_id =#{signId})
+	</if>
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="locale != null and locale != ''">and locale = #{locale}</if>
+	<if test="createBy != null and createBy != ''">and create_by = #{createBy}</if>
+	<if test="subActFlag != null and subActFlag != ''">and sub_act_flag = #{subActFlag}</if>
+	<if test="parentActId != null and parentActId != ''">and parent_act_id = #{parentActId}</if>
+  	<if test="acticityMonth != null and acticityMonth !=  ''">and begin_date like '%'||#{acticityMonth}||'%'</if>
+  	
+    <if test="orderBy != null and orderBy != ''">order by ${orderBy}</if>
+  </select>
+  
+
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_activity t where 1=1
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="content != null and content != ''">and content like '%'||#{content}||'%'</if>
+	<if test="beginDateStart != null and beginDateStart != ''">and begin_date<![CDATA[>=]]>#{beginDateStart}</if>
+	<if test="beginDateEnd != null and beginDateEnd != ''">and begin_date<![CDATA[<=]]> #{beginDateEnd}</if>
+	<if test="beginDate != null and beginDate != ''">and begin_date<![CDATA[>=]]>#{beginDate}</if>
+	<if test="endDate != null and endDate != ''">and end_date<![CDATA[<=]]>#{endDate}</if>
+	<if test="activityType != null and activityType != ''">and activity_type=#{activityType}</if>
+	<if test="activityStatus != null and activityStatus != ''">and activity_status=#{activityStatus}</if>
+	<if test="priorityLevel != null and priorityLevel != ''">and priority_level=#{priorityLevel}</if>
+	<if test="topicType != null and topicType != ''">and topic_type=#{topicType}</if>
+	<if test="activityCate != null and activityCate != ''">and activity_cate=#{activityCate}</if>
+	<if test="dataSrc != null and dataSrc != ''">and data_src like '%'||#{dataSrc}||'%'</if>
+	<if test="orgId != null and orgId != ''">and org_id like '%'||#{orgId}||'%'</if>
+	<if test="staffName != null and staffName != ''">
+		and id in (select distinct t1.activity_id from ty_activitystaff t1 left join ty_stafflist t2 on t1.staff_id=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t2.staff_name like '%'||#{staffName}||'%')
+	</if>
+	<if test="staffId != null and staffId != ''">
+		and exists (select * from ty_activitystaff t6 where t6.activity_id=t.id and t6.staff_id =#{staffId})
+	</if>
+	<if test="deptId != null and deptId != ''">
+		and (exists (select * from ty_activitystaff t6 where t6.activity_id=t.id and t6.dept_id =#{deptId})
+		  or exists (select * from ty_activitysign t7 where t7.activity_id=t.id and t7.dept_id =#{deptId} )
+		  or t.create_dept_id = #{deptId}
+		  or t.contact_dept_id = #{deptId})
+	</if>
+	<if test="deptName != null and deptName != ''">
+		and id in (select distinct t1.activity_id from ty_activitystaff t1 left join SYS_DEPT t3 on t1.dept_id=t3.id 
+		where t3.parent_id='2002' and t3.dept_name like '%'||#{deptName}||'%')
+	</if>
+	<if test="orgName != null and orgName != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.org_name like '%'||#{orgName}||'%')
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.team_cat like '%'||#{teamCat}||'%')
+	</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.service_saler like '%'||#{serviceSaler}||'%')
+	</if>
+	<if test="custName != null and custName != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.cust_name like '%'||#{custName}||'%')
+	</if>
+	<if test="custId != null and custId != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.cust_id =#{custId})
+	</if>
+	<if test="signId != null and signId != ''">
+		and exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.sign_id =#{signId})
+	</if>
+	<if test="createBy != null and createBy != ''">and create_by = #{createBy}</if>
+	<if test="locale != null and locale != ''">and locale like '%'||#{locale}||'%'</if>
+	<if test="keyword != null">
+		and (title like '%'||#{keyword}||'%'  or begin_date like '%'||#{keyword}||'%' or end_date like '%'||#{keyword}||'%' or activity_type like '%'||#{keyword}||'%' or priority_level like '%'||#{keyword}||'%' or topic_type like '%'||#{keyword}||'%' or data_src like '%'||#{keyword}||'%' or org_id like '%'||#{keyword}||'%' or create_by like '%'||#{keyword}||'%')
+	</if>
+	<if test="custId != null and custId != ''">
+		and exists (select 1 from ty_activitysign t2 where t.id = t2.activity_id and t2.cust_id = #{custId})
+	</if>
+	<if test="exActivityType != null and exActivityType != ''">
+		and activity_type not in ${exActivityType}
+	</if>
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="subActFlag != null and subActFlag != ''">and sub_act_flag = #{subActFlag}</if>
+	<if test="parentActId != null and parentActId != ''">and parent_act_id = #{parentActId}</if>
+	<if test="salerId != null and salerId != ''">
+		and exists(select 1 from ty_activitysign t2 
+			where t2.activity_id = t.id 
+			  and t2.cust_id in (select id from ty_orgcustomer t3 where t3.saler_id = #{salerId}))
+	</if>
+	<if test="salerList != null and salerList.size>0">
+		and exists(select 1 from ty_activitysign t2 
+			where t2.activity_id = t.id 
+			  and t2.cust_id in (select id from ty_orgcustomer t3 where t3.saler_id in 
+			<foreach collection="salerList" item="salerId" index="index"
+				open="(" close=")" separator=",">
+				#{salerId}
+			</foreach>))
+	</if>
+	<if test="activityTypes != null and activityTypes.size>0">
+		and activity_type in 
+			<foreach collection="activityTypes" item="activityType" index="index"
+				open="(" close=")" separator=",">
+				#{activityType}
+			</foreach>
+	</if>
+  </select>
+  
+  <select id="queryMyActCount" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select count(1) from ty_activity t
+    where t.create_by = #{staffId}
+       or t.contact_id = #{staffId}
+    or exists (select * from ty_activitysign t5 where t5.activity_id=t.id and t5.sign_id =#{staffId})
+    or exists (select * from ty_activitystaff t5 where t5.activity_id=t.id and t5.staff_id =#{staffId})
+  </select>
+</mapper>

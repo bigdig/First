@@ -1,0 +1,26 @@
+{
+  "pages":[
+    "pages/22xinxishenpi/index",
+    "pages/21xiaoxi_detail/index",
+    "pages/19xiaoxi/index",
+    "pages/17wenjian_list/index",
+    "pages/16wenjian/index",
+    "pages/13tongzhi_detail/index",
+    "pages/10tongzhi_list/index",
+    "pages/9tongzhi/index",
+    "pages/8mingpianshenqing/index",
+    "pages/7tijiaoshenpi/index",
+    "pages/4chenhui/index",
+    "pages/3shouye/index",
+    "pages/vote-detail/vote-detail",
+    "pages/index/index",
+    "pages/logs/logs"
+    
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle":"black"
+  }
+}

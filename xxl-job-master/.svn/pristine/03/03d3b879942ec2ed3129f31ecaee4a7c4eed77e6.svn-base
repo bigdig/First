@@ -1,0 +1,195 @@
+package com.net263.contact;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.net263.contact.util.HttpClientUtils;
+import com.net263.contact.util.JsonUtils;
+import com.net263.contact.vo.Contact;
+import com.net263.contact.vo.ContactDelData;
+import com.net263.contact.vo.ContactGroup;
+
+/**
+ * Created with IntelliJ IDEA.
+ * Description:
+ * User: Administrator
+ * Date: 2017/11/7
+ * Time: 10:55
+ * Package : com.net263.framework.test
+ * Company : 北京二六三企业通信有限公司
+ */
+//@RunWith(JUnit4.class)
+public class Test {
+
+    //测试地址   119.61.2.147:8053
+    private static String url = "icontact.263.net:8053/contact";
+//    private static String url = "119.61.2.147:8053/contact";
+//    private static String url = "itest.263.net:8053/contact";
+
+
+    /**
+     * Method: login()
+     */
+   // @org.junit.Test
+    public void testLogin() throws Exception {
+        //TODO: Test goes here...
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("tag", "1");
+        Map<String, String> data = new HashMap<String, String>();
+//        data.put("account", "962628567@qq.com");
+//        data.put("password", "111111");
+        data.put("account", "tianfengyjs@qq.com");
+        data.put("password", "31415926");
+        map.put("data", data);
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/auth", JsonUtils.mapToString(map));
+        System.out.println(test);
+    }
+
+    /**
+     * Method: addgroup()
+     */
+    //@org.junit.Test
+    public void testAddgroup() throws Exception {
+        //TODO: Test goes here...
+        List<ContactGroup> datas = new ArrayList<ContactGroup>();
+        Map<String, String> heard = new HashMap<>();
+
+        ContactGroup groupData = new ContactGroup();
+        groupData.setCustsysid("1000");
+        groupData.setName("CRM");
+        groupData.setName("CRM导入");
+        groupData.setVip("1");
+        groupData.setPriority("0");
+
+
+//        Contact Contact = new Contact();
+//        Contact.setCustsysid("5");
+//        Contact.setCustgrpid("1");
+//        Contact.setName("沈力");
+//        Contact.setEmail("shen.li@dangdaifintech.com");
+//        Contact.setTelephone("010-12423543");
+
+
+        datas.add(groupData);
+//        datas.add(Contact);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("tag", "1");
+        map.put("data", datas);
+
+        heard.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjb20ubmV0MjYzLmNvbnN0YW50IiwiaWF0IjoxNTIyMzc1NTM1LCJzdWIiOiJ7XCJjaWRcIjpcIjI5ODk3NTI1NDlcIixcIm5hbWVcIjpcIlwiLFwidWlkXCI6MTAwMDAwMDY0MDQ1fSIsImV4cCI6MTUyMjQxODczNX0.6Jf3KIgUZ2phA8yUjtxjPNWsXe02QqNPNZItwMNBSyA");
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/group/addBatch", JsonUtils.mapToString(map), heard);
+        System.out.println(test);
+    }
+
+    /**
+     * Method: updategroup()
+     */
+    public void testUpdategroup() throws Exception {
+        //TODO: Test goes here...
+    }
+
+
+    //@org.junit.Test
+    public void deleteGroup() throws Exception {
+        Map<String, String> heard = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        heard.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjb20ubmV0MjYzLmNvbnN0YW50IiwiaWF0IjoxNTEwMDE5OTAwLCJzdWIiOiJ7XCJjaWRcIjpcIjUyMzg3NzM5MTBcIixcIm5hbWVcIjpcIueOi-W9u1wiLFwidWlkXCI6MTAwMDAzMTc1NTN9IiwiZXhwIjoxNTEwMDYzMTAwfQ.b1-jFXXQjDQ0WSr0NvmnMPs-XorbNS8ZdXCSfIfoBDs");
+
+        Map<String, String> groupMap = new HashMap<>();
+        groupMap.put("custsysid", "1");
+
+        map.put("data", groupMap);
+
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/group/del", JsonUtils.mapToString(map), heard);
+        System.out.println(test);
+    }
+
+    /**
+     * Method: addcontact()
+     */
+    //@org.junit.Test
+    public void testAddcontact() throws Exception {
+        //TODO: Test goes here...
+        List<Contact> datas = new ArrayList<Contact>();
+        Map<String, String> heard = new HashMap<>();
+
+        Contact contactData = new Contact();
+        contactData.setCustsysid("6666666666666666666");
+        contactData.setCustgrpid("1000");
+        contactData.setName("彭涛");
+        contactData.setEmail("peng.tao@dangdaifintech.com");
+        contactData.setTelephone("13871066260");
+
+
+//        Contact Contact = new Contact();
+//        Contact.setCustsysid("5");
+//        Contact.setCustgrpid("1");
+//        Contact.setName("沈力");
+//        Contact.setEmail("shen.li@dangdaifintech.com");
+//        Contact.setTelephone("010-12423543");
+
+
+        datas.add(contactData);
+//        datas.add(Contact);
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("tag", "1");
+        map.put("data", datas);
+
+        heard.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjb20ubmV0MjYzLmNvbnN0YW50IiwiaWF0IjoxNTIyMzc1NTM1LCJzdWIiOiJ7XCJjaWRcIjpcIjI5ODk3NTI1NDlcIixcIm5hbWVcIjpcIlwiLFwidWlkXCI6MTAwMDAwMDY0MDQ1fSIsImV4cCI6MTUyMjQxODczNX0.6Jf3KIgUZ2phA8yUjtxjPNWsXe02QqNPNZItwMNBSyA");
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/contact/addBatch", JsonUtils.mapToString(map), heard);
+        System.out.println(test);
+    }
+
+
+    //@org.junit.Test
+    public void deleteContact() throws Exception {
+        Map<String, String> heard = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        heard.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjb20ubmV0MjYzLmNvbnN0YW50IiwiaWF0IjoxNTEwMDE5OTAwLCJzdWIiOiJ7XCJjaWRcIjpcIjUyMzg3NzM5MTBcIixcIm5hbWVcIjpcIueOi-W9u1wiLFwidWlkXCI6MTAwMDAzMTc1NTN9IiwiZXhwIjoxNTEwMDYzMTAwfQ.b1-jFXXQjDQ0WSr0NvmnMPs-XorbNS8ZdXCSfIfoBDs");
+
+        ContactDelData contactDelData = new ContactDelData();
+        //contactDelData.setCustsysid(Arrays.asList(new String[]{"1"}));
+        contactDelData.setCustgrpid("1");
+        map.put("data", contactDelData);
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/contact/del", JsonUtils.mapToString(map), heard);
+        System.out.println(test);
+    }
+
+
+
+    //@org.junit.Test
+    public void updateContact() throws Exception{
+        Map<String, String> heard = new HashMap<>();
+        Map<String, Object> map = new HashMap<String, Object>();
+        heard.put("token", "eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJjb20ubmV0MjYzLmNvbnN0YW50IiwiaWF0IjoxNTEwMDE5OTAwLCJzdWIiOiJ7XCJjaWRcIjpcIjUyMzg3NzM5MTBcIixcIm5hbWVcIjpcIueOi-W9u1wiLFwidWlkXCI6MTAwMDAzMTc1NTN9IiwiZXhwIjoxNTEwMDYzMTAwfQ.b1-jFXXQjDQ0WSr0NvmnMPs-XorbNS8ZdXCSfIfoBDs");
+
+        List<Contact> datas = new ArrayList<Contact>();
+        Contact contactData = new Contact();
+        contactData.setCustsysid("6");
+        contactData.setCustgrpid("2");
+        contactData.setName("我的测试7");
+        contactData.setEmail("77777777@163.com");
+        contactData.setTelephone("010-85377777677");
+
+
+//        Contact Contact = new Contact();
+//        Contact.setCustsysid("5");
+//        Contact.setCustgrpid("1");
+//        Contact.setName("我的测试5");
+//        Contact.setEmail("123123@163.com");
+//        Contact.setTelephone("010-12423543");
+
+
+        datas.add(contactData);
+        //datas.add(Contact);
+
+        map.put("data", datas);
+        String test = HttpClientUtils.sendPostBodyRequest("http://"+ Test.url +"/api/contact/update", JsonUtils.mapToString(map), heard);
+        System.out.println(test);
+
+
+
+    }
+}

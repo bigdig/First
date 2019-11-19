@@ -1,0 +1,21 @@
+/* pages/8mingpianshenqing/index.wxss */
+.center{ padding: 0 30rpx 30rpx 30rpx; margin-top: 16rpx; background-color: #fff;}
+.choose_num{ position: relative;}
+.choose_num::after{ content: ""; width: 20rpx; height: 20rpx; border: #C7C7CC solid 4rpx; border-color: #C7C7CC #C7C7CC transparent transparent; position: absolute; right: 15rpx; top: 34rpx;
+-webkit-transform: rotate(45deg);
+transform: rotate(45deg);
+}
+.choose_num picker{ padding-right: 35rpx;}
+
+.send_btn{ margin-bottom: 60rpx;}
+
+
+
+
+
+
+
+
+
+
+

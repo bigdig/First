@@ -1,0 +1,17 @@
+<!--pages/13tongzhi_detail/index.wxml-->
+<view class='top'>
+  <view class='base_title'>{{notice.noticeTitle}}</view>
+  <view>{{notice.createTime}}</view>
+</view>
+
+<view class='center'>
+  <text>{{notice.noticeContent}}</text>
+</view>
+
+
+<view class='msg' wx:if='{{notice.noticeUrl}}'>
+  <text class="icon iconfont icon-jingshigantanhao2"></text> 长按链接可复制外部链接
+</view>
+<view class='center' wx:if='{{notice.noticeUrl}}'>
+  <view data-linksrc='{{notice.noticeUrl}}' bindlongtap='copyLink' hover-class="list_hover">外部链接：{{notice.noticeUrl}}</view>
+</view>

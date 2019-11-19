@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyMessageauditMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyMessageaudit">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="msg_type" jdbcType="VARCHAR" property="msgType" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="msg_content" jdbcType="CLOB" property="msgContent" />
+      <result column="audit_flag" jdbcType="VARCHAR" property="auditFlag" />
+      <result column="audit_by" jdbcType="VARCHAR" property="auditBy" />
+      <result column="audit_time" jdbcType="TIMESTAMP" property="auditTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_messageaudit where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyMessageaudit">
+    insert into ty_messageaudit (
+    id
+	,msg_type
+	,title
+	,msg_content
+	,audit_flag
+	,audit_by
+	,audit_time
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,remark
+	,file_name
+	,file_path
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{msgType,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{msgContent,jdbcType=CLOB}
+    	,#{auditFlag,jdbcType=VARCHAR}
+    	,#{auditBy,jdbcType=VARCHAR}
+    	,#{auditTime,jdbcType=TIMESTAMP}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{fileName,jdbcType=VARCHAR}
+    	,#{filePath,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyMessageaudit">
+    update ty_messageaudit
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null ">
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null ">
+        msg_content = #{msgContent,jdbcType=CLOB},
+      </if>
+      <if test="auditFlag != null ">
+        audit_flag = #{auditFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="auditBy != null ">
+        audit_by = #{auditBy,jdbcType=VARCHAR},
+      </if>
+      <if test="auditTime != null ">
+        audit_time = #{auditTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null ">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null ">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,msg_type,title,msg_content,audit_flag,audit_by,audit_time,create_by,create_time,update_by,update_time,remark,file_name,file_path
+    from ty_messageaudit
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,msg_type,title,msg_content,audit_flag,audit_by,audit_time,create_by,create_time,update_by,update_time,remark,file_name,file_path
+    from ty_messageaudit
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_messageaudit where 1=1
+	<if test="msgType != null and msgType != ''">and msg_type = #{msgType}</if>
+	<if test="auditFlag != null and auditFlag != ''">and audit_flag = #{auditFlag}</if>
+	<if test="createTime != null and createTime != ''">and to_char(create_time,'yyyy-mm-dd') like '%'||#{createTime}||'%'</if>
+	<if test="keyword != null">
+		and (msg_type like '%'||#{keyword}||'%' )
+	</if>
+	<if test="salerId != null and salerId != ''">
+		and create_by = #{salerId}
+	</if>
+ 	<if test="salerList != null and salerList.size>0">
+		and create_by in
+		<foreach collection="salerList" item="salerId" index="index"
+            open="(" close=")" separator=",">
+            #{salerId}
+        </foreach>
+	</if> 
+  </select>
+</mapper>

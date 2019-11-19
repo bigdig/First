@@ -1,0 +1,37 @@
+<!--pages/26mingpian_detail/index.wxml-->
+<view class='show_status'>
+  <view class='base_title'>{{status}}</view>
+  <view>审核状态</view>
+</view>
+
+<view class='top'>申请信息</view>
+
+<view class='center'>
+
+  <view class='send_item'>
+    <view>提交人</view>
+    <view>{{name}}</view>
+  </view>
+
+  <view class='send_item'>
+    <view>提交时间</view>
+    <view>{{sendTime}}</view>
+  </view>
+
+  <view class='send_item'>
+    <view>名片姓名</view>
+    <view>{{mingpianname}}</view>
+  </view>
+
+  <view class='send_item'>
+    <view>数量</view>
+    <view style='color:#FBA703;'>{{minpian_number}}盒</view>
+  </view>
+
+  <!-- <view class='send_item no_line'>
+    <view>备注</view>
+    <view>{{content}}</view>
+  </view> -->
+
+
+</view>

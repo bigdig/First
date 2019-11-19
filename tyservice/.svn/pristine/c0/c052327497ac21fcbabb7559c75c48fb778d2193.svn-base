@@ -1,0 +1,116 @@
+<div>
+    <form name="search"
+          ng-submit="searchDictionary()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search">
+            <li>
+                <input type="search"
+                       ng-model="dictionary.keyword"
+                       maxlength="20"
+                       placeholder="字典名称">
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editDictionaryTemplate">
+    <form name="dic_form"
+          ng-submit="editDictionary()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="dictionaryInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="dic_form.dic_name.$dirty && dic_form.dic_name.$invalid">
+                        <span ng-show="dic_form.dic_name.$error.required">
+                            请输入字典名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="dic_name"
+                           ng-model="dictionaryInfo.name"
+                           maxlength="20"
+                           required
+                           placeholder="字典名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="dic_form.dic_key.$dirty && dic_form.dic_key.$invalid">
+                        <span ng-show="dic_form.dic_key.$error.required">
+                            请输入关键字
+                        </span>
+                    </div>
+                    <input type="search"
+                           ng-model="dictionaryInfo.key"
+                           name="dic_key"
+                           maxlength="20"
+                           required
+                           placeholder="关键字"/>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <!--<input type="button"-->
+            <!--ng-show="dictionaryInfo.btnName=='添加'"-->
+            <!--value="文件批量添加"-->
+            <!--ng-dialog="uploadExcelTemplate"-->
+            <!--ng-dialog-scope="this.$parent"-->
+            <!--ng-dialog-class="ngdialog-theme-default"-->
+            <!--ng-dialog-pre-close-callback="uploadPreCloseCallback"-->
+            <!--ng-dialog-on-open-callback="uploadOpenedCallback"-->
+            <!--ng-dialog-close-previous-->
+            <!--class="btn-search text-orange light font-18">-->
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{dictionaryInfo.btnName}}"
+                   ng-disabled="dic_form.$invalid || dictionaryInfo.loading"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="editDictionaryChildTemplate">
+    <form name="dic_child_form"
+          ng-submit="editDictionaryChild()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center">添加子项</h2>
+            <br>
+            <div class="text-center">
+                <table cellpadding="3" cellspacing="5" align="center" width="80%">
+                    <tr ng-repeat="child in childList">
+                        <td>
+                            <input type="search"
+                                   name="{{'dic_child_code_'+$index}}"
+                                   ng-model="child.code"
+                                   maxlength="100"
+                                   placeholder="编码"/>
+                        </td>
+                        <td>
+                            <input type="search"
+                                   name="{{'dic_child_name_'+$index}}"
+                                   ng-model="child.codeText"
+                                   maxlength="20"
+                                   placeholder="名称"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{dictionaryInfo.btnName}}"
+                   ng-disabled="dic_child_form.$invalid || dictionaryInfo.loading"/>
+        </div>
+    </form>
+</script>

@@ -1,0 +1,335 @@
+
+#user  nobody;
+user  root;
+worker_processes  2;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+	client_max_body_size 100m;
+
+    #gzip  on;
+	
+	upstream infopubManage { 
+		server 127.0.0.1:8088;
+		keepalive 350;
+	}
+
+	#因测试及演示需要，把17788端口曝露出来作为图片访问服务端口
+	server {
+        listen       17788;
+        server_name  localhost;
+		
+		location ^~ /n1/custimg/ {
+            root       /home/attachments/;
+        }
+    }
+	
+	server {
+        listen       80;
+        server_name  t.dangdaifintech.com;
+
+		location ~ {
+            proxy_pass  http://192.168.146.51;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+	}
+	
+	server {
+        listen       80;
+        server_name  infoimg.dangdaifintech.com;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 静态页面目录
+        root       /home/infopub/infopub-UI;
+        # 默认首页
+        index      manage.html;
+
+        location = / {
+            index      manage.html;
+            root       /home/infopub/infopub-UI;
+        }
+		
+		location ^~ /n1/custimg/ {
+		    add_header 'Access-Control-Allow-Origin' '*';
+			add_header 'Access-Control-Allow-Credentials' 'true';
+			add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+			add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            root       /home/attachments/;
+        }
+		location ^~ /hr/ {
+            root       /home/;
+        }
+		location ^~ /emallnet/ {
+            root       /home/infopub/;
+        }
+        location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/infopub/infopub-UI;
+			#expires 1h;
+        }
+	}	
+	
+	server {
+        listen       80;
+        server_name  infosim.dangdaifintech.com;
+
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 静态页面目录
+        root       /home/infopub/infopub-UI;
+        # 默认首页
+        index      manage.html;
+
+        location = / {
+            index      manage.html;
+            root       /home/infopub/infopub-UI;
+        }
+		
+		location ^~ /n1/custimg/ {
+		    add_header 'Access-Control-Allow-Origin' '*';
+			add_header 'Access-Control-Allow-Credentials' 'true';
+			add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+			add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+            root       /home/attachments/;
+        }
+		location ^~ /hr/ {
+            root       /home/;
+        }
+		location ^~ /emallnet/ {
+            root       /home/infopub/;
+        }
+        location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/infopub/infopub-UI;
+			#expires 1h;
+        }
+		#nginx采用post方式访问静态资源
+		error_page 405 =200 @405;
+		location @405
+		{
+			root /home/infopub/infopub-UI;
+		}     	
+        location ~ (login|logout|regin|unauthorized|forbidden)$ {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://infopubManage/infopub-WebMng/$1;
+			proxy_cookie_path  /infopub-WebMng/ /;
+			#
+			proxy_redirect http://192.168.144.206/infopub-WebMng/ /;
+			proxy_redirect http://59.172.188.109/infopub-WebMng/ http://59.172.188.109/;
+		}
+		location ~ (bizspace|emall|info|sys|uploadfile)/(.*) {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://infopubManage/infopub-WebMng/$1/$2?$query_string;
+			proxy_cookie_path  /infopub-WebMng/ /;
+			#
+			proxy_redirect http://192.168.144.206/infopub-WebMng/ /;
+			proxy_redirect http://59.172.188.109/infopub-WebMng/ http://59.172.188.109/;
+		}
+
+	}
+	
+	server {
+        listen       80;
+        server_name  tysim.dangdaifintech.com;
+
+		location ~ {
+            proxy_pass  http://192.168.144.205;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+        
+
+	}
+	
+	server {
+        listen       80;
+        server_name  mallsim.dangdaifintech.com;
+
+		location ~ {
+            proxy_pass  http://192.168.144.57;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+	}
+	
+
+	
+	
+	#当代云介绍页
+	server {
+        listen       80;
+        server_name appsim.dangdaifintech.com;
+		# 静态页面目录
+        root       /home/51huoban;
+        # 默认首页
+        index      index.html;
+
+        location = / {
+            index      index.html;
+            root       /home/51huoban;
+        }
+
+		
+		location ^~ /51huoban/ {
+            root       /home;
+        }
+		
+		
+		location ^~  /nexus/ {
+            proxy_pass  http://192.168.145.21;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		location ^~  /html/ {
+            proxy_pass  http://192.168.145.21;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		
+		location ^~  /bizspace/ {
+            proxy_pass  http://127.0.0.1 ;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		
+		location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/ddy;
+			#expires 1h;
+        }
+    }
+   
+
+	#天风国际介绍页
+	server {
+        listen       80;
+        server_name sim.tfisec.com;
+		# 静态页面目录
+        root       /home/tfgj;
+        # 默认首页
+        index      index.html;
+
+        location = / {
+            index      index.html;
+            root       /home/tfgj;
+        }		
+		location ^~ / {
+            root       /home/tfgj/;
+        }
+    }
+	
+	
+		#当代云后台
+	server {
+        listen       80;
+        server_name test.dangdaifintech.com;
+
+		location ^~  /ump/ {
+            proxy_pass  http://192.168.144.204:8550;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		location ^~  /ccump/ {
+            proxy_pass  http://192.168.144.204:8116;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		location ^~  /afs/ {
+            proxy_pass  http://192.168.144.204:8544;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		location ^~  /pjt/ {
+            proxy_pass  http://192.168.144.204:7001;
+			proxy_redirect default ;
+			proxy_buffering off;
+        }
+		
+
+    }
+
+server {
+		listen 443 ssl;
+		ssl_certificate     /usr/local/nginx/ssl/www.ddy.com.crt;
+		ssl_certificate_key /usr/local/nginx/ssl/www.ddy.com.key;
+		
+		#charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 静态页面目录
+        root       /home/infopub/infopub-UI;
+        # 默认首页
+        index      manage.html;
+
+        location = / {
+            index      manage.html;
+            root       /home/infopub/infopub-UI;
+        }
+		
+		location ^~ /n1/custimg/ {
+            root       /home/attachments/;
+        }
+        location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/infopub/infopub-UI;
+			#expires 1h;
+        }
+     	
+        location ~ (login|logout|regin|unauthorized|forbidden)$ {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://infopubManage/infopub-WebMng/$1;
+			proxy_cookie_path  /infopub-WebMng/ /;
+			proxy_redirect http://192.168.144.206/infopub-WebMng/ /;
+			proxy_redirect http://59.172.188.109/infopub-WebMng/ http://59.172.188.109/;
+		}
+		location ~ (bizspace|info|sys|uploadfile)/(.*) {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://infopubManage/infopub-WebMng/$1/$2?$query_string;
+			proxy_cookie_path  /infopub-WebMng/ /;
+			proxy_redirect http://192.168.144.206/infopub-WebMng/ /;
+			proxy_redirect http://59.172.188.109/infopub-WebMng/ http://59.172.188.109/;
+		}
+
+	}
+}

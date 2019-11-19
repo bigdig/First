@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.tycrm.mapper.TyActivityMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.tycrm.entity.TyActivity">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="begin_date" jdbcType="INTEGER" property="beginDate" />
+      <result column="begin_time" jdbcType="INTEGER" property="beginTime" />
+      <result column="end_date" jdbcType="INTEGER" property="endDate" />
+      <result column="end_time" jdbcType="INTEGER" property="endTime" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="avg_duration" jdbcType="INTEGER" property="avgDuration" />
+      <result column="activity_type" jdbcType="VARCHAR" property="activityType" />
+      <result column="priority_level" jdbcType="VARCHAR" property="priorityLevel" />
+      <result column="total_limit" jdbcType="INTEGER" property="totalLimit" />
+      <result column="per_limit" jdbcType="INTEGER" property="perLimit" />
+      <result column="locale" jdbcType="VARCHAR" property="locale" />
+      <result column="labels" jdbcType="VARCHAR" property="labels" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="activity_status" jdbcType="VARCHAR" property="activityStatus" />
+      <result column="topic_type" jdbcType="VARCHAR" property="topicType" />
+      <result column="attachs" jdbcType="VARCHAR" property="attachs" />
+      <result column="attachs_name" jdbcType="VARCHAR" property="attachsName" />
+      <result column="data_src" jdbcType="VARCHAR" property="dataSrc" />
+      <result column="data_srcname" jdbcType="VARCHAR" property="dataSrcname" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="create_name" jdbcType="VARCHAR" property="createName" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="contact_id" jdbcType="VARCHAR" property="contactId" />
+      <result column="detail_addr" jdbcType="VARCHAR" property="detailAddr" />
+      <result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+      <result column="activity_cate" jdbcType="VARCHAR" property="activityCate" />
+      <result column="notify_flag" jdbcType="VARCHAR" property="notifyFlag" />
+  </resultMap>
+
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.tycrm.entity.TyActivity">
+    update ty_activity
+    <trim prefix="set" suffixOverrides=",">
+      <if test="dataSrcname != null ">
+        data_srcname = #{dataSrcname,jdbcType=VARCHAR},
+      </if>
+      <if test="activityStatus != null ">
+        activity_status = #{activityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyFlag != null ">
+        notify_flag = #{notifyFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateSignByActivityId" parameterType="com.tfzq.tycrm.entity.TyActivitysign">
+    update ty_activitysign
+        set sign_status = '1'
+    where activity_id = #{activityId,jdbcType=VARCHAR}
+      and (trim(sign_status) is null or trim(sign_status)='0')
+  </update>
+  <select id="findByCondition" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select id,title,content,begin_date,begin_time,end_date,end_time,total_duration,avg_duration,activity_type,priority_level,total_limit,per_limit,locale,labels,remark,activity_status,topic_type,attachs,attachs_name,data_src,data_srcname,org_id,create_name,create_by,create_time,update_by,update_time,contact_id,detail_addr,contact_name,activity_cate,notify_flag
+    from ty_activity
+    where 1=1
+    <if test="hasFinished != null ">
+	  and (end_date <![CDATA[ < ]]> #{endDate} or (end_date<![CDATA[ = ]]> #{endDate} and end_time<![CDATA[ < ]]>#{endTime}))
+    </if>
+    <if test="activityStatusEx != null ">
+	  and activity_status <![CDATA[ <> ]]> #{activityStatusEx}
+    </if>
+    <if test="dataSrc != null ">
+	  and data_src = #{dataSrc}
+    </if>
+    <if test="yesterdayCreate != null ">
+	  and to_char(create_time,'yyyymmdd')= #{yesterdayCreate}
+    </if>
+  </select>
+  <select id="findNotifyRecords" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select id,title,content,begin_date,begin_time,end_date,end_time,total_duration,avg_duration,activity_type,priority_level,total_limit,per_limit,locale,labels,remark,activity_status,topic_type,attachs,attachs_name,data_src,data_srcname,org_id,create_name,create_by,create_time,update_by,update_time,contact_id,detail_addr,contact_name,activity_cate,notify_flag
+    from ty_activity
+    where 1=1
+	and notify_flag = '0'
+  </select>        
+  <select id="getCustIdsByActivityId" parameterType="java.lang.String" resultType="java.lang.String">
+    select cust_id from ty_activitysign where activity_id = #{activityId,jdbcType=VARCHAR}
+  </select>
+</mapper>

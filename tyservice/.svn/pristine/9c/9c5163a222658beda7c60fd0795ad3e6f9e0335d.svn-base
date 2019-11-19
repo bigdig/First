@@ -1,0 +1,124 @@
+<script type="text/ng-template"
+        id="editStockTemplate">
+    <form name="stock_form"
+          ng-submit="editStock()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="stockInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stock_form.stock_code.$dirty && stock_form.stock_code.$invalid">
+                        <span ng-show="stock_form.stock_code.$error.required">
+                            请输入股票代码
+                        </span>
+                        <span ng-show="stock_form.stock_code.$error.pattern">
+                            只接受6至8位数值
+                        </span>
+                    </div>
+                    <input name="stock_code"
+                           type="search"
+                           maxlength="8"
+                           ng-pattern="/^\d{6,8}$/"
+                           placeholder="股票代码"
+                           required
+                           ng-model="stockInfo.stockCode"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stock_form.stock_name.$dirty && stock_form.stock_name.$invalid">
+                        <span ng-show="stock_form.stock_name.$error.required">
+                            请输入股票名称
+                        </span>
+                    </div>
+                    <input name="stock_name"
+                           type="search"
+                           maxlength="16"
+                           required
+                           placeholder="股票名称"
+                           ng-model="stockInfo.stockName"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stock_form.stock_market.$dirty && stock_form.stock_market.$invalid">
+                        <span ng-show="stock_form.stock_market.$error.select">
+                            请选择市场
+                        </span>
+                    </div>
+                    <select name="stock_market"
+                            ng-model="stockInfo.marketNo"
+                            option-select="stock_market">
+                        <option value="">市场</option>
+                        <option ng-repeat="market in markets"
+                                ng-selected="market.selected"
+                                value="{{market}}">{{market}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stockInfo.dirty && stock_form.stock_date.$invalid">
+                        <span ng-show="stock_form.stock_date.$error.required">
+                            请选择日期
+                        </span>
+                    </div>
+                    <ng-datepicker name="stock_date"
+                                   dirty="stockInfo.dirty"
+                                   value="stockInfo.recommendDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   required="true"
+                                   placeholder="推荐日期"></ng-datepicker>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stock_form.stock_team.$dirty && stock_form.stock_team.$invalid">
+                        <span ng-show="stock_form.stock_team.$error.required">
+                            请选推荐团队
+                        </span>
+                        <span ng-show="stock_form.stock_team.$error.unique">
+                            无效的推荐团队
+                        </span>
+                    </div>
+                    <combobox name="stock_team"
+                              placeholder="推荐团队"
+                              model="stockInfo"
+                              id="teamId"
+                              no="team"
+                              value="stockInfo.team"
+                              required="true"
+                              servicelist="teams"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="stock_form.stock_type.$dirty && stock_form.stock_type.$invalid">
+                        <span ng-show="stock_form.stock_type.$error.select">
+                            请选择推荐类型
+                        </span>
+                    </div>
+                    <select name="stock_type"
+                            ng-model="stockInfo.recommendType"
+                            option-select="stock_type">
+                        <option value="">推荐类型</option>
+                        <option ng-repeat="rdType in recommendTypes"
+                                ng-selected="rdType.selected"
+                                value="{{rdType.id}}">{{rdType.text}}
+                        </option>
+                    </select>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="stock_form.$invalid || stock_form.loading"
+                   value="{{stockInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

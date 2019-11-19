@@ -1,0 +1,60 @@
+<view class='box'>
+    <view class='box_information font28'>
+        <view class='box_information_people' wx:if="{{showCustomerPart}}"> 
+             <text>参会客户</text>
+             <text class='box_information_people_text' bindtap="toSelectCustomers">{{selCustomers.length > 0 ? selCustomers.length  : "请选择"}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{selCustomers}}">{{item.custName}}</view>
+        </view>
+    </view>
+    <view class='box_show font28'>
+         <view class='box_information_people' wx:if="{{showLocalePart}}"> 
+             <text>活动地址</text>
+             <picker bindchange="bindAddrChange" value="{{value}}" range="{{SysWorkAreas}}" range-key="text">
+                <view class="picker" hidden="{{actAddrHidFlag}}">
+                    请选择地址
+                </view>
+                 <view class="picker" hidden="{{!actAddrHidFlag}}">
+                      {{actAddr}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <textarea bindinput="bindDetailAddrInput" value="{{detailAddr}}" placeholder="请输入详细地址..." placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;'/>
+        </view> 
+        <view class='box_information_people' wx:if="{{showContentPart}}"> 
+             <textarea bindinput="bindActContentInput" placeholder="请输入活动内容..." value="{{actContent}}" placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;margin-top:20rpx;'/>
+        </view>
+        <view class='box_information_people' wx:if="{{showPriorityPart}}"> 
+             <text>优先度</text>
+             <picker bindchange="bindPriorityChange" value="{{value}}" range="{{PRIORITYLEVEL}}" range-key="text">
+                <view class="picker" hidden="{{priorityHidFlag}}">
+                    请选择优先级
+                </view>
+                 <view class="picker" hidden="{{!priorityHidFlag}}">
+                      {{priorityLevelText}}
+                </view>
+             </picker>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+        </view>
+        <view class='box_information_people' wx:if="{{showLabelPart}}"> 
+             <text>添加标签</text>
+             <text bindtap="tochooseLabels" class='box_information_people_text' >{{actLabels == null  || actLabels.length == 0 ? "请选择" : actLabels.length}}</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view wx:for-index="idx" style="background-color :{{labelBackColor[idx%5]}}; color :{{labelColor[idx%5]}}" class='box_information_people_kuai' wx:for="{{actLabels}}">{{item}}</view>
+        </view>
+         <view class='box_information_people' wx:if="{{showAttachPart}}">   
+             <text>附件</text>
+             <text class='box_information_people_text' bindtap="openMyFile">请选择</text>
+             <image class="enterNextImg" src="./../../image/details.png"></image>
+             <view></view>
+             <view class='box_information_people_kuai' wx:for="{{addAttachs}}" wx:for-index="idx">图片{{idx}}：{{item}}</view>
+        </view>
+        <view class='box_information_people' wx:if="{{showRemarkPart}}"> 
+             <text>备注</text>
+             <textarea bindinput="bindRemarkInput" value="{{remark}}" placeholder="请输入您的备注..." placeholder-style='color:#9FA3BB' style='width:100%;height:200rpx;line-height:30rpx;'/>
+        </view>
+    </view>
+</view>
+<button class='submit font30' bindtap="submitMyAct" disabled="{{disableSubAct}}">完成</button>

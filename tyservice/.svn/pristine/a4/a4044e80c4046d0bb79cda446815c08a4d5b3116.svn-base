@@ -1,0 +1,32 @@
+<view>
+   <text class='hreder font26'>个人中心</text>
+</view>
+<view>
+   <view class='box'>
+      <view class='box_top'>
+         <view class='font30 box_top_hreder'>{{user.deptName}}</view>
+         <view class='font36 box_top_center'>{{user.staffName}}</view>
+         <view class='font24 box_top_footer'>{{user.position}}</view>
+         <!--<image class='box_img' src='{{nameImg}}'></image>-->
+         <open-data class="user_Img" type="userAvatarUrl"></open-data>
+    <!-- <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image> -->
+      </view>
+      <view class='box_bottom'>
+          <view class='font22 box_bottom_title'>
+             <text class='box_bottom_title_text'>我的活动</text>
+             <text class='box_bottom_title_text'>活跃客户</text>
+          </view>
+          <view class='font34 box_bottom_test'>
+             <text class='box_bottom_test_text' bindtap='myActivities'>{{myActivities}}</text>
+             <text class='box_bottom_test_text' bindtap='ActiveCustomers'>{{ActiveCustomers}}</text>
+             <!-- <navigator url="../index/index"  hover-class="navigator-hover"></navigator> -->
+             <!-- <navigator url="../ActiveCustomers/ActiveCustomers" class='box_bottom_test_text' hover-class="navigator-hover">{{ActiveCustomers}}</navigator> -->
+          </view>
+      </view>
+   </view>
+</view>
+<view style='margin-top:20rpx;'>
+ <view class='scan font28' bindtap="scanImg">
+    <text>扫一扫</text>
+  </view>
+</view>

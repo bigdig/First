@@ -1,0 +1,23 @@
+<!--pages/37chenhuijilu/index.wxml-->
+<view wx:if="{{listData[0]}}" class='list_box'>
+
+  <view wx:for="{{listData}}" class='list'>
+    <view class='list_l'>
+      <view>{{item.day}}</view>
+      <view>{{item.month}}月</view>
+    </view>
+    <view class='list_c'>{{item.text}}
+      <text>{{item.address}}</text>
+    </view>
+    <view class='list_r'>{{item.time}}</view>
+  </view>
+  <button bindtap='nextPage' class='get_more' wx:if="{{ifHaveMore}}">加载更多</button>
+</view>
+
+
+<view wx:else class='no_list' wx:else>
+  <view>
+    <image src='/img/shenpi_none.png' mode='widthFix'></image>
+  </view>
+  <view>暂无相关数据</view>
+</view>

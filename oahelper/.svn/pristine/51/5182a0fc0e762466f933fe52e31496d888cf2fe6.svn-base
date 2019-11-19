@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoGroupMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoGroup">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+      <result column="group_type" jdbcType="VARCHAR" property="groupType" />
+      <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+      <result column="group_remark" jdbcType="VARCHAR" property="groupRemark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoGroupBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+      <result column="group_type" jdbcType="VARCHAR" property="groupType" />
+      <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+      <result column="group_remark" jdbcType="VARCHAR" property="groupRemark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_group where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoGroup">
+    insert into go_group (
+    id
+	,group_name
+	,group_type
+	,department_id
+	,group_remark
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{groupName,jdbcType=VARCHAR}
+    	,#{groupType,jdbcType=VARCHAR}
+    	,#{departmentId,jdbcType=VARCHAR}
+    	,#{groupRemark,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoGroup">
+    update go_group
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null ">
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupType != null ">
+        group_type = #{groupType,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null ">
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="groupRemark != null ">
+        group_remark = #{groupRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,group_name,group_type,department_id,group_remark,create_by,create_time,update_by,update_time
+    from go_group
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,group_name,group_type,department_id,group_remark,create_by,create_time,update_by,update_time
+    from go_group
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,group_name,group_type,department_id,group_remark,create_by,create_time,update_by,update_time
+    from go_group
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="groupName != null and groupName != ''">and group_name like '%'||#{groupName}||'%'</if>
+	<if test="groupType != null and groupType != ''">and group_type=#{groupType}</if>
+	<if test="departmentId != null and departmentId != ''">and department_id like '%'||#{departmentId}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_group where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="groupName != null and groupName != ''">and group_name like '%'||#{groupName}||'%'</if>
+	<if test="groupType != null and groupType != ''">and group_type=#{groupType}</if>
+	<if test="departmentId != null and departmentId != ''">and department_id like '%'||#{departmentId}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or group_name like '%'||#{keyword}||'%' or group_type like '%'||#{keyword}||'%' or department_id like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

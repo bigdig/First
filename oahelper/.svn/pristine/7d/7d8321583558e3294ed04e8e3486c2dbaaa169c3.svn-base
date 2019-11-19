@@ -1,0 +1,16 @@
+<!--pages/16wenjian/index.wxml-->
+<view class='center'>
+  <!-- 公共搜索框配置 start -->
+  <import src="/common/search.wxml"/>
+  <template is="search" data="{{search_text: search_text,if_search: if_search}}"/>
+  <!-- 公共搜索框配置 end -->
+
+  <!--循环输出-->
+  <navigator wx:for="{{list}}" class='list' url="/pages/17wenjian_list/index?page_title={{item.text}}&page_type={{item.id}}" hover-class="list_hover">
+    <text class="icon iconfont icon-wenjianjia"></text>
+    {{item.text}}
+  </navigator>
+
+</view>
+
+

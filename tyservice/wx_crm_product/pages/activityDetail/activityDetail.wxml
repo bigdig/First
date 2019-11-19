@@ -1,0 +1,170 @@
+<wxs module="util">
+    var subName = function(val) {
+      if(val==undefined || val==''){
+        return '';
+      }else if(val.length<3){
+        return val;
+      }else{
+        return val.substring(val.length-2);
+      }
+    }
+    module.exports.subName = subName;
+</wxs>
+<view class='box'>
+     <view class='box_title'>
+        <view class="box_title_checkbox">
+            <checkbox wx:if="{{showActStatus}}" data-status="{{actInfo.activityStatus}}" bindtap="updateActStatus" checked="{{actInfo.activityStatus == 1 || actInfo.activityStatus == 2}}"></checkbox>
+            <text class='box_title_text'>{{actInfo.title}}</text>
+        </view>
+        <view class="box_infomation_share_close_btn">
+             <image class='box_title_share' src='../../image/guanbi.png'><button class="share_btn" open-type='share'></button></image>
+             <image class='box_title_delete' src='../../image/delete.png' bindtap="deleteAct" wx:if="{{actInfo.deleteFlag == '0' && usreId == actInfo.createBy}}"></image>
+        </view>
+         <view></view>
+         <view class='box_title_label font24'>{{actInfo.activityTypeText}}</view>
+     </view>
+     <view class='box_information'>
+         <view class='box_information_item'>
+              <image class='box_information_item_icon' src='{{actInfo.createAvatar}}'></image>
+              <text class='box_information_item_text font28'>{{actInfo.createName == null  ? "" : actInfo.createName}}</text>
+         </view>
+         <view class='box_information_item'>
+              <image class='box_information_item_icon' src='../../image/shijian.png'></image>
+              <text class='box_information_item_text font28'>{{(actInfo.beginDateText == null ? "" : actInfo.beginDateText)+" / "+(actInfo.beginTimeText == null ? "" :actInfo.beginTimeText ) +"  --   "+(actInfo.endDateText == null ? "" :actInfo.endDateText)+" / "+(actInfo.endTimeText == null ? "" : actInfo.endTimeText)}}</text>
+         </view>
+         <view class='box_information_item'>
+              <image class='box_information_item_icon' src='../../image/rentou.png'></image>
+              <text class='box_information_item_text font28'>{{actInfo.totalLimit == null ? "不限人数" : "限"+actInfo.totalLimit+"人"}}</text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.priorityLevelText}}">
+              <text class='box_information_item_yuan' style="border : {{priority_color[actInfo.priorityLevel]}}"></text>
+              <text class='box_information_item_text1 font28'>{{actInfo.priorityLevelText== null ? "": actInfo.priorityLevelText }}</text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.labels}}">
+              <image class='box_information_item_icon' src='../../image/biaoqian.png'></image>
+               <view class='box_information_item_text'> 
+              <text class='box_information_item_label font28' style="background-color :{{labelBackColor[idx%5]}}; color :{{labelColor[idx%5]}}" wx:key='{{item}}' wx:for-index="idx" wx:for="{{actInfo.labelsText}}">{{item}}</text>
+               </view> 
+              
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.locale || actInfo.detailAddr}}">
+              <image class='box_information_item_icon' src='../../image/dizhi.png'></image>
+              <text class='box_information_item_text font28'>{{(actInfo.locale == null ? "" : actInfo.locale) + " "+ (actInfo.detailAddr == null ? "" : actInfo.detailAddr)}}</text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.remark}}">
+              <image class='box_information_item_icon' src='../../image/beizhu.png'></image>
+              <text class='box_information_item_text font28'>{{actInfo.remark == null ? "" : actInfo.remark}}</text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.content}}">
+              <image class='box_information_item_icon' src='../../image/leirong.png'></image>
+              <text class='box_information_item_text font28'>{{actInfo.content == null ? "" : actInfo.content}}</text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.expertList && actInfo.expertList.length  > 0 }}">
+              <image class='box_information_item_icon' src='../../image/qzku.png'></image>
+              <text class='box_information_item_text font28'><text style="margin-right:30rpx;" wx:for="{{actInfo.expertList}}" wx:for-item="expert" wx:for-index="idx">{{ expert.expertName}}</text></text>
+         </view>
+         <view class='box_information_item' wx:if="{{actInfo.listedCompList && actInfo.listedCompList.length  > 0 }}">
+              <image class='box_information_item_icon' src='../../image/remark.png'></image>
+              <text class='box_information_item_text font28' ><text style="margin-right:30rpx;" wx:for="{{actInfo.listedCompList}}" wx:for-item="listedComp" wx:for-index="idx">{{ listedComp.stockShortname}}</text></text>
+         </view>
+          <view class='box_information_item' wx:if="{{actInfo.attachs}}">
+              <image class='box_information_item_icon' src='../../image/images.png'></image>
+              <view class='box_img_list' wx:key="{{image}}" wx:for="{{actInfo.attachImgs}}" wx:for-item="image">
+                 <image class='box_img' bindtap="previewImg" data-image="{{image}}" src='{{image}}'></image>
+              </view>
+         </view>
+         <view style='padding-bottom:20rpx;' hidden="{{hasAll}}">
+             <text class='box_information_addContent' bindtap="updateActContent"  >更新内容</text>
+         </view>
+     </view>
+     <view class='box_contact'>
+         <view class='font22'>
+            <text>报名参与者</text>
+            <text bindtap="callContact" class='box_contact_title_text'>联系人<text style='color:#3296FA;margin-left:20rpx;'>{{actInfo.contactName == null ? "" : actInfo.contactName}}</text></text>
+            
+         </view>
+         <!--<view class='box_contact_list' >
+             <view class='box_contact_list_icon font18'>小强</view>
+             <view class='font24 box_contact_list_kuang'>
+                 <text class='box_contact_list_jiantou'></text>
+                 <view class='box_contact_list_item'>
+                     <text class='box_contact_list_item_name'>小明 — </text>
+                     <text class='box_contact_list_item_company'>平安证券 — </text>
+                     <text class='box_contact_list_item_tel'>13312344321</text>
+                 </view>
+             </view>
+             <view class='box_contact_list_time font18'>10.10 5:20</view>
+         </view>-->
+         <view class='box_contact_list' wx:key="item" wx:for-item="cust" wx:for-index="idx" wx:for="{{activitysignData}}" >
+             <view class='box_contact_list_icon font18'>{{util.subName(cust.signName)}}</view>
+             <view class='box_contact_list_index font18'>第{{idx+1}}位</view>
+             <view class='font24 box_contact_list_kuang' data-id='{{cust.id}}' catchtap="changeSignStatus">
+                 <text class='box_contact_list_jiantou'></text>
+                 <view class='box_contact_list_item' style="border-right:{{custBorder[actInfo.totalLimit && (idx + 1) > actInfo.totalLimit ? 0 : 1 ]}}">
+                     <text class='box_contact_list_item_name'>{{cust.custName == null ? "" : cust.custName}}</text>
+                     <text class='box_contact_list_item_tel'>{{cust.custMobile == null ? "" : ("--" + cust.custMobile )}}</text>
+                     <view></view>
+                     <text class='box_contact_list_item_company'>{{cust.orgName == null ?  "" : cust.orgName}}</text>
+                    <view class='box_contact_list_time font18' >
+                        {{cust.createTime}}<text class='box_contact_list_item_sign' style="color:{{signStatusColor[cust.signStatus]}}">{{cust.signStatusText == null ?  "" : cust.signStatusText}}</text>
+                    </view>
+                 </view>
+             </view>
+             <view  class="box_contact_list_sign_btn" wx:if="{{cust.showSignBtn &&( actInfo.createBy == userId || userId == cust.signId)}}">
+                  <image class='box_contact_list_sign_img1' bindtap="cancelSignIn" data-id='{{cust.id}}' data-signstatus="{{cust.signStatus}}" data-actid="{{cust.activityId}}" data-custid="{{cust.custId}}" src='../../image/signCancel.png'></image>
+                  <image class='box_contact_list_sign_img2' bindtap="cfmSignIn" data-id='{{cust.id}}' data-signstatus="{{cust.signStatus}}" data-actid="{{cust.activityId}}" data-custid="{{cust.custId}}" src='../../image/signCfm.png'></image>
+             </view>
+         </view>
+         <!--活动截止显示-->
+        <view class='box_contact_list'  wx:if="{{actInfo.activityStatus != 0}}">
+                 <view class='box_contact_list_item font18' style="background-color:#eee;text-align:center">
+                     <text class='box_contact_list_item_name'>报名截止</text>
+                 </view>
+         </view>
+        <!--显示已经发送消息的客户 -->
+        <view class='box_contact_list' wx:if="{{actInfo.activityStatus != 0 && smsMessges.length > 0}}">
+             <!--<view class='box_contact_list_icon font18'>{{cust.signName}}</view>-->
+             <view class='font24 box_contact_list_kuang'>
+                 <!--<text class='box_contact_list_jiantou' wx:if="{{smsMessges.length > 0 }}">{{'已发送邀请信息' + smsMessges.length +"人,"}}</text>-->
+                 <view class='box_contact_list_item'>
+                     <text class='box_contact_list_item_name' wx:if="{{smsMessges.length > 0 }}">{{'已发送邀请信息' + smsMessges.length +"人,"}}<text wx:for="{{smsMessges}}" wx:for-item="smsMsg" wx:for-index="idx" wx:key="smsMsg"> {{idx == smsMessges.length -1 ? smsMsg.receiverName : ( smsMsg.receiverName +",")}}</text></text>
+                 </view>
+             </view>
+         </view>
+     </view>
+</view>
+<image class='back_home_img' wx:if="{{isShare}}" src='../../image/home.png' bindtap="backToHome"></image>
+<button class='submit font30' wx:if="{{actInfo.activityStatus == 1 }}" bindtap="toSendMsg">发送邀请消息</button>
+<button class='submit font30' wx:if="{{actInfo.activityStatus == 0 && actInfo.activityCate == 0 }}" bindtap="toSelOrgCustomer">报名</button>
+<!--<view class="inviteMask" hidden="{{hiddenModal}}" catchtap="hideShareModal"></view> 
+<view class="inviteShare" hidden="{{hiddenModal}}">  
+          <view class="inviteShareTitle">分享给好友</view>
+          <view class="weixinContainer">
+            <image class="weixinImg" src="./../../image/weixin.png"></image> 
+          </view>
+          <view class="inviteBtn"> 
+            <button class="inviteShareCancel"  bindtap='closeMask'>取消</button>
+            <button class="inviteShareDetermine"  open-type='share' bindtap='closeMask'>确认</button>
+          </view>
+  </view> -->
+  <!-- 模态框 -->
+<view class='mask' wx:if='{{showModal}}' catchtap="hideAddContent">
+</view>
+ <view class='mask_modal' wx:if='{{showModal}}'>
+        <view class='mask_modal_title'>添加内容</view>
+        <checkbox-group bindchange="serviceValChange">  
+          <view class="service_selection flex">  
+            <block wx:key="{{item}}" wx:for="{{allGoodsFilte}}" wx:for-index="idx">  
+              <view class="item" hidden="{{item.isNotNull || idx == 0}}">
+                <label class="">  
+                  <image class='mask_modal_img' src='{{item.img}}'></image>
+                  <checkbox value="{{item.value}}" checked="{{item.checked}}" hidden="false" />
+                  <text class="mask_modal_text {{item.checked?'is_checked':''}}">{{item.name}}</text>
+                  <image class='mask_modal_icon' wx:if="{{item.checked}}" src="../../image/checkbox.png"></image>  
+                </label>  
+              </view>  
+            </block>  
+          </view>  
+        </checkbox-group> 
+        <view class='mask_modal_submit' bindtap='cfmAddActContent'>确定</view>
+     </view>

@@ -1,0 +1,561 @@
+<div class="padding20">
+    <form name="search"
+          ng-submit="searchInstitutional()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <search model="institutional"
+                        value="institutional.orgName"
+                        name="orgName"
+                        maxlength="64"
+                        servicelist="searchOrgs"
+                        placeholder="机构名称"></search>
+            </li>
+            <!--<li>
+                <select ng-model="institutional.areaCode">
+                    <option value="">地域</option>
+                    <option ng-repeat="area in searchAreaCode"
+                            ng-selected="institutional.areaCode==area.text"
+                            value="{{area.text}}">{{area.text}}
+                    </option>
+                </select>
+            </li>-->
+            <li>
+                <select ng-model="institutional.teamCat">
+                    <option value="">区域</option>
+                    <option ng-repeat="area in searchArea"
+                            ng-selected="institutional.teamCat==area.text"
+                            value="{{area.text}}">{{area.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <search model="institutional"
+                        value="institutional.serviceSaler"
+                        name="serviceSaler"
+                        maxlength="16"
+                        servicelist="searchStafflist"
+                        placeholder="对口销售"></search>
+            </li>
+            <li>
+                <select ng-model="institutional.orgLevel">
+                    <option value="">机构级别</option>
+                    <option ng-repeat="level in searchLevels"
+                            ng-selected="institutional.orgLevel==level.id"
+                            value="{{level.id}}">{{level.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.custStatus">
+                    <option value="">机构状态</option>
+                    <option ng-repeat="status in searchStatuss"
+                            ng-selected="institutional.custStatus==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.custCat">
+                    <option value="">机构类型</option>
+                    <option ng-repeat="cat in searchCats"
+                            ng-selected="institutional.custCat==cat.id"
+                            value="{{cat.id}}">{{cat.text}}
+                    </option>
+                </select>
+            </li>
+            <li ng-if="institutional.custStatus!='3'">
+                <select ng-model="institutional.whiteDeadline">
+                    <option value="">白名单到期</option>
+                    <option ng-repeat="flag in whiteDeadlineFlags"
+                            ng-selected="institutional.whiteDeadline==flag.value"
+                            value="{{flag.value}}">{{flag.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <input type="search"
+                       class="special-width"
+                       name="source"
+                       ng-model="institutional.source"
+                       placeholder="来源"/>
+            </li>
+            <li>
+                <input type="search"
+                       class="special-width"
+                       name="remark"
+                       ng-model="institutional.remark"
+                       placeholder="备注"/>
+            </li>
+        </ul>
+    </form>
+    <div class="text-right lh30">
+        <a href="javascript:void(0)"
+           ng-click="prepInstitutional()"
+           class="text-blue">
+            <i class="icon icon-credit-card font-16"></i>
+            潜在机构审核
+        </a>
+    </div>
+</div>
+
+<table width="100%"
+       class="panel-head"
+       cellpadding="10"
+       cellspacing="0">
+    <tr>
+        <td ng-if="dataModel.data.length">
+            <span class="text-red"
+                  ng-bind="dataModel.data.length+'/'+dataModel.pageInfo.total"></span>
+            项
+            <label ng-hide="dataModel.hidePages">&nbsp;&nbsp;每页
+                <select ng-model="searchModel.pageSize"
+                        ng-change="changePageSize()"
+                        ng-options="p for p in pageNo.pages"
+                        style="display: inline; width: 80px">
+                </select>
+                &nbsp;
+                <a href="javascript:void(0)" ng-click="changePageSize('refresh')"
+                   class="refresh"
+                   title="刷新">
+                    <i class="icon icon-cw font-20"></i>
+                </a>
+                &nbsp;&nbsp;&nbsp;
+            </label>
+            <span ng-if="dataModel.selectedCount">
+            已选中：<span ng-bind="dataModel.selectedCount"></span> 项
+            </span>
+            <a href="javascript:void(0)" ng-if="dataModel.charts"
+               ng-repeat="chart in dataModel.charts"
+               bo-title="chart.title"
+               class="refresh padding10"
+               ng-click="chart.event()">
+                <i bo-class="chart.icon" class="font-20 text-purple"></i>
+            </a>
+        </td>
+        <td class="text-right"
+            ng-if="dataModel.toolsBar">
+            <!--<input ng-if="dataModel.checkAll && dataModel.data.length"-->
+            <!--type="checkbox"-->
+            <!--ng-model="messageInfo.isAll"-->
+            <!--ng-checked="messageInfo.isAll"><label></label>-->
+            <!--<span class="text-blue-menu"-->
+            <!--ng-bind="dataModel.checkAll.value"-->
+            <!--ng-if="dataModel.checkAll && dataModel.data.length"></span>-->
+            <input type="button"
+                   class="font-16 padding20"
+                   bo-title="bar.title"
+                   ng-class="{'margin-right': !$last}"
+                   bo-class="bar.bgStyle"
+                   value="{{bar.btnName}}"
+                   ng-click="bar.event()"
+                   ng-disabled="bar.isDisabled && !messageInfo.isAll"
+                   ng-hide="bar.isHide"
+                   ng-repeat="bar in dataModel.toolsBar">
+            <label ng-if="dataModel.menu && dataModel.menu.isEnable && dataModel.menu.isShow && dataModel.data.length"
+                   class="font-24"
+                   bo-title="dataModel.menu.title">
+                <a href="javascript:void(0)" class="icon icon-menu"
+                   ng-click="toggleMenu()"></a>
+            </label>
+            <div id="tag_menu"
+                 style="width: 90px; right: 30px; margin-top: -10px; text-align: left"
+                 class="lenovo border-blue-dark-color bg-white">
+                <ul class="op">
+                    <li class="padding10"
+                        ng-repeat="menu in dataModel.menu.list"
+                        bo-text="menu.name"
+                        ng-click="menu.callback()">
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+</table>
+<div class="dataCp"></div>
+<div class="data"
+     style="overflow-x: hidden;">
+    <table cellpadding="10"
+           cellspacing="0"
+           width="100%"
+           ng-if="dataModel.data.length">
+        <thead ng-show="dataModel.dataHead">
+        <th class="th"
+            ng-show="dataModel.hasAllChecked">
+            <input type="checkbox"
+                   ng-checked="dataModel.selectAll"
+                   ng-show="dataModel.selectedAll"
+                   ng-model="dataModel.selectAll"
+                   ng-click="selectAll()"><label ng-show="dataModel.selectedAll"></label>
+        </th>
+        <th class="th" ng-repeat="head in dataModel.dataHead"
+            style="min-width: {{head.width+'px'}};"
+            ng-if="!head.hide"
+            bo-text="head.title"></th>
+        <th ng-show="dataModel.hasControl"
+            class="ctl_h"
+            style="min-width: {{dataModel.controlWidth+'px'}};">
+            操作
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dataItem in dataModel.data"
+            repeat-finish="copyDataToTable()">
+            <td ng-show="dataItem.hasCheckBox">
+                <input type="checkbox"
+                       ng-model="dataItem.hasCheckBox.isChecked"
+                       ng-checked="dataItem.hasCheckBox.isChecked"
+                       ng-click="dataItem.hasCheckBox.check(dataItem)"><label></label>
+            </td>
+            <td ng-repeat="it in dataItem.item"
+                bo-hide="it.hide"
+                title="{{it.text | deleteHtml}}"
+                ng-bind-html="it.text"></td>
+            <td ng-show="dataItem.controls"
+                class="ctl">
+                <a ng-if="dataModel.controlAsMenu"
+                   title="菜单"
+                   href="javascript:void(0)"
+                   class="icon icon-menu font-18"
+                   ng-click="toggleMenuById('menu'+$index)"></a>
+                <div ng-if="dataModel.controlAsMenu"
+                     id="menu{{$index}}"
+                     style="width: 90px; right: 30px; text-align: left"
+                     class="lenovo border-blue-dark-color bg-white">
+                    <ul class="op">
+                        <li class="padding10"
+                            ng-repeat="ctrl in dataItem.controls"
+                            bo-text="ctrl.name"
+                            ng-show="ctrl.isShow"
+                            ng-click="ctrl.event(dataItem)">
+                        </li>
+                    </ul>
+                </div>
+                <a ng-if="!dataModel.controlAsMenu"
+                   href="javascript:void(0)"
+                   ng-repeat="ctrl in dataItem.controls"
+                   class="text-orange"
+                   ng-show="ctrl.isShow"
+                   bo-text="ctrl.name"
+                   ng-click="ctrl.event(dataItem)"
+                   style="width: {{ctrl.width+'px'}}"
+                   bo-class="{'space-left':!$first}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4 class="text-center"
+    ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+<img src="../img/loading.gif"
+     width="26"
+     class="loading"
+     ng-show="loading.isShow">
+<br>
+<nav aria-label="Page navigation" class="clearfix" ng-if="dataModel.data.length!=0">
+     <ul class="pagination pagination-sm pagination1 fl" style="margin:0 0 30px 0;width:800px;">
+       <li ng-class="{disabled:page==1}">
+         <a href="javascript:void(0)" aria-label="Previous" ng-click="sub(page-1<1?1:page-1)" ng-disabled="page==1">
+           <span aria-hidden="true"><</span>
+         </a>
+       </li>
+       <li ng-if="page >= pageNum && lastPage !== pageNum" ng-click="sub(1)" ng-class="{pageActive:item==1}">
+         <a href="javascript:void(0)">1</a>
+       </li>
+       <li ng-if="page >= pageNum && lastPage !== pageNum">
+         <a href="javascript:void(0)">...</a>
+       </li>
+       <li ng-click="sub(item)" ng-class="{pageActive:item==page}" ng-repeat="item in pages">
+         <a href="javascript:void(0)">{{item}}</a>
+       </li>
+       <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum">
+         <a href="javascript:void(0)">...</a>
+       </li>
+       <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum" ng-click="sub(lastPage)" ng-class="{pageActive:item==page}">
+         <a href="javascript:void(0)">{{lastPage}}</a>
+       </li>
+       <li ng-class="{disabled:page==lastPage}">
+         <a href="javascript:void(0)" aria-label="Next" ng-click="sub(page+1>lastPage?page:page+1)">
+           <span aria-hidden="true">></span>
+        </a>
+       </li>
+     </ul>
+</nav>
+<br><br>
+<div class="back bg-red-opacity">
+    <a href="javascript:void(0)" ng-click="backTop()">
+        <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+    </a>
+</div>
+
+
+<script type="text/ng-template"
+        id="editInstitutionalTemplate">
+    <form name="ins_form"
+          ng-click="hide($event)"
+          ng-submit="editInstitutional()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="institutionalInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_name.$dirty && ins_form.ins_name.$invalid">
+                        <span ng-show="ins_form.ins_name.$error.required">
+                            请输入机构名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_name"
+                           ng-model="institutionalInfo.orgName"
+                           maxlength="64"
+                           required
+                           placeholder="机构名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_staff.$dirty && ins_form.ins_staff.$invalid">
+                        <span ng-show="ins_form.ins_staff.$error.required">
+                            请选择对口销售
+                        </span>
+                        <span ng-show="ins_form.ins_staff.$error.unique">
+                            无效的对口销售
+                        </span>
+                    </div>
+                    <combobox name="ins_staff"
+                              placeholder="对口销售"
+                              model="institutionalInfo"
+                              id="salerId"
+                              no="serviceSaler"
+                              value="institutionalInfo.serviceSaler"
+                              multiple="true"
+                              required="true"
+                              servicelist="tyStafflists"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_status.$dirty && ins_form.ins_status.$invalid">
+                        <span ng-show="ins_form.ins_status.$error.select">
+                            请选择机构状态
+                        </span>
+                    </div>
+                    <select name="ins_status"
+                            ng-model="institutionalInfo.custStatus"
+                            option-select="ins_status">
+                        <option value="">机构状态</option>
+                        <option ng-repeat="status in searchStatuss"
+                                ng-selected="status.id==institutionalInfo.custStatus"
+                                value="{{status.id}}">{{status.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div ng-if="institutionalInfo.custStatus=='3'"
+                         class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_level.$dirty && ins_form.ins_level.$invalid">
+                        <span ng-show="ins_form.ins_level.$error.select">
+                            请选择机构级别
+                        </span>
+                    </div>
+                    <select ng-if="institutionalInfo.custStatus=='3'"
+                            name="ins_level"
+                            ng-model="institutionalInfo.orgLevel"
+                            option-select="ins_level">
+                        <option value="">机构级别</option>
+                        <option ng-repeat="level in searchLevels"
+                                ng-selected="level.id==institutionalInfo.orgLevel"
+                                value="{{level.id}}">{{level.text}}
+                        </option>
+                    </select>
+                    <select ng-if="institutionalInfo.custStatus!='3'"
+                            ng-init="institutionalInfo.orgLevel ? institutionalInfo.orgLevel='10' : institutionalInfo.orgLevel=''"
+                            ng-model="institutionalInfo.orgLevel"
+                            option-select="ins_level"
+                            name="ins_level">
+                        <option value="">机构级别</option>
+                        <option ng-selected="institutionalInfo.orgLevel=='10'"
+                                value="10">其他</option>
+                        </option>
+                    </select>
+                </li>
+              <!--   <li ng-if="institutionalInfo.custStatus!='3'">
+                    <ng-datepicker name="white_deadline"
+                                   value="institutionalInfo.whiteDeadline"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   placeholder="白名单到期日"></ng-datepicker>
+                </li> -->
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_kind.$dirty && ins_form.ins_kind.$invalid">
+                        <span ng-show="ins_form.ins_kind.$error.select">
+                            请选择机构类型
+                        </span>
+                    </div>
+                    <select name="ins_kind"
+                            ng-model="institutionalInfo.custCat"
+                            option-select="ins_kind">
+                        <option value="">机构类型</option>
+                        <option ng-repeat="cat in searchCats"
+                                ng-selected="cat.id==institutionalInfo.custCat"
+                                value="{{cat.id}}">{{cat.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_simName.$dirty && ins_form.ins_simName.$invalid">
+                        <span ng-show="ins_form.ins_simName.$error.required">
+                            请输入机构简称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_simName"
+                           ng-model="institutionalInfo.orgSimpleName"
+                           maxlength="64"
+                           required
+                           placeholder="机构简称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_address.$dirty && ins_form.ins_address.$invalid">
+                        <span ng-show="ins_form.ins_address.$error.required">
+                            请输入地址
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_address"
+                           ng-model="institutionalInfo.address"
+                           maxlength="100"
+                           required
+                           placeholder="地址"/>
+                </li>
+                <!--<li>
+                    <select name="ins_area"
+                            ng-model="institutionalInfo.areaCode">
+                        <option value="">地域类型</option>
+                        <option ng-repeat="area in searchAreaCode"
+                                ng-selected="area.id==institutionalInfo.areaCode"
+                                value="{{area.id}}">{{area.text}}
+                        </option>
+                    </select>
+                </li>-->
+                <li>
+                    <input type="search"
+                           name="ins_contactor"
+                           ng-model="institutionalInfo.contactorName"
+                           maxlength="16"
+                           placeholder="联系人"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_contel.$dirty && ins_form.ins_contel.$invalid">
+                        <span ng-show="ins_form.ins_contel.$error.pattern">
+                            无效的电话号码格式;例如027-83889140或15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_contel"
+                           ng-model="institutionalInfo.contactorTel"
+                           maxlength="20"
+                           ng-pattern="/^((\d{11,15})|(\d{3,5}-\d{7,8}(-\d{2,4})?))$/"
+                           placeholder="联系人电话(格式：[区号-直拨号]或手机号[大陆11位，其他12-15位])"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_telephone.$dirty && ins_form.ins_telephone.$invalid">
+                        <span ng-show="ins_form.ins_telephone.$error.pattern">
+                            无效的电话号码格式;例如027-83889140或15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_telephone"
+                           ng-model="institutionalInfo.companyTel"
+                           maxlength="20"
+                           ng-pattern="/^((\d{11,15})|(\d{3,5}-\d{7,8}(-\d{2,4})?))$/"
+                           placeholder="电话(格式：[区号-直拨号]或手机号[大陆11位，其他12-15位])"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_mail.$dirty && ins_form.ins_mail.$invalid">
+                        <span ng-show="ins_form.ins_mail.$error.pattern">
+                            邮箱格式错误
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_mail"
+                           ng-model="institutionalInfo.companyMail"
+                           maxlength="50"
+                           ng-pattern="/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/"
+                           placeholder="邮箱"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_source.$dirty && ins_form.ins_source.$invalid">
+                        <span ng-show="ins_form.ins_source.$error.required">
+                            请输入来源
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_source"
+                           ng-model="institutionalInfo.source"
+                           maxlength="100"
+                           placeholder="来源"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_remark.$dirty && ins_form.ins_remark.$invalid">
+                        <span ng-show="ins_form.ins_remark.$error.required">
+                            请输入备注
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_remark"
+                           ng-model="institutionalInfo.remark"
+                           maxlength="100"
+                           placeholder="备注"/>
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="institutionalInfo.recEmail"
+                           ng-checked="institutionalInfo.recEmail"/><label></label>
+                    接受邮件通知
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="institutionalInfo.recSms"
+                           ng-checked="institutionalInfo.recSms"/><label></label>
+                    接受短信通知
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="institutionalInfo.btnName=='添加' && institutionalInfo.import"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="ins_form.$invalid || institutionalInfo.loading"
+                   value="{{institutionalInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

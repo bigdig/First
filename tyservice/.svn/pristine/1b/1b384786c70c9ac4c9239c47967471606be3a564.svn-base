@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.generator.SysPositionMapper">
+  <resultMap id="BaseResultMap" type="org.ibase4j.model.generator.SysPosition">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="position_name" jdbcType="VARCHAR" property="positionName" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_position where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.ibase4j.model.generator.SysPosition">
+    insert into sys_position (
+    id
+	,position_name
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{positionName,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ibase4j.model.generator.SysPosition">
+    update sys_position
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null ">
+        position_name = #{positionName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,position_name
+    from sys_position
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,position_name
+    from sys_position
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from sys_position where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

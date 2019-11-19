@@ -1,0 +1,340 @@
+<form name="search"
+      ng-submit="searchExpert()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <select ng-model="expert.expertType">
+                <option value="">类别</option>
+                <option ng-repeat="ty in expertType"
+                        value="{{ty.id}}">{{ty.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.expertName"
+                   maxlength="16"
+                   placeholder="联系人"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.industry"
+                   maxlength="64"
+                   placeholder="所属团队"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.borkerName"
+                   maxlength="16"
+                   placeholder="对接人"/>
+        </li>
+        <li>
+            <select ng-model="expert.closeLevel">
+                <option value="">关系程度</option>
+                <option ng-repeat="le in closeLevel"
+                        value="{{le.id}}">{{le.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <select ng-model="expert.expertProjectRole">
+                <option value="">项目角色</option>
+                <option ng-repeat="le in projectRole"
+                        value="{{le.id}}">{{le.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.source"
+                   maxlength="50"
+                   placeholder="来源"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editExpertTemplate">
+    <form name="exp_form"
+          ng-submit="editExpert()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="expertInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_type.$dirty && exp_form.exp_type.$invalid">
+                        <span ng-show="exp_form.exp_type.$error.select">
+                            请选择类别
+                        </span>
+                    </div>
+                    <select name="exp_type"
+                            ng-model="expertInfo.expertType"
+                            option-select="exp_type">
+                        <option value="">类别</option>
+                        <option ng-repeat="ty in expertTypes"
+                                ng-selected="expertInfo.expertType==ty.id"
+                                value="{{ty.id}}">{{ty.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.expertName.$dirty && exp_form.expertName.$invalid">
+                        <span ng-show="exp_form.expertName.$error.required">
+                            请输入联系人
+                        </span>
+                    </div>
+                    <search model="expertInfo"
+                            value="expertInfo.expertName"
+                            name="expertName"
+                            maxlength="20"
+                            servicelist="expertNames"
+                            required="true"
+                            placeholder="联系人"
+                            callback="setExpert"></search>
+                    <input type="hidden"
+                           ng-model="expertInfo.expertId">
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_mobile.$dirty && exp_form.exp_mobile.$invalid">
+                        <span ng-show="exp_form.exp_mobile.$error.required">
+                            请输入手机
+                        </span>
+                        <span ng-show="exp_form.exp_mobile.$error.pattern">
+                            无效的手机号码格式;例如15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="exp_mobile"
+                           ng-model="expertInfo.expertTel"
+                           maxlength="15"
+                           required
+                           ng-pattern="/^\d{11,15}$/"
+                           placeholder="手机(格式:大陆11位，其他12-15位)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_org.$dirty && exp_form.exp_org.$invalid">
+                        <span ng-show="exp_form.exp_org.$error.required">
+                            请输入所属公司
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="exp_org"
+                           maxlength="50"
+                           placeholder="所属公司"
+                           required
+                           ng-model="expertInfo.orgName">
+                    <input type="hidden"
+                           ng-model="expertInfo.orgId">
+                </li>
+                <li>
+                    <input type="search"
+                           name="exp_industry"
+                           ng-model="expertInfo.industry"
+                           maxlength="64"
+                           readonly
+                           required
+                           placeholder="所属团队"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_broker.$dirty && exp_form.exp_broker.$invalid">
+                        <span ng-show="exp_form.exp_broker.$error.required">
+                            请输入对接人
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="exp_broker"
+                           ng-model="expertInfo.brokerName"
+                           maxlength="64"
+                           readonly
+                           required
+                           placeholder="对接人"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_tel.$dirty && exp_form.exp_tel.$invalid">
+                        <span ng-show="exp_form.exp_tel.$error.required">
+                            请输入对接人电话
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="exp_tel"
+                           ng-model="expertInfo.brokerTel"
+                           maxlength="64"
+                           required
+                           readonly
+                           placeholder="对接人电话"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_lev.$dirty && exp_form.exp_lev.$invalid">
+                        <span ng-show="exp_form.exp_lev.$error.select">
+                            请选择关系程度
+                        </span>
+                    </div>
+                    <select name="exp_lev"
+                            ng-model="expertInfo.closeLevel"
+                            option-select="exp_lev">
+                        <option value="">关系程度</option>
+                        <option ng-repeat="lv in closeLevels"
+                                ng-selected="expertInfo.closeLevel==lv.id"
+                                value="{{lv.id}}">{{lv.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="exp_form.exp_lev.$dirty && exp_form.exp_lev.$invalid">
+                        <span ng-show="exp_form.exp_lev.$error.select">
+                            请选择项目角色
+                        </span>
+                    </div>
+                    <select name="exp_lev"
+                            ng-model="expertInfo.expertProjectRole"
+                            option-select="exp_lev">
+                        <option value="">项目角色</option>
+                        <option ng-repeat="role in projectRoles"
+                                ng-selected="expertInfo.expertProjectRole==role.id"
+                                value="{{role.id}}">{{role.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <input type="search"
+                           name="exp_title"
+                           ng-model="expertInfo.title"
+                           maxlength="64"
+                           placeholder="职位"/>
+                </li>
+                <li>
+                    <input type="search"
+                           name="exp_source"
+                           ng-model="expertInfo.source"
+                           maxlength="50"
+                           placeholder="来源"/>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="exp_form.exp_rmk.$dirty && exp_form.exp_rmk.$invalid">
+                <span class="error"
+                      ng-show="exp_form.exp_rmk.$error.maxlength">
+                    总字数不超过500
+                </span>
+            </div>
+            <textarea rows="5"
+                      name="exp_rmk"
+                      ng-model="expertInfo.remark"
+                      ng-maxlength="500"
+                      placeholder="备注"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="expertInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{expertInfo.btnName}}"
+                   ng-disabled="exp_form.$invalid || expertInfo.loading"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="expertTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">专家信息</h3>
+        <table width="100%" cellpadding="3" cellspacing="10">
+            <tr valign="top">
+                <td class="text-right text-blue-light"
+                    width="30%">类别：
+                </td>
+                <td ng-bind="expertInfo.expertTypeText"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">联系人：</td>
+                <td ng-bind="expertInfo.expertName"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">所属公司：</td>
+                <td ng-bind="expertInfo.orgName"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">职位：</td>
+                <td ng-bind="expertInfo.title"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">手机：</td>
+                <td ng-bind="expertInfo.expertTel"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">所属团队：</td>
+                <td ng-bind="expertInfo.industry"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">对接人：</td>
+                <td ng-bind="expertInfo.brokerName"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">对接人电话：</td>
+                <td ng-bind="expertInfo.brokerTel"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">关系程度：</td>
+                <td ng-bind="expertInfo.closeLevelText"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">项目角色：</td>
+                <td ng-bind="expertInfo.expertProjectRoleText"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">来源：</td>
+                <td ng-bind="expertInfo.source"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">备注：</td>
+                <td ng-bind="expertInfo.remark"></td>
+            </tr>
+        </table>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>
+<script type="text/ng-template"
+        id="chartTemplate">
+    <div class="ngdialog-message text-center">
+        <ul class="charts">
+            <li id="close_chart"></li>
+            <li id="industry_chart"></li>
+        </ul>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

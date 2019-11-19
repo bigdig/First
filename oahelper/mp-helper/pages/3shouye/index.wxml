@@ -1,0 +1,94 @@
+<!--pages/3shouye/index.wxml-->
+<view class='top'>
+  <navigator class='top_li' url="/pages/4chenhui/index" hover-class="top_li_hover">
+    <view><image src='/img/index1.png' mode='widthFix'></image></view>
+    <view>晨会签到</view>
+  </navigator>
+  <navigator class='top_li' url="/pages/xxsp/index" hover-class="top_li_hover">
+    <view><image src='/img/index2.png' mode='widthFix'></image></view>
+    <view>信息审批</view>
+  </navigator>
+  <navigator class='top_li' url="/pages/mmsq/index" hover-class="top_li_hover">
+    <view><image src='/img/index3.png' mode='widthFix'></image></view>
+    <view>名片申请</view>
+  </navigator>
+</view>
+
+<view class='center'>
+  <view class='center_li'>
+
+    <view class='base_title'>
+      <navigator class='center_li_more' url="/pages/tongzhi/index" hover-class="center_li_more_hover"><view></view></navigator>
+    通知
+    </view>
+
+    <view wx:if="{{tongzhi}}">
+      <navigator class='center_li_list' wx:for="{{tongzhi}}" url="{{item.link}}" hover-class="center_li_list_hover">{{item.text}}</navigator>
+    </view>
+    <view class='center_li_list' wx:else>暂无最新通知</view>
+
+  </view>
+  <view class='center_li'>
+
+    <view class='base_title'>
+      <!--需要查看更多则开启以下注释-->
+      <!--
+      <navigator class='center_li_more' url="/pages/toupiao/index" hover-class="center_li_more_hover"><view></view></navigator>
+      -->
+    投票
+    </view>
+
+    <view wx:if="{{toupiao}}">
+      <navigator class='center_li_list' wx:for="{{toupiao}}" url="{{item.link}}" hover-class="center_li_list_hover">{{item.text}}</navigator>
+    </view>
+    <view class='center_li_list' wx:else>暂无最新投票</view>
+    
+  </view>
+  <view class='center_li'>
+
+    <view class='base_title'>
+      <!--需要查看更多则开启以下注释-->
+      <!--
+      <navigator class='center_li_more' url="/pages/huodong/index" hover-class="center_li_more_hover"><view></view></navigator>
+      -->
+    活动
+    </view>
+
+    <view wx:if="{{huodong}}">
+      <navigator class='center_li_list' wx:for="{{huodong}}" url="{{item.link}}" hover-class="center_li_list_hover">{{item.text}}</navigator>
+    </view>
+    <view class='center_li_list' wx:else>暂无最新活动</view>
+    
+  </view>
+</view>
+
+
+
+<!--  <view        当前页面-->
+<!--  <navigator   链接至其它页面导航-->
+<!--
+<view class='bottom_nav'>
+
+
+  <view class='bottom_nav_li'>
+    <view><text class="icon iconfont icon-shouye2"></text></view>
+    <view>首页</view>
+  </view>
+  
+  <navigator class='bottom_nav_li' url="/pages/wenjian/index" hover-class="bottom_nav_li_hover">
+    <view><text class="icon iconfont icon-wenjian1"></text></view>
+    <view>文件</view>
+  </navigator>
+
+  <navigator class='bottom_nav_li' url="/pages/xiaoxi/index" hover-class="bottom_nav_li_hover">
+    <view><text class="icon iconfont icon-icon-xiaoxi"></text></view>
+    <view>消息</view>
+  </navigator>
+
+  <navigator class='bottom_nav_li' url="/pages/wode/index" hover-class="bottom_nav_li_hover">
+    <view><text class="icon iconfont icon-wode1"></text></view>
+    <view>我的</view>
+  </navigator>
+
+</view>
+-->

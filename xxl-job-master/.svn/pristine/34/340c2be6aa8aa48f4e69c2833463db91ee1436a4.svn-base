@@ -1,0 +1,194 @@
+package com.xxl.job.executor.service.jobhandler;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.crm.com.bigdata.tfzq.webservice.service.crm.Customer;
+import com.crm.com.bigdata.tfzq.webservice.service.crm.impl.CrmSynchroImplServiceTestCase;
+import com.ddfc.util.DateUtil;
+import com.ddfc.util.DateUtil.DATE_PATTERN;
+import com.tfzq.tycrm.entity.TyServiceorg;
+import com.tfzq.tycrm.service.TyServiceorgService;
+import com.tfzq.utils.Constants;
+import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.handler.IJobHandler;
+import com.xxl.job.core.handler.annotation.JobHandler;
+import com.xxl.job.core.log.XxlJobLogger;
+
+/**
+ * 任务Handler示例（Bean模式）
+ *
+ * 开发步骤： 1、继承"IJobHandler"：“com.xxl.job.core.handler.IJobHandler”；
+ * 2、注册到Spring容器：添加“@Component”注解，被Spring容器扫描为Bean实例；
+ * 3、注册到执行器工厂：添加“@JobHandler(value="自定义jobhandler名称")”注解，
+ * 注解value值对应的是调度中心新建任务的JobHandler属性的值。 4、执行日志：需要通过 "XxlJobLogger.log" 打印执行日志；
+ *
+ * @author xuxueli 2015-12-19 19:43:36
+ */
+@JobHandler(value = "synchronizeServiceOrg")
+@Component
+public class SynchronizeServiceOrgJobHandler extends IJobHandler {
+	
+	@Autowired
+	private TyServiceorgService tyServiceorgService;
+
+	@Override
+	public ReturnT<String> execute(String param) throws Exception {
+		XxlJobLogger.log("同步机构数据!");
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("platFlag", "KMS");
+		List<TyServiceorg> results = tyServiceorgService.findByUnionCondition(params);
+		XxlJobLogger.log("推送机构数据到KT，条数：" + results.size());
+		Map<String,Integer> returnMap = new HashMap<>();
+		boolean succ = true;
+		for (TyServiceorg lc : results) {
+			String remark =null;
+			String dealFlag="1";
+			try {
+				returnMap = addServiceorgToKM(lc,returnMap);
+				if(returnMap.get("andOrUpdate")!=-1){					
+					XxlJobLogger.log("推送机构返回值：" + returnMap.get("andOrUpdate")+" 机构姓名："+lc.getOrgName());
+				}
+				if(returnMap.get("delete")!=-1){					
+					XxlJobLogger.log("推送删除机构返回值：" + returnMap.get("delete")+" 机构姓名："+lc.getOrgName());
+				}
+			} catch (Exception e) {
+				succ = false;
+				e.printStackTrace();
+				remark = e.getMessage();
+				dealFlag="2";
+				XxlJobLogger.log("推送失败机构[" + lc.toString() + "]到KT会议失败：" + e.getMessage());
+			}
+			TyServiceorg result = new TyServiceorg();
+			result.setPushId(lc.getPushId());
+			result.setRemark(remark);
+			result.setDealFlag(dealFlag);
+			tyServiceorgService.updateByPushId(result);
+		}
+		if(succ){
+			return SUCCESS;
+		}else{
+			return FAIL;
+		}
+	}
+	
+	private Map<String,Integer> addServiceorgToKM(TyServiceorg tyServiceorg,Map<String,Integer> returnMap) throws Exception {
+		// Customer对应我们的TyServiceorg
+		Customer customer = setObjectOfCustomer(tyServiceorg);
+		
+		int returnResult=-1,returnResultDel=-1;
+		CrmSynchroImplServiceTestCase crm = new CrmSynchroImplServiceTestCase();
+		if(StringUtils.equals(tyServiceorg.getDealFlag(), "0")){			
+			returnResult = crm.test1CrmSynchroImplPortSaveOrUpdateCustomer(customer);
+			returnMap.put("andOrUpdate", returnResult);
+			returnMap.put("delete",returnResultDel);
+		}
+		if(StringUtils.equals(tyServiceorg.getDealFlag(), "1")){			
+			returnResultDel = crm.test3CrmSynchroImplPortDeleteCustomer(customer.getId());
+			returnMap.put("delete",returnResultDel);
+			returnMap.put("andOrUpdate", returnResult);
+		}
+		return returnMap;
+	}
+	
+	private Customer setObjectOfCustomer(TyServiceorg tyServiceorg) {
+		Customer customer = new Customer();
+		customer.setId(tyServiceorg.getId());
+		customer.setSource(442595874);
+		customer.setName(tyServiceorg.getOrgName());
+		customer.setManger(tyServiceorg.getServiceSaler());
+		customer.setStatus(transCustStatus(tyServiceorg.getCustStatus()));
+		customer.setLevel(transOrgLevel(tyServiceorg.getOrgLevel()));
+		customer.setType(transCustCat(tyServiceorg.getCustCat()));
+		customer.setCustSht(tyServiceorg.getOrgSimpleName());
+		customer.setOfsAddr(tyServiceorg.getAddress());
+		customer.setCustLxPsn(tyServiceorg.getContactorName());
+		customer.setCustLxTel(tyServiceorg.getContactorTel());
+		customer.setTel(tyServiceorg.getCompanyTel());
+		customer.setEmail(tyServiceorg.getCompanyMail());
+		customer.setCreateTime(DateUtil.format(tyServiceorg.getCreateTime(), DATE_PATTERN.YYYYMMDDHHMMSS));
+		customer.setCreator(tyServiceorg.getCreateBy());
+		customer.setUpdator(tyServiceorg.getUpdateBy());
+		customer.setUpdateTime(DateUtil.format(tyServiceorg.getUpdateTime(), DATE_PATTERN.YYYYMMDDHHMMSS));
+		customer.setAreaCode(transAreaCode(tyServiceorg.getAreaCode()));
+		return customer;
+	}
+	
+	private String transCustCat(String custCat) {
+		 if ("1".equals(custCat)) {
+			return Constants.CUST_CAT_INSURANCE;
+		} else if ("2".equals(custCat)) {
+			return Constants.CUST_CAT_PUBLIC;
+		} else if ("3".equals(custCat)) {
+			return Constants.CUST_CAT_MANAGEMENT;
+		} else if ("4".equals(custCat)) {
+			return Constants.CUST_CAT_SELF;
+		} else if ("5".equals(custCat)) {
+			return Constants.CUST_CAT_PRIVATE;
+		} else if ("6".equals(custCat)) {
+			return Constants.CUST_CAT_TRUST_COMPANY;
+		} else if ("7".equals(custCat))  {
+			return Constants.CUST_CAT_OTHER;
+		} else {
+			return custCat;
+		}
+	}
+	
+	private String transCustStatus(String custStatus) {
+		 if ("1".equals(custStatus)) {
+			return Constants.CUST_STATUS_UNSIGNED;
+		} else if ("2".equals(custStatus)) {
+			return Constants.CUST_STATUS_POTENTIAL;
+		} else if ("3".equals(custStatus)) {
+			return Constants.CUST_STATUS_SIGNED;
+		} else if ("4".equals(custStatus)) {
+			return Constants.CUST_STATUS_OTHER;
+		} else {
+			return custStatus;
+		}
+	}
+	
+	private String transOrgLevel(String orgLevel) {
+		 if ("1".equals(orgLevel)) {
+			return Constants.KM_CUST_LEVEL_1;
+		} else if ("2".equals(orgLevel)) {
+			return Constants.KM_CUST_LEVEL_2;
+		} else if ("3".equals(orgLevel)) {
+			return Constants.KM_CUST_LEVEL_3;
+		} else if ("4".equals(orgLevel)) {
+			return Constants.KM_CUST_LEVEL_4;
+		} else if ("10".equals(orgLevel)) {
+			return Constants.KM_CUST_LEVEL_10;
+		} else {
+			return orgLevel;
+		}
+	}
+	
+	private String transAreaCode(String areaCode) {
+		 if ("1".equals(areaCode)) {
+			return Constants.AREA_CODE_1;
+		} else if ("2".equals(areaCode)) {
+			return Constants.AREA_CODE_2;
+		} else if ("3".equals(areaCode)) {
+			return Constants.AREA_CODE_3;
+		} else if ("4".equals(areaCode)) {
+			return Constants.AREA_CODE_4;
+		} else if ("5".equals(areaCode)) {
+			return Constants.AREA_CODE_5;
+		} else if ("6".equals(areaCode)) {
+			return Constants.AREA_CODE_6;
+		} else if ("7".equals(areaCode)) {
+			return Constants.AREA_CODE_7;
+		} else if ("8".equals(areaCode)) {
+			return Constants.AREA_CODE_8;
+		} else {
+			return areaCode;
+		}
+	}
+
+}

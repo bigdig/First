@@ -1,0 +1,27 @@
+<!--pages/27baoxiao_detail/index.wxml-->
+<view class='show_status'>
+
+  <view wx:if="{{money}}">
+    <view class='base_title'>{{money}}</view>
+    <view>金额（元）</view>
+  </view>
+
+  <view wx:else>
+    <view class='base_title'>{{status}}</view>
+    <view>报销单状态</view>
+  </view>
+
+</view>
+
+
+<view class='center'>
+
+ <view class='show_name'>{{name}}，您好！ </view> 
+
+ <view class='show_content'>
+   <!--用 text 标签，也只可以 text 标签 ： 这样后台传的data数据中 \n 就可以换行啦-->
+  <text>{{content}}</text>
+ </view>
+
+
+</view>

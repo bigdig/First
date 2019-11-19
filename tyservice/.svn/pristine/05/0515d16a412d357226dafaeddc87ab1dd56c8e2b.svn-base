@@ -1,0 +1,31 @@
+<div class="logo">
+    <a href="javascript:void(0)" ng-click="logout()"
+       class="logout text-orange font-16 fl">
+        <sub class="icon icon-switch font-20"></sub>
+        退出账户
+    </a>
+    <img bo-if="userInfo.dept.pic"
+         bo-src="{{userInfo.dept.pic}}"/>
+    <img bo-if="!userInfo.dept.pic"
+         src="../img/logo.png"/>
+</div>
+<h1 bo-text="system.name"></h1>
+<h3 class="text-blue-light" style="margin:10px 0;"
+    ng-if="router.showSubTitle">
+    <a href="javascript:void(0)"
+       ng-if="router.current"
+       class="text-blue-light"
+       ng-click="go(router.previous)"
+       ng-bind="router.previous.menuName"></a>
+    <label ng-if="router.current">
+        <span ng-if="router.previous">></span>
+        <span ng-bind="router.current.menuName"></span>
+    </label>
+    <label ng-if="!router.current"
+           ng-bind="router.previous.menuName"></label>
+    <a href="javascript:void(0)"
+       class="text-orange font-16"
+       ng-show="welcome.isBack"
+       style="float: right"
+       ng-click="back()">返回</a>
+</h3>

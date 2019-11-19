@@ -1,0 +1,36 @@
+<tr ng-hide="node.isCollected && node.childCollected"
+    repeat-finish="copyDataToTable()"
+    dataId="{{node.source.id}}">
+    <td ng-show="node.hasCheckBox">
+        <input type="checkbox"
+               ng-model="node.hasCheckBox.isChecked"
+               ng-checked="node.hasCheckBox.isChecked"
+               ng-click="node.hasCheckBox.check(dataItem)"/>
+        <label></label>
+    </td>
+    <td ng-repeat="it in node.item">
+        <div ng-if="$first">
+            <div ng-style="node.style">
+                <a href="javascript:void(0)" ng-if="node.childrenVisibility"
+                   ng-click="toggle(node)">
+                    <i class="icon"
+                       ng-class="{'icon-minus':!node.isCollected, 'icon-plus':node.isCollected}"></i>
+                </a>
+                <span ng-bind="it.text"></span>
+            </div>
+        </div>
+        <div ng-if="!$first">
+            <div ng-bind="it.text"
+                 title="{{it.text | deleteHtml}}"></div>
+        </div>
+    </td>
+    <td ng-show="node.controls"
+        class="ctl">
+        <a href="javascript:void(0)" ng-repeat="ctrl in node.controls"
+           class="text-orange"
+           ng-show="ctrl.isShow"
+           bo-text="ctrl.name"
+           ng-click="ctrl.event(node)"
+           bo-class="{'space-left':!$first}"></a>
+    </td>
+</tr>

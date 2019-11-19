@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="logo">
+    <image src="../../static/images/login2.png" mode="aspectFit"></image>
+  </view>
+  <view class="form">
+    <text class="form_label">账号：</text>
+    <input class="form_item" type="text" bindinput="bindUserNameInput" />
+  </view>
+  <view class="form">
+    <text class="form_label">密码：</text>
+    <input class="form_item" password type="text" bindinput="bindPwdInput" />
+  </view>
+    <button class="commit_button ">提交</button>
+</view>

@@ -1,0 +1,61 @@
+/* pages/newGroup/newGroup.wxss */
+.box_title{
+   margin-top: 20rpx;
+   color: #282C3F;
+   padding: 10rpx 0 0 46rpx;
+   background-color: #ffffff;
+}
+.flex{ 
+   margin-bottom: 20rpx;
+}  
+.box_item{
+  display: inline-block;  
+  padding: 0rpx 30rpx; 
+  background: #F7F7FA;  
+  font-size: 24rpx;  
+  color: #9FA3BB;
+  border-radius: 4px;  
+  border: 1rpx solid #eeeeee;
+  box-sizing: border-box;
+  margin-right: 20rpx;
+  margin-top: 20rpx;
+  line-height: 50rpx;
+}  
+.is_checked {  
+  border: 1px solid #FC6E57;  
+  box-sizing: border-box;
+  color: #ffffff;  
+  background: #FE8166;  
+}  
+/* 
+.box_section{
+  padding: 20rpx 40rpx;
+  background-color: #ffffff;
+  margin-top: 20rpx;
+} */
+.box_number{
+  color: #282C3F;
+  margin-left: 40rpx;
+  margin-top: 40rpx;
+  display: block;
+}
+.box_add{
+  margin-top: 100rpx;
+  margin-left: 40rpx;
+}
+.box_section{
+  margin-top: 30rpx;
+}
+
+.submit{
+  color: #3296FA;
+  font-size: 30rpx;
+  height: 95rpx;
+  line-height: 95rpx;
+  text-align: center;
+  box-shadow:10px 0px 20px #F7F7FA ;    
+  background-color: #ffffff;  
+  position: absolute;
+  bottom: 0;   
+  width: 100%;
+}

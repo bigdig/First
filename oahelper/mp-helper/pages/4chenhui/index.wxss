@@ -1,0 +1,37 @@
+/* pages/4chenhui/index.wxss */
+.top{ height: 212rpx; padding-top: 40rpx; margin-bottom: 20rpx; box-sizing: border-box; line-height: 66rpx; text-align: center; color: #fff; background:linear-gradient(360deg,rgba(255,153,0,1) 0%,rgba(255,184,42,1) 100%)}
+.top base_top{ line-height: 90rpx; font-size: 48rpx;}
+
+
+.center{ padding: 0 35rpx; background-color: #fff;}
+
+.center_choose{ height: 90rpx; line-height: 88rpx; color: #000; border-bottom: #E5E5E5 solid 2rpx; position: relative;}
+.center_choose.no_line{ border-bottom: transparent solid 2rpx;}
+
+.center_choose_show_more{ padding-right: 30rpx;}
+.center_choose_show_more::after{ content: ""; width: 20rpx; height: 20rpx; border: #C7C7CC solid 4rpx; border-color: #C7C7CC #C7C7CC transparent transparent; position: absolute; right: 0; top: 34rpx;
+-webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+}
+.center_choose_show_more picker{ width: 420rpx; height: 100%; text-align: right; color: #888; white-space: nowrap; overflow: hidden; float: right;}
+
+
+.center_choose_ico{ display: inline-block; vertical-align: middle; width: 44rpx; height: 44rpx; line-height: 44rpx; margin-right: 10rpx; text-align: center; color: #fff; border-radius: 50%; border: #C9C9C9 solid 2rpx; position: relative; top: -2rpx;}
+.center_choose_ico .iconfont{ display: none;}
+.center_choose_ico_in{ border: #FF9900 solid 2rpx; background-color: #FF9900;}
+.center_choose_ico_in .iconfont{ display: inline-block;}
+
+.choose_img{ margin-left: 70rpx;}
+
+
+.choose_img_text{ line-height: 76rpx; padding-left: 70rpx; color: #B2B2B2; font-size: 28rpx;}
+
+
+.send_btn_gray{ width: 670rpx; height: 94rpx; margin-top: 60rpx; color: #fff; font-size: 36rpx; border-radius: 10rpx; background-color: #C9C9C9;}
+
+
+
+
+
+
+

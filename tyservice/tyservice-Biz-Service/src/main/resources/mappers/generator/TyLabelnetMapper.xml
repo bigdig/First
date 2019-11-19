@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyLabelnetMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyLabelnet">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="label_id_from" jdbcType="VARCHAR" property="labelIdFrom" />
+      <result column="label_id_to" jdbcType="VARCHAR" property="labelIdTo" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyLabelnetBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="label_id_from" jdbcType="VARCHAR" property="labelIdFrom" />
+      <result column="label_id_to" jdbcType="VARCHAR" property="labelIdTo" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="p_id" jdbcType="VARCHAR" property="pId" />
+      <result column="label_level" jdbcType="VARCHAR" property="labelLevel" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+      <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_labelnet where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteByLabelId" parameterType="java.lang.String">
+    delete from ty_labelnet where label_id_from = #{labelId,jdbcType=VARCHAR} or label_id_to = #{labelId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyLabelnet">
+    insert into ty_labelnet (
+    id
+	,label_id_from
+	,label_id_to
+	,delete_flag
+	,type
+	,create_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{labelIdFrom,jdbcType=VARCHAR}
+    	,#{labelIdTo,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{type,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyLabelnet">
+    update ty_labelnet
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="labelIdFrom != null ">
+        label_id_from = #{labelIdFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="labelIdTo != null ">
+        label_id_to = #{labelIdTo,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null ">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,label_id_from,label_id_to,delete_flag,create_time,type
+    from ty_labelnet
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,label_id_from,label_id_to,delete_flag,create_time,type
+    from ty_labelnet
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select t.id,label_id_from,label_id_to,delete_flag,create_time,type,t1.label_name,t1.p_id,t1.cat_id,t1.cat_name,t1.label_level
+    from ty_labelnet t , ty_label t1 
+    where t.label_id_to = t1.id
+	<if test="id != null and id != ''">and t.id = #{id}</if>
+	<if test="labelIdFrom != null and labelIdFrom != ''">and label_id_from = #{labelIdFrom}</if>
+	<if test="labelIdTo != null and labelIdTo != ''">and label_id_to = #{labelIdTo}</if>
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag = #{deleteFlag}</if>
+	<if test="type != null and type != ''">and type=#{type}</if>
+      order by t.id
+  </select>
+  <select id="getBindLabels" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,label_id_from,label_id_to,delete_flag,create_time,type
+    from ty_labelnet
+    where 1=1
+	<if test="id != null and id != ''">and id = #{id}</if>
+	<if test="labelIdFrom != null and labelIdFrom != ''">and label_id_from = #{labelIdFrom}</if>
+	<if test="labelIdTo != null and labelIdTo != ''">and label_id_to = #{labelIdTo}</if>
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag = #{deleteFlag}</if>
+	<if test="type != null and type != ''">and type=#{type}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_labelnet where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="labelIdFrom != null and labelIdFrom != ''">and label_id_from = #{labelIdFrom}</if>
+	<if test="labelIdTo != null and labelIdTo != ''">and label_id_to = #{labelIdTo}</if>
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag=#{deleteFlag}</if>
+	<if test="type != null and type != ''">and type=#{type}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or label_id_from like '%'||#{keyword}||'%' or label_id_to like '%'||#{keyword}||'%' or delete_flag like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

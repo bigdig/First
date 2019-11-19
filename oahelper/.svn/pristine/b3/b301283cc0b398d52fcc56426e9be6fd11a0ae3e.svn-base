@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoInformMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoInform">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="inform_title" jdbcType="VARCHAR" property="informTitle" />
+      <result column="inform_content" jdbcType="CLOB" property="informContent" />
+      <result column="external_link" jdbcType="VARCHAR" property="externalLink" />
+      <result column="src_type" jdbcType="VARCHAR" property="srcType" />
+      <result column="src_id" jdbcType="VARCHAR" property="srcId" />
+      <result column="is_reply" jdbcType="VARCHAR" property="isReply" />
+      <result column="inform_group" jdbcType="VARCHAR" property="informGroup" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoInformBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="inform_title" jdbcType="VARCHAR" property="informTitle" />
+      <result column="inform_content" jdbcType="CLOB" property="informContent" />
+      <result column="external_link" jdbcType="VARCHAR" property="externalLink" />
+      <result column="src_type" jdbcType="VARCHAR" property="srcType" />
+      <result column="src_id" jdbcType="VARCHAR" property="srcId" />
+      <result column="is_reply" jdbcType="VARCHAR" property="isReply" />
+      <result column="inform_group" jdbcType="VARCHAR" property="informGroup" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_inform where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoInform">
+    insert into go_inform (
+    id
+	,inform_title
+	,inform_content
+	,external_link
+	,src_type
+	,src_id
+	,is_reply
+	,inform_group
+	,remark
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{informTitle,jdbcType=VARCHAR}
+    	,#{informContent,jdbcType=CLOB}
+    	,#{externalLink,jdbcType=VARCHAR}
+    	,#{srcType,jdbcType=VARCHAR}
+    	,#{srcId,jdbcType=VARCHAR}
+    	,#{isReply,jdbcType=VARCHAR}
+    	,#{informGroup,jdbcType=VARCHAR}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoInform">
+    update go_inform
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="informTitle != null ">
+        inform_title = #{informTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="informContent != null ">
+        inform_content = #{informContent,jdbcType=CLOB},
+      </if>
+      <if test="externalLink != null ">
+        external_link = #{externalLink,jdbcType=VARCHAR},
+      </if>
+      <if test="srcType != null ">
+        src_type = #{srcType,jdbcType=VARCHAR},
+      </if>
+      <if test="srcId != null ">
+        src_id = #{srcId,jdbcType=VARCHAR},
+      </if>
+      <if test="isReply != null ">
+        is_reply = #{isReply,jdbcType=VARCHAR},
+      </if>
+      <if test="informGroup != null ">
+        inform_group = #{informGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,inform_title,inform_content,external_link,src_type,src_id,is_reply,inform_group,remark,create_by,create_time,update_by,update_time
+    from go_inform
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,inform_title,inform_content,external_link,src_type,src_id,is_reply,inform_group,remark,create_by,create_time,update_by,update_time
+    from go_inform
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,inform_title,inform_content,external_link,src_type,src_id,is_reply,inform_group,remark,create_by,create_time,update_by,update_time
+    from go_inform
+    where 1=1
+	<if test="id != null and id != ''">and id=#{id}</if>
+	<if test="informTitle != null and informTitle != ''">and inform_title like '%'||#{informTitle}||'%'</if>
+	<if test="informContent != null and informContent != ''">and inform_content like '%'||#{informContent}||'%'</if>
+	<if test="externalLink != null and externalLink != ''">and external_link like '%'||#{externalLink}||'%'</if>
+	<if test="srcType != null and srcType != ''">and src_type=#{srcType}</if>
+	<if test="srcId != null and srcId != ''">and src_id=#{srcId}</if>
+	<if test="isReply != null and isReply != ''">and is_reply=#{isReply}</if>
+	<if test="remark != null and remark != ''">and remark=#{remark}</if>
+	<if test="informGroup != null and informGroup != ''">and inform_group like '%'||#{informGroup}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_inform where 1=1
+	<if test="id != null and id != ''">and id=#{id}</if>
+	<if test="informTitle != null and informTitle != ''">and inform_title like '%'||#{informTitle}||'%'</if>
+	<if test="informContent != null and informContent != ''">and inform_content like '%'||#{informContent}||'%'</if>
+	<if test="externalLink != null and externalLink != ''">and external_link like '%'||#{externalLink}||'%'</if>
+	<if test="srcType != null and srcType != ''">and src_type=#{srcType}</if>
+	<if test="srcId != null and srcId != ''">and src_id=#{srcId}=</if>
+	<if test="isReply != null and isReply != ''">and is_reply=#{isReply}</if>
+	<if test="informGroup != null and informGroup != ''">and inform_group like '%'||#{informGroup}||'%'</if>
+	<if test="remark != null and remark != ''">and remark=#{remark}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or inform_title like '%'||#{keyword}||'%' or inform_content like '%'||#{keyword}||'%' or external_link like '%'||#{keyword}||'%' or src_type like '%'||#{keyword}||'%' or src_id like '%'||#{keyword}||'%' or is_reply like '%'||#{keyword}||'%' or inform_group like '%'||#{keyword}||'%'or remark like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

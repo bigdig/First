@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoFileArchiveMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoFileArchive">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_description" jdbcType="VARCHAR" property="fileDescription" />
+      <result column="file_catalog" jdbcType="VARCHAR" property="fileCatalog" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+      <result column="file_weight" jdbcType="INTEGER" property="fileWeight" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoFileArchiveBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_description" jdbcType="VARCHAR" property="fileDescription" />
+      <result column="file_catalog" jdbcType="VARCHAR" property="fileCatalog" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+      <result column="file_weight" jdbcType="INTEGER" property="fileWeight" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_file_archive where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoFileArchive">
+    insert into go_file_archive (
+    id
+	,file_name
+	,file_description
+	,file_catalog
+	,file_path
+	,file_weight
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{fileName,jdbcType=VARCHAR}
+    	,#{fileDescription,jdbcType=VARCHAR}
+    	,#{fileCatalog,jdbcType=VARCHAR}
+    	,#{filePath,jdbcType=VARCHAR}
+    	,#{fileWeight,jdbcType=INTEGER}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoFileArchive">
+    update go_file_archive
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null ">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="fileDescription != null ">
+        file_description = #{fileDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="fileCatalog != null ">
+        file_catalog = #{fileCatalog,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null ">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileWeight != null ">
+        file_weight = #{fileWeight,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,file_name,file_description,file_catalog,file_path,file_weight,create_by,create_time,update_by,update_time
+    from go_file_archive
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,file_name,file_description,file_catalog,file_path,file_weight,create_by,create_time,update_by,update_time
+    from go_file_archive
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,file_name,file_description,file_catalog,file_path,file_weight,create_by,create_time,update_by,update_time
+    from go_file_archive
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="fileName != null and fileName != ''">and file_name like '%'||#{fileName}||'%'</if>
+	<if test="fileDescription != null and fileDescription != ''">and file_description like '%'||#{fileDescription}||'%'</if>
+	<if test="fileCatalog != null and fileCatalog != ''">and file_catalog=#{fileCatalog}</if>
+	<if test="filePath != null and filePath != ''">and file_path like '%'||#{filePath}||'%'</if>
+	<if test="fileWeight != null and fileWeight != ''">and file_weight=#{fileWeight}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_file_archive where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="fileName != null and fileName != ''">and file_name like '%'||#{fileName}||'%'</if>
+	<if test="fileDescription != null and fileDescription != ''">and file_description like '%'||#{fileDescription}||'%'</if>
+	<if test="fileCatalog != null and fileCatalog != ''">and file_catalog=#{fileCatalog}</if>
+	<if test="filePath != null and filePath != ''">and file_path like '%'||#{filePath}||'%'</if>
+	<if test="fileWeight != null and fileWeight != ''">and file_weight=#{fileWeight}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or file_name like '%'||#{keyword}||'%' or file_description like '%'||#{keyword}||'%' or file_catalog like '%'||#{keyword}||'%' or file_path like '%'||#{keyword}||'%' or file_weight like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyPreserviceorgMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyPreserviceorg">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="org_level" jdbcType="VARCHAR" property="orgLevel" />
+      <result column="saler_id" jdbcType="VARCHAR" property="salerId" />
+      <result column="cust_status" jdbcType="VARCHAR" property="custStatus" />
+      <result column="org_simple_name" jdbcType="VARCHAR" property="orgSimpleName" />
+      <result column="cust_cat" jdbcType="VARCHAR" property="custCat" />
+      <result column="team_cat" jdbcType="VARCHAR" property="teamCat" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="company_mail" jdbcType="VARCHAR" property="companyMail" />
+      <result column="company_tel" jdbcType="VARCHAR" property="companyTel" />
+      <result column="contactor_name" jdbcType="VARCHAR" property="contactorName" />
+      <result column="contactor_tel" jdbcType="VARCHAR" property="contactorTel" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="rec_sms" jdbcType="VARCHAR" property="recSms" />
+      <result column="rec_email" jdbcType="VARCHAR" property="recEmail" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="white_deadline" jdbcType="INTEGER" property="whiteDeadline" />
+      <result column="preporg_status" jdbcType="VARCHAR" property="preporgStatus" />
+      <result column="org_exists" jdbcType="VARCHAR" property="orgExists" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyPreserviceorgBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="org_level" jdbcType="VARCHAR" property="orgLevel" />
+      <result column="saler_id" jdbcType="VARCHAR" property="salerId" />
+      <result column="cust_status" jdbcType="VARCHAR" property="custStatus" />
+      <result column="org_simple_name" jdbcType="VARCHAR" property="orgSimpleName" />
+      <result column="cust_cat" jdbcType="VARCHAR" property="custCat" />
+      <result column="team_cat" jdbcType="VARCHAR" property="teamCat" />
+      <result column="address" jdbcType="VARCHAR" property="address" />
+      <result column="company_mail" jdbcType="VARCHAR" property="companyMail" />
+      <result column="company_tel" jdbcType="VARCHAR" property="companyTel" />
+      <result column="contactor_name" jdbcType="VARCHAR" property="contactorName" />
+      <result column="contactor_tel" jdbcType="VARCHAR" property="contactorTel" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="rec_sms" jdbcType="VARCHAR" property="recSms" />
+      <result column="rec_email" jdbcType="VARCHAR" property="recEmail" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="white_deadline" jdbcType="INTEGER" property="whiteDeadline" />
+      <result column="preporg_status" jdbcType="VARCHAR" property="preporgStatus" />
+      <result column="org_exists" jdbcType="VARCHAR" property="orgExists" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_preserviceorg where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyPreserviceorg">
+    insert into ty_preserviceorg (
+    id
+	,org_name
+	,service_saler
+	,org_level
+	,saler_id
+	,cust_status
+	,org_simple_name
+	,cust_cat
+	,team_cat
+	,address
+	,company_mail
+	,company_tel
+	,contactor_name
+	,contactor_tel
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,rec_sms
+	,rec_email
+	,delete_flag
+	,white_deadline
+	,org_exists
+	,preporg_status
+	,mark
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{serviceSaler,jdbcType=VARCHAR}
+    	,#{orgLevel,jdbcType=VARCHAR}
+    	,#{salerId,jdbcType=VARCHAR}
+    	,#{custStatus,jdbcType=VARCHAR}
+    	,#{orgSimpleName,jdbcType=VARCHAR}
+    	,#{custCat,jdbcType=VARCHAR}
+    	,#{teamCat,jdbcType=VARCHAR}
+    	,#{address,jdbcType=VARCHAR}
+    	,#{companyMail,jdbcType=VARCHAR}
+    	,#{companyTel,jdbcType=VARCHAR}
+    	,#{contactorName,jdbcType=VARCHAR}
+    	,#{contactorTel,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{recSms,jdbcType=VARCHAR}
+    	,#{recEmail,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{whiteDeadline,jdbcType=VARCHAR}
+    	,#{orgExists,jdbcType=VARCHAR}
+    	,#{preporgStatus,jdbcType=VARCHAR}
+    	,#{mark,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyPreserviceorg">
+    update ty_preserviceorg
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceSaler != null ">
+        service_saler = #{serviceSaler,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLevel != null ">
+        org_level = #{orgLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="salerId != null ">
+        saler_id = #{salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="custStatus != null ">
+        cust_status = #{custStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgSimpleName != null ">
+        org_simple_name = #{orgSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="custCat != null ">
+        cust_cat = #{custCat,jdbcType=VARCHAR},
+      </if>
+      <if test="teamCat != null ">
+        team_cat = #{teamCat,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null ">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="companyMail != null ">
+        company_mail = #{companyMail,jdbcType=VARCHAR},
+      </if>
+      <if test="companyTel != null ">
+        company_tel = #{companyTel,jdbcType=VARCHAR},
+      </if>
+      <if test="contactorName != null ">
+        contactor_name = #{contactorName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactorTel != null ">
+        contactor_tel = #{contactorTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="recEmail != null ">
+        rec_email = #{recEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recSms != null ">
+        rec_sms = #{recSms,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="whiteDeadline != null ">
+        white_deadline = #{whiteDeadline,jdbcType=INTEGER},
+      </if>
+      <if test="preporgStatus != null ">
+        preporg_status = #{preporgStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="orgExists != null ">
+        org_exists = #{orgExists,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null ">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,org_name,service_saler,org_level,saler_id,cust_status,org_simple_name,cust_cat,team_cat,address,company_mail,company_tel,contactor_name,contactor_tel,create_by,create_time,update_by,update_time,rec_sms,rec_email,delete_flag,white_deadline,preporg_status,org_exists,mark
+    from ty_preserviceorg
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,org_name,service_saler,org_level,saler_id,cust_status,org_simple_name,cust_cat,team_cat,address,company_mail,company_tel,contactor_name,contactor_tel,create_by,create_time,update_by,update_time,rec_sms,rec_email,delete_flag,white_deadline,preporg_status,org_exists,mark
+    from ty_preserviceorg
+    where delete_flag = '0'
+    order by id
+  </select>
+  <select id="queryByCondition" parameterType="java.util.Map" resultMap="ExResultMap">
+  	select id,org_name,service_saler,org_level,saler_id,cust_status,org_simple_name,cust_cat,team_cat,address,company_mail,company_tel,contactor_name,contactor_tel,create_by,create_time,update_by,update_time,rec_sms,rec_email,delete_flag,white_deadline,preporg_status,org_exists,mark
+  		from ty_preserviceorg where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="orgName != null and orgName != ''">and org_name like '%'||#{orgName}||'%'</if>
+	<if test="orgNameAccurate != null and orgNameAccurate != ''">and org_name =#{orgNameAccurate}</if>
+	<if test="orgSimpleName != null and orgSimpleName != ''">and org_simple_name like '%'||#{orgSimpleName}||'%'</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and  service_saler like '%'||#{serviceSaler}||'%'
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and  team_cat like '%'||#{teamCat}||'%'
+	</if>
+	<if test="orgLevel != null and orgLevel != ''">and ORG_LEVEL = #{orgLevel}</if>
+	<if test="custCat != null and custCat != ''">and cust_cat = #{custCat}</if>
+	<if test="custStatus != null and custStatus != ''">and CUST_STATUS = #{custStatus}</if>
+	<if test="keyword != null">
+		and (org_name like '%'||#{keyword}||'%'  or service_saler like '%'||#{keyword}||'%')
+	</if>
+	<if test="salerId != null and salerId != ''">
+		and ','||saler_id||',' like '%,'||#{salerId}||',%'
+	</if>
+	<if test="salerList != null and salerList.size>0">
+		and 
+		<foreach collection="salerList" item="salerId" index="index"
+            open="(" close=")" separator="or">
+             ','||saler_id||',' like '%,'||#{salerId}||',%'
+        </foreach>
+	</if>
+  </select>
+  
+   <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_preserviceorg where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="orgName != null and orgName != ''">and org_name like '%'||#{orgName}||'%'</if>
+	<if test="orgSimpleName != null and orgSimpleName != ''">and org_simple_name like '%'||#{orgSimpleName}||'%'</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and  service_saler like '%'||#{serviceSaler}||'%'
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and  team_cat like '%'||#{teamCat}||'%'
+	</if>
+	<if test="orgLevel != null and orgLevel != ''">and ORG_LEVEL = #{orgLevel}</if>
+	<if test="custCat != null and custCat != ''">and cust_cat = #{custCat}</if>
+	<if test="custStatus != null and custStatus != ''">and CUST_STATUS = #{custStatus}</if>
+	<if test="orgExists != null and orgExists != ''">and org_exists = #{orgExists}</if>
+	<if test="preporgStatus != null and preporgStatus != ''">and preporg_status = #{preporgStatus}</if>
+	<if test="keyword != null">
+		and (org_name like '%'||#{keyword}||'%'  or service_saler like '%'||#{keyword}||'%')
+	</if>
+	<if test="salerId != null and salerId != ''">
+		and ','||saler_id||',' like '%,'||#{salerId}||',%'
+	</if>
+	<if test="salerList != null and salerList.size>0">
+		and 
+		<foreach collection="salerList" item="salerId" index="index"
+            open="(" close=")" separator="or">
+             ','||saler_id||',' like '%,'||#{salerId}||',%'
+        </foreach>
+	</if>
+  </select>
+  
+  
+  <select id="getRecordByOrgName" parameterType="java.lang.String" resultMap="ExResultMap">
+  	select id,org_name,service_saler,org_level,saler_id,cust_status,org_simple_name,cust_cat,team_cat,address,company_mail,company_tel,contactor_name,contactor_tel,create_by,create_time,update_by,update_time,rec_sms,rec_email,delete_flag,white_deadline,preporg_status,org_exists,mark
+  		from ty_preserviceorg where org_name = #{orgName,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

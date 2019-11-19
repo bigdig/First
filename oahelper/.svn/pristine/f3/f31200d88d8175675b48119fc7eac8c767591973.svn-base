@@ -1,0 +1,26 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="title">
+    <view>
+      <text class="title_text">{{vote_group.vote_group_title}}</text>
+    </view>
+    <view>
+      <text class="title_end_time">{{vote_group.end_time}}</text>
+    </view>
+  </view>
+  <view class="vote" wx:for="{{vote_group.votes}}" wx:for-index="vote_index" wx:for-item="vote">
+    <view class="vote_title">
+      <text>{{"Q"+(vote_index+1)+". "+vote.vote_name}}</text>
+    </view>
+
+    <radio-group bindchange="radioChange">
+      <view class="vote_item" wx:for="{{vote.vote_items}}" wx:for-index="vote_item_index" wx:for-item="vote_item">
+        <radio value="{{vote_item.vote_item_id}}" checked="{{vote_item.checked}}" />{{vote_item.vote_item_name}}
+      </view>
+    </radio-group>
+
+  </view>
+
+  <button class="commit_button ">提交</button>
+
+</view>

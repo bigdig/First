@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDcmorningstockMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDcmorningstock">
+      <result column="speak_id" jdbcType="VARCHAR" property="speakId" />
+      <result column="stock_id" jdbcType="VARCHAR" property="stockId" />
+      <result column="act_type" jdbcType="VARCHAR" property="actType" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dcmorningstock where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteRecords" parameterType="java.util.Map">
+    delete from ty_dcmorningstock where speak_id = #{speakId,jdbcType=VARCHAR} and stock_id= #{stockId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDcmorningstock">
+    insert into ty_dcmorningstock (
+    speak_id
+	,stock_id
+	,act_type
+    )values (
+    #{speakId,jdbcType=VARCHAR}
+    	,#{stockId,jdbcType=VARCHAR}
+    	,#{actType,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDcmorningstock">
+    update ty_dcmorningstock
+    <trim prefix="set" suffixOverrides=",">
+      <if test="speakId != null ">
+        speak_id = #{speakId,jdbcType=VARCHAR},
+      </if>
+      <if test="stockId != null ">
+        stock_id = #{stockId,jdbcType=VARCHAR},
+      </if>
+      <if test="actType != null ">
+        act_type = #{actType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select speak_id,stock_id,act_type
+    from ty_dcmorningstock
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select speak_id,stock_id,act_type
+    from ty_dcmorningstock
+    order by id
+  </select>
+  <select id="getStockBySpeakId" resultType="java.lang.String">
+    select stock_id
+    from ty_dcmorningstock t
+    where t.speak_id = #{speakId}
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dcmorningstock where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

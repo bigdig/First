@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.dao.sys.SysEventExpandMapper">
+	<select id="query" parameterType="java.util.Map" resultType="java.lang.String">
+		select id from sys_event where 1=1
+		<if test="title != null and title !=''">
+			and title_ = #{title}
+		</if>
+		<if test="requestUri != null and requestUri !=''">
+			and request_uri = #{requestUri}
+		</if>
+		<if test="account != null and account !=''">
+			and create_by in (select id from sys_user where account_ = #{account})
+		</if>
+		<if test="dictList != null and dictList.size>0">
+			and request_uri in
+			<foreach collection="dictList" item="dic" index="index"
+	            open="(" close=")" separator=",">
+	            #{dic,jdbcType=VARCHAR}
+        	</foreach>
+        </if>
+        <if test="userIds != null and userIds.size>0">
+			and create_by in
+			<foreach collection="userIds" item="userId" index="index"
+	            open="(" close=")" separator=",">
+	            #{userId,jdbcType=VARCHAR}
+        	</foreach>
+		</if>
+	</select>
+</mapper>

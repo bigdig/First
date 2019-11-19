@@ -1,0 +1,97 @@
+<!--pages/addService/addService.wxml-->
+<view class='tab'>
+   <text class='tab_customer font26' style='color:282C3F' bindtap='tab_customer'>现有服务</text>
+   <text class='tab_mechanism font26' bindtap='tab_mechanism' style='color:#3296FA;margin-right:50rpx;float:right;margin-top:10rpx;'>新建活动</text>
+</view>
+<view class='box'>
+  <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px'  bindscrolltolower="bindDownLoad">
+      <view class='box_list' wx:key="{{item}}" wx:for="{{customerList}}">
+          <!-- <checkbox-group class="checkbox-group" bindchange="checkboxChange"> -->
+          <view class='checkbox-group' bindtap="checkboxChange" data-id="{{item.id}}" data-checked="{{item.checked}}">
+            <image wx:if="{{item.checked}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+            <view wx:else class='box_list_yuan'></view>
+          </view>
+            <!-- <checkbox  class='box_list_checked' value='{{item.checked}}' checked="{{item.checked}}"/> -->
+            <view class='box_list_item'>
+              <text class='font28 box_list_title'>{{item.title == null ? "" : item.title}}</text>
+              <text class='font20 box_list_pattern'>{{item.activityTypeText == null ? "" : item.activityTypeText}}</text>
+              <text class='font20 box_list_Rnumber'>{{item.perLimit == null ? '无限人数' : item.perLimit +'人'}}</text>
+              <text class='font20 box_list_time'>{{item.createTime}}</text>
+            </view>
+          <!-- </checkbox-group> -->
+      </view>
+  </scroll-view>
+    <!-- <view wx:else>
+         <view class='box_title'>
+              <text class='font28'>请选择活动类型</text>
+              <checkbox-group bindchange="serviceValChange">  
+                <view class="service_selection flex">  
+                  <block wx:key="{{item}}" wx:for="{{allGoodsFilte}}">  
+                    <view class="box_item">  
+                      <label class="checkbox {{item.checked?'is_checked':''}}">  
+                        <checkbox value="{{item.value}}" checked="{{item.checked}}" hidden="false" />{{item.name}}  
+                      </label>  
+                    </view>  
+                  </block>  
+                </view>  
+              </checkbox-group> 
+         </view>
+          <view class="box_section">
+             <textarea placeholder="请输入活动标题..." placeholder-style="color:#9FA3BB;" class='font28' />
+          </view>
+          <view class='box_information'> 
+              <view class='font28 box_information_item'>
+                 <text class='box_information_item_key'>活动发起人</text>
+                 <text class='box_information_item_val'>我</text>
+              </view>
+              <view  class='font28 box_information_item'>
+                 <text class='box_information_item_key'>活动时间</text>
+                 <text class='box_information_item_val'>2017.10.10 6:20-9:20</text>
+              </view>
+              <view class='font28 box_informat'>
+                 <text class='box_information_item_key'>参会客户</text>
+                 <text class='box_information_item_val'>1</text>
+                 <view></view>
+                 <text class='box_item_label font20'>周丽</text>
+              </view>
+          </view>
+           <view class='box_show' wx:if="{{}}">
+            <text class='font28'>显示全部</text>
+          </view> 
+          <view wx:else="{{}}">
+               <view class='box_dizhi'>
+                  <view class='font28 box_texteard'>
+                    <text class='box_information_item_key' style='line-height:80rpx;'>活动地点</text>
+                    <text class='box_information_item_val' style='line-height:80rpx;'>武汉</text>
+                    <textarea placeholder="请输入详细地址..." placeholder-style="color:#9FA3BB;" class='font28 textarea_bottom' />
+                    <textarea placeholder="请输入活动内容..." placeholder-style="color:#9FA3BB;" class='font28 textarea_top textarea_bottom' />
+                  </view>
+                  <view  class='font28 box_information_item'>
+                    <text class='box_information_item_key'>优先度</text>
+                    <text class='box_information_item_val'>非常紧急</text>
+                  </view>
+                  <view class='font28 box_informat'>
+                    <text class='box_information_item_key'>添加标签</text>
+                    <text class='box_information_item_val'>1</text>
+                    <view></view>
+                    <text class='box_item_label font20'>有色金属</text>
+                  </view>
+                  <view  class='font28 box_information_item'>
+                    <text class='box_information_item_key'>附件</text>
+                    <text class='box_information_item_val'>请选择</text>
+                  </view>
+              </view>
+              <view style='height:20rpx;background-color:#F3F2F7;'></view>
+              <view class='font28 box_texteard' style='margin-left:40rpx;'>
+                  <text class='box_information_item_key' style='line-height:80rpx;'>备注</text>
+                  <textarea placeholder="请输入您的备注..." placeholder-style="color:#9FA3BB;" class='font28'/>
+              </view>
+          </view>
+    </view> -->
+</view>
+ <button class='submit' bindtap='submit'>完成</button>   
+ <view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+       加载中...
+    </loading>
+</view>

@@ -1,0 +1,5 @@
+<li>
+    <span ng-bind="node.deptName"
+          ng-class="{'active':model.deptId==node.id}"
+          ng-click="select(node)"></span>
+</li>

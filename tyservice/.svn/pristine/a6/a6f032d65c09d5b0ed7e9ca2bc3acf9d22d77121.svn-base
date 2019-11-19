@@ -1,0 +1,140 @@
+<form name="search"
+      ng-submit="searchLanguage()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <ng-datepicker value="language.startDateTime"
+                           name="beginDateStart"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="false"
+                           limitdate="{{language.endDateTime}}"
+                           placeholder="起始日期"></ng-datepicker>
+        </li>
+        <li>
+            <ng-datepicker value="language.endDateTime"
+                           name="beginDateEnd"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="true"
+                           limitdate="{{language.startDateTime}}"
+                           placeholder="截止日期"></ng-datepicker>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="language.title"
+                   maxlength="16"
+                   placeholder="服务内容">
+        </li>
+        <li>
+            <search model="language"
+                    value="language.deptName"
+                    name="deptName"
+                    maxlength="20"
+                    servicelist="researchTeams"
+                    placeholder="研究团队"></search>
+        </li>
+        <li>
+            <search model="language"
+                    value="language.staffName"
+                    name="staffName"
+                    maxlength="20"
+                    servicelist="researchers"
+                    placeholder="研究员"></search>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editLanguageTemplate">
+    <form name="language_form"
+          ng-submit="editLanguage()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="languageInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="languageInfo.dirty && language_form.state_date.$invalid">
+                        <span ng-show="language_form.state_date.$error.required">
+                            请选择日期
+                        </span>
+                    </div>
+                    <ng-datepicker name="state_date"
+                                   dirty="languageInfo.dirty"
+                                   value="languageInfo.setDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   required="true"
+                                   placeholder="日期"></ng-datepicker>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="language_form.state_researcher.$dirty && language_form.state_researcher.$invalid">
+                        <span ng-show="language_form.state_researcher.$error.required">
+                            请选择研究员
+                        </span>
+                        <span ng-show="language_form.state_researcher.$error.unique">
+                            无效的研究员
+                        </span>
+                    </div>
+                    <combobox name="state_researcher"
+                              placeholder="研究员"
+                              model="languageInfo"
+                              id="researcherId"
+                              no="researcherName"
+                              value="languageInfo.researcherName"
+                              multiple="true"
+                              required="true"
+                              servicelist="stResearchers"></combobox>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="language_form.state_content.$dirty && language_form.state_content.$invalid">
+                <span class="error"
+                      ng-show="language_form.state_content.$error.required">
+                     请输入服务内容
+                </span>
+                <span class="error"
+                      ng-show="language_form.state_content.$error.maxlength">
+                     总字数不超过1000
+                </span>
+            </div>
+            <textarea name="state_content"
+                      ng-maxlength="1000"
+                      rows="5"
+                      ng-model="languageInfo.title"
+                      required
+                      placeholder="服务内容"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="languageInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="language_form.$invalid || languageInfo.loading"
+                   value="{{languageInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

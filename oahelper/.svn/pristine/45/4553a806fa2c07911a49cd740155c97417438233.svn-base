@@ -1,0 +1,39 @@
+<!--pages/15toupiao_detail/index.wxml-->
+<view class='top'>
+  <view>{{title}}</view>
+  <view wx:if='{{!is_ended}}'>{{datetime}}结束</view>
+  <view wx:else>已结束</view>
+</view>
+
+
+
+<view class='center' wx:for="{{questionArr}}" wx:for-index="index" wx:for-item="item">
+
+  <view class='q_title'>{{index+1}}、{{item.question}}
+    <text wx:if="{{item.questiontype == 2}}" style='color:rgba(251,167,3,1);'>(多选)</text>
+  </view>
+
+  <view class='a_body'>
+
+    <view wx:for="{{item.answer}}" wx:for-index="index2" wx:for-item="item2" class='center_list' data-qindex='{{index}}' data-choose_type='{{index2}}' bindtap='choose_type'>
+      <text wx:if="{{item.choosearr[index2]}}" class='center_list_ico_in'></text>
+      <text wx:else class='center_list_ico'></text>
+      <view>{{item2.content}}</view>
+      <view wx:if="{{item2.id === '' && item.choosearr[index2]}}">
+        <textarea class='input_content' value='{{item.content}}' data-qindex='{{index}}' data-choose_type='{{index2}}' catchtap="kong" bindinput="bindSetContent" placeholder="请简述" />
+      </view>
+
+    </view>
+
+  </view>
+
+
+</view>
+
+
+
+
+<button wx:if="{{!myVote[0]&&!is_ended&&is_open==='OPEN'}}" bindtap='sendData' class='send_btn'>提交</button>
+
+
+<button wx:if="{{myVote[0]&&!is_ended&&is_open==='OPEN'}}" bindtap='sendData' class='send_btn'>重新提交</button>

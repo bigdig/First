@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyCustomerlabelMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyCustomerlabel">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+      <result column="label_id" jdbcType="VARCHAR" property="labelId" />
+      <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+      <result column="active_date" jdbcType="INTEGER" property="activeDate" />
+      <result column="valid_count" jdbcType="INTEGER" property="validCount" />
+      <result column="score" jdbcType="DOUBLE" property="score" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyCustomerlabelBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+      <result column="label_id" jdbcType="VARCHAR" property="labelId" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+      <result column="label_name" jdbcType="VARCHAR" property="labelName" />
+      <result column="p_id" jdbcType="VARCHAR" property="pid" />
+      <result column="active_date" jdbcType="INTEGER" property="activeDate" />
+      <result column="valid_count" jdbcType="INTEGER" property="validCount" />
+      <result column="score" jdbcType="DOUBLE" property="score" />
+      <result column="days_power" jdbcType="DOUBLE" property="daysPower" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_customerlabel where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByCustId" parameterType="java.lang.String">
+    delete from ty_customerlabel where customer_id = #{customerId,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByLabelId" parameterType="java.lang.String">
+    delete from ty_customerlabel where label_id = #{labelId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyCustomerlabel">
+    insert into ty_customerlabel (
+    id
+	,customer_id
+	,label_id
+	,active_date
+	,valid_count
+	,label_name
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{customerId,jdbcType=VARCHAR}
+    	,#{labelId,jdbcType=VARCHAR}
+    	,#{activeDate,jdbcType=INTEGER}
+    	,#{validCount,jdbcType=INTEGER}
+    	,#{labelName,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyCustomerlabel">
+    update ty_customerlabel
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null ">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="labelId != null ">
+        label_id = #{labelId,jdbcType=VARCHAR},
+      </if>
+      <if test="labelName != null ">
+        label_name = #{labelName,jdbcType=VARCHAR},
+      </if>
+      <if test="validCount != null ">
+        valid_count = #{validCount,jdbcType=INTEGER},
+      </if>
+      <if test="activeDate != null ">
+        active_date = #{activeDate,jdbcType=INTEGER},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="transferLableId" parameterType="java.util.Map">
+    update ty_customerlabel set id = (lpad(customer_id,22,'0') || lpad(#{newLabelId,jdbcType=VARCHAR},22,'0')) ,label_id = #{newLabelId,jdbcType=VARCHAR} where label_id = #{oldLabelId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,customer_id,label_id,active_date,valid_count,label_name
+    from ty_customerlabel
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,customer_id,label_id,active_date,valid_count,label_name
+    from ty_customerlabel
+    order by id
+  </select>
+  <select id="queryByCustId" parameterType="java.lang.String" resultMap="ExResultMap">
+    select a.id,a.customer_id,a.label_id,b.cat_id,b.cat_name,b.label_name,b.p_id,a.score,a.days_power,a.valid_count
+    from ty_customerlabel a, ty_label b
+    where a.label_id = b.id
+      and a.customer_id = #{customerId}
+    order by b.cat_id, a.score desc, a.label_id desc
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_customerlabel where 1=1
+	<if test="customerId != null and customerId != ''">and customer_id = #{customerId}</if>
+  </select>
+  
+  
+</mapper>

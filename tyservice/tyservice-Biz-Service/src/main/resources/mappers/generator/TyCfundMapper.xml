@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyCfundMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyCfund">
+      <result column="windcode" jdbcType="VARCHAR" property="windcode" />
+      <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+      <result column="shortname" jdbcType="VARCHAR" property="shortname" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyCfundBean">
+      <result column="windcode" jdbcType="VARCHAR" property="windcode" />
+      <result column="fullname" jdbcType="VARCHAR" property="fullname" />
+      <result column="shortname" jdbcType="VARCHAR" property="shortname" />
+  </resultMap>
+
+  <select id="selectByCondition" parameterType="java.util.Map" resultMap="ExResultMap">
+    select windcode,fullname,shortname
+      from T_WIND_CFUNDDESCRIPTION a
+     where a.windcode in (SELECT windcode FROM T_WIND_CFUNDMANAGER b WHERE b.fundmanager=#{fundmanager} )
+     order by setupdate
+  </select>
+</mapper>

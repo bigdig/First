@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyMsgtemplateMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyMsgtemplate">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="tmp_title" jdbcType="VARCHAR" property="tmpTitle" />
+      <result column="tmp_content" jdbcType="VARCHAR" property="tmpContent" />
+      <result column="send_shortmsg" jdbcType="VARCHAR" property="sendShortmsg" />
+      <result column="send_mail" jdbcType="VARCHAR" property="sendMail" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_msgtemplate where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyMsgtemplate">
+    insert into ty_msgtemplate (
+    id
+	,tmp_title
+	,tmp_content
+	,send_shortmsg
+	,send_mail
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{tmpTitle,jdbcType=VARCHAR}
+    	,#{tmpContent,jdbcType=VARCHAR}
+    	,#{sendShortmsg,jdbcType=VARCHAR}
+    	,#{sendMail,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyMsgtemplate">
+    update ty_msgtemplate
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpTitle != null ">
+        tmp_title = #{tmpTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="tmpContent != null ">
+        tmp_content = #{tmpContent,jdbcType=VARCHAR},
+      </if>
+      <if test="sendShortmsg != null ">
+        send_shortmsg = #{sendShortmsg,jdbcType=VARCHAR},
+      </if>
+      <if test="sendMail != null ">
+        send_mail = #{sendMail,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,tmp_title,tmp_content,send_shortmsg,send_mail,create_by,create_time,update_by,update_time
+    from ty_msgtemplate
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,tmp_title,tmp_content,send_shortmsg,send_mail,create_by,create_time,update_by,update_time
+    from ty_msgtemplate
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_msgtemplate where 1=1
+	<if test="tmpTitle != null and tmpTitle != ''">and  tmp_title like '%'||#{tmpTitle}||'%'</if>
+	<if test="sendShortmsg != null and sendShortmsg != ''">and send_shortmsg = #{sendShortmsg}</if>
+	<if test="sendMail != null and sendMail != ''">and send_mail = #{sendMail}</if>
+  </select>
+</mapper>

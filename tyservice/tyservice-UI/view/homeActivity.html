@@ -1,0 +1,178 @@
+<div>
+  <div class="tabheader">
+    <ul>
+      <li class="tabactive" ng-click="servicebtn()" id="service" style="cursor: pointer;">服务维度</li>
+      <li ng-click="customerbtn()" id="customer" style="cursor: pointer;">客户维度</li>
+    </ul>
+  </div>
+  <div class="tabservice por" style="min-height: 100px;" ng-if="service">
+    <div class="data">
+        <table cellpadding="10"
+               cellspacing="1"
+               width="100%"
+               style="z-index: 100; position: relative"
+               class="bg-blue-light th">
+            <thead>
+            <th class="bg-white text-center font-12 active"
+                ng-repeat="head in dataModel.dataHead">
+            <span bo-if="!$first && (head.type != undefined || head.type != null )"
+                  bo-class="'text_act_'+head.type" ng-class="{'icon icon-radio-checked': currentType == head.type,'icon icon-radio-unchecked': currentType != head.type}" class="font-14"></span>
+                <span bo-text="head.title" style="cursor: pointer;"
+                      ng-click="chooseAct(head.type)"
+                      ng-class="{'active': currentType == head.type}"
+                     ></span>
+            </th>
+            </thead>
+        </table>
+    </div>
+    <br>
+    <ul class="list"  ng-if='dataModel.data.length!=0'>
+        <li ng-repeat="dataItem in dataModel.data">
+            <div class="bg-blue-light"></div>
+            <i bo-if="dataItem.source.type != undefined || dataItem.source.type != null"
+               class="lh30 font-14 icon icon-radio-checked"
+               bo-class="'text_act_'+dataItem.source.type"></i>
+            <i bo-if="dataItem.source.type == undefined || dataItem.source.type == null"
+               class="lh30 font-14 icon icon-radio-checked"
+               bo-class="text_act_9"></i>
+            <label class="lh30">
+                <a ng-repeat="ctrl in dataItem.controls"
+                   class="text-orange fr"
+                   href="javascript:void(0)"
+                   ng-show="ctrl.isShow"
+                   bo-text="ctrl.name"
+                   ng-click="ctrl.event(dataItem)"></a>
+                <span class="sp" 
+                      bo-title="dataItem.source.text"
+                      bo-text="dataItem.source.text"></span>
+            </label>
+        </li>
+    </ul>
+    <h4 class="text-center"
+        ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+    <img src="../img/loading.gif"
+         width="26"
+         class="loading"
+         style="position: absolute;top:50px;left:45%;"
+         ng-show="loading.isShow">
+    <br>
+    <div class="back bg-red-opacity">
+        <a href="javascript:void(0)" ng-click="backTop()">
+            <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+        </a>
+    </div> 
+
+    <nav aria-label="Page navigation" class="clearfix" ng-if="dataModel.data.length!=0">
+         <ul class="pagination pagination-sm pagination1 fl" style="margin:10px 0 30px 0;width:800px;">
+           <li ng-class="{disabled:page==1}">
+             <a href="javascript:void(0)" aria-label="Previous" ng-click="sub(page-1<1?1:page-1)" ng-disabled="page==1">
+               <span aria-hidden="true"><</span>
+             </a>
+           </li>
+           <li ng-if="page >= pageNum && lastPage !== pageNum" ng-click="sub(1)" ng-class="{pageActive:item==1}">
+             <a href="javascript:void(0)">1</a>
+           </li>
+           <li ng-if="page >= pageNum && lastPage !== pageNum">
+             <a href="javascript:void(0)">...</a>
+           </li>
+           <li ng-click="sub(item)" ng-class="{pageActive:item==page}" ng-repeat="item in pages">
+             <a href="javascript:void(0)">{{item}}</a>
+           </li>
+           <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum">
+             <a href="javascript:void(0)">...</a>
+           </li>
+           <li ng-if="lastPage > pageNum && firstPage <= lastPage - pageNum" ng-click="sub(lastPage)" ng-class="{pageActive:item==page}">
+             <a href="javascript:void(0)">{{lastPage}}</a>
+           </li>
+           <li ng-class="{disabled:page==lastPage}">
+             <a href="javascript:void(0)" aria-label="Next" ng-click="sub(page+1>lastPage?page:page+1)">
+               <span aria-hidden="true">></span>
+            </a>
+           </li>
+         </ul>
+    </nav>
+  </div>
+  <div class="tabcustomer por" style="min-height: 100px;" ng-if="customer">
+     <div class="data">
+        <table cellpadding="10"
+               cellspacing="1"
+               width="100%"
+               style="z-index: 100; position: relative"
+               class="bg-blue-light th">
+            <thead>
+            <th class="bg-white text-center font-12 active"
+                ng-repeat="head in dataModel.dataHead">
+            <i bo-if="!$first && (head.type != undefined || head.type != null )"
+                  bo-class="'text_act_'+head.type" class="font-14"
+                  ng-class="{'icon icon-radio-checked': currentType1 == head.type,'icon icon-radio-unchecked': currentType1 != head.type}"></i>
+                <span bo-text="head.title" style="cursor: pointer;"
+                      ng-click="chooseAct1(head.type)"
+                      ng-class="{'active': currentType1 == head.type}"
+                     ></span>
+            </th>
+            </thead>
+        </table>
+      </div>
+      <br>
+      <ul class="list" ng-if='dataModel.data1.length!=0'>
+          <li ng-repeat="item in dataModel.data1">
+              <div class="bg-blue-light"></div>
+              <i bo-if="item.type != undefined || item.type != null"
+                 class="lh30 icon icon-radio-checked font-14"
+                 bo-class="'text_act_'+item.type"></i>
+              <i bo-if="item.type == undefined || item.type == null"
+                 class="lh30 font-14 icon icon-radio-checked"
+                 bo-class="text_act_9"></i>
+              <label class="lh30">
+                  <span class="sp" 
+                        bo-title="item.text"
+                        bo-text="item.text"></span>
+              </label>
+          </li>
+      </ul>
+      <h4 class="text-center"
+          ng-if="(dataModel.data1.length==0) && !loading.isShow1">暂无数据</h4>
+      <img src="../img/loading.gif"
+           width="26"
+           class="loading"
+           style="position: absolute;top:50px;left:45%;"
+           ng-show="loading.isShow1">
+      <br>
+      <div class="back bg-red-opacity">
+          <a href="javascript:void(0)" ng-click="backTop()">
+              <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+          </a>
+      </div>
+
+      <nav aria-label="Page navigation" class="clearfix" ng-if="dataModel.data1.length!=0">
+         <ul class="pagination pagination-sm pagination1 fl" style="margin:10px 0 30px 0;width:800px;">
+           <li ng-class="{disabled:page1==1}">
+             <a href="javascript:void(0)" aria-label="Previous" ng-click="sub1(page1-1<1?1:page1-1)" ng-disabled="page1==1">
+               <span aria-hidden="true"><</span>
+             </a>
+           </li>
+           <li ng-if="page1 >= pageNum1 && lastPage1 !== pageNum1" ng-click="sub1(1)" ng-class="{pageActive:item==1}">
+             <a href="javascript:void(0)">1</a>
+           </li>
+           <li ng-if="page1 >= pageNum1 && lastPage1 !== pageNum1">
+             <a href="javascript:void(0)">...</a>
+           </li>
+           <li ng-click="sub1(item1)" ng-class="{pageActive:item1==page1}" ng-repeat="item1 in pages1">
+             <a href="javascript:void(0)">{{item1}}</a>
+           </li>
+           <li ng-if="lastPage1 > pageNum1 && firstPage1 <= lastPage1 - pageNum1">
+             <a href="javascript:void(0)">...</a>
+           </li>
+           <li ng-if="lastPage1 > pageNum1 && firstPage1 <= lastPage1 - pageNum1" ng-click="sub1(lastPage1)" ng-class="{pageActive:item1==page1}">
+             <a href="javascript:void(0)">{{lastPage1}}</a>
+           </li>
+           <li ng-class="{disabled:page1==lastPage1}">
+             <a href="javascript:void(0)" aria-label="Next" ng-click="sub1(page1+1>lastPage1?page1:page1+1)">
+               <span aria-hidden="true">></span>
+            </a>
+           </li>
+         </ul>
+    </nav>
+  </div>
+</div>
+

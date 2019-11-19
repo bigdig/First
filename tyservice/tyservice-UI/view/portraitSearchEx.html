@@ -1,0 +1,24 @@
+<script type="text/ng-template"
+        id="reportTemplate">
+    <div class="ngdialog-message">
+        <div class="res-head">
+            <ul class="tag">
+                <li ng-repeat="menu in reportMenu">
+                    <a href="javascript:void(0)"
+                       ng-click="tabReport(menu.name)"
+                       ng-class="{'active':menu.active}"
+                       class="text-blue-light font-16"
+                       bo-text="menu.name"></a>
+                </li>
+            </ul>
+            <div id="report_chart"
+                 class="template"></div>
+        </div>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

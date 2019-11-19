@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoRemindMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoRemind">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="remind_title" jdbcType="VARCHAR" property="remindTitle" />
+      <result column="remind_type" jdbcType="VARCHAR" property="remindType" />
+      <result column="is_informed" jdbcType="VARCHAR" property="isInformed" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoRemindBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="remind_title" jdbcType="VARCHAR" property="remindTitle" />
+      <result column="remind_type" jdbcType="VARCHAR" property="remindType" />
+      <result column="is_informed" jdbcType="VARCHAR" property="isInformed" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_remind where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoRemind">
+    insert into go_remind (
+    id
+	,remind_title
+	,remind_type
+	,is_informed
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{remindTitle,jdbcType=VARCHAR}
+    	,#{remindType,jdbcType=VARCHAR}
+    	,#{isInformed,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoRemind">
+    update go_remind
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="remindTitle != null ">
+        remind_title = #{remindTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="remindType != null ">
+        remind_type = #{remindType,jdbcType=VARCHAR},
+      </if>
+      <if test="isInformed != null ">
+        is_informed = #{isInformed,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,remind_title,remind_type,is_informed,create_by,create_time,update_by,update_time
+    from go_remind
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,remind_title,remind_type,is_informed,create_by,create_time,update_by,update_time
+    from go_remind
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,remind_title,remind_type,is_informed,create_by,create_time,update_by,update_time
+    from go_remind
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="remindTitle != null and remindTitle != ''">and remind_title like '%'||#{remindTitle}||'%'</if>
+	<if test="remindType != null and remindType != ''">and remind_type=#{remindType}</if>
+	<if test="isInformed != null and isInformed != ''">and is_informed=#{isInformed}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_remind where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="remindTitle != null and remindTitle != ''">and remind_title like '%'||#{remindTitle}||'%'</if>
+	<if test="remindType != null and remindType != ''">and remind_type=#{remindType}</if>
+	<if test="isInformed != null and isInformed != ''">and is_informed=#{isInformed}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or remind_title like '%'||#{keyword}||'%' or remind_type like '%'||#{keyword}||'%' or is_informed like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

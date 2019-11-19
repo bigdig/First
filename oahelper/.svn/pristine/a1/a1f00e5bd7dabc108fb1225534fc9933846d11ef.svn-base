@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.InfAlbumMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.InfAlbum">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+      <result column="content_id" jdbcType="VARCHAR" property="contentId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="publish_count" jdbcType="INTEGER" property="publishCount" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.pr.entity.InfAlbum">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+      <result column="content_id" jdbcType="VARCHAR" property="contentId" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="publish_count" jdbcType="INTEGER" property="publishCount" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from inf_album where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.InfAlbum">
+    insert into inf_album (
+    id
+	,subject_id
+	,content_id
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{subjectId,jdbcType=VARCHAR}
+    	,#{contentId,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.InfAlbum">
+    update inf_album
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null ">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="contentId != null ">
+        content_id = #{contentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,subject_id,content_id,create_by,create_time,update_by,update_time
+        from inf_album
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,subject_id,content_id,create_by,create_time,update_by,update_time
+    from inf_album
+    order by id
+  </select>
+  <select id="getRecordsBycondition" resultMap="ExResultMap" parameterType="com.tfzq.pr.entity.InfAlbum">
+    select id,subject_id,content_id,create_by,create_time,update_by,update_time
+    from inf_album a where 1=1
+    <if test="contentId != null and contentId != ''">and content_id = #{contentId}</if>
+	<if test="channelNumber != null and channelNumber != ''">and channel_number = #{channelNumber,jdbcType=INTEGER}</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from inf_album a where 1=1
+	<if test="channelNumber != null and channelNumber != ''">and channel_number = #{channelNumber,jdbcType=INTEGER}</if>
+	<if test="subjectId != null and subjectId != ''">and subject_id = #{subjectId}</if>
+	<if test="contentId != null and contentId != ''">and content_id = #{contentId}</if>
+	<if test="title != null and title != ''">and exists (select 1 from inf_content b where a.content_id=b.id and b.title like '%'||#{title}||'%') </if>
+	<if test="calMonth != null and calMonth != ''">
+		and to_char(update_time,'yyyy-mm') = #{calMonth}
+	</if>
+	<if test="calDay != null and calDay != ''">
+		and to_char(update_time,'yyyy-mm-dd') = #{calDay}
+	</if>
+	<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+  </select>
+</mapper>

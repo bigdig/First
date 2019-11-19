@@ -1,0 +1,15 @@
+<div>
+    <input type="search"
+           placeholder="所属部门"
+           ng-model="value"
+           ng-click="openSelect()"
+           class="select"
+           readonly
+           ng-required="required"/>
+    <div id="{{tag}}"
+         class="disp options tags bg-gray border-blue-dark-color">
+        <ul>
+            <selects children="children" current="model"></selects>
+        </ul>
+    </div>
+</div>

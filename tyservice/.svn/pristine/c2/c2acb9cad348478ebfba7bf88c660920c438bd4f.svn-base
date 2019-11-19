@@ -1,0 +1,84 @@
+<table width="100%"
+       class="panel-head"
+       cellpadding="10"
+       cellspacing="0">
+    <tr>
+        <td ng-if="dataModel.data.length">
+            <span class="text-red"
+                  ng-bind="dataModel.data.length+'/'+dataModel.pageInfo.total"></span>
+            项&nbsp;&nbsp;
+            每页
+            <select ng-model="searchModel.pageSize"
+                    ng-change="broadcast()"
+                    ng-options="p for p in page.pages"
+                    style="display: inline; width: 80px">
+            </select>
+            &nbsp;
+            <a href="javascript:void(0)"
+               ng-click="broadcast()"
+               class="refresh">
+                <i class="icon icon-cw font-20"></i>
+            </a>
+        </td>
+        <td class="text-right"
+            ng-if="dataModel.toolsBar">
+            <input ng-if="dataModel.checkAll"
+                   type="checkbox"
+                   ng-model="messageInfo.isAll"
+                   ng-checked="messageInfo.isAll"><label></label>
+            <span class="text-blue-menu"
+                  ng-bind="dataModel.checkAll.value"
+                  ng-if="dataModel.checkAll"></span>
+            <input type="button"
+                   class="font-16 padding20"
+                   ng-class="{'margin-right': !$last}"
+                   bo-class="bar.bgStyle"
+                   value="{{bar.btnName}}"
+                   ng-click="bar.event()"
+                   ng-disabled="bar.isDisabled && !messageInfo.isAll"
+                   ng-repeat="bar in dataModel.toolsBar">
+        </td>
+    </tr>
+</table>
+<div class="dataCp"></div>
+<div class="data"
+     style="overflow-x: hidden;">
+    <table cellpadding="10"
+           cellspacing="0"
+           width="100%">
+        <thead ng-show="dataModel.dataHead">
+        <th class="th"
+            ng-show="dataModel.hasAllChecked">
+            <input type="checkbox"
+                   ng-checked="dataModel.selectAll"
+                   ng-model="dataModel.selectAll"
+                   ng-click="selectAll()"><label></label>
+        </th>
+        <th class="th"
+            ng-repeat="head in dataModel.dataHead"
+            bo-text="head.title"
+            style="min-width: {{head.width+'px'}};"></th>
+        <th class="ctl_h"
+            ng-show="dataModel.hasControl"
+            style="min-width: {{dataModel.controlWidth+'px'}};">
+            操作
+        </th>
+        </thead>
+        <tbody id="data-list">
+        <grid children="dataModel.data"
+              parent="data-list"></grid>
+        </tbody>
+    </table>
+</div>
+<h4 class="text-center"
+    ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+<img src="../img/loading.gif"
+     width="26"
+     class="loading"
+     ng-show="loading.isShow">
+<br><br><br>
+<div class="back bg-red-opacity">
+    <a href="javascript:void(0)" ng-click="backTop()">
+        <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+    </a>
+</div>

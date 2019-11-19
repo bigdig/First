@@ -1,0 +1,73 @@
+/* pages/23xinxishenpi_detail/index.wxss */
+.top{ line-height: 86rpx; padding: 0 30rpx; color: #FB7F03; font-size: 28rpx; border-bottom: #E5E5E5 solid 2rpx; background-color: #fff;}
+.top::before{ content: ""; display: inline-block; vertical-align: middle; position: relative; top: -2rpx; width: 8rpx; height: 28rpx; margin-right: 18rpx; background-color: #FF9900;}
+
+.center{ padding: 0 30rpx 40rpx 30rpx; background-color: #fff;}
+
+.send_item > view:last-child{ color: #888;}
+
+.center .choose_img{ display: inline-block; margin-right: 45rpx; margin-bottom: 60rpx;}
+
+.help {
+  background-color: #fff;
+  margin: 0 auto;
+}
+.help .help_item {
+  margin: 10rpx auto;
+}
+.help .help_item .title {
+  font-size: 30rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  display: flex;
+  color: #FB7F03;
+}
+.help .help_item .title .title_1 {
+  width: 630rpx;
+  height: 60rpx;
+}
+.help .help_item .title .title_2 {
+  width: 50rpx;
+  height: 60rpx;
+  text-align: center;
+}
+.help .help_item .title .title_2 image {
+  width: 35rpx;
+  height: 35rpx;
+}
+.help .help_item .detail {
+  margin: 10rpx auto;
+  font-size: 25rpx;
+  line-height: 40rpx;
+  text-indent: 2em;
+}
+
+.table {
+  border: 0px solid darkgray;
+}
+.tr {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+.td {
+    justify-content: center;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.bg-w{
+  background: snow;
+}
+.bg-g{
+  background: #E6F3F9;
+}
+.th {
+  width: 40%;
+  justify-content: center;
+  background: #3366FF;
+  color: #fff;
+  display: flex;
+  height: 3rem;
+  align-items: center;
+}

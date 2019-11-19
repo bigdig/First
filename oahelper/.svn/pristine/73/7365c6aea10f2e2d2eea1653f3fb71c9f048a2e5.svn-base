@@ -1,0 +1,468 @@
+package com.tfzq.web;
+
+import java.lang.reflect.InvocationTargetException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.ibase4j.core.base.BaseController;
+import org.ibase4j.core.support.DictItem;
+import org.ibase4j.core.util.Request2ModelUtil;
+import org.ibase4j.core.util.WebUtil;
+import org.ibase4j.model.generator.SysParam;
+import org.ibase4j.model.generator.SysUser;
+import org.ibase4j.service.sys.SysDicService;
+import org.ibase4j.service.sys.SysParamService;
+import org.ibase4j.service.sys.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+
+import com.github.pagehelper.PageInfo;
+import com.tfzq.pr.model.generator.GoInform;
+import com.tfzq.pr.model.generator.GoRemind;
+import com.tfzq.pr.model.generator.GoRemindInform;
+import com.tfzq.pr.model.pr.GoInformBean;
+import com.tfzq.pr.model.pr.GoInformUserBean;
+import com.tfzq.pr.model.pr.GoRemindBean;
+import com.tfzq.pr.model.pr.GoRemindInformBean;
+import com.tfzq.service.GoInformService;
+import com.tfzq.service.GoInformUserService;
+import com.tfzq.service.GoRemindInformService;
+import com.tfzq.service.GoRemindService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+/**
+ * 流程控制类
+ * 
+ * @author yuzhitao
+ */
+@RestController
+@Api(value = "流程管理", description = "流程管理")
+@RequestMapping(value = "pr/goRemind", method = RequestMethod.POST)
+public class GoRemindController extends BaseController {
+	@Autowired
+	private GoRemindService goRemindService;
+	@Autowired
+	private GoRemindInformService goRemindInformService;
+	@Autowired
+	private SysDicService sysDicService;
+	@Autowired
+	private SysUserService sysUserService;
+	@Autowired
+	private GoInformService goInformService;
+	@Autowired
+	private GoInformUserService goInformUserService;
+	@Autowired
+	private SysParamService sysParamService;
+
+	// 查询流程
+	@ApiOperation(value = "查询流程")
+	// @RequiresPermissions("pr.goRemind.read")
+	@RequestMapping(value = "/read/list")
+	public Object get(HttpServletRequest request, ModelMap modelMap) {
+		Map<String, Object> params = WebUtil.getParameterMap(request);
+		params.put("deleteFlag", "0");
+		params.put("orderBy", "id desc");
+		PageInfo<GoRemindBean> list = goRemindService.queryBeans(params);
+
+		Map<String, List<DictItem>> dicts = new HashMap<String, List<DictItem>>();
+		// 添加字典翻译
+		Map<String, String> remind_typeMap = sysDicService.queryDicByDicIndexKey("REMIND_TYPE");
+		addDictFromMap(dicts, "REMIND_TYPE", remind_typeMap);
+		Map<String, String> yes_noMap = sysDicService.queryDicByDicIndexKey("YES_NO");
+		addDictFromMap(dicts, "YES_NO", yes_noMap);
+		for (GoRemindBean singleBean : list.getList()) {
+			if (StringUtils.isNotEmpty(singleBean.getRemindType())) {
+				singleBean.setRemindTypeText(remind_typeMap.get(singleBean.getRemindType().toString()));
+			}
+			if (StringUtils.isNotEmpty(singleBean.getIsInformed())) {
+				singleBean.setIsInformedText(yes_noMap.get(singleBean.getIsInformed().toString()));
+			}
+		}
+		return setSuccessModelMap(modelMap, list, dicts);
+	}
+
+	// 详细信息
+	@ApiOperation(value = "流程详情")
+	// @RequiresPermissions("pr.goRemind.read")
+	@RequestMapping(value = "/read/detail")
+	public Object detail(ModelMap modelMap, @RequestParam(value = "id", required = false) String id) {
+		GoRemindBean goRemindBean = new GoRemindBean();
+		Map<String, List<DictItem>> dicts = new HashMap<String, List<DictItem>>();
+		if (StringUtils.isNotEmpty(id)) {
+			GoRemind record = goRemindService.queryById(id);
+			try {
+				BeanUtils.copyProperties(goRemindBean, record);
+
+			} catch (IllegalAccessException e) {
+				e.printStackTrace();
+			} catch (InvocationTargetException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				goRemindBean = null;
+				e.printStackTrace();
+			}
+		}
+		// 添加字典翻译
+		Map<String, String> remind_typeMap = sysDicService.queryDicByDicIndexKey("REMIND_TYPE");
+		addDictFromMap(dicts, "REMIND_TYPE", remind_typeMap);
+		Map<String, String> yes_noMap = sysDicService.queryDicByDicIndexKey("YES_NO");
+		addDictFromMap(dicts, "YES_NO", yes_noMap);
+		if (goRemindBean != null) {
+			if (StringUtils.isNotEmpty(goRemindBean.getRemindType())) {
+				goRemindBean.setRemindTypeText(remind_typeMap.get(goRemindBean.getRemindType().toString()));
+			}
+			if (StringUtils.isNotEmpty(goRemindBean.getIsInformed())) {
+				goRemindBean.setIsInformedText(yes_noMap.get(goRemindBean.getIsInformed().toString()));
+			}
+		}
+
+		return setSuccessModelMap(modelMap, goRemindBean, dicts);
+	}
+
+	// 新增流程
+	@ApiOperation(value = "添加流程")
+	// @RequiresPermissions("pr.goRemind.add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	public Object add(HttpServletRequest request, ModelMap modelMap) {
+		CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver(
+				request.getSession().getServletContext());
+		String remindTitle = request.getParameter("remindTitle");
+		String remindType = request.getParameter("remindType");
+		String isInformed = "NO";
+		GoRemind record = new GoRemind();
+		record.setRemindTitle(remindTitle);
+		record.setRemindType(remindType);
+		record.setIsInformed(isInformed);
+
+		GoRemind r = goRemindService.add(record);
+		SysParam param = sysParamService.queryById("GoRemainerPeople");
+		String goRemainerPeople = param.getParamValue();
+
+
+		List<GoRemindInform> informs = new ArrayList<GoRemindInform>();
+
+		if (multipartResolver.isMultipart(request)) {
+			MultipartHttpServletRequest multiRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> iterator = multiRequest.getFileNames();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+				MultipartFile multipartFile = multiRequest.getFile(key);
+				if (multipartFile != null) {
+					try {
+						HashMap<String, HashMap<String, Double>> hashMap = new HashMap<String, HashMap<String, Double>>();
+						
+						Workbook hssfWorkbook = WorkbookFactory.create(multipartFile.getInputStream());
+						Sheet hssfSheet = hssfWorkbook.getSheetAt(0);
+						Row row = null;
+						int totalRows = hssfSheet.getLastRowNum();
+						GoRemindInform inform = null;
+	
+						for (int i = 1; i <= totalRows; i++) {
+							inform = new GoRemindInform();
+							inform.setRemindId(r.getId());
+							inform.setRemindTitle(r.getRemindTitle());
+							row = hssfSheet.getRow(i);
+
+							SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 ");
+							try {
+								if (r.getRemindType().equals("EXPENSE_NORMAL")) {
+									String itemNo = row.getCell(1).getStringCellValue();
+									Date date = row.getCell(2).getDateCellValue();
+									String status = row.getCell(5).getStringCellValue();
+									String people = row.getCell(7).getStringCellValue();
+									String audityPeople = row.getCell(12).getStringCellValue();
+									// Date backDate = row.getCell(11).getDateCellValue();
+									String content = "";
+									// Calendar c1 = Calendar.getInstance();
+									// c1.setTime(date);
+									// Calendar c2 = Calendar.getInstance();
+
+									long interval = (new Date().getTime() - date.getTime()) / (24 * 60 * 60 * 1000);
+
+									if (status.equals("初始态") && interval >= 10) {// 10天
+										inform.setRemindStatus("INITIAL");
+										content = people + "，您好，您的报销单（编号为" + itemNo + "）已停留在初始态超过" + interval
+												+ "日，请尽快提交。";
+									} else if (status.equals("审批中") && interval >= 5) {// 5天
+										inform.setRemindStatus("AUDITING");
+										content = people + "，您好，请尽快将您的报销单（编号为" + itemNo + "）纸质审批单及原始单据交至综合组"
+												+ audityPeople + "处。";
+									}
+									if (content.length() != 0 && people != null && people.length() != 0) {
+										inform.setRemindContent(content);
+										inform.setUserName(people);
+										informs.add(inform);
+									}
+
+								} else if (r.getRemindType().equals("EXPENSE_RETURNED")) {
+									String itemNo = row.getCell(1).getStringCellValue();
+									Date date = row.getCell(2).getDateCellValue();
+									String status = row.getCell(3).getStringCellValue();
+									String people = row.getCell(5).getStringCellValue();
+									Date backDate = row.getCell(7).getDateCellValue();
+									String backPeople = row.getCell(6).getStringCellValue();
+									String content = "";
+
+									if (status.equals("退回")) {
+										inform.setRemindStatus("RETURNED");
+										content = "您的报销单（编号为" + itemNo + "）已被" + backPeople + "于"
+												+ sdf.format(backDate) + "退回，烦请尽快登录报销系统，查看退回原因，至综合组领回报销单并及时处理。";
+									} else if (status.equals("提交")) {
+										inform.setRemindStatus("COMMITED");
+										content = "系统显示：您被" + backPeople + "于" + sdf.format(backDate)
+												+ "退回的报销单（编号为" + itemNo + "）已重新修改提交，烦请尽快提交纸质报销单至综合组复核岗。";
+									}
+									if (content.length() != 0 && people != null && people.length() != 0) {
+										inform.setRemindContent(content);
+										inform.setUserName(people);
+										informs.add(inform);
+									}
+								} else if (r.getRemindType().equals("EXPENSE_TOTAL")) {
+									//将相同被提醒人的相同类别的报销单进行求和
+									//1.判断当前行的people是否已存在  是，进行下一步判断  不是 将新的people加入map中																			
+									String item = row.getCell(3).getStringCellValue();
+									double total = row.getCell(6).getNumericCellValue();
+									String people = row.getCell(7).getStringCellValue();
+									if(hashMap.containsKey(people)){
+										HashMap<String, Double> currMap=hashMap.get(people);
+										if(currMap!=null&&currMap.size()>0){
+											if(currMap.containsKey(item)){
+												double sum =currMap.get(item)+total;
+												currMap.put(item, sum);
+											}else{//listMap中没有item项，则直接放入listMap
+												currMap.put(item, total);
+											}								
+										}
+										hashMap.put(people, currMap);
+									}else{
+										HashMap<String, Double> map=new HashMap<String, Double>();
+										map.put(item, total);
+										hashMap.put(people, map);
+									}
+														
+								}else if (r.getRemindType().equals("PRACTICE_CONF")) {
+									String student = row.getCell(0).getStringCellValue();
+									double total = row.getCell(4).getNumericCellValue();
+									String people = row.getCell(3).getStringCellValue();
+									String content = "老师您好！您名下实习生" + student + "11月考勤天数为" + total
+											+ "天，请您在月底最后两个工作日前确认回复。未确认的视为放弃当月津贴。谢谢！（实习生离职请及时告知，以免产生不必要的费用。）";
+									if (content.length() != 0 && people != null && people.length() != 0) {
+										inform.setRemindContent(content);
+										inform.setUserName(people);
+										inform.setRemindStatus("NORMAL");
+										informs.add(inform);
+									}
+
+								}else if (r.getRemindType().equals("BILL_CHECK")) {
+									row.getCell(0).setCellType(CellType.STRING);
+									row.getCell(1).setCellType(CellType.STRING);
+									row.getCell(2).setCellType(CellType.STRING);
+									row.getCell(3).setCellType(CellType.STRING);
+									row.getCell(4).setCellType(CellType.STRING);
+									row.getCell(5).setCellType(CellType.STRING);
+									row.getCell(6).setCellType(CellType.STRING);
+									row.getCell(7).setCellType(CellType.STRING);
+									row.getCell(8).setCellType(CellType.STRING);
+									row.getCell(9).setCellType(CellType.STRING);
+									row.getCell(10).setCellType(CellType.STRING);
+									String people = row.getCell(0).getStringCellValue();
+									String travel = row.getCell(1).getStringCellValue();
+									String travelDate = row.getCell(2).getStringCellValue();
+									String travelPlane = row.getCell(3).getStringCellValue();
+									String travelTicket = row.getCell(4).getStringCellValue();
+									String fee1 = row.getCell(5).getStringCellValue();
+									String fee2 = row.getCell(6).getStringCellValue();
+									String fee3 = row.getCell(7).getStringCellValue();
+									String fee4 = row.getCell(8).getStringCellValue();
+									String fee5 = row.getCell(9).getStringCellValue();
+									String dept = row.getCell(10).getStringCellValue();
+//									String content = "请老师核对上月机票账单，如有疑问请务必在3日内反馈给姚蕾，谢谢。"
+									String content = "请老师核对上月机票账单，如有疑问请务必在3日内反馈给"+ goRemainerPeople +"，谢谢。"
+									+"旅客姓名："+ people+","
+									+"航程："+ travel+","
+									+"日期："+ travelDate+","
+									+"航班："+ travelPlane+","
+									+"票号："+ travelTicket+","
+									+"退改费："+ fee1+"元,"
+									+"票面价："+ fee2+"元,"
+									+"税收："+ fee3+"元,"
+									+"服务费："+ fee4+"元,"
+									+"实收："+ fee5+"元,"
+									+"分部："+ dept+"。"
+									;
+									if (people != null && people.length() != 0) {
+										inform.setRemindContent(content);
+										inform.setUserName(people);
+										inform.setRemindStatus("NORMAL");
+										informs.add(inform);
+									}
+
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+						//for循环结束之后，若当前累计提醒有内容，则拼接content
+						if(r.getRemindType().equals("EXPENSE_TOTAL") && hashMap!=null && hashMap.size()>0){
+							for(String userName: hashMap.keySet()){
+								String people = userName;
+						    	HashMap<String, Double> map=hashMap.get(userName);
+						    	for(String key1 : map.keySet()){   //获取item、total
+									String item = key1;
+									double total =map.get(key1);
+			
+									String content = "您2018年累计已报销" + item + "合计" + total
+											+ "元（单项收支项目分别进行金额合计）；请遵循必要、合理、节约、属实的原则，不虚开发票，不伪造报销事项，谢谢！！！";
+									if (content.length() != 0 && people != null && people.length() != 0) {
+										GoRemindInform remindInform = new GoRemindInform();
+										remindInform.setRemindContent(content);
+										remindInform.setUserName(people);
+										remindInform.setRemindStatus("NORMAL");
+										remindInform.setRemindId(r.getId());
+										remindInform.setRemindTitle(r.getRemindTitle());
+										informs.add(remindInform);
+										//goRemindInformService.add(remindInform);
+										}
+									}
+																						
+								}
+							} 						
+						} catch (Exception e) {
+						e.printStackTrace();
+					}
+
+				}
+			}
+
+		}
+
+		// 开始发消息
+
+		for (GoRemindInform info : informs) {
+			// System.out.println(info.getUserName() + "-" + info.getRemindTitle() + "-" +
+			// info.getRemindId() + "-"
+			// + info.getRemindContent());
+			Map<String, Object> params = new HashMap<String, Object>();
+			// String userId = "1";
+			params.put("userName", info.getUserName());
+			List<SysUser> su = sysUserService.queryByCondition(params);
+			if (su.size() != 0) {
+				info.setUserId(su.get(0).getId());
+				goRemindInformService.add(info);
+			} else {
+				// info.setUserId("1");
+				logger.info("查不到此用户：" + info.getUserName());
+			}
+
+		}
+
+		return setSuccessModelMap(modelMap);
+	}
+
+	@ApiOperation(value = "发送消息提醒")
+	// @RequiresPermissions("pr.goRemind.update")
+	@RequestMapping(value = "/remind", method = RequestMethod.POST)
+	public Object remind(HttpServletRequest request, ModelMap modelMap,
+			@RequestParam(value = "id", required = false) String id) {
+
+		Map<String, Object> params = new TreeMap<String, Object>();
+		params.put("remindId", id);
+		List<GoRemindInformBean> list = goRemindInformService.queryByCondition(params);
+
+		// List<GoInformBean> informs = new ArrayList<GoInformBean>();
+
+		for (GoRemindInformBean ib : list) {
+			GoInformBean gb = new GoInformBean();
+			gb.setInformTitle(ib.getRemindTitle());
+			gb.setInformContent(ib.getRemindContent());
+			gb.setSrcId(ib.getId());
+			gb.setRemark(ib.getUserName());
+			GoRemind record = goRemindService.queryById(ib.getRemindId());
+			if(record.getRemindType().equals("EXPENSE_NORMAL")){			
+				gb.setSrcType("RMD_EN");
+				gb.setIsReply("NO");
+			}else if(record.getRemindType().equals("EXPENSE_RETURNED")){
+				gb.setSrcType("RMD_ER");
+				gb.setIsReply("NO");
+			}else if(record.getRemindType().equals("EXPENSE_TOTAL")){
+				gb.setSrcType("RMD_ET");
+				gb.setIsReply("NO");
+			}else if(record.getRemindType().equals("PRACTICE_CONF")){
+				gb.setSrcType("RMD_PC");
+				gb.setIsReply("YES");
+			}else if(record.getRemindType().equals("BILL_CHECK")){
+				gb.setSrcType("RMD_BC");
+				gb.setIsReply("YES");
+			}
+			
+			//完善备注信息
+			if(gb.getIsReply().equals("YES")){
+				gb.setRemark(ib.getUserName() + "未确认");
+			}
+		
+			GoInform i = goInformService.add(gb);
+
+			GoInformUserBean iub = new GoInformUserBean();
+			iub.setInformId(i.getId());
+			iub.setUserId(ib.getUserId());
+			iub.setUserName(ib.getUserName());
+			iub.setIsRead("NO");
+			iub.setIsReplied("NO");
+			goInformUserService.add(iub);
+		}
+
+		GoRemind record = goRemindService.queryById(id);
+		record.setIsInformed("YES");
+		goRemindService.update(record);
+
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 修改流程
+	@ApiOperation(value = "修改流程")
+	// @RequiresPermissions("pr.goRemind.update")
+	@RequestMapping(value = "/update", method = RequestMethod.POST)
+	public Object update(HttpServletRequest request, ModelMap modelMap) {
+		GoRemind record = Request2ModelUtil.covert(GoRemind.class, request);
+		goRemindService.update(record);
+		return setSuccessModelMap(modelMap);
+	}
+
+	// 删除流程
+	@ApiOperation(value = "删除流程")
+	// @RequiresPermissions("pr.goRemind.delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST)
+	public Object delete(HttpServletRequest request, ModelMap modelMap,
+			@RequestParam(value = "id", required = false) String id) {
+		GoRemind record = goRemindService.queryById(id);
+		if (record != null) {
+			goRemindService.deletePhysical(id);
+		}
+		return setSuccessModelMap(modelMap);
+	}
+}

@@ -1,0 +1,17 @@
+<div>
+    <form name="search"
+          ng-submit="searchSession()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search">
+            <li>
+                <input type="search"
+                       ng-model="session.keyword"
+                       maxlength="16"
+                       placeholder="账户">
+            </li>
+        </ul>
+    </form>
+</div>

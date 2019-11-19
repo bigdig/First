@@ -1,0 +1,63 @@
+<view class='box'>
+     <view class='box_KP'>
+         <view wx:if="{{state}}">
+            <image src='../../image/yiqianyue.png' class='box_KP_img'></image>
+            <text class='box_KP_stateText1 font28'>已签约</text>
+         </view>
+         <view wx:else>
+            <!-- <text class='box_KP_state font28' bindtap="signState" style="color:#3296FA">修改签约状态</text> -->
+            <text class='box_KP_stateText font28' style='padding-left:500rpx'>未签约</text>
+         </view>
+         <text class='box_KP_userName font34'>{{userName == null ? '-' : userName }}</text>
+         <text class='box_KP_department font24'>{{department == null ? '-' : department}}</text>
+         <text class='box_KP_position font24'>{{position == null ? '-' : position}}</text>
+         <view class='box_phone'>
+             <image class='icon_phone' src='../../image/phone.png'></image>
+             <text class='box_KP_phone font28'>{{phone == null ? '-' : phone}}</text>
+         </view>
+         <view class='box_email'>
+            <image class='icon_email' src='../../image/email.png'></image>
+            <text class='box_KP_email font28'>{{email == null ? '-' : email}}</text>
+         </view> 
+     </view>
+     <view class='box_sale'>
+          <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>对口销售</text>
+                <text class='font28 box_sale_list_value'>{{serviceSaler == null ? '-' : serviceSaler}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>所在地</text>
+                <text class='font28 box_sale_list_value'>{{teamCat == null ? '-' : teamCat}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>联系人</text>
+                <text class='font28 box_sale_list_value'>{{contactorName == null ? '-' : contactorName}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>联系电话</text>
+                <text class='font28 box_sale_list_value'>{{contactorTel == null ? '-' : contactorTel}}</text>
+         </view>
+         <view class='box_sale_list1'>
+                <text class='font28 box_sale_list_text1'>地址</text>
+                <text class='font28 box_sale_list_value1'>{{address == null ? '-' : address}}</text>
+         </view>
+     </view>
+     <!-- <view style='height:20rpx;background:#F3F2F7;'></view>
+     <view class='box_label'>
+          <view class='box_label_list'>
+                <text class='box_label_list_title font28'>行业标签</text>
+                <view class='box_label_list_text'>
+                    <text wx:key="{{item}}" wx:for="{{industryLabel}}" class='box_label_industryLabel font20' style='background-color:{{item.bg}};color:{{item.color}}'>{{item.text}}</text>
+                </view>
+         </view>
+         <view class='box_label_list'>
+                <text class='box_label_list_title font28'>活动标签</text>
+                <view class='box_label_list_text'>
+                    <text wx:key="{{item}}" wx:for="{{industryLabel}}" class='box_label_industryLabel font20' style='background-color:{{item.bg}};color:{{item.color}}'>{{item.text}}</text>
+                </view>
+         </view>
+         <view class='box_botton'>
+            <button class='box_botton_submit font32'>+</button>
+         </view>
+     </view> -->
+</view>

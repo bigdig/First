@@ -1,0 +1,45 @@
+<form name="search"
+      ng-submit="searchCustomer()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <input type="search"
+                   ng-model="customer.custName"
+                   maxlength="16"
+                   placeholder="客户名称"/>
+        </li>
+        <li>
+            <search model="customer"
+                    value="customer.orgName"
+                    name="orgName"
+                    maxlength="20"
+                    servicelist="searchOrgs"
+                    placeholder="所属机构"></search>
+        </li>
+        <li>
+            <search model="customer"
+                    value="customer.serviceSaler"
+                    name="serviceSaler"
+                    maxlength="20"
+                    servicelist="searchStafflist"
+                    placeholder="对口销售"></search>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="customer.custMobile"
+                   maxlength="11"
+                   placeholder="手机号"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="customer.custEmail"
+                   placeholder="邮箱"/>
+        </li>
+    </ul>
+</form>
+<div class="lh30 scroll"
+     ng-bind="customerInfo.selectedCustomers">
+</div>

@@ -1,0 +1,36 @@
+<form name="search"
+      ng-submit="searchCompany()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <input type="search"
+                   ng-model="company.marketKind"
+                   maxlength="16"
+                   placeholder="证券类别"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.stockCode"
+                   maxlength="16"
+                   placeholder="交易代码"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.stockShortname"
+                   maxlength="50"
+                   placeholder="证券简称"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.marketName"
+                   maxlength="16"
+                   placeholder="交易市场"/>
+        </li>
+    </ul>
+</form>
+<div class="lh30 scroll"
+     ng-bind="companyInfo.selectedCompanies">
+</div>

@@ -1,0 +1,36 @@
+<div class="padding20">
+    <form name="search" ng-submit="searchAudit()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <select ng-model="audit.msgType">
+                    <option value="">类型</option>
+                    <option ng-repeat="mtype in msgType"
+                            ng-selected="audit.msgType==mtype.id"
+                            value="{{mtype.id}}">{{mtype.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="audit.auditFlag">
+                    <option value="">状态</option>
+                    <option ng-repeat="flag in msgFlag"
+                            ng-selected="audit.auditFlag==flag.id"
+                            value="{{flag.id}}">{{flag.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <ng-datepicker value="audit.createTime"
+                               name="startDate"
+                               locale="zh-cn"
+                               format="YYYY-MM-DD"
+                               view-format="YYYY-MM-DD"
+                               placeholder="发起日期"></ng-datepicker>
+            </li>
+        </ul>
+    </form>
+</div>

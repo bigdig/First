@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.tycrm.mapper.TyMessagelogMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.tycrm.entity.TyMessagelog">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="msg_type" jdbcType="VARCHAR" property="msgType" />
+      <result column="msg_content" jdbcType="CLOB" property="msgContent" />
+      <result column="receiver" jdbcType="VARCHAR" property="receiver" />
+      <result column="receiver_name" jdbcType="VARCHAR" property="receiverName" />
+      <result column="receiver_tel" jdbcType="VARCHAR" property="receiverTel" />
+      <result column="receiver_email" jdbcType="VARCHAR" property="receiverEmail" />
+      <result column="send_flag" jdbcType="VARCHAR" property="sendFlag" />
+      <result column="send_date" jdbcType="VARCHAR" property="sendDate" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="msg_auditid" jdbcType="VARCHAR" property="msgAuditid" />
+      <result column="file_name" jdbcType="VARCHAR" property="fileName" />
+      <result column="file_path" jdbcType="VARCHAR" property="filePath" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_messagelog where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.tycrm.entity.TyMessagelog">
+    insert into ty_messagelog (
+    id
+	,msg_type
+	,msg_content
+	,receiver
+	,receiver_name
+	,receiver_tel
+	,receiver_email
+	,send_flag
+	,send_date
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,remark
+	,title
+	,msg_auditid
+	,file_name
+	,file_path
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{msgType,jdbcType=VARCHAR}
+    	,#{msgContent,jdbcType=CLOB}
+    	,#{receiver,jdbcType=VARCHAR}
+    	,#{receiverName,jdbcType=VARCHAR}
+    	,#{receiverTel,jdbcType=VARCHAR}
+    	,#{receiverEmail,jdbcType=VARCHAR}
+    	,#{sendFlag,jdbcType=VARCHAR}
+    	,#{sendDate,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{msgAuditid,jdbcType=VARCHAR}
+    	,#{fileName,jdbcType=VARCHAR}
+    	,#{filePath,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.tycrm.entity.TyMessagelog">
+    update ty_messagelog
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="msgType != null ">
+        msg_type = #{msgType,jdbcType=VARCHAR},
+      </if>
+      <if test="msgContent != null ">
+        msg_content = #{msgContent,jdbcType=CLOB},
+      </if>
+      <if test="receiver != null ">
+        receiver = #{receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverName != null ">
+        receiver_name = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null ">
+        receiver_tel = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverEmail != null ">
+        receiver_email = #{receiverEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="sendFlag != null ">
+        send_flag = #{sendFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sendDate != null ">
+        send_date = #{sendDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="msgAuditid != null ">
+        msg_auditid = #{msgAuditid,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null ">
+        file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="filePath != null ">
+        file_path = #{filePath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,msg_type,msg_content,receiver,receiver_name,receiver_tel,receiver_email,send_flag,send_date,create_by,create_time,update_by,update_time,remark,title,msg_auditid,file_name,file_path
+    from ty_messagelog
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,msg_type,msg_content,receiver,receiver_name,receiver_tel,receiver_email,send_flag,send_date,create_by,create_time,update_by,update_time,remark,title,msg_auditid,file_name,file_path
+    from ty_messagelog
+    order by id
+  </select>
+  <select id="findByCondition" resultMap="BaseResultMap">
+    select id,msg_type,msg_content,receiver,receiver_name,receiver_tel,receiver_email,send_flag,send_date,create_by,create_time,update_by,update_time,remark,title,msg_auditid,file_name,file_path
+    from ty_messagelog where 1=1
+    <if test="msgType != null and msgType != ''">and msg_type = #{msgType}</if>
+	<if test="sendFlag != null and sendFlag != ''">and send_flag = #{sendFlag}</if>
+	<if test="receiverName != null and receiverName != ''">and receiver_name like '%'||#{receiverName}||'%'</if>
+	<if test="receiverTel != null and receiverTel != ''">and receiver_tel like '%'||#{receiverTel}||'%'</if>
+	<if test="receiverEmail != null and receiverEmail != ''">and receiver_email like '%'||#{receiverEmail}||'%'</if>
+	<if test="sendDate != null and sendDate != ''">and send_date = #{sendDate}</if>
+	<if test="auditFlag != null and auditFlag != ''">and exists (select 1 from ty_messageaudit t2 where t1.msg_auditid=t2.id and t2.audit_flag = #{auditFlag})</if>
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_messagelog t1 where 1=1
+	<if test="msgType != null and msgType != ''">and msg_type = #{msgType}</if>
+	<if test="sendFlag != null and sendFlag != ''">and send_flag = #{sendFlag}</if>
+	<if test="receiverName != null and receiverName != ''">and receiver_name like '%'||#{receiverName}||'%'</if>
+	<if test="receiverTel != null and receiverTel != ''">and receiver_tel like '%'||#{receiverTel}||'%'</if>
+	<if test="receiverEmail != null and receiverEmail != ''">and receiver_email like '%'||#{receiverEmail}||'%'</if>
+	<if test="sendDate != null and sendDate != ''">and send_date = #{sendDate}</if>
+	<if test="auditFlag != null and auditFlag != ''">and exists (select 1 from ty_messageaudit t2 where t1.msg_auditid=t2.id and t2.audit_flag = #{auditFlag})</if>
+	<if test="keyword != null">
+		and (msg_type like '%'||#{keyword}||'%'  or receiver_name like '%'||#{keyword}||'%' or receiver_tel like '%'||#{keyword}||'%' or receiver_email like '%'||#{keyword}||'%' or send_date like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

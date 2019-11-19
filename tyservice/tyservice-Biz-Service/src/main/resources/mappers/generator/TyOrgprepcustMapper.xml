@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyOrgprepcustMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyOrgprepcust">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+      <result column="prepcust_status" jdbcType="VARCHAR" property="prepcustStatus" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="exist_mobile_flag" jdbcType="VARCHAR" property="existMobileFlag" />
+      <result column="mark" jdbcType="VARCHAR" property="mark" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyOrgprepcustBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="customer_id" jdbcType="VARCHAR" property="customerId" />
+      <result column="prepcust_status" jdbcType="VARCHAR" property="prepcustStatus" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="exist_mobile_flag" jdbcType="VARCHAR" property="existMobileFlag" />
+      <result column="mark" jdbcType="VARCHAR" property="mark" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_orgprepcust where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyOrgprepcust">
+    insert into ty_orgprepcust (
+    id
+	,org_name
+	,service_saler
+	,cust_name
+	,industry
+	,title
+	,area
+	,cust_email
+	,cust_mobile
+	,customer_id
+	,prepcust_status
+	,update_time
+	,update_by
+	,create_time
+	,create_by
+	,exist_mobile_flag
+	,mark
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{serviceSaler,jdbcType=VARCHAR}
+    	,#{custName,jdbcType=VARCHAR}
+    	,#{industry,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{area,jdbcType=VARCHAR}
+    	,#{custEmail,jdbcType=VARCHAR}
+    	,#{custMobile,jdbcType=VARCHAR}
+    	,#{customerId,jdbcType=VARCHAR}
+    	,#{prepcustStatus,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=DATE}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=DATE}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{existMobileFlag,jdbcType=VARCHAR}
+    	,#{mark,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyOrgprepcust">
+    update ty_orgprepcust
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceSaler != null ">
+        service_saler = #{serviceSaler,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null ">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null ">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null ">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="custEmail != null ">
+        cust_email = #{custEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null ">
+        cust_mobile = #{custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="customerId != null ">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="prepcustStatus != null ">
+        prepcust_status = #{prepcustStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="existMobileFlag != null ">
+        exist_mobile_flag = #{existMobileFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null ">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,org_name,service_saler,cust_name,industry,title,area,cust_email,cust_mobile,customer_id,prepcust_status,update_time,update_by,create_time,create_by,exist_mobile_flag,mark
+    from ty_orgprepcust
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,org_name,service_saler,cust_name,industry,title,area,cust_email,cust_mobile,customer_id,prepcust_status,update_time,update_by,create_time,create_by,exist_mobile_flag,mark
+    from ty_orgprepcust
+    order by id
+  </select>
+  <select id="queryByCondition" resultMap="ExResultMap">
+    select id,org_name,service_saler,cust_name,industry,title,area,cust_email,cust_mobile,customer_id,prepcust_status,update_time,update_by,create_time,create_by,exist_mobile_flag,mark
+    from ty_orgprepcust where 1=1
+    <if test="orgName != null and orgName != ''">and org_name like '%'||#{orgName}||'%'</if>
+	<if test="serviceSaler != null and serviceSaler != ''">and service_saler like '%'||#{serviceSaler}||'%'</if>
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="area != null and area != ''">and area like '%'||#{area}||'%'</if>
+	<if test="custEmail != null and custEmail != ''">and cust_email like '%'||#{custEmail}||'%'</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile = #{custMobile}</if>
+	<if test="prepcustStatus != null and prepcustStatus != ''">and prepcust_status=#{prepcustStatus}</if>
+	<if test="existMobileFlag != null and existMobileFlag == '1'.toString()">and exists(select 1 from ty_orgcustomer t1 where t1.cust_mobile = t.cust_mobile)</if>
+	<if test="existMobileFlag != null and existMobileFlag == '0'.toString()">and not exists(select 1 from ty_orgcustomer t1 where t1.cust_mobile = t.cust_mobile)</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_orgprepcust t where 1=1
+	<if test="orgName != null and orgName != ''">and org_name like '%'||#{orgName}||'%'</if>
+	<if test="serviceSaler != null and serviceSaler != ''">and service_saler like '%'||#{serviceSaler}||'%'</if>
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="area != null and area != ''">and area like '%'||#{area}||'%'</if>
+	<if test="custEmail != null and custEmail != ''">and cust_email like '%'||#{custEmail}||'%'</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile like '%'||#{custMobile}||'%'</if>
+	<if test="prepcustStatus != null and prepcustStatus != ''">and prepcust_status=#{prepcustStatus}</if>
+	<if test="existMobileFlag != null and existMobileFlag == '1'.toString()">and exists(select 1 from ty_orgcustomer t1 where t1.cust_mobile = t.cust_mobile and t1.delete_flag='0')</if>
+	<if test="existMobileFlag != null and existMobileFlag == '0'.toString()">and not exists(select 1 from ty_orgcustomer t1 where t1.cust_mobile = t.cust_mobile and t1.delete_flag='0')</if>
+  </select>
+</mapper>

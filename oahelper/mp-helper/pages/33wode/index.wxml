@@ -1,0 +1,72 @@
+<!--pages/33wode/index.wxml-->
+<view class='top'>
+  <view class='header'>
+    <image src='{{headimg}}' mode='widthFix'></image>
+  </view>
+  <view class='user_msg'>
+    <view class='base_title' style='font-size:36rpx;margin-top:10rpx;'>{{name}}</view>
+    <view>{{email}}</view>
+  </view>
+</view>
+
+<view class='top_nav_box'>
+  <view class='top_nav'>
+    <navigator class='top_nav_li' url="/pages/34wode_shenpi/index" hover-class="top_nav_hover">
+      <view>
+        <image src='/img/wode1.png' mode='widthFix'></image>
+      </view>
+      <view>提交的审批</view>
+    </navigator>
+    <navigator class='top_nav_li' url="/pages/35wode_baoxiao/index" hover-class="top_nav_hover">
+      <view>
+        <image src='/img/wode2.png' mode='widthFix'></image>
+      </view>
+      <view>我的报销</view>
+    </navigator>
+    <navigator class='top_nav_li' url="/pages/36wode_shoucang/index" hover-class="top_nav_hover">
+      <view>
+        <image src='/img/wode3.png' mode='widthFix'></image>
+      </view>
+      <view>我的收藏</view>
+    </navigator>
+  </view>
+</view>
+
+
+
+
+<view class='center'>
+
+  <navigator class='center_li' url="/pages/37wode_chenhuijilu/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_1.png' mode='widthFix'></image>
+    晨会记录
+  </navigator>
+
+  <navigator class='center_li' url="/pages/38wode_mingpianshenqing/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_2.png' mode='widthFix'></image>
+    名片申请
+  </navigator>
+
+  <navigator class='center_li' url="/pages/39wode_kaoqin/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_3.png' mode='widthFix'></image>
+    实习生考勤确认
+  </navigator>
+
+  <navigator class='center_li' url="/pages/40wode_huodong/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_3.png' mode='widthFix'></image>
+    我的活动
+  </navigator>
+
+  <navigator class='center_li' url="/pages/42wode_toupiao/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_4.png' mode='widthFix'></image>
+    我的投票
+  </navigator>
+  <navigator wx:if="{{hasShenPiAuth}}" class='center_li' url="/pages/43shenpilaoshi_list/index" hover-class="center_li_hover">
+    <image src='/img/wode_li_5.png' mode='widthFix'></image>
+    我的审批
+  </navigator>
+    <navigator class='center_li' url="/pages/45wode_billcheck/index" hover-class="center_li_hover">
+    <image src='/img/billCheck.png' mode='widthFix'></image>
+    账单核对
+  </navigator>
+</view>

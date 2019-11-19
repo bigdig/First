@@ -1,0 +1,20 @@
+package com.tfzq.utils;
+
+public class Constants {
+	//客户级别
+	public static String CUST_LEVEL_1 = "904580650";//第一梯队
+	public static String CUST_LEVEL_2 = "904580651";//第二梯队
+	public static String CUST_LEVEL_3 = "904580652";//第三梯队
+	public static String CUST_LEVEL_OTHER = "908711355";//其他
+	public static String CUST_LEVEL_4 = "1411707804";//第四梯队
+	
+	
+	public static String LABEL_LISTCOMPANY_CAT_ID = "000000001";//标签上市公司
+	public static String LABEL_LISTCOMPANY_CAT_NAME = "上市公司";//标签上市公司名称
+	public static String LABEL_OTHER_CAT_ID = "000000001";//标签其他分类
+	public static String LABEL_OTHER_CAT_NAME = "其他类别";//标签其他分类名称
+
+	public static String DATA_SRC_HANDLED = "[导入已处理]";//导入已处理
+	
+	
+}

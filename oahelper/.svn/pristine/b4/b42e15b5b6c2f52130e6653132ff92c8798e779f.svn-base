@@ -1,0 +1,45 @@
+<!--pages/21xiaoxi_detail/index.wxml-->
+<view class='top'>
+  <view class='base_title'>{{listData.inform.informTitle}}</view>
+  <view>{{listData.createTime}}</view>
+  <navigator style='color:#FB7F03;font-size:30rpx;' wx:if="{{listData.inform.srcType == 'NOTICE'}}" url='/pages/13tongzhi_detail/index?id={{listData.inform.srcId}}'>查看通知详情</navigator>
+</view>
+
+<view class='center'>
+  <text>{{listData.inform.informContent}}</text>
+</view>
+
+<view wx:if="{{imgArr.length>0}}" class='center'>
+  <view wx:for="{{imgArr}}" wx:for-index="index" wx:for-item="item" class='choose_img noadd'>
+    <view data-linksrc='{{prefix + item}}' bindtap='openImg'>
+      <image  src='{{prefix + item}}' mode='widthFix'></image>
+    </view>
+  </view>
+</view>
+
+<view wx:if='{{listData.inform.srcType != "RMD_PC" && listData.inform.srcType != "RMD_BC" && listData.isReplied=="NO" && listData.inform.isReply=="YES"}}' bindtap='confirm' class='bottom'>我知道了</view>
+<!---->
+<view wx:if='{{(listData.inform.srcType == "RMD_PC" || listData.inform.srcType == "RMD_BC") && listData.isReplied=="NO" && listData.inform.isReply=="YES"}}' class='bottom' style='display:flex;flex-direction: row'>
+  <view style='flex:1;border-width: 0 2rpx 0 0;border-color: #fff;border-style: solid' bindtap='confirm' >确认</view>
+  <view style='flex:1;' bindtap='disagree' >有异议</view>
+</view>
+
+<view class='toast-box' wx:if='{{ifDisagree}}'>
+    <view class='toastbg'></view>
+    <view class='showToast'>
+        <view class='toast-title'>
+            <text>异议原因</text>
+        </view>
+        <view class='toast-main'>
+          <textarea placeholder='请输入异议原因' bindinput='bindInputVal'></textarea>
+        </view>
+        <view class='toast-button'>
+            <view class='button1'>
+                <button bindtap='cancelDisagree'>取消</button>
+            </view>
+            <view class='button2'>
+                <button bindtap='submitDisagree'>确定</button>
+            </view>
+        </view>
+    </view>
+</view>

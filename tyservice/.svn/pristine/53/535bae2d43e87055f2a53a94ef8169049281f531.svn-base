@@ -1,0 +1,7 @@
+<li>
+    <input ng-click="checkNode(node)"
+           type="checkbox"
+           ng-checked="node.checked"/>
+    <label></label>
+    <span ng-bind="node.menuName"></span>
+</li>

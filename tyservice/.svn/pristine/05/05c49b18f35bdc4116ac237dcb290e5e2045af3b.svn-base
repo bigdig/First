@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyStafflistMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyStafflist">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+      <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+      <result column="position" jdbcType="VARCHAR" property="position" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+      <result column="position_id" jdbcType="VARCHAR" property="positionId" />
+      <result column="area_id" jdbcType="VARCHAR" property="areaId" />
+      <result column="work_areaid" jdbcType="VARCHAR" property="workAreaid" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyStafflistBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+      <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+      <result column="position" jdbcType="VARCHAR" property="position" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+      <result column="position_id" jdbcType="VARCHAR" property="positionId" />
+      <result column="area_id" jdbcType="VARCHAR" property="areaId" />
+      <result column="work_areaid" jdbcType="VARCHAR" property="workAreaid" />
+      <result column="isResearcher" jdbcType="VARCHAR" property="isResearcher" />
+      <result column="isSaler" jdbcType="VARCHAR" property="isSaler" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_stafflist where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyStafflist">
+    insert into ty_stafflist (
+    id
+	,dept_name
+	,staff_name
+	,position
+	,tel
+	,area
+	,email
+	,user_id
+	,dept_id
+	,position_id
+	,area_id
+	,work_areaid
+	,wx_openid
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,delete_flag
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{deptName,jdbcType=VARCHAR}
+    	,#{staffName,jdbcType=VARCHAR}
+    	,#{position,jdbcType=VARCHAR}
+    	,#{tel,jdbcType=VARCHAR}
+    	,#{area,jdbcType=VARCHAR}
+    	,#{email,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{deptId,jdbcType=VARCHAR}
+    	,#{positionId,jdbcType=VARCHAR}
+    	,#{areaId,jdbcType=VARCHAR}
+    	,#{workAreaid,jdbcType=VARCHAR}
+    	,#{wxOpenid,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyStafflist">
+    update ty_stafflist
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null ">
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null ">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null ">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null ">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null ">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null ">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null ">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null ">
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null ">
+        position_id = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null ">
+        area_id = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="workAreaid != null ">
+        work_areaid = #{workAreaid,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenid != null ">
+        wx_openid = #{wxOpenid,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+    from ty_stafflist
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+    from ty_stafflist
+    where delete_flag = '0'
+    order by id
+  </select>
+  <select id="getSalerRecords" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+    from ty_stafflist t1 
+    where t1.dept_id in (select t2.id from sys_dept t2 where t2.parent_id='2001')
+      and t1.delete_flag = '0'
+    order by id
+  </select>
+  <select id="getResearcherRecords" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid
+    from ty_stafflist t1 
+    where t1.dept_id in (select t2.id from sys_dept t2 where t2.parent_id='2002')
+      and t1.delete_flag = '0'
+    order by id
+  </select>
+  <select id="getRecordBySalerName" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+    from ty_stafflist t1 
+    where t1.staff_name=#{saler} and t1.dept_id in (select t2.id from sys_dept t2 where t2.parent_id='2001')
+      and t1.delete_flag = '0'
+    order by id
+  </select>
+  <select id="queryByActId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+    from ty_stafflist t1 
+    where t1.id in (select staff_id from ty_activitystaff t2 where t2.activity_id=#{actId})
+  </select>
+  <select id="queryByCondition" parameterType="java.util.Map" resultMap="ExResultMap">
+	select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+	  from ty_stafflist where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="deptName != null and deptName != ''">and dept_name like '%'||#{deptName}||'%'</if>
+	<if test="staffName != null and staffName != ''">and staff_name like '%'||#{staffName}||'%'</if>
+	<if test="staffNameAccurate != null and staffNameAccurate != ''">and staff_name =#{staffNameAccurate}</if>
+	<if test="area != null and area != ''">and area like '%'||#{area}||'%'</if>
+	<if test="keyword != null">
+		and (dept_name like '%'||#{keyword}||'%'  or staff_name like '%'||#{keyword}||'%' or position like '%'||#{keyword}||'%' or area like '%'||#{keyword}||'%')
+	</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="workAreaid != null and workAreaid != ''">and work_areaid = #{workAreaid}</if>
+	<if test="positionList != null and positionList.size>0">
+		and position_id in
+		<foreach collection="positionList" item="positionId" index="index"
+            open="(" close=")" separator=",">
+            #{positionId}
+        </foreach>
+	</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_stafflist where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="deptName != null and deptName != ''">and dept_name like '%'||#{deptName}||'%'</if>
+	<if test="staffName != null and staffName != ''">and staff_name like '%'||#{staffName}||'%'</if>
+	<if test="area != null and area != ''">and area like '%'||#{area}||'%'</if>
+	<if test="keyword != null">
+		and (dept_name like '%'||#{keyword}||'%'  or staff_name like '%'||#{keyword}||'%' or position like '%'||#{keyword}||'%' or area like '%'||#{keyword}||'%')
+	</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="workAreaid != null and workAreaid != ''">and work_areaid = #{workAreaid}</if>
+	<if test="positionList != null and positionList.size>0">
+		and position_id in
+		<foreach collection="positionList" item="positionId" index="index"
+            open="(" close=")" separator=",">
+            #{positionId}
+        </foreach>
+	</if>
+  </select>
+    <!-- 用于增量拉取内容变动 -->
+  <select id="queryLatestModifiedRecords" resultMap="ExResultMap">
+    	select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,delete_flag
+        ,(select COUNT(*) from sys_dept t2 WHERE id = '2001' start with t2.id=t1.dept_id connect by nocycle prior t2.parent_id=t2.id ) as isSaler         
+    	,(select COUNT(*) from sys_dept t2 WHERE id = '2002' start with t2.id=t1.dept_id connect by nocycle prior t2.parent_id=t2.id ) as isResearcher 
+        from ty_stafflist t1 where 1=1 
+      <if test="lastestTime != null and lastestTime != ''"> and update_time <![CDATA[>]]> to_date(#{lastestTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')</if>
+  </select>
+  
+</mapper>

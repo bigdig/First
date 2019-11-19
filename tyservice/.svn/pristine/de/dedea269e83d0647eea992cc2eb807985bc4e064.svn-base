@@ -1,0 +1,17 @@
+<div class="padding20">
+    <div class="res-head"
+         ng-if="tabBar.isShow">
+        <ul class="tag">
+            <li ng-repeat="menu in tabMenus">
+                <a href="javascript:void(0)"
+                   ng-click="tabMenu(menu)"
+                   ng-class="{'active':menu.active}"
+                   class="text-blue-light font-16"
+                   bo-text="menu.name"></a>
+            </li>
+        </ul>
+    </div>
+    <br>
+    <div ui-view="resource-main"></div>
+    <div ui-view="resource-data"></div>
+</div>

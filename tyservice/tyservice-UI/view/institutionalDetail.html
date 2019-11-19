@@ -1,0 +1,96 @@
+<div class="padding20">
+    <a href="javascript:void(0)"
+       ng-class="{'icon-chevron-thin-up':!institutionalInfo.up,'icon-chevron-thin-down':institutionalInfo.up}"
+       ng-click="showOrHide()"
+       class="icon fr font-16"
+       style="margin-top: -7px"></a>
+    <div class="scroll" style="width:98%">
+    </div>
+    <div class="user-info"
+         ng-if="institutionalInfo && !institutionalInfo.up">
+        <br>
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr class="text-blue-light">
+                <td width="33%">机构名称</td>
+                <td width="33%">机构简称</td>
+                <td>机构类型</td>
+            </tr>
+            <tr class="text-dark font-18">
+                <td ng-bind="institutionalInfo.orgName ? institutionalInfo.orgName : '-'"></td>
+                <td ng-bind="institutionalInfo.orgSimpleName ? institutionalInfo.orgSimpleName : '-'"></td>
+                <td class="td-nopadding"
+                    ng-bind="institutionalInfo.custCatName ? institutionalInfo.custCatName : '-'"></td>
+            </tr>
+            <tr>
+                <td colspan="3" height="20"></td>
+            </tr>
+            <tr class="text-blue-light">
+                <td>机构级别</td>
+                <td>机构状态</td>
+                <td>邮箱</td>
+            </tr>
+            <tr class="text-dark font-18">
+                <td ng-bind="institutionalInfo.orgLevelName ? institutionalInfo.orgLevelName : '-'"></td>
+                <td ng-bind="institutionalInfo.custStatusName ? institutionalInfo.custStatusName : '-'"></td>
+                <td class="td-nopadding"
+                    ng-bind="institutionalInfo.companyMail ? institutionalInfo.companyMail : '-'"></td>
+            </tr>
+            <tr>
+                <td colspan="3" height="20"></td>
+            </tr>
+            <tr class="text-blue-light">
+                <td>白名单到期日</td>
+                <td>对口销售</td>
+                <td>电话</td>
+            </tr>
+            <tr class="text-dark font-18">
+                <td ng-bind="institutionalInfo.whiteDeadline ? institutionalInfo.whiteDeadline : '-'"></td>
+                <td ng-bind="institutionalInfo.serviceSaler ? institutionalInfo.serviceSaler : '-'"></td>
+                <td class="td-nopadding"
+                    ng-bind="institutionalInfo.companyTel ? institutionalInfo.companyTel : '-'"></td>
+            </tr>
+            <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+            <tr class="text-blue-light">
+                <td>区域</td>
+                <td>联系人</td>
+                <td>联系人电话</td>
+            </tr>
+            <tr class="text-dark font-18">
+                <td ng-bind="institutionalInfo.teamCat ? institutionalInfo.teamCat : '-'"></td>
+                <td ng-bind="institutionalInfo.contactorName ? institutionalInfo.contactorName : '-'"></td>
+                <td class="td-nopadding"
+                    ng-bind="institutionalInfo.contactorTel ? institutionalInfo.contactorTel : '-'"></td>
+            </tr>
+            <tr>
+                <td colspan="3" height="20"></td>
+            </tr>
+            <tr class="text-blue-light">
+                <td>来源</td>
+                <td>备注</td>
+            </tr>
+            <tr class="text-dark font-18">
+                <td ng-bind="institutionalInfo.source ? institutionalInfo.source : '-'"></td>
+                <td ng-bind="institutionalInfo.remark ? institutionalInfo.remark : '-'"></td>
+            </tr>
+        </table>
+    </div>
+    <p>&nbsp;</p>
+    <div class="scroll"
+         ng-if="custList.length"
+         style="border-bottom: solid 1px #f6f6f6;">
+        <ul class="groups"
+            style="width: 100%">
+            <li ng-repeat="cust in custList"
+                repeat-finish="finish()"
+                class="font-16 text-center padding20"
+                ng-class="{'active':cust.active}"
+                bo-text="cust.custName"
+                ng-click="showCust(cust)">
+            </li>
+        </ul>
+    </div>
+    <div ui-view="inst-main"></div>
+    <div ui-view="inst-data"></div>
+</div>

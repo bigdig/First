@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDctopiccustMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDctopiccust">
+      <result column="topic_id" jdbcType="VARCHAR" property="topicId" />
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyDctopiccustBean">
+      <result column="topic_id" jdbcType="VARCHAR" property="topicId" />
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dctopiccust where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByTopicId" parameterType="java.lang.String">
+    delete from ty_dctopiccust where topic_id = #{topicId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDctopiccust">
+    insert into ty_dctopiccust (
+    topic_id
+	,cust_id
+    )values (
+    #{topicId,jdbcType=VARCHAR}
+    	,#{custId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDctopiccust">
+    update ty_dctopiccust
+    <trim prefix="set" suffixOverrides=",">
+      <if test="topicId != null ">
+        topic_id = #{topicId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null ">
+        cust_id = #{custId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select topic_id,cust_id
+    from ty_dctopiccust
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryByTopicId" parameterType="java.lang.String" resultMap="ExResultMap">
+    select topic_id,cust_id
+    from ty_dctopiccust
+    where topic_id = #{topicId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select topic_id,cust_id
+    from ty_dctopiccust
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dctopiccust where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

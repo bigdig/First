@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>公司数据</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <link href="lib/ionic.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="src/css/main.css">
+    <link rel="stylesheet" href="src/css/allContact.css">
+    <link rel="stylesheet" href="src/css/client.css">
+    <script src="lib/ionic.bundle.min.js"></script>
+    <script src="src/app.js"></script>
+    <script src="src/controller/clientCtrl.js"></script>
+    <script src="src/controller/mainCtrl.js"></script>
+    <script src="src/controller/allContactCtrl.js"></script>
+    <!-- <base href=''> -->
+
+  </head>
+  <body>
+  <!-- <ion-nav-bar class="bar-positive nav-title-slide-ios7" id="color">
+      <ion-nav-back-button class="button-clear">
+
+    <i class="ion-arrow-left-c"></i> 
+  </ion-nav-back-button>
+  </ion-nav-bar> -->
+  <ion-nav-view >
+
+  </ion-nav-view>
+  </body>
+</html>

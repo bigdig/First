@@ -1,0 +1,19 @@
+/* pages/19xiaoxi/index.wxss */
+page{ background-color: #fff;
+font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+.center{ padding: 20rpx 30rpx 110rpx 30rpx;}
+.list{ height: 162rpx; border-bottom: #E5E5E5 solid 2rpx; display: flex; justify-content: space-between; align-items:center;}
+.list_hover{ color: #FBA703;}
+.list_img{ width: 100rpx; height: 100rpx; border-radius: 16rpx; overflow: hidden;}
+.list_img image{ width: 100%;}
+.list_msg{ width: 566rpx;}
+.list_msg > view:first-child{ height: 56rpx; line-height: 56rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+.list_new{ display: inline-block; vertical-align: middle; width: 16rpx; height: 16rpx; margin-left: 12rpx; border-radius: 50%; background-color: #FF4658;}
+.list_time{ float: right; color: #999; font-size: 24rpx;}
+.list_msg > view:last-child{ height: 50rpx; line-height: 50rpx; color: #999; font-size: 24rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+
+
+.no_list{ padding-top: 100rpx; text-align: center; color: #999; font-size: 32rpx;}
+.no_list image{ width: 320rpx;}
+

@@ -1,0 +1,26 @@
+<view class='tab'>
+   <text class='tab_customer font26' bindtap='tab_customer' style='color:{{cColorText}};border-bottom:{{cBorderBottom}}'>发起的活动</text>
+   <text class='tab_mechanism font26' bindtap='tab_mechanism' style='color:{{mColorText}};border-bottom:{{mBorderBottom}}'>参加的活动</text>
+</view>
+ <view class='box'>
+  <view wx:if="{{taber}}">
+      <view class='box_list' wx:key="{{item}}" wx:for="{{customerList}}" style='border-left:{{item.borderColor}}'>
+          <view class='box_list_item'>
+             <text class='font28 box_list_title'>{{item.title}}</text>
+             <text class='font20 box_list_pattern'>{{item.activityTypeText}}</text>
+             <text class='font20 box_list_Rnumber'>{{item.perLimit}}</text>
+             <text class='font20 box_list_time'>{{item.createTime}}</text>
+          </view>
+      </view>
+  </view>
+  <view wx:else>
+      <view class='box_list' wx:key="{{item}}" wx:for="{{mechanismList}}" style='border-left:{{item.borderColor}}'>
+          <view class='box_list_item'>
+             <text class='font28 box_list_title'>{{item.title}}</text>
+             <text class='font20 box_list_pattern'>{{item.activityTypeText}}</text>
+             <text class='font20 box_list_Rnumber'>{{item.perLimit}}</text>
+             <text class='font20 box_list_time'>{{item.createTime}}</text>
+          </view>
+      </view>
+  </view>
+</view> 

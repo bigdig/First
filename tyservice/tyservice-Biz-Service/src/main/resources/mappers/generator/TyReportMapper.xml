@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyReportMapper">
+	<resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyReport">
+		<result column="group_name" jdbcType="VARCHAR" property="groupName" />
+		<result column="group_num" jdbcType="INTEGER" property="groupNum" />
+	</resultMap>
+	<resultMap id="BaseResultMap2" type="com.tfzq.ty.model.generator.TyCustListReport">
+		<result column="id" jdbcType="VARCHAR" property="custId" />
+		<result column="cust_name" jdbcType="VARCHAR" property="custName" />
+		<result column="org_name" jdbcType="VARCHAR" property="orgName" />
+	</resultMap>
+
+	<select id="queryCustAreaDist" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from(
+		select t1.area as group_name,count(*) as group_num from ty_orgcustomer t1
+		where 1=1
+		and t1.delete_flag ='0'
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id =
+			t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where
+			(t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+				<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		group by t1.area
+		order by group_num desc
+		) where rownum <![CDATA[<]]> 6
+	</select>
+
+
+	<select id="queryCustSaleDist" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select t2.org_level as group_name,count(*) as group_num from
+		ty_orgcustomer t1 , TY_SERVICEORG t2 where t1.org_id = t2.id
+		and t1.delete_flag ='0' and t2.delete_flag ='0'
+		<if test="orgName != null and orgName != ''">and t2.org_name like '%'||#{orgName}||'%' </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where (t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+				<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and t1.saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (t1.saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR t1.saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		group by t2.org_level
+		order by t2.org_level
+	</select>
+
+	<select id="queryActivityLike" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select t2.activity_type as group_name ,count(*) as group_num from
+		TY_ACTIVITYSIGN t1 inner join ty_activity t2 on t1.activity_id = t2.id
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_orgcustomer t7 where t7.id =
+			t1.cust_id and t7.org_name like '%'||#{orgName}||'%') </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.cust_id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.cust_id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.cust_id in (select distinct t5.customer_id from
+			ty_customerlabel t5 where t5.label_id in
+			(select t6.id from ty_label t6 where (t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+				<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and exists(select 1 from ty_orgcustomer t8 where t8.id =
+			t1.cust_id and t8.saler_id = #{salerId})</if>
+		<if test="salerList != null and salerList.size>0">
+			and exists (select 1 from ty_orgcustomer t9 where t9.id = t1.cust_id
+			and (t1.saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR t1.saler_id IN (</if>#{salerId}
+			</foreach>)
+			)
+		</if>
+		group by t2.activity_type
+		order by group_num desc
+	</select>
+
+	<select id="queryCustTradeDist" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from(
+		select t.industry as group_name,count(*) as group_num from
+		(select t1.id , REGEXP_SUBSTR(t1.industry ,'[^,]+',1,l) AS industry
+		from ty_orgcustomer t1,(SELECT LEVEL l FROM DUAL CONNECT BY LEVEL <![CDATA[<]]>=100) b
+		WHERE 1=1
+		and l <![CDATA[<]]>= LENGTH(t1.industry) - LENGTH(REPLACE(t1.industry,','))+1
+		and t1.delete_flag ='0'
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id =
+			t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where (t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+				<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (t1.saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR t1.saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		)t
+		group by t.industry
+		order by group_num desc
+		) where rownum <![CDATA[<]]> 9
+	</select>
+
+	<select id="queryCustNum" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from ty_orgcustomer t1 where 1=1
+		and t1.delete_flag='0'
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id =
+			t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where (t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+				<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		<if test="month != null">
+			and exists (select 1 from ty_activitysign t7 where
+			t7.cust_id = t1.id and t7.create_time <![CDATA[>]]> ADD_MONTHS
+			(sysdate,#{month}))
+		</if>
+	</select>
+
+
+	<select id="queryCustLabelDist" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select * from(
+		select t7.label_name as group_name,count(*) as group_num
+		from ty_orgcustomer t1 , ty_customerlabel t7 where t7.customer_id = t1.id
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id =
+			t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+		<if test="serviceSaler != null and serviceSaler != ''">and t1.service_saler like '%'||#{serviceSaler}||'%'</if>
+		<if test="custEmail != null and custEmail != ''">and t1.cust_email like '%'||#{custEmail}||'%'</if>
+		<if test="custName != null and custName != ''">and t1.cust_name like '%'||#{custName}||'%'</if>
+		<if test="custTel != null and custTel != ''">and t1.cust_tel like '%'||#{custTel}||'%'</if>
+		<if test="custMobile != null and custMobile != ''">and t1.cust_mobile like '%'||#{custMobile}||'%'</if>
+		<if test="title != null and title != ''">and t1.title like '%'||#{title}||'%'</if>
+		<if test="department != null and department != ''">and t1.department like '%'||#{department}||'%'</if>
+		<if test="industry != null and industry != ''">and t1.industry like '%'||#{industry}||'%'</if>
+		<if test="domain != null and domain != ''">and t1.domain like '%'||#{domain}||'%'</if>
+		<if test="area != null and area != ''">and t1.area like '%'||#{area}||'%'</if>
+		<if test="groupId != null and groupId !='' ">
+			and exists (select * from ty_custgroupdetail t4 where t4.group_id =
+			#{groupId} and t4.cust_id=t1.id)
+		</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and t1.id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and t1.id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where (t6.label_name in
+			<foreach collection="labelNames" index="index" item="item" open="(" separator="," close=")">
+					<if test="(index % 999) == 998"> NULL ) OR t6.label_name IN (</if>#{item}
+			</foreach>)
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		group by t7.label_name
+		order by group_num desc
+		) where rownum <![CDATA[<]]> 9
+	</select>
+
+	<!-- 待删除 -->
+	<select id="custList" resultMap="BaseResultMap2">
+		select t1.id , t1.cust_name , t1.org_name from ty_orgcustomer t1 where
+		1=1
+		<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id =
+			t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+		<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+		<!-- 多标签与计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='and'">
+			<foreach collection="marks" index="index" item="item" open=""
+				separator="" close="">
+			and id in (select distinct t3.customer_id from ty_customerlabel t3
+			            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+			</foreach>
+		</if>
+		<!-- 多标签或计算 -->
+		<if test="marks != null and marks.size() > 0 and markCal=='or'">
+			and id in (select distinct t3.customer_id from ty_customerlabel t3
+						where t3.label_id in
+						(select t4.id from ty_label t4 where (t4.label_name in
+							<foreach collection="marks" index="index" item="item" open="(" separator="," close=")">
+								<if test="(index % 999) == 998"> NULL ) OR t4.label_name IN (</if>#{item}
+							</foreach>)
+						)
+					)
+		</if>
+		<if test="labelNames != null and labelNames.size() > 0 ">
+			and id in (select distinct t5.customer_id from ty_customerlabel t5
+			where t5.label_id in
+			(select t6.id from ty_label t6 where
+			t6.label_name in
+			<foreach collection="labelNames" index="index" item="item"
+				open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			)
+		</if>
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+	</select>
+
+	<select id="queryCustActivityNum" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select t2.activity_type as group_name , count(*) as
+		group_num from TY_ACTIVITYSIGN t1, ty_activity t2
+		where t1.activity_id = t2.id
+		and t1.cust_id = #{custId}
+		group by t2.activity_type
+		order by t2.activity_type
+	</select>
+
+	<select id="queryMyCustTotal" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from ty_orgcustomer t1 where 1=1 
+		and t1.delete_flag ='0'
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+	</select>
+
+	<select id="queryNewAddCustNum" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from ty_orgcustomer t1 where 1=1
+		and t1.delete_flag ='0'
+		<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		<if test="month != null and month != ''">
+			and create_time <![CDATA[>]]> ADD_MONTHS (sysdate,#{month})
+		</if>
+	</select>
+
+	<select id="queryJoinActiCustNum" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from ty_orgcustomer t1 where 1=1
+		and t1.delete_flag ='0'
+		<if test="salerId != null and salerId != ''">and t1.saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (t1.saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR t1.saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		and exists(select 1 from ty_activitysign t2 where t2.cust_id = t1.id
+		and t2.create_time <![CDATA[>]]> ADD_MONTHS (sysdate,#{month}))
+	</select>
+	
+	
+	<select id="queryDeadlineOrgs" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		select count(*) from ty_serviceorg t1 where 1=1
+		and t1.delete_flag ='0'
+		<if test="salerId != null and salerId != ''">and t1.saler_id = #{salerId}</if>
+		<if test="salerList != null and salerList.size>0">
+			and (t1.saler_id in
+			<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+				<if test="(index % 999) == 998"> NULL ) OR t1.saler_id IN (</if>#{salerId}
+			</foreach>)
+		</if>
+		<if test="deleteFlag != null and deleteFlag != ''">and t1.delete_flag =#{deleteFlag}</if>
+		<if test="whiteDeadlineEnd != null and whiteDeadlineEnd != ''">
+			and t1.white_deadline<![CDATA[<=]]> #{whiteDeadlineEnd}
+		</if>
+	</select>
+
+	<select id="queryActivityNum" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select t.activity_type as group_name,count(*) as group_num from
+		ty_activity t where 1 = 1
+		and t.delete_flag='0'
+		<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+		<if test="custId != null and custId != ''">
+			and exists (select 1 from ty_activitysign t2 where t.id =
+			t2.activity_id and t2.cust_id = #{custId})
+		</if>
+		<if test="beginDateStart != null and beginDateStart != ''">
+			and t.begin_date <![CDATA[>]]>= #{beginDateStart}
+		</if>
+		<if test="beginDateEnd != null and beginDateEnd != ''">
+			and t.begin_date <![CDATA[<]]>= #{beginDateEnd}
+		</if>
+		<if test="salerId != null and salerId != ''">
+			and exists(select 1 from ty_activitysign t2 
+				where t2.activity_id = t.id 
+				  and t2.cust_id in (select id from ty_orgcustomer t3 where t3.saler_id = #{salerId}))
+		</if>
+		<if test="salerList != null and salerList.size>0">
+			and exists(select 1 from ty_activitysign t2 
+				where t2.activity_id = t.id 
+				  and t2.cust_id in (select id from ty_orgcustomer t3 where (t3.saler_id in 
+				<foreach collection="salerList" item="salerId" index="index" open="(" close=")" separator=",">
+					<if test="(index % 999) == 998"> NULL ) OR t3.saler_id IN (</if>#{salerId}
+				</foreach>)))
+		</if>
+		group by t.activity_type
+		order by group_num desc
+	</select>
+</mapper>

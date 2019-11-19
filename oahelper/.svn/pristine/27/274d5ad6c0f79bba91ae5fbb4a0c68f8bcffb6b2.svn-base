@@ -1,0 +1,44 @@
+<!--pages/32kaoqin_detail/index.wxml-->
+<view class='show_status'>
+  <view class='base_title'>账单核对</view>
+  <view></view>
+</view>
+
+
+<view class='center'>
+
+  <view class='show_name'>{{name}}老师，您好！</view>
+
+  <view class='show_content'>
+    <!--用 text 标签，也只可以 text 标签 ： 这样后台传的data数据中 \n 就可以换行啦-->
+    <text>{{content}}</text>
+  </view>
+</view>
+<view style='display:flex;flex-direction: row'>
+  <view style='flex:1; padding-right:5rpx'  >
+    <button style='width:100%' wx:if="{{isReplied==='NO'}}" bindtap='confirm' class='send_btn'>确认</button>
+  </view>
+  <view style='flex:1;'>
+    <button style='width:100%' wx:if="{{isReplied==='NO'}}" bindtap='disagree' class='send_btn'>有异议</button>
+  </view>
+</view>
+
+<view class='toast-box' wx:if='{{ifDisagree}}'>
+    <view class='toastbg'></view>
+    <view class='showToast'>
+        <view class='toast-title'>
+            <text>异议原因</text>
+        </view>
+        <view class='toast-main'>
+          <textarea placeholder='请输入异议原因' bindinput='bindInputVal'></textarea>
+        </view>
+        <view class='toast-button'>
+            <view class='button1'>
+                <button bindtap='cancelDisagree'>取消</button>
+            </view>
+            <view class='button2'>
+                <button bindtap='submitDisagree'>确定</button>
+            </view>
+        </view>
+    </view>
+</view>

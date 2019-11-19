@@ -1,0 +1,91 @@
+<div>
+    <form name="search"
+          ng-submit="searchDepartment()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search">
+            <li>
+                <input type="search"
+                       ng-model="department.deptName"
+                       maxlength="20"
+                       placeholder="部门名称">
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editDepartmentTemplate">
+    <form name="dept_form"
+          ng-submit="editDepartment()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="departmentInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <dept-list children="deptList"
+                               model="departmentInfo"
+                               name="deptParentName"
+                               tag="dept"
+                               required="true"
+                               value="departmentInfo.deptParentName"></dept-list>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="dept_form.dept_name.$dirty && dept_form.dept_name.$invalid">
+                        <span ng-show="dept_form.dept_name.$error.required">
+                            请输入部门名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="dept_name"
+                           ng-model="departmentInfo.deptName"
+                           maxlength="20"
+                           required
+                           placeholder="部门名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="dept_form.dept_no.$dirty && dept_form.dept_no.$invalid">
+                        <span ng-show="dept_form.dept_no.$error.required">
+                            请输入部门编码
+                        </span>
+                        <span ng-show="dept_form.dept_no.$error.pattern">
+                            只接受8位内的数值
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="dept_no"
+                           ng-model="departmentInfo.deptNo"
+                           ng-pattern="/^\d{1,8}$/"
+                           required
+                           placeholder="部门编码"/>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="dept_form.dept_desc.$dirty && dept_form.dept_desc.$invalid">
+                <span class="error"
+                      ng-show="dept_form.dept_desc.$error.maxlength">
+                    总字数不超过500
+                </span>
+            </div>
+            <textarea rows="5"
+                      name="dept_desc"
+                      ng-model="departmentInfo.deptDesc"
+                      ng-maxlength="500"
+                      placeholder="描述"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="dept_form.$invalid || departmentInfo.loading"
+                   value="{{departmentInfo.btnName}}"/>
+        </div>
+    </form>
+</script>

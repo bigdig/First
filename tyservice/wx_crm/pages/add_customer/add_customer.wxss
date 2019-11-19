@@ -1,0 +1,43 @@
+.box{
+    border-top:2rpx solid #F3F2F7;
+    background-color:#F3F2F7;
+    position: absolute;
+    height: 100%;
+}
+.box_information{
+    padding-left:41rpx;
+    background-color: #ffffff;
+    margin-bottom: 20rpx;
+}
+.box_list{
+    width:709rpx;
+    height:88rpx;
+    line-height:88rpx;
+    border-bottom: 2rpx solid #F3F2F7;
+    box-sizing: border-box;
+}
+.box_list_text{
+    color:#282C3F;
+}
+input{
+  display: inline-block;
+   margin-top: 20rpx;
+  margin-right: 41rpx;
+  float: right;
+  text-align: right;  
+  width:520rpx;
+}
+.submit{
+  background-color: #ffffff;
+  height: 97rpx;
+  width: 100%;
+  line-height: 97rpx;
+  text-align: center;
+  color: #3296FA;
+  position: fixed;
+  bottom: 0;
+}
+.marketing{
+  float:right;
+  margin-right:40rpx;
+}

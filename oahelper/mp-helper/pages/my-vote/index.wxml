@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <view class="title" wx:for="{{vote_groups}}" wx:for-index="vote_group_index" wx:for-item="vote_group">
+    <view>
+      <text class="title_text">{{vote_group.vote_group_title}}</text>
+    </view>
+    <view>
+      <text class="title_end_time">{{vote_group.end_time}}</text>
+    </view>
+  </view>
+
+</view>

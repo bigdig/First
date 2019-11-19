@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="tfpb-Web">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="oahelper-Common-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/oahelper-Common/oahelper-Common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="oahelper-SYS-API-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/oahelper-SYS-API/oahelper-SYS-API">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="oahelper-Biz-API-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/oahelper-Biz-API/oahelper-Biz-API">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="oahelper-SYS-Service-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/oahelper-SYS-Service/oahelper-SYS-Service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="oahelper-Biz-Service-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/oahelper-Biz-Service/oahelper-Biz-Service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/tfpb-Web/target/classes"/>
+        <property name="context-root" value="oahelper-WebMng"/>
+    </wb-module>
+</project-modules>

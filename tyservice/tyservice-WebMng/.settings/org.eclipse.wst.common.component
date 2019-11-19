@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="tyservice-WebMng">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="tyservice-Common-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tyservice-Common/tyservice-Common">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tyservice-SYS-API-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tyservice-SYS-API/tyservice-SYS-API">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tyservice-Biz-API-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tyservice-Biz-API/tyservice-Biz-API">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tyservice-SYS-Service-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tyservice-SYS-Service/tyservice-SYS-Service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="tyservice-Biz-Service-0.5.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/tyservice-Biz-Service/tyservice-Biz-Service">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="java-output-path" value="/tfpb-Web/target/classes"/>
+        <property name="context-root" value="tyservice-WebMng"/>
+    </wb-module>
+</project-modules>

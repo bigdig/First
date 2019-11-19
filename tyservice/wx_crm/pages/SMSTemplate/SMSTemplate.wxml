@@ -1,0 +1,10 @@
+<!--pages/SMSTemplate/SMSTemplate.wxml-->
+<view class='box'>
+      <radio-group class="radio-group" bindchange="radioChange">
+        <label class="radio" wx:key="{{item}}" wx:for="{{items}}" class='box_list'>
+          <radio value="{{item.text}}" checked="{{item.checked}}" class='box_checkbox' color="#FE8166"/>
+          <view class='box_list_text'>{{item.text}}</view>
+        </label>
+      </radio-group>
+</view>
+<button class='submit' bindtap='submit'>完成</button>

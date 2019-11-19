@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.tycrm.mapper.GoInformUserMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.tycrm.entity.GoInformUser">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="inform_title" jdbcType="VARCHAR" property="informTitle" />
+      <result column="inform_content" jdbcType="VARCHAR" property="informContent" />      
+      <result column="inform_id" jdbcType="VARCHAR" property="informId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="is_read" jdbcType="VARCHAR" property="isRead" />
+      <result column="is_replied" jdbcType="VARCHAR" property="isReplied" />
+      <result column="is_send" jdbcType="VARCHAR" property="isSend" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+ 
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.tycrm.entity.GoInformUser">
+    update go_inform_user
+    <trim prefix="set" suffixOverrides=",">
+      <if test="isSend != null ">
+        is_send = #{isSend,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  
+  <select id="findNotifyRecords" resultMap="BaseResultMap">
+   select t.id,t.inform_id,t.user_id,t.user_name,t.is_send,t1.inform_title,t1.inform_content
+    from go_inform_user t ,go_inform t1
+    where t.inform_id = t1.id and t.is_send='0'
+    order by t1.id
+  </select>
+  <insert id="insert" parameterType="com.tfzq.tycrm.entity.GoInformUser">
+    insert into go_inform_user (
+    id
+	,inform_id
+	,user_id
+	,user_name
+	,is_read
+	,is_replied
+	,is_send
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{informId,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{isRead,jdbcType=VARCHAR}
+    	,#{isReplied,jdbcType=VARCHAR}
+    	,#{isSend,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+</mapper>

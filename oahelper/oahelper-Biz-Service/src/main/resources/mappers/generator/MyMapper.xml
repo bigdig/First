@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.MyMapper">
+	<resultMap id="MyVoteMap" type="com.tfzq.pr.model.generator.MyVote">
+		<result column="vote_group_name" jdbcType="VARCHAR" property="voteGroupName" />
+		<result column="vote_name" jdbcType="VARCHAR" property="voteName" />
+		<result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="vote_item_content" jdbcType="VARCHAR" property="voteItemContent" />
+		<result column="vote_group_id" jdbcType="VARCHAR" property="voteGroupId" />
+		<result column="vote_id" jdbcType="VARCHAR" property="voteId" />
+		<result column="vote_item_id" jdbcType="VARCHAR" property="voteItemId" />
+	</resultMap>
+
+	<resultMap id="MyInformMap" type="com.tfzq.pr.model.generator.MyInform">
+		<result column="id" jdbcType="VARCHAR" property="id" />
+		<result column="inform_id" jdbcType="VARCHAR" property="informId" />
+		<result column="inform_title" jdbcType="VARCHAR" property="informTitle" />
+		<result column="inform_content" jdbcType="CLOB" property="informContent" />
+		<result column="external_link" jdbcType="VARCHAR" property="externalLink" />
+		<result column="src_type" jdbcType="VARCHAR" property="srcType" />
+		<result column="src_id" jdbcType="VARCHAR" property="srcId" />
+		<result column="is_reply" jdbcType="VARCHAR" property="isReply" />
+		<result column="user_id" jdbcType="VARCHAR" property="userId" />
+		<result column="user_name" jdbcType="VARCHAR" property="userName" />
+		<result column="is_read" jdbcType="VARCHAR" property="isRead" />
+		<result column="is_replied" jdbcType="VARCHAR" property="isReplied" />
+		<result column="replyRemark" jdbcType="VARCHAR" property="replyRemark" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	</resultMap>
+
+	<select id="selectByVoteGroupId" parameterType="java.lang.String"
+		resultMap="MyVoteMap">
+		SELECT
+		b.VOTE_GROUP_ID,
+		a.VOTE_GROUP_NAME,
+		c.VOTE_ID,
+		b.VOTE_NAME,
+		b.SORT_NO,
+		c.USER_ID,
+		c.USER_NAME,
+		c.VOTE_ITEM_CONTENT
+		FROM
+		GO_VOTE_GROUP a,
+		GO_VOTE b,
+		GO_VOTE_USER c
+		WHERE
+		b.VOTE_GROUP_ID = a."ID"
+		AND c.VOTE_ID = b."ID"
+		AND a."ID" = #{id,jdbcType=VARCHAR}
+
+		ORDER BY
+		b.SORT_NO
+	</select>
+
+	<select id="selectUserVote" resultMap="MyVoteMap">
+		SELECT
+		b.VOTE_GROUP_ID,
+		a.VOTE_GROUP_NAME,
+		c.VOTE_ID,
+		b.VOTE_NAME,
+		b.SORT_NO,
+		c.USER_ID,
+		c.USER_NAME,
+		c.VOTE_ITEM_ID,
+		c.VOTE_ITEM_CONTENT
+		FROM
+		GO_VOTE_GROUP a,
+		GO_VOTE b,
+		GO_VOTE_USER c
+		WHERE
+		b.VOTE_GROUP_ID = a."ID"
+		AND c.VOTE_ID =
+		b."ID"
+		AND a."ID" =
+		#{0,jdbcType=VARCHAR}
+		AND c.USER_ID
+		=#{1,jdbcType=VARCHAR}
+	</select>
+
+
+	<select id="selectUserAllVote" resultMap="MyVoteMap">
+		SELECT
+		DISTINCT
+		b.VOTE_GROUP_ID
+		FROM
+		GO_VOTE_GROUP a,
+		GO_VOTE b,
+		GO_VOTE_USER c
+		WHERE
+		b.VOTE_GROUP_ID = a."ID"
+		AND c.VOTE_ID =
+		b."ID"
+		AND
+		a.IS_ACTIVITY=
+		#{0,jdbcType=VARCHAR}
+		AND
+		c.USER_ID
+		=#{1,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteUserVote">
+		DELETE
+		FROM
+		GO_VOTE_USER c
+		WHERE
+		c.USER_ID =
+		#{1,jdbcType=VARCHAR}
+		AND EXISTS (
+		SELECT
+		1
+		FROM
+		GO_VOTE_GROUP A,
+		GO_VOTE b
+		WHERE
+		b.VOTE_GROUP_ID = A ."ID"
+		AND c.VOTE_ID = b."ID"
+		AND A ."ID" =
+		#{0,jdbcType=VARCHAR}
+		)
+	</delete>
+
+	<select id="selectUserInform" resultMap="MyInformMap">
+		SELECT
+		A.inform_title,
+		A.external_link,
+		A.src_type,
+		A.src_id,
+		A.is_reply,
+		b.ID,
+		b.inform_id,
+		b.user_id,
+		b.user_name,
+		b.is_read,
+		b.is_replied,
+		b.create_time
+		FROM
+		GO_INFORM
+		A,
+		GO_INFORM_USER b
+		WHERE
+		A."ID" = b.INFORM_ID
+		AND b.USER_ID
+		=#{0,jdbcType=VARCHAR}
+	</select>
+
+
+	<select id="selectInformByCondition" parameterType="java.util.Map"
+		resultMap="MyInformMap">
+		SELECT
+		A.inform_title,
+		A.inform_content,
+		A.external_link,
+		A.src_type,
+		A.src_id,
+		A.is_reply,
+		b.ID,
+		b.inform_id,
+		b.user_id,
+		b.user_name,
+		b.is_read,
+		b.is_replied,
+		b.create_time,
+		b.remark as replyRemark
+		FROM
+		GO_INFORM A,
+		GO_INFORM_USER b
+		WHERE
+		A."ID" =
+		b.INFORM_ID
+		<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+		<if test="informTitle != null and informTitle != ''">and inform_title like '%'||#{informTitle}||'%'</if>
+		<if test="srcType != null and srcType != ''">and src_type=#{srcType}</if>
+		<if test="isReply != null and isReply != ''">and is_reply=#{isReply}</if>
+		<if test="userName != null and userName != ''">and user_name=#{userName}</if>
+		<if test="userId != null and userId != ''">and user_id=#{userId}</if>
+		order by id
+	</select>
+
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyOrgcustomerpushMapper">
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyOrgcustomerpush">
+    insert into ty_orgcustomerpush (
+    id
+	,customer_id
+	,plat_flag
+	,deal_flag
+	,create_by
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{customerId,jdbcType=VARCHAR}
+    	,#{platFlag,jdbcType=VARCHAR}
+    	,#{dealFlag,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyOrgcustomerpush">
+    update ty_orgcustomerpush
+    <trim prefix="set" suffixOverrides=",">
+      <if test="customerId != null ">
+        customer_id = #{customerId,jdbcType=VARCHAR},
+      </if>
+      <if test="platFlag != null ">
+        plat_flag = #{platFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="dealFlag != null ">
+        deal_flag = #{dealFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_orgcustomerpush t1 where 1=1
+	<if test="platFlag != null and platFlag != ''">and plat_flag = #{platFlag}</if>
+	<if test="dealFlag != null and dealFlag != ''">and deal_flag = #{dealFlag}</if>
+  </select>
+  
+</mapper>

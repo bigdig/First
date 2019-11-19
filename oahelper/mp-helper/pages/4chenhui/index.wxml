@@ -1,0 +1,87 @@
+<!--pages/4chenhui/index.wxml-->
+<view class='top'>
+  <view class='base_title'>{{week}}</view>
+  <view>{{dateText}}</view>
+</view>
+
+<view wx:if='{{!is_attend}}' class='center'>
+
+  <view bindtap='choose_type' data-choose_type='1' class='center_choose center_choose_show_more'>
+    <!--现场参加 地址选择器-->
+    <picker wx:if="{{choose_type == 1}}" bindchange="bindPickerChange" value="{{index}}" range-key="text" range="{{present_way}}">
+      <view class="picker">
+        {{present_way[index].text}}
+      </view>
+    </picker>
+
+    <view wx:if="{{choose_type == 1}}" class='center_choose_ico center_choose_ico_in'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+    <view wx:else class='center_choose_ico'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+
+    现场参加
+  </view>
+
+  <view bindtap='choose_type' data-choose_type='2' class='center_choose'>
+
+    <view wx:if="{{choose_type == 2}}" class='center_choose_ico center_choose_ico_in'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+    <view wx:else class='center_choose_ico'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+
+    电话接入
+  </view>
+
+  <view bindtap='choose_type' data-choose_type='3' class='center_choose center_choose_show_more'>
+    <!-- 地址选择器-->
+    <picker wx:if="{{choose_type == 3}}" bindchange="bindPickerChange" value="{{index}}" range-key="text" range="{{absence_way}}">
+      <view class="picker">
+        {{absence_way[index].text}}
+      </view>
+    </picker>
+    <view wx:if="{{choose_type == 3}}" class='center_choose_ico center_choose_ico_in'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+    <view wx:else class='center_choose_ico'>
+      <text class="icon iconfont icon-right"></text>
+    </view>
+
+    请假
+  </view>
+
+  <view wx:if='{{choose_type == 3}}' style='margin-top:20rpx;'>
+    <view>
+      <view class='choose_img_show'>
+        <image wx:if='{{imgURL!=null}}' src='{{imgURL}}' mode='widthFix'></image>
+      </view>
+    </view>
+    <image style="width:58px;height:58px;" src='../../img/uploadFile.png' bindtap="chooseImg"></image>
+    <view class='choose_img_text'>请上传请假申请凭证</view>
+  </view>
+
+
+</view>
+
+
+<view wx:else>
+  <view class='center_choose'>
+    <view style='margin-left:30rpx;'>
+      {{atw}}
+      <block wx:if='{{pw}}'>：{{pw}}</block>
+      <block wx:if='{{aw}}'>：{{aw}}</block>
+    </view>
+  </view>
+  <view wx:if='{{imgPath}}'>
+      <view class='choose_img_show' style="margin-left:30rpx;">
+        <image wx:if='{{imgURL!=null}}' src='{{imgURL}}' mode='widthFix'></image>
+      </view>
+  </view>
+</view>
+
+<button wx:if='{{!is_attend}}' bindtap='sendData' class='send_btn'>提交</button>
+
+<!-- <button wx:if='{{is_attend}}' class='send_btn_gray'>提交</button> -->

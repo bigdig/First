@@ -1,0 +1,228 @@
+<form name="search"
+      ng-submit="searchProject()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <select ng-model="project.projectType">
+                <option value="">项目类型</option>
+                <option ng-repeat="ty in projectType"
+                        value="{{ty.id}}">{{ty.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <select ng-model="project.projectRole">
+                <option value="">项目角色</option>
+                <option ng-repeat="ty in projectRole"
+                        value="{{ty.id}}">{{ty.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="project.projectName"
+                   maxlength="64"
+                   placeholder="项目主体"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="project.deptName"
+                   maxlength="64"
+                   placeholder="所属团队"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="project.brokerName"
+                   maxlength="16"
+                   placeholder="提供者"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editProjectTemplate">
+    <form name="pro_form"
+          ng-submit="editProject()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="projectInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="pro_form.pro_type.$dirty && pro_form.pro_type.$invalid">
+                        <span ng-show="pro_form.pro_type.$error.select">
+                            请选择项目类型
+                        </span>
+                    </div>
+                    <select name="pro_type"
+                            ng-model="projectInfo.projectType"
+                            option-select="pro_type">
+                        <option value="">项目类型</option>
+                        <option ng-repeat="ty in projectTypes"
+                                ng-selected="projectInfo.projectType==ty.id"
+                                value="{{ty.id}}">{{ty.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="pro_form.pro_role.$dirty && pro_form.pro_role.$invalid">
+                        <span ng-show="pro_form.pro_role.$error.select">
+                            请选择项目角色
+                        </span>
+                    </div>
+                    <select name="pro_role"
+                            ng-model="projectInfo.projectRole"
+                            option-select="pro_type">
+                        <option value="">项目角色</option>
+                        <option ng-repeat="ty in projectRoles"
+                                ng-selected="projectInfo.projectRole==ty.id"
+                                value="{{ty.id}}">{{ty.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <input type="search"
+                           ng-model="projectInfo.projectName"
+                           name="projectName"
+                           maxlength="64"
+                           placeholder="项目主体">
+                </li>
+                <li>
+                    <input type="search"
+                           name="pro_industry"
+                           ng-model="projectInfo.deptName"
+                           maxlength="64"
+                           readonly
+                           required
+                           placeholder="所属团队"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="pro_form.pro_broker.$dirty && pro_form.pro_broker.$invalid">
+                        <span ng-show="pro_form.pro_broker.$error.required">
+                            请输入提供者
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="pro_broker"
+                           ng-model="projectInfo.brokerName"
+                           maxlength="64"
+                           readonly
+                           required
+                           placeholder="提供者"/>
+                </li>
+                <li>
+                    <ng-datepicker value="projectInfo.endTime"
+                                   name="endDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   min="true"
+                                   limitdate="{{projectInfo.createTimeText}}"
+                                   placeholder="截止日期"></ng-datepicker>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="pro_form.pro_demand.$dirty && pro_form.pro_demand.$invalid">
+                <span class="error"
+                      ng-show="pro_form.pro_demand.$error.maxlength">
+                    总字数不超过1500
+                </span>
+            </div>
+            <textarea rows="5"
+                      name="pro_demand"
+                      ng-model="projectInfo.projectDemand"
+                      ng-maxlength="1500"
+                      placeholder="项目需求"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   value="附件批量添加"
+                   ng-dialog="filesTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="filesPreCloseCallback"
+                   ng-dialog-on-open-callback="filesOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{projectInfo.btnName}}"
+                   ng-disabled="pro_form.$invalid || projectInfo.loading"/>
+        </div>
+    </form>
+</script>
+<!--<script type="text/ng-template"-->
+        <!--id="projectTemplate">-->
+    <!--<div class="ngdialog-message">-->
+        <!--<h3 class="text-center">项目信息</h3>-->
+        <!--<table width="100%" cellpadding="3" cellspacing="10">-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light"-->
+                    <!--width="30%">项目类型：-->
+                <!--</td>-->
+                <!--<td ng-bind="projectInfo.projectTypeText"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">项目角色：</td>-->
+                <!--<td ng-bind="projectInfo.projectRoleText"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">项目主体：</td>-->
+                <!--<td ng-bind="projectInfo.projectName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">所属团队：</td>-->
+                <!--<td ng-bind="projectInfo.deptName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">提供者：</td>-->
+                <!--<td ng-bind="projectInfo.brokerName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">关联客户：</td>-->
+                <!--<td ng-bind="projectInfo.orgCustName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">关联公司：</td>-->
+                <!--<td ng-bind="projectInfo.companyName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">关联专家：</td>-->
+                <!--<td ng-bind="projectInfo.expertStaffName"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">需求及进展：</td>-->
+                <!--<td ng-bind="projectInfo.projectDemand"></td>-->
+            <!--</tr>-->
+            <!--<tr valign="top">-->
+                <!--<td class="text-right text-blue-light">附件：</td>-->
+                <!--<td>-->
+                    <!--<label ng-repeat="file in uploadFile.files">-->
+                        <!--<a bo-href="'uploadfile/downActFile?fileUrl='+file.addAttachs+'&fileName='+file.addAttachNames"-->
+                           <!--target="_blank"-->
+                           <!--bo-text="file.addAttachNames"></a>-->
+                        <!--&nbsp;-->
+                    <!--</label>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+        <!--<br>-->
+    <!--</div>-->
+    <!--<div class="ngdialog-buttons text-center">-->
+        <!--<input type="button"-->
+               <!--class="text-orange padding40 light border-gray-color"-->
+               <!--ng-click="closeThisDialog()"-->
+               <!--value="关闭"/>-->
+    <!--</div>-->
+<!--</script>-->

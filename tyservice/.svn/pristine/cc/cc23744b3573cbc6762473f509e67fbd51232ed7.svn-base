@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyListedcompanyMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyListedcompany">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+      <result column="market_kind" jdbcType="VARCHAR" property="marketKind" />
+      <result column="stock_shortname" jdbcType="VARCHAR" property="stockShortname" />
+      <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+      <result column="company_shortname" jdbcType="VARCHAR" property="companyShortname" />
+      <result column="market_no" jdbcType="VARCHAR" property="marketNo" />
+      <result column="market_name" jdbcType="VARCHAR" property="marketName" />
+      <result column="indu_code" jdbcType="VARCHAR" property="induCode" />
+      <result column="indu_name" jdbcType="VARCHAR" property="induName" />
+      <result column="data_src" jdbcType="VARCHAR" property="dataSrc" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_listedcompany where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyListedcompany">
+    insert into ty_listedcompany (
+    id
+	,stock_code
+	,market_kind
+	,stock_shortname
+	,stock_name
+	,company_shortname
+	,market_no
+	,market_name
+	,indu_code
+	,indu_name
+	,data_src
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{stockCode,jdbcType=VARCHAR}
+    	,#{marketKind,jdbcType=VARCHAR}
+    	,#{stockShortname,jdbcType=VARCHAR}
+    	,#{stockName,jdbcType=VARCHAR}
+    	,#{companyShortname,jdbcType=VARCHAR}
+    	,#{marketNo,jdbcType=VARCHAR}
+    	,#{marketName,jdbcType=VARCHAR}
+    	,#{induCode,jdbcType=VARCHAR}
+    	,#{induName,jdbcType=VARCHAR}
+    	,#{dataSrc,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyListedcompany">
+    update ty_listedcompany
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null ">
+        stock_code = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="marketKind != null ">
+        market_kind = #{marketKind,jdbcType=VARCHAR},
+      </if>
+      <if test="stockShortname != null ">
+        stock_shortname = #{stockShortname,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null ">
+        stock_name = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyShortname != null ">
+        company_shortname = #{companyShortname,jdbcType=VARCHAR},
+      </if>
+      <if test="marketNo != null ">
+        market_no = #{marketNo,jdbcType=VARCHAR},
+      </if>
+      <if test="marketName != null ">
+        market_name = #{marketName,jdbcType=VARCHAR},
+      </if>
+      <if test="induCode != null ">
+        indu_code = #{induCode,jdbcType=VARCHAR},
+      </if>
+      <if test="induName != null ">
+        indu_name = #{induName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataSrc != null ">
+        data_src = #{dataSrc,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,stock_code,market_kind,stock_shortname,stock_name,company_shortname,market_no,market_name,indu_code,indu_name,data_src,create_by,create_time,update_by,update_time
+    from ty_listedcompany
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,stock_code,market_kind,stock_shortname,stock_name,company_shortname,market_no,market_name,indu_code,indu_name,data_src,create_by,create_time,update_by,update_time
+    from ty_listedcompany
+    order by id
+  </select>
+  <select id="queryByActId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,stock_code,market_kind,stock_shortname,stock_name,company_shortname,market_no,market_name,indu_code,indu_name,data_src,create_by,create_time,update_by,update_time
+    from ty_listedcompany t1 
+    where t1.id in (select listedcomp_id from ty_activitylistedcomp t2 where t2.activity_id=#{actId})
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_listedcompany a where 1=1
+	<if test="marketKind != null and marketKind != ''"> and a.market_kind like '%'||#{marketKind}||'%'</if>
+	<if test="stockCode != null and stockCode != ''"> and a.stock_code like '%'||#{stockCode}||'%'</if>
+	<if test="stockShortname != null and stockShortname != ''"> and a.stock_shortname like '%'||#{stockShortname}||'%'</if>
+	<if test="marketNo != null and marketNo != ''"> and a.market_no like '%'||#{marketNo}||'%'</if>
+	<if test="marketName != null and marketName != ''"> and a.market_name like '%'||#{marketName}||'%'</if>
+	<if test="induName != null and induName != ''"> and indu_name like '%'||#{induName}||'%'</if>
+	<if test="keyword != null and keyword != '' ">
+		and (a.market_kind like '%'||#{keyword}||'%'  or a.stock_code like '%'||#{keyword}||'%' or a.stock_shortname like '%'||#{keyword}||'%' or a.market_no like '%'||#{keyword}||'%'
+			or a.market_name like '%'||#{keyword}||'%' or a.indu_name like '%'||#{keyword}||'%'
+		)
+	</if>
+  </select>
+    <!-- 用于增量拉取内容变动 -->
+  <select id="queryLatestModifiedRecords" resultMap="BaseResultMap">
+		select id,stock_code,market_kind,stock_shortname,stock_name,company_shortname,market_no,market_name,indu_code,indu_name,data_src,create_by,create_time,update_by,update_time
+		  from ty_listedcompany a
+		  where 1=1 
+      <if test="lastestTime != null and lastestTime != ''"> and a.update_time <![CDATA[>]]> to_date(#{lastestTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')</if>
+  </select>
+  
+</mapper>

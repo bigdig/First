@@ -1,0 +1,63 @@
+<table width="100%"
+       cellspacing="5"
+       cellpadding="0">
+    <tr>
+        <td colspan="3">
+            <div class="span-head">
+                <ul class="tag">
+                    <li ng-repeat="tab in timespan">
+                        <a href="javascript:void(0)"
+                           ng-class="{'active': tab.active}"
+                           ng-click="getCustByTimespan(tab)"
+                           bo-text="tab.name"></a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+        <td>
+            <div class="span-head">
+                <ul class="tag">
+                    <li ng-repeat="tab in whiteDeadline">
+                        <a href="javascript:void(0)"
+                           ng-class="{'active': tab.active}"
+                           ng-click="getWhiteDeadLine(tab)"
+                           bo-text="tab.name"></a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    <tr class="text-center text-dark">
+        <td width="25%"
+            class="border-gray-color"
+            height="200">
+            <h1 ng-bind="myCust.newAddCustNum"></h1>
+            <p>本月新增客户</p>
+        </td>
+        <td width="25%"
+            class="border-gray-color">
+            <h1 ng-bind="myCust.myCustTotal"></h1>
+            <p>客户总数</p>
+        </td>
+        <td width="25%"
+            class="border-gray-color">
+            <h1 ng-bind="myCust.joinActivityRateDesc"></h1>
+            <p>客户服务参与率</p>
+        </td>
+        <td class="border-gray-color"
+            style="cursor: pointer"
+            ng-click="setWhiteDeadLine()">
+            <h1 ng-class="{'text-orange':myCust.whileDeadLineNumber>0}"
+                ng-bind="myCust.whileDeadLineNumber">
+            </h1>
+            <p>白名单到期的机构</p>
+        </td>
+    </tr>
+</table>
+<ul class="charts report">
+    <li id="area_chart"></li>
+    <li id="sale_chart"></li>
+    <li id="trade_chart"></li>
+    <li id="active_chart"></li>
+</ul>
+<br><br>

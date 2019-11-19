@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.generator.SysResourceMapper">
+  <resultMap id="BaseResultMap" type="org.ibase4j.model.generator.SysResource">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+      <result column="resource_path" jdbcType="VARCHAR" property="resourcePath" />
+      <result column="resource_type" jdbcType="VARCHAR" property="resourceType" />
+      <result column="resource_file" jdbcType="VARCHAR" property="resourceFile" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_resource where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.ibase4j.model.generator.SysResource">
+    insert into sys_resource (
+    id
+	,resource_name
+	,resource_path
+	,resource_type
+	,resource_file
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{resourceName,jdbcType=VARCHAR}
+    	,#{resourcePath,jdbcType=VARCHAR}
+    	,#{resourceType,jdbcType=VARCHAR}
+    	,#{resourceFile,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ibase4j.model.generator.SysResource">
+    update sys_resource
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceName != null ">
+        resource_name = #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourcePath != null ">
+        resource_path = #{resourcePath,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null ">
+        resource_type = #{resourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceFile != null ">
+        resource_file = #{resourceFile,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,resource_name,resource_path,resource_type,resource_file,create_by,create_time,update_by,update_time
+    from sys_resource
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,resource_name,resource_path,resource_type,resource_file,create_by,create_time,update_by,update_time
+    from sys_resource
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from sys_resource where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="resourceName != null and resourceName != ''">and resource_name like '%'||#{resourceName}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or resource_name like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

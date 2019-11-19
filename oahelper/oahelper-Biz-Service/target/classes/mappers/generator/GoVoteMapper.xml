@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoVoteMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoVote">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_group_id" jdbcType="VARCHAR" property="voteGroupId" />
+      <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+      <result column="vote_name" jdbcType="VARCHAR" property="voteName" />
+      <result column="vote_description" jdbcType="VARCHAR" property="voteDescription" />
+      <result column="is_customizable" jdbcType="VARCHAR" property="isCustomizable" />
+      <result column="is_multi" jdbcType="VARCHAR" property="isMulti" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoVoteBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_group_id" jdbcType="VARCHAR" property="voteGroupId" />
+      <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+      <result column="vote_name" jdbcType="VARCHAR" property="voteName" />
+      <result column="vote_description" jdbcType="VARCHAR" property="voteDescription" />
+      <result column="is_customizable" jdbcType="VARCHAR" property="isCustomizable" />
+      <result column="is_multi" jdbcType="VARCHAR" property="isMulti" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_vote where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoVote">
+    insert into go_vote (
+    id
+	,vote_group_id
+	,sort_no
+	,vote_name
+	,vote_description
+	,is_customizable
+	,is_multi
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{voteGroupId,jdbcType=VARCHAR}
+    	,#{sortNo,jdbcType=INTEGER}
+    	,#{voteName,jdbcType=VARCHAR}
+    	,#{voteDescription,jdbcType=VARCHAR}
+    	,#{isCustomizable,jdbcType=VARCHAR}
+    	,#{isMulti,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoVote">
+    update go_vote
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="voteGroupId != null ">
+        vote_group_id = #{voteGroupId,jdbcType=VARCHAR},
+      </if>
+      <if test="sortNo != null ">
+        sort_no = #{sortNo,jdbcType=INTEGER},
+      </if>
+      <if test="voteName != null ">
+        vote_name = #{voteName,jdbcType=VARCHAR},
+      </if>
+      <if test="voteDescription != null ">
+        vote_description = #{voteDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="isCustomizable != null ">
+        is_customizable = #{isCustomizable,jdbcType=VARCHAR},
+      </if>
+      <if test="isMulti != null ">
+        is_multi = #{isMulti,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,vote_group_id,sort_no,vote_name,vote_description,is_customizable,is_multi,create_by,create_time,update_by,update_time
+    from go_vote
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,vote_group_id,sort_no,vote_name,vote_description,is_customizable,is_multi,create_by,create_time,update_by,update_time
+    from go_vote
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,vote_group_id,sort_no,vote_name,vote_description,is_customizable,is_multi,create_by,create_time,update_by,update_time
+    from go_vote
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteGroupId != null and voteGroupId != ''">and vote_group_id like '%'||#{voteGroupId}||'%'</if>
+	<if test="sortNo != null and sortNo != ''">and sort_no=#{sortNo}</if>
+	<if test="voteName != null and voteName != ''">and vote_name like '%'||#{voteName}||'%'</if>
+	<if test="voteDescription != null and voteDescription != ''">and vote_description like '%'||#{voteDescription}||'%'</if>
+	<if test="isCustomizable != null and isCustomizable != ''">and is_customizable=#{isCustomizable}</if>
+	<if test="isMulti != null and isMulti != ''">and is_multi=#{isMulti}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_vote where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteGroupId != null and voteGroupId != ''">and vote_group_id like '%'||#{voteGroupId}||'%'</if>
+	<if test="sortNo != null and sortNo != ''">and sort_no=#{sortNo}</if>
+	<if test="voteName != null and voteName != ''">and vote_name like '%'||#{voteName}||'%'</if>
+	<if test="voteDescription != null and voteDescription != ''">and vote_description like '%'||#{voteDescription}||'%'</if>
+	<if test="isCustomizable != null and isCustomizable != ''">and is_customizable=#{isCustomizable}</if>
+	<if test="isMulti != null and isMulti != ''">and is_multi=#{isMulti}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or vote_group_id like '%'||#{keyword}||'%' or sort_no like '%'||#{keyword}||'%' or vote_name like '%'||#{keyword}||'%' or vote_description like '%'||#{keyword}||'%' or is_customizable like '%'||#{keyword}||'%' or is_multi like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.PrMediaspreadMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.PrMediaspread">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="amount" jdbcType="VARCHAR" property="amount" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_note" jdbcType="VARCHAR" property="catNote" />
+      <result column="percent" jdbcType="VARCHAR" property="percent" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="busi_date" jdbcType="VARCHAR" property="busiDate" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.entity.PrMediaspread">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="amount" jdbcType="VARCHAR" property="amount" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_note" jdbcType="VARCHAR" property="catNote" />
+      <result column="percent" jdbcType="VARCHAR" property="percent" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="busi_date" jdbcType="VARCHAR" property="busiDate" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_mediaspread where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.PrMediaspread">
+    insert into pr_mediaspread (
+    id
+	,amount
+	,cat_id
+	,cat_note
+	,percent
+	,company_id
+	,busi_date
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{amount,jdbcType=VARCHAR}
+    	,#{catId,jdbcType=VARCHAR}
+    	,#{catNote,jdbcType=VARCHAR}
+    	,#{percent,jdbcType=VARCHAR}
+    	,#{companyId,jdbcType=VARCHAR}
+    	,#{busiDate,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.PrMediaspread">
+    update pr_mediaspread
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null ">
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+      <if test="catId != null ">
+        cat_id = #{catId,jdbcType=VARCHAR},
+      </if>
+      <if test="catNote != null ">
+        cat_note = #{catNote,jdbcType=VARCHAR},
+      </if>
+      <if test="percent != null ">
+        percent = #{percent,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null ">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="busiDate != null ">
+        busi_date = #{busiDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,amount,cat_id,cat_note,percent,company_id,busi_date,create_by,create_time,update_by,update_time
+    from pr_mediaspread
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,amount,cat_id,cat_note,percent,company_id,busi_date,create_by,create_time,update_by,update_time
+    from pr_mediaspread
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,amount,cat_id,cat_note,percent,company_id,busi_date,create_by,create_time,update_by,update_time
+    from pr_mediaspread
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="catId != null and catId != ''">and cat_id like '%'||#{catId}||'%'</if>
+	<if test="companyId != null and companyId != ''">and company_id like '%'||#{companyId}||'%'</if>
+	<if test="busiDate != null and busiDate != ''">and busi_date like '%'||#{busiDate}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from pr_mediaspread where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="catId != null and catId != ''">and cat_id like '%'||#{catId}||'%'</if>
+	<if test="companyId != null and companyId != ''">and company_id like '%'||#{companyId}||'%'</if>
+	<if test="busiDate != null and busiDate != ''">and busi_date like '%'||#{busiDate}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or cat_id like '%'||#{keyword}||'%' or busi_date like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

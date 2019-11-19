@@ -1,0 +1,54 @@
+.ngdialog.ngdialog-theme-plain {
+    padding-bottom: 120px;
+    padding-top: 120px;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-content {
+    background: #fff;
+    color: #8494A5;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    margin: 0 auto;
+    padding: 1em;
+    position: relative;
+    max-width: 36%;
+    min-width: 400px;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-close {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-close:before {
+    background: transparent;
+    color: #bbb;
+    content: "\00D7";
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 26px;
+    text-align: center;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-close:hover:before,
+.ngdialog.ngdialog-theme-plain .ngdialog-close:active:before {
+    color: #777;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-message {
+    margin-bottom: .5em;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-buttons > input[type='submit'], .ngdialog.ngdialog-theme-plain .ngdialog-buttons > input[type='rest']{
+     display: inline-block;
+}
+
+.ngdialog.ngdialog-theme-plain .ngdialog-buttons:after {
+    clear: both;
+    content: '';
+    display: table;
+}

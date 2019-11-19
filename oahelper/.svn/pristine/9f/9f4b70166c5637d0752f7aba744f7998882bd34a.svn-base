@@ -1,0 +1,17 @@
+/* pages/13tongzhi_detail/index.wxss */
+page{ padding: 0 30rpx; box-sizing: border-box; background-color: #fff;
+font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.top{ padding: 22rpx 0; line-height: 66rpx; border-bottom: #E5E5E5 solid 2rpx;}
+.top view:first-child{ font-size: 44rpx;}
+.top view:last-child{ color: #999; font-size: 28rpx;}
+
+.center{ padding: 30rpx 0; line-height: 44rpx; font-size: 32rpx;
+word-break:break-all !important; word-wrap:break-word !important; white-space:pre-wrap !important;
+text-align:justify;text-justify:inter-ideograph;
+}
+.center > view{ margin-bottom: 44rpx;}
+.center image{ max-width: 100% !important;}
+
+.msg{ padding: 0 30rpx; height: 80rpx; line-height: 80rpx; color: #FB7F03; font-size: 30rpx; background-color: #FFEBCD;}

@@ -1,0 +1,25 @@
+/* pages/37chenhuijilu/index.wxss */
+page{ background-color: #fff; font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.list_box{ padding-left: 90rpx;}
+
+.list{ height: 110rpx; border-bottom: #E5E5E5 solid 2rpx; position: relative; display: flex; align-items: center;}
+.list::before{ content: ""; width: 18rpx; height: 18rpx; border-radius: 50%; background-color: #D1D1D1; position: absolute; left: -50rpx; top: 46rpx;}
+.list::after{ content: ""; width: 2rpx; height: 100%; background-color: #D1D1D1; position: absolute; left: -41rpx; bottom: 0;}
+.list:first-child::after{ height: 50%}
+.list_l{ width: 115rpx; text-align: center;}
+.list_l view:first-child{ line-height: 42rpx; font-size: 38rpx;}
+.list_l view:last-child{ line-height: 32rpx; color: #999; font-size: 22rpx;}
+.list_c{ width: 390rpx; white-space: nowrap; overflow: hidden;}
+.list_c text{ color: #999; font-size: 26rpx;}
+.list_r{ width: 150rpx; text-align: center; color: #FBA703;}
+
+
+
+
+
+
+.no_list{ padding-top: 100rpx; text-align: center; color: #999; font-size: 32rpx;}
+.no_list image{ width: 320rpx;}
+

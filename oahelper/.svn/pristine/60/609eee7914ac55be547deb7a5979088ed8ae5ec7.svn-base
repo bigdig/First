@@ -1,0 +1,41 @@
+<!--pages/17wenjian_list/index.wxml-->
+<view class='center'>
+  <!-- 公共搜索框配置 start -->
+  <import src="/common/search.wxml" />
+  <template is="search" data="{{search_text: search_text,if_search: if_search}}" />
+  <!-- 公共搜索框配置 end -->
+</view>
+
+<view class='msg'>
+  <text class="icon iconfont icon-jingshigantanhao2"></text> 长按链接可复制下载链接
+</view>
+
+
+<view class='list_box'>
+
+
+  <view wx:if="{{listData[0]}}">
+
+    <view class='list' wx:for="{{listData}}">
+      <view>
+        <text data-index='{{index}}' wx:if="{{item.ifsc}}" bindtap='shoucang' class="icon iconfont icon-tubiao_wuxing-"></text>
+        <text data-index='{{index}}' wx:else bindtap='shoucang' class="icon iconfont icon-tubiao_wuxing-1"></text>
+        <view data-linksrc='{{host+"/"+item.filePath}}' bindtap='openFile'>{{item.fileName}}</view>
+      </view>
+      <view data-linksrc='{{host+"/"+item.filePath}}' bindlongtap='copyLink' hover-class="list_hover">{{host+'/'+item.filePath}}</view>
+    </view>
+
+    <button bindtap='nextPage' class='get_more' wx:if="{{ifHaveMore}}">加载更多</button>
+
+  </view>
+
+  <view class='no_list' wx:else>
+    <view>
+      <image src='/img/wj_none.png' mode='widthFix'></image>
+    </view>
+    <view>暂无相关文件</view>
+  </view>
+
+
+
+</view>

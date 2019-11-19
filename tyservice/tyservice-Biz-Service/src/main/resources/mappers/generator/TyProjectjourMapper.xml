@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyProjectjourMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyProjectjour">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+      <result column="project_role" jdbcType="VARCHAR" property="projectRole" />
+      <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+      <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+      <result column="project_demand" jdbcType="VARCHAR" property="projectDemand" />
+      <result column="broker_id" jdbcType="VARCHAR" property="brokerId" />
+      <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+      <result column="expert_staff_id" jdbcType="VARCHAR" property="expertStaffId" />
+      <result column="expert_staff_name" jdbcType="VARCHAR" property="expertStaffName" />
+      <result column="attachment" jdbcType="VARCHAR" property="attachment" />
+      <result column="attach_name" jdbcType="VARCHAR" property="attachName" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <result column="org_cust_id" jdbcType="VARCHAR" property="orgCustId" />
+      <result column="org_cust_name" jdbcType="VARCHAR" property="orgCustName" />
+      <result column="end_time" jdbcType="INTEGER" property="endTime" />
+      <result column="begin_time" jdbcType="INTEGER" property="beginTime" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyProjectjourBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+      <result column="project_role" jdbcType="VARCHAR" property="projectRole" />
+      <result column="project_type" jdbcType="VARCHAR" property="projectType" />
+      <result column="project_name" jdbcType="VARCHAR" property="projectName" />
+      <result column="project_demand" jdbcType="VARCHAR" property="projectDemand" />
+      <result column="broker_id" jdbcType="VARCHAR" property="brokerId" />
+      <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+      <result column="expert_staff_id" jdbcType="VARCHAR" property="expertStaffId" />
+      <result column="expert_staff_name" jdbcType="VARCHAR" property="expertStaffName" />
+      <result column="attachment" jdbcType="VARCHAR" property="attachment" />
+      <result column="attach_name" jdbcType="VARCHAR" property="attachName" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <result column="org_cust_id" jdbcType="VARCHAR" property="orgCustId" />
+      <result column="org_cust_name" jdbcType="VARCHAR" property="orgCustName" />
+      <result column="end_time" jdbcType="INTEGER" property="endTime" />
+      <result column="begin_time" jdbcType="INTEGER" property="beginTime" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyProjectjour">
+    insert into ty_projectjour (
+    id
+    ,project_id
+	,project_role
+	,project_type
+	,project_name
+	,project_demand
+	,broker_id
+	,broker_name
+	,dept_name
+	,expert_staff_id
+	,expert_staff_name
+	,attachment
+	,attach_name
+	,remark
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,company_id
+	,company_name
+	,org_cust_id
+	,org_cust_name
+	,end_time
+	,begin_time
+	,delete_flag
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{projectId,jdbcType=VARCHAR}
+    	,#{projectRole,jdbcType=VARCHAR}
+    	,#{projectType,jdbcType=VARCHAR}
+    	,#{projectName,jdbcType=VARCHAR}
+    	,#{projectDemand,jdbcType=VARCHAR}
+    	,#{brokerId,jdbcType=VARCHAR}
+    	,#{brokerName,jdbcType=VARCHAR}
+    	,#{deptName,jdbcType=VARCHAR}
+    	,#{expertStaffId,jdbcType=VARCHAR}
+    	,#{expertStaffName,jdbcType=VARCHAR}
+    	,#{attachment,jdbcType=VARCHAR}
+    	,#{attachName,jdbcType=VARCHAR}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{companyId,jdbcType=VARCHAR}
+    	,#{companyName,jdbcType=VARCHAR}
+    	,#{orgCustId,jdbcType=VARCHAR}
+    	,#{orgCustName,jdbcType=VARCHAR}
+    	,#{endTime,jdbcType=INTEGER}
+    	,#{beginTime,jdbcType=INTEGER}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    )
+  </insert>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,delete_flag,company_id,company_name,org_cust_id,org_cust_name,project_role,project_type,project_name,project_demand,broker_id,broker_name,dept_name,expert_staff_id,expert_staff_name,attachment,attach_name,remark,create_by,create_time,update_by,update_time,end_time,begin_time,project_id
+    from ty_projectjour
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,delete_flag,company_id,company_name,org_cust_id,org_cust_name,project_role,project_type,project_name,project_demand,broker_id,broker_name,dept_name,expert_staff_id,expert_staff_name,attachment,attach_name,remark,create_by,create_time,update_by,update_time,end_time,begin_time,project_id
+    from ty_projectjour
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,delete_flag,company_id,company_name,org_cust_id,org_cust_name,project_role,project_type,project_name,project_demand,broker_id,broker_name,dept_name,expert_staff_id,expert_staff_name,attachment,attach_name,remark,create_by,create_time,update_by,update_time,end_time,begin_time,project_id
+    from ty_projectjour
+    where 1=1
+    <if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="projectId != null and id != ''">and project_id = #{projectId}</if>
+	<if test="projectRole != null and projectRole != ''">and project_role=#{projectRole}</if>
+	<if test="projectType != null and projectType != ''">and project_type=#{projectType}</if>
+	<if test="projectName != null and projectName != ''">and project_name like '%'||#{projectName}||'%'</if>
+	<if test="projectDemand != null and projectDemand != ''">and project_demand like '%'||#{projectDemand}||'%'</if>
+	<if test="brokerId != null and brokerId != ''">and broker_id like '%'||#{brokerId}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="deptName != null and deptName != ''">and dept_name like '%'||#{deptName}||'%'</if>
+	<if test="expertStaffId != null and expertStaffId != ''">and expert_staff_id like '%'||#{expertStaffId}||'%'</if>
+	<if test="expertStaffName != null and expertStaffName != ''">and expert_staff_name like '%'||#{expertStaffName}||'%'</if>
+	<if test="attachment != null and attachment != ''">and attachment like '%'||#{attachment}||'%'</if>
+	<if test="remark != null and remark != ''">and remark like '%'||#{remark}||'%'</if>
+	<if test="createBy != null and createBy != ''">and create_by like '%'||#{createBy}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_projectjour where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="projectId != null and id != ''">and project_id = #{projectId}</if>
+	<if test="projectRole != null and projectRole != ''">and project_role=#{projectRole}</if>
+	<if test="projectType != null and projectType != ''">and project_type=#{projectType}</if>
+	<if test="projectName != null and projectName != ''">and project_name like '%'||#{projectName}||'%'</if>
+	<if test="projectDemand != null and projectDemand != ''">and project_demand like '%'||#{projectDemand}||'%'</if>
+	<if test="brokerId != null and brokerId != ''">and broker_id like '%'||#{brokerId}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="deptName != null and deptName != ''">and dept_name like '%'||#{deptName}||'%'</if>
+	<if test="expertStaffId != null and expertStaffId != ''">and expert_staff_id=#{expertStaffId}</if>
+	<if test="expertStaffName != null and expertStaffName != ''">and expert_staff_name like '%'||#{expertStaffName}||'%'</if>
+	<if test="attachment != null and attachment != ''">and attachment like '%'||#{attachment}||'%'</if>
+	<if test="remark != null and remark != ''">and remark like '%'||#{remark}||'%'</if>
+	<if test="createBy != null and createBy != ''">and create_by=#{createBy}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or project_role like '%'||#{keyword}||'%' or project_type like '%'||#{keyword}||'%' or project_name like '%'||#{keyword}||'%' or project_demand like '%'||#{keyword}||'%' or broker_id like '%'||#{keyword}||'%' or broker_name like '%'||#{keyword}||'%' or dept_name like '%'||#{keyword}||'%' or expert_staff_id like '%'||#{keyword}||'%' or expert_staff_name like '%'||#{keyword}||'%' or attachment like '%'||#{keyword}||'%' or remark like '%'||#{keyword}||'%' or create_by like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

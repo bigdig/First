@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoAudityMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoAudity">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="audity_title" jdbcType="VARCHAR" property="audityTitle" />
+      <result column="audity_link" jdbcType="VARCHAR" property="audityLink" />
+      <result column="audity_picture" jdbcType="VARCHAR" property="audityPicture" />
+      <result column="audity_status" jdbcType="VARCHAR" property="audityStatus" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoAudityBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="audity_title" jdbcType="VARCHAR" property="audityTitle" />
+      <result column="audity_link" jdbcType="VARCHAR" property="audityLink" />
+      <result column="audity_picture" jdbcType="VARCHAR" property="audityPicture" />
+      <result column="audity_status" jdbcType="VARCHAR" property="audityStatus" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_audity where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoAudity">
+    insert into go_audity (
+    id
+	,user_id
+	,user_name
+	,audity_title
+	,audity_link
+	,audity_picture
+	,audity_status
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{audityTitle,jdbcType=VARCHAR}
+    	,#{audityLink,jdbcType=VARCHAR}
+    	,#{audityPicture,jdbcType=VARCHAR}
+    	,#{audityStatus,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoAudity">
+    update go_audity
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null ">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="audityTitle != null ">
+        audity_title = #{audityTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="audityLink != null ">
+        audity_link = #{audityLink,jdbcType=VARCHAR},
+      </if>
+      <if test="audityPicture != null ">
+        audity_picture = #{audityPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="audityStatus != null ">
+        audity_status = #{audityStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,user_id,user_name,audity_title,audity_link,audity_picture,audity_status,create_by,create_time,update_by,update_time
+    from go_audity
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,user_id,user_name,audity_title,audity_link,audity_picture,audity_status,create_by,create_time,update_by,update_time
+    from go_audity
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,user_id,user_name,audity_title,audity_link,audity_picture,audity_status,create_by,create_time,update_by,update_time
+    from go_audity
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="audityTitle != null and audityTitle != ''">and audity_title like '%'||#{audityTitle}||'%'</if>
+	<if test="audityLink != null and audityLink != ''">and audity_link like '%'||#{audityLink}||'%'</if>
+	<if test="audityPicture != null and audityPicture != ''">and audity_picture like '%'||#{audityPicture}||'%'</if>
+	<if test="audityStatus != null and audityStatus != ''">and audity_status=#{audityStatus}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_audity where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="audityTitle != null and audityTitle != ''">and audity_title like '%'||#{audityTitle}||'%'</if>
+	<if test="audityLink != null and audityLink != ''">and audity_link like '%'||#{audityLink}||'%'</if>
+	<if test="audityPicture != null and audityPicture != ''">and audity_picture like '%'||#{audityPicture}||'%'</if>
+	<if test="audityStatus != null and audityStatus != ''">and audity_status=#{audityStatus}</if>
+	<if test="beginDate != null and beginDate != ''">and to_char(create_time,'yyyy-mm-dd') <![CDATA[>=]]> #{beginDate}</if>
+	<if test="endDate != null and endDate != ''">and to_char(create_time,'yyyy-mm-dd') <![CDATA[<=]]> #{endDate}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or user_id like '%'||#{keyword}||'%' or user_name like '%'||#{keyword}||'%' or audity_title like '%'||#{keyword}||'%' or audity_link like '%'||#{keyword}||'%' or audity_picture like '%'||#{keyword}||'%' or audity_status like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

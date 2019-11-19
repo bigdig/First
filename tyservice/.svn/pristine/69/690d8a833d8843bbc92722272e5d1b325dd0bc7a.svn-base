@@ -1,0 +1,221 @@
+<form name="search"
+      ng-submit="searchCompany()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <input type="search"
+                   ng-model="company.marketKind"
+                   maxlength="16"
+                   placeholder="证券类别"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.stockCode"
+                   maxlength="16"
+                   placeholder="交易代码"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.stockShortname"
+                   maxlength="50"
+                   placeholder="证券简称"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="company.marketName"
+                   maxlength="16"
+                   placeholder="交易市场"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editCompanyTemplate">
+    <form name="com_form"
+          ng-submit="editCompany()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="companyInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_name.$dirty && com_form.com_name.$invalid">
+                        <span ng-show="com_form.com_name.$error.required">
+                            请输入证券简称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_name"
+                           ng-model="companyInfo.stockShortname"
+                           maxlength="50"
+                           required
+                           placeholder="证券简称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_no.$dirty && com_form.com_no.$invalid">
+                        <span ng-show="com_form.com_no.$error.required">
+                            请输入交易代码
+                        </span>
+                        <span ng-show="com_form.com_no.$error.pattern">
+                            只接受16位内数值
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_no"
+                           ng-model="companyInfo.stockCode"
+                           maxlength="16"
+                           required
+                           placeholder="交易代码"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_kind.$dirty && com_form.com_kind.$invalid">
+                        <span ng-show="com_form.com_kind.$error.required">
+                            请输入证券类别
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_kind"
+                           ng-model="companyInfo.marketKind"
+                           maxlength="16"
+                           required
+                           placeholder="证券类别"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_nameCn.$dirty && com_form.com_nameCn.$invalid">
+                        <span ng-show="com_form.com_nameCn.$error.required">
+                            请输入中文名称
+                        </span>
+                        <span ng-show="com_form.com_nameCn.$error.pattern">
+                            不被接受的字符
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_nameCn"
+                           ng-model="companyInfo.stockName"
+                           maxlength="100"
+                           ng-pattern="/^[\(\)\（\）\u4e00-\u9fa5]{1,100}$/"
+                           required
+                           placeholder="中文名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_nameSh.$dirty && com_form.com_nameSh.$invalid">
+                        <span ng-show="com_form.com_nameSh.$error.pattern">
+                            不被接受的字符
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_nameSh"
+                           ng-model="companyInfo.companyShortname"
+                           maxlength="50"
+                           ng-pattern="/^[\(\)\（\）\u4e00-\u9fa5]{1,50}$/"
+                           placeholder="中文缩写"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_mkNo.$dirty && com_form.com_mkNo.$invalid">
+                        <span ng-show="com_form.com_mkNo.$error.required">
+                            请输入交易市场代码
+                        </span>
+                        <span ng-show="com_form.com_mkNo.$error.pattern">
+                            只接受16位内数值
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_mkNo"
+                           ng-model="companyInfo.marketNo"
+                           maxlength="16"
+                           required
+                           placeholder="交易市场代码"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="com_form.com_market.$dirty && com_form.com_market.$invalid">
+                        <span ng-show="com_form.com_market.$error.required">
+                            请输入交易市场
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="com_market"
+                           ng-model="companyInfo.marketName"
+                           maxlength="16"
+                           required
+                           placeholder="交易市场"/>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="companyInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="com_form.$invalid || companyInfo.loading"
+                   value="{{companyInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="companyTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">公司信息</h3>
+        <table width="100%" cellpadding="3" cellspacing="10">
+            <tr valign="top">
+                <td class="text-right text-blue-light"
+                    width="35%">证券类别：
+                </td>
+                <td ng-bind="companyInfo.marketKind"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">交易代码：</td>
+                <td ng-bind="companyInfo.id"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">证券简称：</td>
+                <td ng-bind="companyInfo.stockShortname"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">中文名称：</td>
+                <td ng-bind="companyInfo.stockName"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">中文缩写：</td>
+                <td ng-bind="companyInfo.companyShortname"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">交易市场代码：</td>
+                <td ng-bind="companyInfo.marketNo"></td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right text-blue-light">交易市场：</td>
+                <td ng-bind="companyInfo.marketName"></td>
+            </tr>
+        </table>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

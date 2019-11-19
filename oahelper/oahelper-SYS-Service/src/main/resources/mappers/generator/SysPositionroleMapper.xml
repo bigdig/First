@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.generator.SysPositionroleMapper">
+  <resultMap id="BaseResultMap" type="org.ibase4j.model.generator.SysPositionrole">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="position_id" jdbcType="VARCHAR" property="positionId" />
+      <result column="position_name" jdbcType="VARCHAR" property="positionName" />
+      <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+      <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_positionrole where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.ibase4j.model.generator.SysPositionrole">
+    insert into sys_positionrole (
+    id
+	,position_id
+	,position_name
+	,role_id
+	,role_name
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{positionId,jdbcType=VARCHAR}
+    	,#{positionName,jdbcType=VARCHAR}
+    	,#{roleId,jdbcType=VARCHAR}
+    	,#{roleName,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ibase4j.model.generator.SysPositionrole">
+    update sys_positionrole
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="positionId != null ">
+        position_id = #{positionId,jdbcType=VARCHAR},
+      </if>
+      <if test="positionName != null ">
+        position_name = #{positionName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null ">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="roleName != null ">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,position_id,position_name,role_id,role_name
+    from sys_positionrole
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,position_id,position_name,role_id,role_name
+    from sys_positionrole
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from sys_positionrole where 1=1
+	<if test="positionId != null and positionId != ''">and position_id=#{positionId}</if>
+	<if test="keyword != null">
+		and ()
+	</if>
+	<if test="roleList != null and roleList.size>0">
+		and role_id in
+		<foreach collection="roleList" item="roleId" index="index"
+            open="(" close=")" separator=",">
+            #{roleId}
+        </foreach>
+	</if>
+  </select>
+</mapper>

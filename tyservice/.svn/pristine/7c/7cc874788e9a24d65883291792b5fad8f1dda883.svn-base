@@ -1,0 +1,177 @@
+<div class="user-info"
+     ng-if="customerInfo">
+    <br>
+    <table cellpadding="0" cellspacing="0" width="100%">
+        <tr class="text-blue-light">
+            <td width="33%">客户姓名</td>
+            <td width="33%">手机号</td>
+            <td>身份证号</td>
+        </tr>
+        <tr class="text-dark font-18">
+            <td ng-bind="customerInfo.custName ? customerInfo.custName : '-'"></td>
+            <td ng-bind="customerInfo.custMobile ? customerInfo.custMobile : '-'"></td>
+            <td class="td-nopadding"
+                ng-bind="customerInfo.idNo ? customerInfo.idNo : '-'"></td>
+        </tr>
+        <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+        <tr class="text-blue-light">
+            <td>邮箱</td>
+            <td>部门</td>
+            <td>职位</td>
+        </tr>
+        <tr class="text-dark font-18">
+            <td ng-bind="customerInfo.custEmail ? customerInfo.custEmail : '-'"></td>
+            <td ng-bind="customerInfo.department ? customerInfo.department : '-'"></td>
+            <td class="td-nopadding"
+                ng-bind="customerInfo.title ? customerInfo.title : '-'"></td>
+        </tr>
+        <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+        <tr class="text-blue-light">
+            <td>所属机构</td>
+            <td>对口销售</td>
+            <td>所在地</td>
+        </tr>
+        <tr class="text-dark font-18">
+            <td ng-bind="customerInfo.orgName ? customerInfo.orgName : '-'"></td>
+            <td ng-bind="customerInfo.serviceSaler ? customerInfo.serviceSaler : '-'"></td>
+            <td class="td-nopadding"
+                ng-bind="customerInfo.area ? customerInfo.area : '-'"></td>
+        </tr>
+        <tr>
+            <td colspan="3" height="20"></td>
+        </tr>
+        <tr class="text-blue-light">
+            <td>研究行业</td>
+            <td>关注领域</td>
+            <td>座机号</td>
+        </tr>
+        <tr class="text-dark font-18">
+            <td ng-bind="customerInfo.industry ? customerInfo.industry : '-'"></td>
+            <td ng-bind="customerInfo.domain ? customerInfo.domain : '-'"></td>
+            <td class="td-nopadding"
+                ng-bind="customerInfo.custTel ? customerInfo.custTel : '-'"></td>
+        </tr>
+    </table>
+    <br>
+    <div class="line-gray bg-gray"></div>
+    <br>
+    <button ng-click="dataModel.charts.event()" style="float:right;">标签云</button>
+    <ul>
+        <li ng-repeat="cat in customerInfo.labelCatList">
+            <p class="text-blue-light"
+               bo-text="cat.catName+'标签'"></p>
+            <ul class="search">
+                <li class="text-dark font-18 auto-width"
+                    style="margin: 0 2% 0 0"
+                    ng-repeat="tag in cat.subList"
+                    bo-text="tag.labelName"></li>
+            </ul>
+        </li>
+    </ul>
+    <p>
+        <a href="javascript:void(0)"
+           class="text-blue"
+           ng-click="focus('tag_name')">
+            <strong class="font-18">+</strong>
+            添加标签
+        </a>
+    </p>
+    <ul class="search">
+        <li class="hide"
+            style="width: 35%">
+            <form name="tag_form"
+                  novalidate>
+                <div class="label customer-list border-gray-color bg-white"
+                     style="width: 340px !important; margin-left: -50px"
+                     ng-if="labelList.length && tagData.label">
+                    <span ng-repeat="label in labelList">
+                        &nbsp;
+                        <a href="javascript:void(0)" ng-click="setLabel(label.labelName, tagData, 'tag_name')"
+                           ng-bind="label.labelName"></a>
+                        &nbsp;
+                    </span>
+                </div>
+                <div class="error text-white bg-red-opacity"
+                     ng-show="tag_form.tag_name.$dirty && tag_form.tag_name.$invalid">
+                    <span ng-show="tag_form.tag_name.$error.pattern">
+                        不被接受的字符
+                    </span>
+                </div>
+                <input type="search"
+                       name="tag_name"
+                       placeholder="输入标签"
+                       ng-model="tagData.label"
+                       maxlength="64"
+                       ng-pattern="/^((?!,).)*$/"
+                       ng-keyup="addTag($event, tag_form.tag_name.$invalid)"
+                       ng-blur="onBlur()"/>
+            </form>
+        </li>
+    </ul>
+    <br>
+    <div class="line-gray bg-gray"></div>
+    <br>
+    <div class="lh30">
+        <label class="text-blue-light">互动 - 服务记录</label>
+        <ul class="fr charts">
+            <li>
+                <ng-datepicker value="searchCust.startDateTime"
+                               name="startDate"
+                               locale="zh-cn"
+                               format="YYYY-MM-DD"
+                               view-format="YYYY-MM-DD"
+                               min="false"
+                               limitdate="{{searchCust.endDateTime}}"
+                               placeholder="发起日期"></ng-datepicker>
+            </li>
+            <li>
+                <ng-datepicker value="searchCust.endDateTime"
+                               name="endDate"
+                               locale="zh-cn"
+                               format="YYYY-MM-DD"
+                               view-format="YYYY-MM-DD"
+                               min="true"
+                               limitdate="{{searchCust.startDateTime}}"
+                               placeholder="结束日期"></ng-datepicker>
+            </li>
+            <li>
+                <a href="javascript:void(0)"
+                   ng-click="searchActivity()"
+                   class="icon icon-search"></a>
+            </li>
+        </ul>
+        <p></p>
+    </div>
+    <div class="bottom active bottom-control"
+         ng-if="customerInfo">
+        <div class="col-45 text-center">
+            <input type="button"
+                   class="text-orange font-18 light padding20"
+                   ng-click="sendToCustomer('message')"
+                   value="发送信息到短信"/>
+            <input type="button"
+                   class="text-orange font-18 light padding20"
+                   ng-click="sendToCustomer('email')"
+                   value="发送信息到邮箱"/>
+        </div>
+    </div>
+</div>
+<script type="text/ng-template"
+        id="counterTemplate">
+    <div class="ngdialog-message">
+        <div>
+            <div id="counter_chart"
+                 class="template" style="margin:0 auto;"></div>
+        </div>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               class="text-orange padding40 light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="关闭"/>
+    </div>
+</script>

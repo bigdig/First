@@ -1,0 +1,123 @@
+<div class="padding20">
+    <div>
+        <form name="search"
+              ng-submit="searchSend()">
+            <input type="submit"
+                   value="查询"
+                   ng-disabled="loading.isShow"
+                   class="text-orange font-18 padding40 btn-search bg-red-light"/>
+            <ul class="search more">
+                <li>
+                    <select ng-model="send.sendFlag">
+                        <option value="">发送标志</option>
+                        <option ng-repeat="flag in msgFlag"
+                                ng-selected="send.sendFlag==flag.id"
+                                value="{{flag.id}}">{{flag.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <input type="search"
+                           ng-model="send.receiverName"
+                           placeholder="接收人"
+                           maxlength="16"/>
+                </li>
+                <li>
+                    <input type="search"
+                           ng-model="send.receiverTel"
+                           placeholder="接收人手机"
+                           maxlength="11"/>
+                </li>
+                <li>
+                    <input type="search"
+                           ng-model="send.receiverEmail"
+                           placeholder="接收人邮箱"
+                           maxlength="11"/>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="font-16"
+       ng-switch="sendInfo.msgType">
+        <span ng-switch-when="sms">短信</span>
+        <span ng-switch-when="email">邮件</span>
+        <a href="javascript:void(0)" ng-click="openEditor()">
+            <i class="icon"
+               title="{{sendInfo.iconTitle}}"
+               ng-class="{'icon-chevron-up':sendInfo.isEditor,'icon-chevron-down':!sendInfo.isEditor}"></i>
+        </a>
+    </div>
+    <div class="template_form"
+         ng-class="{'opened':sendInfo.isEditor}">
+        <br>
+        <table width="100%" cellpadding="8" cellspacing="1">
+            <tr valign="top"
+                ng-if="sendInfo.msgType=='email'">
+                <td width="40">标题</td>
+                <td ng-bind="sendInfo.title"
+                    class="border-gray-color"></td>
+            </tr>
+            <!--<tr valign="top"-->
+                <!--ng-if="sendInfo.fileName">-->
+                <!--<td class="text-right" width="40">附件</td>-->
+                <!--<td>-->
+                    <!--<ul class="files">-->
+                        <!--<li ng-repeat="file in auditInfo.files">-->
+                            <!--<a class="text-blue"-->
+                               <!--bo-href="file.fileDownload"-->
+                               <!--target="_blank"-->
+                               <!--bo-text="file.fileName"></a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <tr valign="top">
+                <td width="40">内容</td>
+                <td class="border-gray-color tags"
+                    style="height: 160px;"
+                    ng-bind-html="sendInfo.htmlContent">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+<script type="text/ng-template"
+        id="editSendTemplate">
+    <div class="ngdialog-message">
+        <h2 class="text-center">流程图</h2>
+        <br>
+        <div class="padding60 text-center flow-mar"
+             style="width: 780px">
+            <div class="flow fl text-white bg-success">
+                提交
+            </div>
+            <div class="flow-line fl bg-purple-light"></div>
+            <div class="flow fl text-white"
+                 ng-class="{'bg-success':sendInfo.audit.auditFlag!='0','bg-flow-opacity':sendInfo.audit.auditFlag=='0'}">
+                审核
+            </div>
+            <div class="flow-line fl bg-purple-light"></div>
+            <div class="flow fl text-white"
+                 ng-class="{'bg-success':sendInfo.sendFlag=='已发送','bg-flow-opacity':sendInfo.sendFlag=='未发送'}">
+                发送
+            </div>
+            <div style="clear: both"></div>
+            <div class="flow-mar bg-blue-light"
+                 style="width: 2px; height: 50px;"></div>
+            <div class="flow_over flow-mar text-white"
+                 ng-class="{'bg-red-opacity':sendInfo.audit.auditFlag=='2','bg-red-light':sendInfo.audit.auditFlag!='2'}">
+                未通过
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
+    <div class="ngdialog-buttons">
+        <div class="text-center">
+            <input type="button"
+                   class="text-orange light border-gray-color padding60"
+                   ng-click="closeThisDialog()"
+                   value="关闭"/>
+        </div>
+    </div>
+</script>

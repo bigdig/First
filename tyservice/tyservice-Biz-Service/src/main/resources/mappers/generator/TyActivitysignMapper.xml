@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyActivitysignMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyActivitysign">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="org_simple_name" jdbcType="VARCHAR" property="orgSimpleName" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="in_whitelist" jdbcType="VARCHAR" property="inWhitelist" />
+      <result column="sign_id" jdbcType="VARCHAR" property="signId" />
+      <result column="sign_name" jdbcType="VARCHAR" property="signName" />
+      <result column="sign_status" jdbcType="VARCHAR" property="signStatus" />
+      <result column="sign_date" jdbcType="INTEGER" property="signDate" />
+      <result column="sign_time" jdbcType="INTEGER" property="signTime" />
+      <result column="arrive_time" jdbcType="INTEGER" property="arriveTime" />
+      <result column="leave_time" jdbcType="INTEGER" property="leaveTime" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+       <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyActivitysignBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="org_simple_name" jdbcType="VARCHAR" property="orgSimpleName" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="in_whitelist" jdbcType="VARCHAR" property="inWhitelist" />
+      <result column="sign_id" jdbcType="VARCHAR" property="signId" />
+      <result column="sign_name" jdbcType="VARCHAR" property="signName" />
+      <result column="sign_status" jdbcType="VARCHAR" property="signStatus" />
+      <result column="sign_date" jdbcType="INTEGER" property="signDate" />
+      <result column="sign_time" jdbcType="INTEGER" property="signTime" />
+      <result column="arrive_time" jdbcType="INTEGER" property="arriveTime" />
+      <result column="leave_time" jdbcType="INTEGER" property="leaveTime" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_activitysign where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+    <delete id="deleteByActId" parameterType="java.lang.String">
+    delete from ty_activitysign where activity_id = #{actId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyActivitysign">
+    insert into ty_activitysign (
+    id
+	,activity_id
+	,cust_name
+	,org_simple_name
+	,org_name
+	,cust_id
+	,org_id
+	,cust_mobile
+	,in_whitelist
+	,sign_id
+	,sign_name
+	,sign_status
+	,sign_date
+	,sign_time
+	,arrive_time
+	,leave_time
+	,total_duration
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,dept_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{activityId,jdbcType=VARCHAR}
+    	,#{custName,jdbcType=VARCHAR}
+    	,#{orgSimpleName,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{custId,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    	,#{custMobile,jdbcType=VARCHAR}
+    	,#{inWhitelist,jdbcType=VARCHAR}
+    	,#{signId,jdbcType=VARCHAR}
+    	,#{signName,jdbcType=VARCHAR}
+    	,#{signStatus,jdbcType=VARCHAR}
+    	,#{signDate,jdbcType=INTEGER}
+    	,#{signTime,jdbcType=INTEGER}
+    	,#{arriveTime,jdbcType=INTEGER}
+    	,#{leaveTime,jdbcType=INTEGER}
+    	,#{totalDuration,jdbcType=INTEGER}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{deptId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyActivitysign">
+    update ty_activitysign
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null ">
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null ">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgSimpleName != null ">
+        org_simple_name = #{orgSimpleName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null ">
+        cust_id = #{custId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null ">
+        cust_mobile = #{custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="inWhitelist != null ">
+        in_whitelist = #{inWhitelist,jdbcType=VARCHAR},
+      </if>
+      <if test="signId != null ">
+        sign_id = #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="signName != null ">
+        sign_name = #{signName,jdbcType=VARCHAR},
+      </if>
+      <if test="signStatus != null ">
+        sign_status = #{signStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="signDate != null ">
+        sign_date = #{signDate,jdbcType=INTEGER},
+      </if>
+      <if test="signTime != null ">
+        sign_time = #{signTime,jdbcType=INTEGER},
+      </if>
+      <if test="arriveTime != null ">
+        arrive_time = #{arriveTime,jdbcType=INTEGER},
+      </if>
+      <if test="leaveTime != null ">
+        leave_time = #{leaveTime,jdbcType=INTEGER},
+      </if>
+      <if test="totalDuration != null ">
+        total_duration = #{totalDuration,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="deptId != null ">
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,activity_id,cust_name,org_simple_name,org_name,cust_id,org_id,cust_mobile,in_whitelist,sign_id,sign_name,sign_status,sign_date,sign_time,arrive_time,leave_time,total_duration,create_by,create_time,update_by,update_time,dept_id
+    from ty_activitysign
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,activity_id,cust_name,org_simple_name,org_name,cust_id,org_id,cust_mobile,in_whitelist,sign_id,sign_name,sign_status,sign_date,sign_time,arrive_time,leave_time,total_duration,create_by,create_time,update_by,update_time,dept_id
+    from ty_activitysign
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,activity_id,cust_name,org_simple_name,org_name,cust_id,org_id,cust_mobile,in_whitelist,sign_id,sign_name,sign_status,sign_date,sign_time,arrive_time,leave_time,total_duration,create_by,create_time,update_by,update_time,dept_id
+    from ty_activitysign t
+    where 1=1
+	<if test="activityId != null and activityId != ''">and activity_id =#{activityId}</if>
+	<if test="custId != null and custId != ''">and cust_id =#{custId}</if>
+	<if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile =#{custMobile}</if>
+	<if test="custTel != null and custTel != ''">and cust_mobile = #{custTel}</if>
+	<if test="inWhitelist != null and inWhitelist != ''">and in_whitelist =#{inWhitelist}</if>
+	<if test="signId != null and signId != ''">and sign_id =#{signId}</if>
+	<if test="signStatus != null and signStatus != ''">and sign_status=#{signStatus}</if>
+	<if test="createBy != null and createBy != ''">and create_by=#{createBy}</if>
+	<if test="signDate != null and signDate != ''">and sign_date=#{signDate}</if>
+    <if test="activityType != null and activityType != ''">
+    	and exists (select * from ty_activity t1 where t1.id=t.activity_id and t1.activity_type = #{activityType})
+    </if>
+    <if test="orderBy != null and orderBy != ''">order by ${orderBy}</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_activitysign t where 1=1
+	<if test="activityId != null and activityId != ''">and activity_id like '%'||#{activityId}||'%'</if>
+	<if test="custId != null and custId != ''">and cust_id = #{custId}</if>
+	<if test="orgId != null and orgId != ''">and org_id like '%'||#{orgId}||'%'</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile like '%'||#{custMobile}||'%'</if>
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="inWhitelist != null and inWhitelist != ''">and in_whitelist like '%'||#{inWhitelist}||'%'</if>
+	<if test="signId != null and signId != ''">and sign_id like '%'||#{signId}||'%'</if>
+	<if test="signStatus != null and signStatus != ''">and sign_status=#{signStatus}</if>
+	<if test="signDate != null and signDate != ''">and sign_date=#{signDate}</if>
+	<if test="startDateTime != null and startDateTime != ''">
+		<![CDATA[ and create_time >= to_date(#{startDateTime,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')]]>
+	</if>
+	<if test="activityType != null and activityType != ''">
+    	and exists (select * from ty_activity t1 where t1.id=t.activity_id and t1.activity_type = #{activityType})
+    </if>
+    <if test="activityTypes != null and activityTypes.size>0">
+		and exists (select * from ty_activity t1 where t1.id=t.activity_id and t1.activity_type in 
+			<foreach collection="activityTypes" item="activityType" index="index"
+				open="(" close=")" separator=",">
+				#{activityType}
+			</foreach>)
+	</if>
+	<if test="exActivityType != null and exActivityType != ''">
+		and exists (select * from ty_activity t1 where t1.id=t.activity_id and t1.activity_type not in ${exActivityType})
+	</if>
+	<if test="endDateTime != null and endDateTime != ''">
+		<![CDATA[ and create_time <= to_date(#{endDateTime,jdbcType=DATE},'yyyy-MM-dd hh24:mi:ss')]]>
+	</if>
+	<if test="title != null and title != ''">
+		and exists (select * from ty_activity t1 where t1.id = t.activity_id and t1.title like  '%'||#{title}||'%')
+	</if>
+	<if test="deptName != null and deptName != ''">
+		and activity_id in (select distinct t2.activity_id from ty_activitystaff t2 left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t3.dept_name like '%'||#{deptName}||'%')
+	</if>
+	<if test="staffName != null and staffName != ''">
+		and activity_id in (select distinct t1.activity_id from ty_activitystaff t1 left join ty_stafflist t2 on t1.staff_id=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t2.staff_name like '%'||#{staffName}||'%')
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.team_cat like '%'||#{teamCat}||'%')
+	</if>
+	<if test="orgName != null and orgName != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.org_name like '%'||#{orgName}||'%')
+	</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.service_saler like '%'||#{serviceSaler}||'%')
+	</if>
+	<if test="locale != null and locale != ''">
+		and exists (select * from ty_activity t1 where t1.id = t.activity_id and t1.locale like  '%'||#{locale}||'%')
+	</if>
+	<if test="keyword != null">
+		and (activity_id like '%'||#{keyword}||'%'  or cust_id like '%'||#{keyword}||'%' or org_id like '%'||#{keyword}||'%' or cust_mobile like '%'||#{keyword}||'%' or in_whitelist like '%'||#{keyword}||'%' or sign_id like '%'||#{keyword}||'%' or sign_status like '%'||#{keyword}||'%' or sign_date like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

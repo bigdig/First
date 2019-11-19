@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.PrRealPublicopinionhotMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.PrRealPublicopinionhot">
+      <result column="abstractStr" jdbcType="VARCHAR" property="abstractstr" />
+      <result column="cat_icon" jdbcType="VARCHAR" property="catIcon" />
+      <result column="cat_id" jdbcType="VARCHAR" property="catId" />
+      <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+      <result column="company_code" jdbcType="VARCHAR" property="companyCode" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="company_name" jdbcType="VARCHAR" property="companyName" />
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="news_id" jdbcType="VARCHAR" property="newsId" />
+      <result column="news_media" jdbcType="VARCHAR" property="newsMedia" />
+      <result column="news_time" jdbcType="TIMESTAMP" property="newsTime" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="transmit" jdbcType="VARCHAR" property="transmit" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_publicOpinionhot where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.PrRealPublicopinionhot">
+    insert into pr_publicOpinionhot (
+    abstractStr
+	,cat_icon
+	,cat_id
+	,cat_name
+	,company_code
+	,company_id
+	,company_name
+	,id
+	,news_id
+	,news_media
+	,news_time
+	,title
+	,transmit
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{abstractstr,jdbcType=VARCHAR}
+    	,#{catIcon,jdbcType=VARCHAR}
+    	,#{catId,jdbcType=VARCHAR}
+    	,#{catName,jdbcType=VARCHAR}
+    	,#{companyCode,jdbcType=VARCHAR}
+    	,#{companyId,jdbcType=VARCHAR}
+    	,#{companyName,jdbcType=VARCHAR}
+    	,#{id,jdbcType=VARCHAR}
+    	,#{newsId,jdbcType=VARCHAR}
+    	,#{newsMedia,jdbcType=VARCHAR}
+    	,#{newsTime,jdbcType=TIMESTAMP}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{transmit,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.PrRealPublicopinionhot">
+    update pr_publicOpinionhot
+    <trim prefix="set" suffixOverrides=",">
+      <if test="abstractstr != null ">
+        abstractStr = #{abstractstr,jdbcType=VARCHAR},
+      </if>
+      <if test="catIcon != null ">
+        cat_icon = #{catIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="catId != null ">
+        cat_id = #{catId,jdbcType=VARCHAR},
+      </if>
+      <if test="catName != null ">
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyCode != null ">
+        company_code = #{companyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null ">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="companyName != null ">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="newsId != null ">
+        news_id = #{newsId,jdbcType=VARCHAR},
+      </if>
+      <if test="newsMedia != null ">
+        news_media = #{newsMedia,jdbcType=VARCHAR},
+      </if>
+      <if test="newsTime != null ">
+        news_time = #{newsTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="transmit != null ">
+        transmit = #{transmit,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select abstractStr,cat_icon,cat_id,cat_name,company_code,company_id,company_name,id,news_id,news_media,news_time,title,transmit,create_by,create_time,update_by,update_time
+    from pr_publicOpinionhot
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select abstractStr,cat_icon,cat_id,cat_name,company_code,company_id,company_name,id,news_id,news_media,news_time,title,transmit,create_by,create_time,update_by,update_time
+    from pr_publicOpinionhot
+    order by id
+  </select>
+  <select id="findByCondition" resultMap="BaseResultMap">
+    select abstractStr,cat_icon,cat_id,cat_name,company_code,company_id,company_name,id,news_id,news_media,news_time,title,transmit,create_by,create_time,update_by,update_time
+    from pr_publicOpinionhot
+    where 1=1
+	<if test="catId != null and catId != ''">and cat_id like '%'||#{catId}||'%'</if>
+	<if test="catName != null and catName != ''">and cat_name like '%'||#{catName}||'%'</if>
+	<if test="companyCode != null and companyCode != ''">and company_code like '%'||#{companyCode}||'%'</if>
+	<if test="companyId != null and companyId != ''">and company_id like '%'||#{companyId}||'%'</if>
+	<if test="companyName != null and companyName != ''">and company_name like '%'||#{companyName}||'%'</if>
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="newsId != null and newsId != ''">and news_id like '%'||#{newsId}||'%'</if>
+	<if test="newsMedia != null and newsMedia != ''">and news_media like '%'||#{newsMedia}||'%'</if>
+      order by id
+  </select>
+</mapper>

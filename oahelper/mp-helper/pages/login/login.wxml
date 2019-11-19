@@ -1,0 +1,25 @@
+<!--index.wxml-->
+<view class="container" style='background-color:#fff'>
+  <view class="logo">
+    <image src="../../img/login2.png" mode="aspectFit"></image>
+  </view>
+  <view class="form">
+    <text class="form_label">账号：</text>
+    <input style="padding-left: 30rpx" class="form_item" type="text" bindinput="bindUserNameInput" />
+  </view>
+  <view class="form">
+    <text class="form_label">密码：</text>
+    <input style="padding-left: 30rpx" class="form_item" password type="text" bindinput="bindPwdInput" />
+  </view>
+  <view class="form">
+     <checkbox-group bindchange="checkboxChange" style="width:100%;text-align: left;">
+       <label>
+           <checkbox checked="{{checked}}">AD登录</checkbox>
+       </label>   
+   </checkbox-group>
+  </view >
+  <view wx:if="passwordErrorText"  style="padding-left:36px;color:red;width:100%;text-align: left;">
+    <label>提示信息：{{passwordErrorText}}</label>
+  </view>
+    <button class="commit_button " bindtap='loginBtnClick'>登录</button>
+</view>

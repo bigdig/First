@@ -1,0 +1,8 @@
+/* pages/27baoxiao_detail/index.wxss */
+page{ background-color: #fff;}
+
+.center{ padding: 78rpx 55rpx 55rpx 55rpx; background-color: #fff;}
+.show_name{ line-height: 98rpx; font-size: 40rpx;}
+.show_content{ line-height: 48rpx; color: #999; font-size: 32rpx;}
+
+

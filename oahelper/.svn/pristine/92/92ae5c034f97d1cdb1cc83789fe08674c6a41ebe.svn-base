@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.PrMonitoringMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.PrMonitoring">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="data_type" jdbcType="VARCHAR" property="dataType" />
+      <result column="data_text" jdbcType="VARCHAR" property="dataText" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.entity.PrMonitoring">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="data_type" jdbcType="VARCHAR" property="dataType" />
+      <result column="data_text" jdbcType="VARCHAR" property="dataText" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pr_datatype where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.PrMonitoring">
+    insert into pr_datatype (
+    id
+	,data_type
+	,data_text
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{dataType,jdbcType=VARCHAR}
+    	,#{dataText,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.PrMonitoring">
+    update pr_datatype
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="dataType != null ">
+        data_type = #{dataType,jdbcType=VARCHAR},
+      </if>
+      <if test="dataText != null ">
+        data_text = #{dataText,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,data_type,data_text,create_by,create_time,update_by,update_time
+    from pr_datatype
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,data_type,data_text,create_by,create_time,update_by,update_time
+    from pr_datatype
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,data_type,data_text,create_by,create_time,update_by,update_time
+    from pr_datatype
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="dataText != null and dataText != ''">and data_text like '%'||#{dataText}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from pr_datatype where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="dataText != null and dataText != ''">and data_text like '%'||#{dataText}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or data_text like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

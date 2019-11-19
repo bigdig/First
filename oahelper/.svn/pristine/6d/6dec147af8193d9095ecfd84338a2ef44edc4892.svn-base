@@ -1,0 +1,30 @@
+<!--pages/19xiaoxi/index.wxml-->
+<view class='center'>
+
+  <view wx:if="{{listData[0]}}">
+    <!--循环输出-->
+    <navigator wx:for="{{listData}}" class='list' url="/pages/21xiaoxi_detail/index?id={{item.id}}" hover-class="list_hover">
+      <view class='list_img'>
+        <image src='{{imgList[item.inform.srcType]}}' mode='widthFix'></image>
+      </view>
+      <view class='list_msg'>
+        <view>
+          <view class='list_time'>{{item.createTime}}</view>
+          {{item.inform.TypeText}}
+          <text wx:if='{{item.isReplied=="NO" && item.inform.isReply=="YES"}}' class='list_new'></text>
+        </view>
+        <view>{{item.inform.informTitle}}</view>
+      </view>
+    </navigator>
+
+    <button bindtap='nextPage' class='get_more' wx:if="{{ifHaveMore}}">加载更多</button>
+  </view>
+
+  <view wx:else class='no_list'>
+    <view>
+      <image src='/img/xx_none.png' mode='widthFix'></image>
+    </view>
+    <view>暂无消息提醒</view>
+  </view>
+
+</view>

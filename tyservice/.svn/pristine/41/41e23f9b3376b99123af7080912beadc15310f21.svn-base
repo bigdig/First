@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyMeetingMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyMeeting">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="meeting_date" jdbcType="VARCHAR" property="meetingDate" />
+      <result column="service_type" jdbcType="VARCHAR" property="serviceType" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="researcher" jdbcType="VARCHAR" property="researcher" />
+      <result column="service_content" jdbcType="VARCHAR" property="serviceContent" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="saler_id" jdbcType="VARCHAR" property="salerId" />
+      <result column="researcher_id" jdbcType="VARCHAR" property="researcherId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_meeting where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyMeeting">
+    insert into ty_meeting (
+    id
+	,cust_name
+	,org_name
+	,meeting_date
+	,service_type
+	,industry
+	,researcher
+	,service_content
+	,area
+	,service_saler
+	,org_id
+	,saler_id
+	,researcher_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{custName,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{meetingDate,jdbcType=VARCHAR}
+    	,#{serviceType,jdbcType=VARCHAR}
+    	,#{industry,jdbcType=VARCHAR}
+    	,#{researcher,jdbcType=VARCHAR}
+    	,#{serviceContent,jdbcType=VARCHAR}
+    	,#{area,jdbcType=VARCHAR}
+    	,#{serviceSaler,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    	,#{salerId,jdbcType=VARCHAR}
+    	,#{researcherId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyMeeting">
+    update ty_meeting
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null ">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="meetingDate != null ">
+        meeting_date = #{meetingDate,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceType != null ">
+        service_type = #{serviceType,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null ">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="researcher != null ">
+        researcher = #{researcher,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceContent != null ">
+        service_content = #{serviceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null ">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceSaler != null ">
+        service_saler = #{serviceSaler,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="salerId != null ">
+        saler_id = #{salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="researcherId != null ">
+        researcher_id = #{researcherId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,cust_name,org_name,meeting_date,service_type,industry,researcher,service_content,area,service_saler,org_id,saler_id,researcher_id
+    from ty_meeting
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,cust_name,org_name,meeting_date,service_type,industry,researcher,service_content,area,service_saler,org_id,saler_id,researcher_id
+    from ty_meeting
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_meeting where 1=1
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="orgName != null and orgName != ''">and org_name like '%'||#{orgName}||'%'</if>
+	<if test="keyword != null">
+		and (cust_name like '%'||#{keyword}||'%'  or org_name like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

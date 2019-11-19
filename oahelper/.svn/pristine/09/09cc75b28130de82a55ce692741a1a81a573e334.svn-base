@@ -1,0 +1,23 @@
+/* pages/35wode_baoxiao/index.wxss */
+page{ background-color: #fff; font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.list_hover{ color: #FBA703;}
+
+.center{ padding: 20rpx 35rpx;}
+
+.list_box{}
+
+.list{ height: 142rpx; padding: 17rpx 0; box-sizing: border-box; border-bottom: #E5E5E5 solid 2rpx;}
+.list > view:first-child{ height: 58rpx; line-height: 58rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.list > view:first-child .f_right{ float: right; color: #999; font-size: 28rpx;}
+.list > view:last-child{ line-height: 50rpx; color: #999; font-size: 28rpx;}
+.list > view:last-child .f_right{ float: right; color: #3271FF;}
+.list > view:last-child text{ color: #FF4658;}
+
+
+
+
+.no_list{ padding-top: 100rpx; text-align: center; color: #999; font-size: 32rpx;}
+.no_list image{ width: 320rpx;}
+

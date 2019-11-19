@@ -1,0 +1,55 @@
+<div class="login-bk">
+    <div class="login-panel">
+        <div class="text-center text-white fl">
+            <br><br><br><br><br><br><br><br>
+            <img src="../img/login-logo.png"
+                 width="180">
+            <br>
+            <h3 bo-text="system.name"></h3>
+        </div>
+        <div class="text-center fr">
+            <br><br><br>
+            <h2>用户登录</h2>
+            <br><br>
+            <form ng-submit="login()">
+                <ul>
+                    <li ng-class="{'active': loginInfo.accountFocus}">
+                        <i class="icon icon-user2 font-18"></i>
+                        <input type="search"
+                               ng-model="loginInfo.account"
+                               maxlength="30"
+                               placeholder="请输入OA账户"
+                               ng-focus="login_focus('account')"
+                               ng-blur="login_blur('account')"
+                               class="font-16">
+                    </li>
+                    <li ng-class="{'active':loginInfo.passwordFocus}">
+                        <i class="icon icon-lock font-18"></i>
+                        <input type="password"
+                               ng-model="loginInfo.password"
+                               maxlength="30"
+                               placeholder="请输入密码"
+                               ng-focus="login_focus('password')"
+                               ng-blur="login_blur('password')"
+                               class="font-16">
+                    </li>
+                    <li>
+                        <input type="checkbox"
+                               ng-model="loginInfo.adlogin"
+                               ng-checked="loginInfo.adlogin"><label></label>
+                        AD登录&nbsp;&nbsp;&nbsp;
+                        <span class="text-orange"
+                              style="float: right; line-height: 20px"
+                              ng-bind="loginInfo.message"></span>
+                    </li>
+                </ul>
+                <br><br>
+                <button class="text-white font-16"
+                        ng-disabled="loginInfo.loading"
+                        ng-bind="loginInfo.btnName"
+                        type="submit">
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

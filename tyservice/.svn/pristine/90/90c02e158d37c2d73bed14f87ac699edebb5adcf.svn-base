@@ -1,0 +1,60 @@
+<form name="search"
+      ng-submit="searchExpert()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <select ng-model="expert.expertType">
+                <option value="">类别</option>
+                <option ng-repeat="ty in expertType"
+                        value="{{ty.id}}">{{ty.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.expertName"
+                   maxlength="16"
+                   placeholder="联系人"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.industry"
+                   maxlength="64"
+                   placeholder="所属团队"/>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.borkerName"
+                   maxlength="16"
+                   placeholder="对接人"/>
+        </li>
+        <li>
+            <select ng-model="expert.closeLevel">
+                <option value="">关系程度</option>
+                <option ng-repeat="le in closeLevel"
+                        value="{{le.id}}">{{le.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <select ng-model="expert.expertProjectRole">
+                <option value="">项目角色</option>
+                <option ng-repeat="le in projectRole"
+                        value="{{le.id}}">{{le.text}}
+                </option>
+            </select>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="expert.source"
+                   maxlength="50"
+                   placeholder="来源"/>
+        </li>
+    </ul>
+</form>
+<div class="lh30 scroll"
+     ng-bind="expertInfo.selectedExperts">
+</div>

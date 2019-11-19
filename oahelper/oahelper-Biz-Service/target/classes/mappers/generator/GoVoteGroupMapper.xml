@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoVoteGroupMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoVoteGroup">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_group_name" jdbcType="VARCHAR" property="voteGroupName" />
+      <result column="vote_group_description" jdbcType="VARCHAR" property="voteGroupDescription" />
+      <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+      <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+      <result column="is_open" jdbcType="VARCHAR" property="isOpen" />
+      <result column="is_activity" jdbcType="VARCHAR" property="isActivity" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoVoteGroupBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_group_name" jdbcType="VARCHAR" property="voteGroupName" />
+      <result column="vote_group_description" jdbcType="VARCHAR" property="voteGroupDescription" />
+      <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+      <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+      <result column="is_open" jdbcType="VARCHAR" property="isOpen" />
+      <result column="is_activity" jdbcType="VARCHAR" property="isActivity" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_vote_group where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoVoteGroup">
+    insert into go_vote_group (
+    id
+	,vote_group_name
+	,vote_group_description
+	,start_time
+	,end_time
+	,is_open
+	,is_activity
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{voteGroupName,jdbcType=VARCHAR}
+    	,#{voteGroupDescription,jdbcType=VARCHAR}
+    	,#{startTime,jdbcType=TIMESTAMP}
+    	,#{endTime,jdbcType=TIMESTAMP}
+    	,#{isOpen,jdbcType=VARCHAR}
+    	,#{isActivity,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoVoteGroup">
+    update go_vote_group
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="voteGroupName != null ">
+        vote_group_name = #{voteGroupName,jdbcType=VARCHAR},
+      </if>
+      <if test="voteGroupDescription != null ">
+        vote_group_description = #{voteGroupDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null ">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null ">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOpen != null ">
+        is_open = #{isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="isActivity != null ">
+        is_activity = #{isActivity,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,vote_group_name,vote_group_description,start_time,end_time,is_open,is_activity,create_by,create_time,update_by,update_time
+    from go_vote_group
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,vote_group_name,vote_group_description,start_time,end_time,is_open,is_activity,create_by,create_time,update_by,update_time
+    from go_vote_group
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,vote_group_name,vote_group_description,start_time,end_time,is_open,is_activity,create_by,create_time,update_by,update_time
+    from go_vote_group
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteGroupName != null and voteGroupName != ''">and vote_group_name like '%'||#{voteGroupName}||'%'</if>
+	<if test="voteGroupDescription != null and voteGroupDescription != ''">and vote_group_description like '%'||#{voteGroupDescription}||'%'</if>
+	<if test="startTime != null and startTime != ''">and start_time like '%'||#{startTime}||'%'</if>
+	<if test="endTime != null and endTime != ''">and end_time like '%'||#{endTime}||'%'</if>
+	<if test="isOpen != null and isOpen != ''">and is_open=#{isOpen}</if>
+	<if test="isActivity != null and isActivity != ''">and is_activity=#{isActivity}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_vote_group where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteGroupName != null and voteGroupName != ''">and vote_group_name like '%'||#{voteGroupName}||'%'</if>
+	<if test="voteGroupDescription != null and voteGroupDescription != ''">and vote_group_description like '%'||#{voteGroupDescription}||'%'</if>
+	<if test="startTime != null and startTime != ''">and start_time like '%'||#{startTime}||'%'</if>
+	<if test="endTime != null and endTime != ''">and end_time like '%'||#{endTime}||'%'</if>
+	<if test="isOpen != null and isOpen != ''">and is_open=#{isOpen}</if>
+	<if test="isActivity != null and isActivity != ''">and is_activity=#{isActivity}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or vote_group_name like '%'||#{keyword}||'%' or vote_group_description like '%'||#{keyword}||'%' or start_time like '%'||#{keyword}||'%' or end_time like '%'||#{keyword}||'%' or is_open like '%'||#{keyword}||'%' or is_activity like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

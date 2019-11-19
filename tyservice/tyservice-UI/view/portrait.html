@@ -1,0 +1,157 @@
+<!--<div class="col-24 fixed bg-blue-dark">-->
+    <!--<br>-->
+    <!--<button class="text-white bg-red"-->
+            <!--ng-if="isSystemManager"-->
+            <!--style="text-align: left; width: 170px"-->
+            <!--ui-sref="master.portrait.tag">-->
+        <!--<i class="icon icon-grid font-24"></i>-->
+        <!--<div style="margin-left: 50px">画像标签管理</div>-->
+    <!--</button>-->
+    <!--<br>-->
+    <!--<form name="info"-->
+          <!--ng-submit="searchUser()">-->
+        <!--<ul class="info">-->
+            <!--<li class="font-18 text-white">-->
+                <!--客户画像搜索：-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<input type="search"-->
+                       <!--placeholder="输入客户姓名"-->
+                       <!--maxlength="16"-->
+                       <!--ng-model="search.custName">-->
+            <!--</li>-->
+            <!--<li>-->
+                <!--<input type="search"-->
+                       <!--placeholder="输入客户所属机构"-->
+                       <!--maxlength="50"-->
+                       <!--ng-model="search.orgName">-->
+            <!--</li>-->
+            <!--<li class="search-Result"-->
+                <!--ng-hide="search.more">-->
+                <!--<ul ng-if="tagList.zero.length"-->
+                    <!--class="search">-->
+                    <!--<li class="bg-blue-light text-gray mark_t auto-width padding10"-->
+                        <!--ng-repeat="label in tagList.zero track by $index">-->
+                        <!--<span ng-bind="label"></span>-->
+                        <!--&nbsp;<i class="icon-cross"-->
+                                 <!--ng-click="removeMark($index, 0)"></i>-->
+                    <!--</li>-->
+                <!--</ul>-->
+                <!--<div class="label customer-list bg-dark text-white"-->
+                     <!--ng-if="searchList.zero.length">-->
+                            <!--<span ng-repeat="label in searchList.zero">-->
+                                <!--&nbsp;-->
+                                <!--<a href="javascript:void(0)" ng-click="setMark(label.labelName, 0)"-->
+                                   <!--ng-bind="label.labelName"></a>-->
+                                <!--&nbsp;-->
+                            <!--</span>-->
+                <!--</div>-->
+                <!--<input type="search"-->
+                       <!--style="width: 80%"-->
+                       <!--placeholder="输入客户画像标签"-->
+                       <!--ng-model="search.zeroLabel"-->
+                       <!--ng-keyup="searchTag(0)"-->
+                       <!--ng-blur="clearTag()">-->
+                <!--<a href="javascript:void(0)" class="fr"-->
+                   <!--ng-click="showMore()">-->
+                    <!--高级-->
+                <!--</a>-->
+            <!--</li>-->
+            <!--<li class="search-Result"-->
+                <!--ng-show="search.more">-->
+                <!--<ul>-->
+                    <!--<li>-->
+                        <!--<ul ng-if="tagList.one.length"-->
+                            <!--class="search">-->
+                            <!--<li class="bg-blue-light text-gray mark_t auto-width padding10"-->
+                                <!--ng-repeat="label in tagList.one track by $index">-->
+                                <!--<span ng-bind="label"></span>-->
+                                <!--&nbsp;<i class="icon-cross"-->
+                                         <!--ng-click="removeMark($index, 1)"></i>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--<div class="label customer-list bg-dark text-white"-->
+                             <!--ng-if="searchList.one.length">-->
+                            <!--<span ng-repeat="label in searchList.one">-->
+                                <!--&nbsp;-->
+                                <!--<a href="javascript:void(0)" ng-click="setMark(label.labelName, 1)"-->
+                                   <!--ng-bind="label.labelName"></a>-->
+                                <!--&nbsp;-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<input type="search"-->
+                               <!--placeholder="输入一级标签"-->
+                               <!--ng-model="search.oneLabel"-->
+                               <!--ng-keyup="searchTag(1)"-->
+                               <!--ng-blur="clearTag()"/></li>-->
+                    <!--<li>-->
+                        <!--<div class="label customer-list bg-dark text-white"-->
+                             <!--ng-if="searchList.two.length">-->
+                            <!--<span ng-repeat="label in searchList.two">-->
+                                <!--&nbsp;-->
+                                <!--<a href="javascript:void(0)" ng-click="setMark(label.labelName, 2)"-->
+                                   <!--ng-bind="label.labelName"></a>-->
+                                <!--&nbsp;-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<ul ng-if="tagList.two.length"-->
+                            <!--class="search">-->
+                            <!--<li class="bg-blue-light text-gray mark_t auto-width padding10"-->
+                                <!--ng-repeat="label in tagList.two track by $index">-->
+                                <!--<span ng-bind="label"></span>-->
+                                <!--&nbsp;<i class="icon-cross"-->
+                                         <!--ng-click="removeMark($index, 2)"></i>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--<input type="search"-->
+                               <!--placeholder="输入二级标签"-->
+                               <!--ng-model="search.twoLabel"-->
+                               <!--ng-keyup="searchTag(2)"-->
+                               <!--ng-blur="clearTag()"/></li>-->
+                    <!--<li>-->
+                        <!--<div class="label customer-list bg-dark text-white"-->
+                             <!--ng-if="searchList.three.length">-->
+                            <!--<span ng-repeat="label in searchList.three">-->
+                                <!--&nbsp;-->
+                                <!--<a href="javascript:void(0)" ng-click="setMark(label.labelName, 3)"-->
+                                   <!--ng-bind="label.labelName"></a>-->
+                                <!--&nbsp;-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<ul ng-if="tagList.three.length"-->
+                            <!--class="search">-->
+                            <!--<li class="bg-blue-light text-gray mark_t auto-width padding10"-->
+                                <!--ng-repeat="label in tagList.three track by $index">-->
+                                <!--<span ng-bind="label"></span>-->
+                                <!--&nbsp;<i class="icon-cross"-->
+                                         <!--ng-click="removeMark($index, 3)"></i>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                        <!--<input type="search"-->
+                               <!--placeholder="输入三级标签"-->
+                               <!--ng-model="search.threeLabel"-->
+                               <!--ng-keyup="searchTag(3)"-->
+                               <!--ng-blur="clearTag()"/></li>-->
+                    <!--<li style="border-bottom: none">-->
+                        <!--<a href="javascript:void(0)" ng-click="showMore()">-->
+                            <!--收起-->
+                        <!--</a>-->
+                    <!--</li>-->
+                <!--</ul>-->
+            <!--</li>-->
+        <!--</ul>-->
+        <!--<br>-->
+        <!--<button type="submit"-->
+                <!--style="width: 170px"-->
+                <!--class="light text-orange font-18 border-red-dark-color">-->
+            <!--查询-->
+        <!--</button>-->
+    <!--</form>-->
+<!--</div>-->
+<div class="padding20">
+    <div ui-view="portrait-head"></div>
+    <div ui-view="portrait-main"></div>
+    <div class="pd user-info">
+        <div ui-view="portrait-data"></div>
+    </div>
+</div>

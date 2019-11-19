@@ -1,0 +1,162 @@
+<table width="100%"
+       class="panel-head"
+       cellpadding="10"
+       cellspacing="0">
+    <tr>
+        <td ng-if="dataModel.data.length">
+            <span class="text-red"
+                  ng-bind="dataModel.data.length+'/'+dataModel.pageInfo.total"></span>
+            项
+            <label ng-hide="dataModel.hidePages">&nbsp;&nbsp;每页
+                <select ng-model="searchModel.pageSize"
+                        ng-change="broadcast()"
+                        ng-options="p for p in page.pages"
+                        style="display: inline; width: 80px">
+                </select>
+                &nbsp;
+                <a href="javascript:void(0)" ng-click="broadcast('refresh')"
+                   class="refresh"
+                   title="刷新">
+                    <i class="icon icon-cw font-20"></i>
+                </a>
+                &nbsp;&nbsp;&nbsp;
+            </label>
+            <span ng-if="dataModel.selectedCount">
+            已选中：<span ng-bind="dataModel.selectedCount"></span> 项
+            </span>
+            <a href="javascript:void(0)" ng-if="dataModel.charts"
+               ng-repeat="chart in dataModel.charts"
+               bo-title="chart.title"
+               class="refresh padding10"
+               ng-click="chart.event()">
+                <i bo-class="chart.icon" class="font-20 text-purple"></i>
+            </a>
+        </td>
+        <td class="text-right"
+            ng-if="dataModel.toolsBar">
+            <!--<input ng-if="dataModel.checkAll && dataModel.data.length"-->
+            <!--type="checkbox"-->
+            <!--ng-model="messageInfo.isAll"-->
+            <!--ng-checked="messageInfo.isAll"><label></label>-->
+            <!--<span class="text-blue-menu"-->
+            <!--ng-bind="dataModel.checkAll.value"-->
+            <!--ng-if="dataModel.checkAll && dataModel.data.length"></span>-->
+            <input type="button"
+                   class="font-16 padding20"
+                   bo-title="bar.title"
+                   ng-class="{'margin-right': !$last}"
+                   bo-class="bar.bgStyle"
+                   value="{{bar.btnName}}"
+                   ng-click="bar.event()"
+                   ng-disabled="bar.isDisabled && !messageInfo.isAll"
+                   ng-hide="bar.isHide"
+                   ng-repeat="bar in dataModel.toolsBar">
+            <label ng-if="dataModel.menu && dataModel.menu.isEnable && dataModel.menu.isShow && dataModel.data.length"
+                   class="font-24"
+                   bo-title="dataModel.menu.title">
+                <a href="javascript:void(0)" class="icon icon-menu"
+                   ng-click="toggleMenu()"></a>
+            </label>
+            <div id="tag_menu"
+                 style="width: 90px; right: 30px; margin-top: -10px; text-align: left"
+                 class="lenovo border-blue-dark-color bg-white">
+                <ul class="op">
+                    <li class="padding10"
+                        ng-repeat="menu in dataModel.menu.list"
+                        bo-text="menu.name"
+                        ng-click="menu.callback()">
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+</table>
+<div class="dataCp"></div>
+<div class="data"
+     style="overflow-x: hidden;">
+    <table cellpadding="10"
+           cellspacing="0"
+           width="100%"
+           ng-if="dataModel.data.length">
+        <thead ng-show="dataModel.dataHead">
+        <th class="th"
+            ng-show="dataModel.hasAllChecked">
+            <input type="checkbox"
+                   ng-checked="dataModel.selectAll"
+                   ng-show="dataModel.selectedAll"
+                   ng-model="dataModel.selectAll"
+                   ng-click="selectAll()"><label ng-show="dataModel.selectedAll"></label>
+        </th>
+        <th class="th" ng-repeat="head in dataModel.dataHead"
+            style="min-width: {{head.width+'px'}};"
+            ng-if="!head.hide"
+            bo-text="head.title"></th>
+        <th ng-show="dataModel.hasControl"
+            class="ctl_h"
+            style="min-width: {{dataModel.controlWidth+'px'}};">
+            操作
+        </th>
+        </thead>
+        <tbody>
+        <tr ng-repeat="dataItem in dataModel.data"
+            repeat-finish="copyDataToTable()">
+            <td ng-show="dataItem.hasCheckBox">
+                <input type="checkbox"
+                       ng-model="dataItem.hasCheckBox.isChecked"
+                       ng-checked="dataItem.hasCheckBox.isChecked"
+                       ng-click="dataItem.hasCheckBox.check(dataItem)"><label></label>
+            </td>
+            <td ng-repeat="it in dataItem.item"
+                bo-hide="it.hide"
+                title="{{it.text | deleteHtml}}"
+                ng-bind-html="it.text"></td>
+            <td ng-show="dataItem.controls"
+                class="ctl">
+                <a ng-if="dataModel.controlAsMenu"
+                   title="菜单"
+                   href="javascript:void(0)"
+                   class="icon icon-menu font-18"
+                   ng-click="toggleMenuById('menu'+$index)"></a>
+                <div ng-if="dataModel.controlAsMenu"
+                     id="menu{{$index}}"
+                     style="width: 90px; right: 30px; text-align: left"
+                     class="lenovo border-blue-dark-color bg-white">
+                    <ul class="op">
+                        <li class="padding10"
+                            ng-repeat="ctrl in dataItem.controls"
+                            bo-text="ctrl.name"
+                            ng-show="ctrl.isShow"
+                            ng-click="ctrl.event(dataItem)">
+                        </li>
+                    </ul>
+                </div>
+                <a ng-if="!dataModel.controlAsMenu"
+                   href="javascript:void(0)"
+                   ng-repeat="ctrl in dataItem.controls"
+                   class="text-orange"
+                   ng-show="ctrl.isShow"
+                   bo-text="ctrl.name"
+                   ng-click="ctrl.event(dataItem)"
+                   style="width: {{ctrl.width+'px'}}"
+                   bo-class="{'space-left':!$first}"></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<h4 class="text-center"
+    ng-if="!dataModel.data.length && !loading.isShow">暂无数据</h4>
+<img src="../img/loading.gif"
+     width="26"
+     class="loading"
+     ng-show="loading.isShow">
+<br><br>
+
+<div class="back bg-red-opacity">
+    <a href="javascript:void(0)" ng-click="backTop()">
+        <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+    </a>
+</div>
+
+

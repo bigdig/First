@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyExpertMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyExpert">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="expert_name" jdbcType="VARCHAR" property="expertName" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="expert_type" jdbcType="VARCHAR" property="expertType" />
+      <result column="expert_tel" jdbcType="VARCHAR" property="expertTel" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="broker_id" jdbcType="VARCHAR" property="brokerId" />
+      <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+      <result column="broker_tel" jdbcType="VARCHAR" property="brokerTel" />
+      <result column="close_level" jdbcType="VARCHAR" property="closeLevel" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="expert_project_role" jdbcType="VARCHAR" property="expertProjectRole" />
+  	  <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  	  <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyExpertBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="expert_name" jdbcType="VARCHAR" property="expertName" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="expert_type" jdbcType="VARCHAR" property="expertType" />
+      <result column="expert_tel" jdbcType="VARCHAR" property="expertTel" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="broker_id" jdbcType="VARCHAR" property="brokerId" />
+      <result column="broker_name" jdbcType="VARCHAR" property="brokerName" />
+      <result column="broker_tel" jdbcType="VARCHAR" property="brokerTel" />
+      <result column="close_level" jdbcType="VARCHAR" property="closeLevel" />
+      <result column="source" jdbcType="VARCHAR" property="source" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="expert_project_role" jdbcType="VARCHAR" property="expertProjectRole" />
+      <result column="industryNum" jdbcType="VARCHAR" property="industryNum" />
+      <result column="closeLevelNum" jdbcType="VARCHAR" property="closeLevelNum" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_expert where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyExpert">
+    insert into ty_expert (
+    id
+	,expert_name
+	,org_name
+	,title
+	,expert_type
+	,expert_tel
+	,industry
+	,broker_id
+	,broker_name
+	,broker_tel
+	,close_level
+	,source
+	,remark
+	,org_id
+	,expert_project_role
+	,delete_flag
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{expertName,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{expertType,jdbcType=VARCHAR}
+    	,#{expertTel,jdbcType=VARCHAR}
+    	,#{industry,jdbcType=VARCHAR}
+    	,#{brokerId,jdbcType=VARCHAR}
+    	,#{brokerName,jdbcType=VARCHAR}
+    	,#{brokerTel,jdbcType=VARCHAR}
+    	,#{closeLevel,jdbcType=VARCHAR}
+    	,#{source,jdbcType=VARCHAR}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    	,#{expertProjectRole,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyExpert">
+    update ty_expert
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="expertName != null ">
+        expert_name = #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="expertType != null ">
+        expert_type = #{expertType,jdbcType=VARCHAR},
+      </if>
+      <if test="expertTel != null ">
+        expert_tel = #{expertTel,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null ">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerId != null ">
+        broker_id = #{brokerId,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerName != null ">
+        broker_name = #{brokerName,jdbcType=VARCHAR},
+      </if>
+      <if test="brokerTel != null ">
+        broker_tel = #{brokerTel,jdbcType=VARCHAR},
+      </if>
+      <if test="closeLevel != null ">
+        close_level = #{closeLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null ">
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="expertProjectRole != null ">
+        expert_project_role = #{expertProjectRole,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,delete_flag,create_by,create_time,update_by,update_time,expert_name,org_name,org_id,title,expert_type,expert_tel,industry,broker_id,broker_name,broker_tel,close_level,source,remark,expert_project_role
+    from ty_expert
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,delete_flag,create_by,create_time,update_by,update_time,expert_name,org_name,org_id,title,expert_type,expert_tel,industry,broker_id,broker_name,broker_tel,close_level,source,remark,expert_project_role
+    from ty_expert
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,delete_flag,create_by,create_time,update_by,update_time,expert_name,org_name,org_id,title,expert_type,expert_tel,industry,broker_id,broker_name,broker_tel,close_level,source,remark,expert_project_role
+    from ty_expert
+    where 1=1
+    <if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="expertName != null and expertName != ''">and expert_name like '%'||#{expertName}||'%'</if>
+	<if test="expertType != null and expertType != ''">and expert_type=#{expertType}</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="closeLevel != null and closeLevel != ''">and close_level=#{closeLevel}</if>
+	<if test="source != null and source != ''">and source like '%'||#{source}||'%'</if>
+      order by id
+  </select>
+  <select id="queryByActId" parameterType="java.lang.String" resultMap="BaseResultMap">
+   select id,delete_flag,create_by,create_time,update_by,update_time,expert_name,org_name,org_id,title,expert_type,expert_tel,industry,broker_id,broker_name,broker_tel,close_level,source,remark,expert_project_role
+    from ty_expert t1 
+    where t1.id in (select expert_id from ty_activityexpert t2 where t2.activity_id=#{actId})
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_expert where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="expertProjectRole != null and expertProjectRole != ''">and expert_project_role=#{expertProjectRole}</if>
+	<if test="expertName != null and expertName != ''">and expert_name like '%'||#{expertName}||'%'</if>
+	<if test="expertType != null and expertType != ''">and expert_type=#{expertType}</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="closeLevel != null and closeLevel != ''">and close_level=#{closeLevel}</if>
+	<if test="source != null and source != ''">and source like '%'||#{source}||'%'</if>
+	<if test="brokerId!= null and brokerId!= ''">and broker_id=#{brokerId}</if>
+	<if test="keyword != null">
+		and (expert_name like '%'||#{keyword}||'%'  or expert_type like '%'||#{keyword}||'%' or industry like '%'||#{keyword}||'%' or broker_name like '%'||#{keyword}||'%' or close_level like '%'||#{keyword}||'%' or source like '%'||#{keyword}||'%')
+	</if>
+  </select>
+  <select id="queryIndustryNum" parameterType="java.util.Map" resultMap="ExResultMap">
+  	select industry,count(id) as industryNum from ty_expert 
+  	where 1=1
+	<if test="expertName != null and expertName != ''">and expert_name like '%'||#{expertName}||'%'</if>
+	<if test="expertType != null and expertType != ''">and expert_type=#{expertType}</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="closeLevel != null and closeLevel != ''">and close_level=#{closeLevel}</if>
+	<if test="source != null and source != ''">and source like '%'||#{source}||'%'</if>
+      group by industry order by industryNum desc
+  </select>
+  <select id="queryCloseLevelNum" parameterType="java.util.Map" resultMap="ExResultMap">
+  	select close_level,count(id) as closeLevelNum from ty_expert 
+  	where 1=1
+	<if test="expertName != null and expertName != ''">and expert_name like '%'||#{expertName}||'%'</if>
+	<if test="expertType != null and expertType != ''">and expert_type=#{expertType}</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="brokerName != null and brokerName != ''">and broker_name like '%'||#{brokerName}||'%'</if>
+	<if test="closeLevel != null and closeLevel != ''">and close_level=#{closeLevel}</if>
+	<if test="source != null and source != ''">and source like '%'||#{source}||'%'</if>
+      group by close_level  order by closeLevelNum desc 
+  </select>
+</mapper>

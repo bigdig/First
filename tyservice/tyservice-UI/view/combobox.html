@@ -1,0 +1,23 @@
+<div class="combobox">
+    <input type="search"
+           class="com-bo"
+           name="{{name}}"
+           ng-model="value"
+           placeholder="{{placeholder}}"
+           maxlength="50000"
+           ng-keyup="selectKeyup()"
+           ng-blur="selectBlur()"
+           unique
+           ng-disabled="disabled"
+           ng-required="{{required}}"/><a class="font-12 select"
+                                          ng-click="openSelect()">&nbsp;</a>
+    <div class="combo tags bg-gray border-blue-dark-color">
+        <ul class="op">
+            <li class="node padding10"
+                ng-repeat="data in list"
+                ng-class="{'active':data.active}"
+                ng-click="onSelect(data)"
+                ng-bind="data.text"></li>
+        </ul>
+    </div>
+</div>

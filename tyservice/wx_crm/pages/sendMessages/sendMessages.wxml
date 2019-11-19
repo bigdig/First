@@ -1,0 +1,27 @@
+<!--pages/sendMessages/sendMessages.wxml-->
+<view class='box'>
+    <view>
+        <navigator url="/pages/customerInformation/customerInformation" hover-class="navigator-hover"  class='box_list font28'>
+            <text>客户人数</text>
+            <text class='box_val'>{{num}}</text>
+            <image src='../../image/details.png' class='img_details'></image>
+        </navigator>
+    </view>
+    <view>
+        <navigator bindtap="toSMSTemplate" url="/pages/SMSTemplate/SMSTemplate?activityId={{msgActivityId}}" hover-class="navigator-hover"  class='box_list font28'>
+            <text>选择短信模板</text>
+            <text class='box_val'></text>
+            <image src='../../image/details.png' class='img_details'></image>
+        </navigator>
+    </view>
+    <view class='box_mess' wx:key="{{item}}" wx:for="{{smsTemplateList}}">
+        <view class='box_message font26'>
+            <text>{{item.smsTemplate}}</text>
+        </view>
+        <text class='box_urse'>{{item.user}}</text>
+    </view>
+</view>
+<!-- <view class='adit_message'>
+    <input placeholder="请输入短信内容..."/>
+    <image src='../../image/fasong.png'></image>
+</view> -->

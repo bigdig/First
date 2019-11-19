@@ -1,0 +1,370 @@
+<div class="col-16 bg-dark fixed"
+     ng-hide="hasFrom">
+    <ul class="menu">
+        <li ng-repeat="menu in menuList">
+            <a href="javascript:void(0)" ng-click="go(menu)"
+               ng-class="{'active':menu.isActive}">
+                <span class="{{menu.iconcls.split(',')[0]}}">
+                    <i class="font-16 icon {{menu.iconcls.split(',')[1]}}"></i>
+                    &nbsp;
+                </span>
+                <span ng-bind="menu.menuName"></span>
+            </a>
+        </li>
+    </ul>
+    <div class="text-blue text-center user">
+        <div style="margin:0 auto 10px">
+          <div style="display: inline-block;min-width:80px;">
+            <img src="../img/user.png" style="vertical-align: top;"/>
+            <div style="display: inline-block;min-width:10px;text-align: center;margin:5px 0 0 3px;">
+              <div bo-text="userInfo.userName" style="white-space:nowrap;"></div>
+              <div bo-text="userInfo.position" style="white-space:nowrap;"></div>
+            </div>
+          </div>
+        </div>
+        <!-- <h4 bo-text="userInfo.userName"></h4> -->
+        <div class="line bg-blue-light"></div>
+        <p style="margin:5px">
+            <button type="button"
+                    style="width: 100px"
+                    class="text-orange light font-18"
+                    ng-disabled="logoutInfo.isLoading"
+                    ng-bind="logoutInfo.btnName"
+                    ng-click="logout()">
+            </button>
+        </p>
+    </div>
+</div>
+<div class="col-84">
+    <div ui-view="head"
+         ng-hide="hasFrom"
+         class="padding20"></div>
+    <div ui-view="main"></div>
+    <div ui-view="data"
+         class="padding20"></div>
+</div>
+<div class="alert text-white font-16">
+    <i class="icon"></i>&nbsp;
+    <span ng-bind="alert.message"></span>
+</div>
+<script type="text/ng-template"
+        id="uploadExcelTemplate">
+    <div class="ngdialog-message">
+        <br>
+        <div class="text-center font-24"
+             ng-bind="uploadDataModel.pageTitle"></div>
+        <div class="text-right">
+            <a href="javascript:void(0)" class="text-cyan-light"
+               ng-href="{{uploadDataModel.templateFile}}"
+               target="_blank">
+                下载模板文件
+            </a>
+        </div>
+        <br>
+        <div class="upload"
+             ng-hide="uploadFile.isHide">
+            <div class="hor"></div>
+            <div class="vet"></div>
+            <input type="file"
+                   accept=".xls,.xlsx"
+                   class="file"/>
+        </div>
+        <h2 class="text-orange text-center"
+            ng-hide="uploadFile.isHide">上传Excel文件</h2>
+        <div ng-repeat="file in uploadFile.files"
+             ng-show="uploadFile.isHide"
+             class="file-panel">
+            <div>
+                <i class="icon icon-file-excel"></i>
+                <span class="font-16" ng-bind="file.name"></span>
+                (<span ng-bind="file.humanSize"></span>)
+                <span class="fr" ng-bind="file.percentage"></span>
+            </div>
+            <progress value="{{file.loaded ? file.loaded : 0}}"
+                      max="{{file.size}}"></progress>
+            <p class="text-center font-18"
+               ng-class="{'text-orange':uploadFile.isError}"
+               ng-bind="file.message"></p>
+            <div class="font-12 bg-gray lh30 padding10">
+                上传日志
+            </div>
+            <div class="tags font-12 log-list padding10 border-gray-color">
+                <ul>
+                    <li ng-repeat="log in uploadFile.logs"
+                        ng-bind="log"></li>
+                </ul>
+            </div>
+        </div>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               value="关闭"
+               ng-disabled="uploadDataModel.isDisabled"
+               ng-click="closeThisDialog()"
+               class="light text-orange border-gray-color padding60"/>
+        <input type="button"
+               ng-disabled="uploadDataModel.isDisabled"
+               value="{{uploadDataModel.value}}"
+               ng-dialog="{{uploadDataModel.template}}"
+               ng-dialog-scope="uploadDataModel.scope"
+               ng-dialog-class="ngdialog-theme-default"
+               ng-dialog-close-previous
+               class="btn-search text-orange light font-18">
+    </div>
+</script>
+<script type="text/ng-template"
+        id="sendMessageTemplate">
+    <form name="sms_form"
+          ng-submit="sendMessage('sms')"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center">发送短信</h2>
+            <table width="100%" cellpadding="0" cellspacing="12">
+                <tr>
+                    <td colspan="2"
+                        class="text-right">
+                        <a href="javascript:void(0)" ng-click="showTemplateList('sms')">
+                            <i class="icon icon-plus"></i>选择模板
+                        </a>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td class="text-right"
+                        width="23%">
+                        收件人<span ng-show="selectedCustomers.length>0">({{messageInfo.total}})</span>
+                    </td>
+                    <td>
+                        <div class="customer-list"
+                             ng-show="selectedCustomers.length>0">
+                            <div class="customer text-center padding20"
+                                 ng-repeat="customer in selectedCustomers">
+                                <span ng-bind="customer.name"></span>
+                                <i class="icon icon-cross"
+                                   ng-click="delete(customer)"></i>
+                            </div>
+                        </div>
+                        <div ng-hide="selectedCustomers.length>0 || messageInfo.total==0">{{messageInfo.total}}</div>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td class="text-right">
+                        短信内容<br>内容禁止出现【】和[]字符
+                    </td>
+                    <td>
+                        <div class="error text-white bg-red-opacity"
+                             ng-show="sms_form.sms_content.$dirty && sms_form.sms_content.$invalid">
+                            <span ng-show="sms_form.sms_content.$error.required">
+                                请输入内容
+                            </span>
+                            <span ng-show="sms_form.sms_content.$error.maxlength">
+                                总字数不超过1000
+                            </span>
+                            <span ng-show="sms_form.sms_content.$error.pattern">
+                                不被接受的字符
+                            </span>
+                        </div>
+                        <textarea placeholder="内容"
+                                  name="sms_content"
+                                  rows="8"
+                                  ng-maxlength="1000"
+                                  ng-pattern="/^[^【】\[\]]+$/"
+                                  required
+                                  ng-model="messageInfo.content"></textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-init="messageInfo.btnName='发送'"
+                   ng-disabled="messageInfo.loading || (!messageInfo.isAll && !selectedCustomers.length) || sms_form.$invalid"
+                   value="{{messageInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="sendEmailTemplate">
+    <!--<form name="mail_form"-->
+    <!--ng-submit="sendMessage('email')"-->
+    <!--novalidate>-->
+    <div class="ngdialog-message">
+        <h2 class="text-center">发送邮件</h2>
+        <table width="100%" cellpadding="0" cellspacing="12">
+            <!--<tr>
+                <td colspan="2"
+                    class="text-right">
+                    <small id="msg"
+                           class="text-red"></small>
+                    &nbsp;&nbsp;
+                    <input type="file"
+                           title="添加附件"
+                           class="attachment_input"
+                           multiple/>
+                    <a>
+                        <i class="icon icon-attachment"></i>
+                        附件
+                    </a>
+                    &nbsp;
+                    <a ng-click="showTemplateList('mail')">
+                        <i class="icon icon-plus"></i>选择模板
+                    </a>
+                </td>
+            </tr>
+            -->
+            <!--<tr valign="top">-->
+            <!--<td class="text-right"-->
+            <!--width="15%"-->
+            <!--ng-bind="'收件人('+messageInfo.total+')'">-->
+            <!--</td>-->
+            <!--<td>-->
+            <!--<div ng-hide="messageInfo.isAll"-->
+            <!--class="customer-list">-->
+            <!--<div class="customer text-center padding20"-->
+            <!--ng-repeat="customer in selectedCustomers">-->
+            <!--<span ng-bind="customer.name"></span>-->
+            <!--<i class="icon icon-cross"-->
+            <!--ng-click="delete(customer)"></i>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<span ng-show="messageInfo.isAll">-->
+            <!--全部客户-->
+            <!--</span>-->
+            <!--</td>-->
+            <!--</tr>-->
+            <tr valign="top">
+                <td class="text-right"
+                    width="15%">
+                    收件人<span ng-show="selectedCustomers.length>0">({{messageInfo.total}})</span>
+                </td>
+                <td>
+                        <textarea rows="7"
+                                  readonly
+                                  placeholder="收件人"
+                                  id="mailList"></textarea>
+                </td>
+            </tr>
+            <!--
+            <tr>
+                <td class="text-right">邮件主题</td>
+                <td>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="mail_form.mail_title.$dirty && mail_form.mail_title.$invalid">
+                        <span ng-show="mail_form.mail_title.$error.required">
+                            请输入主题
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="mail_title"
+                           style="width: 100%"
+                           maxlength="100"
+                           placeholder="主题"
+                           required
+                           ng-model="messageInfo.title">
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <ul class="attachment"></ul>
+                </td>
+            </tr>
+            <tr valign="top">
+                <td class="text-right">邮件内容</td>
+                <td>
+                    <textarea placeholder="内容"
+                              id="mail_content"></textarea>
+                </td>
+            </tr>
+            -->
+            <tr>
+                <td></td>
+                <td class="font-12">
+                    注：如果未自动打开邮件客户端，可以先拷贝收件人列表到客户端使用，然后联系管理员。
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!--<div class="ngdialog-buttons text-center font-12">-->
+    <!--<input type="submit"-->
+    <!--class="bg-red text-white"-->
+    <!--ng-init="messageInfo.btnName='发送'"-->
+    <!--ng-disabled="messageInfo.loading || (!messageInfo.isAll && !selectedCustomers.length) || mail_form.$invalid"-->
+    <!--value="{{messageInfo.btnName}}"/>-->
+    <!--</div>-->
+    <!--</form>-->
+</script>
+<script type="text/ng-template"
+        id="msgTempTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">消息模板</h3>
+        <br>
+        <ul class="customer-list cus_list border-gray-color"
+            style="height: 320px !important;">
+            <li ng-repeat="template in templateList"
+                ng-click="chooseTemplate(template)">
+                <div ng-if="template.msgType=='mail'"
+                     class="padding10 bg-gray list_temp"
+                     ng-bind="template.tmpTitle"></div>
+                <div class="padding10 bg-gray"
+                     style="padding-top:15px; padding-bottom:15px"
+                     ng-bind="template.tmpContent"></div>
+            </li>
+        </ul>
+        <br>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               value="返回"
+               ng-click="closeThisDialog();backDialog(template)"
+               class="text-orange padding60 light border-gray-color"/>
+    </div>
+</script>
+<script type="text/ng-template"
+        id="maskTemplate">
+    <div class="ngdialog-message font-18 text-red text-center">
+        <br>
+        <i class="icon icon-warning2"></i>
+        正在处理中...
+    </div>
+</script>
+<script type="text/ng-template"
+        id="filesTemplate">
+    <div class="ngdialog-message">
+        <h2 class="text-center">批量上传附件</h2>
+        <div class="padding60">
+            <ul class="report">
+                <li ng-repeat="file in uploadFile.files">
+                    <a ng-click="downloadFile(file)"
+                       ng-if="file.loaded"
+                       ng-bind="file.addAttachNames"></a>
+                    <div class="fr">
+                        <span ng-bind="file.humanSize"></span>
+                        <a ng-click="fileRemove(file)"
+                           class="icon icon-cross font-16 text-red"
+                           title="移除"></a>
+                    </div>
+                    <progress value="{{file.loaded ? file.loaded : 0}}"
+                              max="{{file.size}}"></progress>
+                </li>
+            </ul>
+            <br>
+            <input type="file"
+                   value="上传附件"
+                   multiple
+                   id="fileBtn"/>
+        </div>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               ng-disabled="uploadDataModel.isDisabled"
+               value="{{uploadDataModel.value}}"
+               ng-dialog="{{uploadDataModel.template}}"
+               ng-dialog-scope="uploadDataModel.scope"
+               ng-dialog-class="ngdialog-theme-default"
+               ng-dialog-close-previous
+               class="light text-orange border-gray-color padding60"/>
+    </div>
+</script>

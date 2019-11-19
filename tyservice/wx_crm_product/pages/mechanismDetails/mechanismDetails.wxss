@@ -1,0 +1,238 @@
+.box{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #F3F2F7;
+}
+.box_KP{
+   width: 640rpx;
+   height: 330rpx;
+   background-color: #ffffff;
+   margin: 44rpx auto;
+   position: relative;
+}
+.box_KP_companyName{
+  display: block;
+  padding-top: 30rpx;
+  padding-right: 41rpx;
+  text-align: right;
+  color: #282C3F;
+}
+.box_KP_userName{
+  display: block;
+  padding-top: 30rpx;
+  margin-left: 27rpx;
+  color: #282C3F;
+}
+.box_KP_department{
+  margin-top: 10rpx;
+  margin-left: 26rpx;
+  color: #9FA3BB;
+}
+.box_KP_position{
+  margin-top: 10rpx;
+  margin-left: 26rpx;
+  color: #9FA3BB;
+}
+.box_phone{
+  margin-top: 10rpx;
+}
+.box_email{
+  margin-top: 10rpx;
+}
+.box_KP_phone{
+  margin-left: 30rpx;
+}
+.box_KP_email{
+  margin-left: 30rpx;
+}
+.icon_phone{
+  width: 40rpx;
+  height: 40rpx;
+  position: relative;
+  top: 12rpx;
+  left: 20rpx;
+}
+.icon_email{
+  width: 40rpx;
+  height: 40rpx;
+  position: relative;
+  top: 12rpx;
+  left: 20rpx;
+}
+.box_fund{
+  background-color: #ffffff;
+}
+.box_fund_title{
+  height: 88rpx;
+  line-height: 88rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+  color: #7A7E98;
+  padding-left: 43rpx;
+}
+ .box_fundNumber{
+  margin-left: 510rpx;
+} 
+.box_fund_list{
+  height: 97rpx;
+  width: 690rpx;
+  line-height: 97rpx;
+  margin-left: 60rpx;
+  border-bottom: 2rpx solid #F3F2F7;
+}
+.box_fund_list_text{
+  color: #282C3F;
+}
+.box_fund_list_Number{
+  float: right;
+  margin-right: 90rpx;
+}
+.box_sale{
+  background-color: #ffffff;
+  margin-top: 20rpx;
+}
+.box_sale_list{
+  /* height: 97rpx; */
+  width: 690rpx;
+  line-height: 97rpx; 
+  margin-left: 60rpx;
+  border-bottom: 2rpx solid #F3F2F7;
+}
+.box_sale_list1{
+  margin-left: 60rpx;
+  min-height:97rpx;
+  display: block
+}
+.box_sale_list_text1{
+  color: #616686;
+  line-height: 97rpx; 
+  margin-top: 0rpx;
+  width: 100rpx;
+  display: inline-block;
+}
+.box_sale_list_value1{
+  text-align: right; 
+  width: 500rpx;
+  display: inline-block;
+   /* line-height: 97rpx;  */
+  margin-left: 30rpx;
+  color: #282C3F;
+}
+.box_sale_list_text{
+  color: #616686;
+}
+.box_sale_list_value{
+  float: right;
+  margin-right: 60rpx;
+  color: #282C3F;
+}
+.box_sale_list_switch{
+  float: right;
+  margin-right: 70rpx;
+}
+.box_label{
+  background-color: #ffffff;
+}
+.box_label_list_title{
+  color: #7A7E98;
+  margin-left: 60rpx;
+  height: 70rpx;
+  line-height: 70rpx;
+}
+.box_label_list_text{
+  margin-left: 60rpx;
+  padding-bottom: 30rpx;
+}
+.box_label_industryLabel{
+  width: 100rpx;
+  height: 40rpx;
+  display: inline-block;
+  line-height: 40rpx;
+  text-align: center;
+  border-radius: 6rpx;
+  margin-right: 20rpx;
+}
+.box_botton{
+  border-bottom: 2rpx solid #F3F2F7;
+  margin-left: 60rpx;
+}
+.box_botton_submit{
+  width: 100rpx;
+  height: 40rpx;
+  color:#DCDCDC;
+  margin-left: 0;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+  background-color: #F3F2F7;
+  text-align: center;
+  line-height: 40rpx;
+}
+.box_record_header{
+  margin-left: 60rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #7A7E98;
+}
+.box_record_header_seach{
+  float: right;
+  margin-right: 60rpx;
+  color: #3296FA;
+}
+.box_record_recordList{
+  padding: 0rpx 45rpx 20rpx 0rpx;
+  border-left: 2rpx solid #D6E0F8;
+  margin-left: 60rpx;
+  margin-top: 20rpx;
+  position: relative;
+}
+.yuan{
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background-color: #000;
+  display: inline-block;
+  position: absolute;
+  top: 4rpx;
+  left: -8rpx;
+}
+.box_record_recordList_text{
+  display: inline-block;
+  margin-left: 20rpx;
+}
+.submit{
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  margin: 0 auto;
+  position: fixed;
+  bottom: 0;
+  color: #3296FA;
+  background-color: #ffffff;
+  box-shadow:0px 10px 20px #F3F2F7; 
+}
+.box_KP_stateText{
+  display: inline-block;
+  padding-left: 20rpx;
+  padding-right: 41rpx;
+  color: #282C3F;
+}
+.box_KP_state{
+  display: inline-block;
+  padding-top: 20rpx;
+  padding-left: 320rpx;
+  color: #282C3F;
+}
+.box_KP_img{
+  display: inline-block;
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 20rpx;
+  right: 150rpx;
+}
+.box_KP_stateText1{
+  display: inline-block;
+  padding-top: 20rpx;
+  padding-left: 500rpx;
+  color: #FE8166;
+}

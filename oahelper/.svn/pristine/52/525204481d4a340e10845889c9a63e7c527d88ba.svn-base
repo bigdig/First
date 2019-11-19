@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.tfzq</groupId>
+		<artifactId>oahelper</artifactId>
+		<version>0.5.0</version>
+		<relativePath>./</relativePath>
+	</parent>
+	<artifactId>oahelper-Web-Server</artifactId>
+	<name>${project.artifactId}</name>
+	<packaging>pom</packaging>
+	<url>http://maven.apache.org</url>
+	<modules>
+		<module>oahelper-Common</module>
+		<!--  <module>oahelper-Generator</module>-->
+		<!--<module>oahelper-Scheduler-API</module>-->
+		<module>oahelper-SYS-API</module>
+		<module>oahelper-Biz-API</module>
+		<module>oahelper-SYS-Service</module>
+		<module>oahelper-Biz-Service</module>
+		<module>oahelper-WebMng</module>
+	</modules>
+	<!-- clean:clean package -P build tomcat7:run-war-only -f pom-webmng-server.xml -->
+	
+</project>

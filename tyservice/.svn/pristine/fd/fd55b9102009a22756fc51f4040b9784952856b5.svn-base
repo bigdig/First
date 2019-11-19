@@ -1,0 +1,21 @@
+<ion-view >
+ <!--  <ion-nav-back-button class="button-clear" 
+ ng-click="canGoBack && goBack()">
+   <i class="ion-chevron-left"></i>
+  </ion-nav-back-button> -->
+<ion-header-bar align-title="left" class="bar-subheader gray" style="padding: 0;line-height: 50px;">
+    <span class="p-left">全部联系人</span>
+</ion-header-bar> 
+ <ion-content style="background: #F9F9F9; top:49px;">
+        <ion-list>
+           <ion-item  class="item-icon-right" ng-click="AllContent(key.id,key.orgId)" ng-repeat="key in allList">
+             {{key.custName}}
+              <i class="icon ion-ios-arrow-forward" style="color: #D0D0D0;
+    font-size: 27px;
+    font-weight: normal;"></i>
+          </ion-item>
+         
+      </ion-list>
+</ion-content>
+</ion-view>
+

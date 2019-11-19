@@ -1,0 +1,64 @@
+{
+  "pages":[
+        "pages/index/index", 
+    "pages/customer/customer",
+    "pages/addService/addService",
+    "pages/addLabel/addLabel",
+    "pages/login/login",
+    "pages/bListMechanism/bListMechanism",
+    "pages/mechanismDetails/mechanismDetails",
+    "pages/addActContent/addActContent",
+    "pages/SMSTemplate/SMSTemplate",
+    "pages/sendMessages/sendMessages",
+    "pages/personal/personal",
+    "pages/customerInformation/customerInformation",
+    "pages/customerDetails/customerDetails",
+    "pages/bListCustomer/bListCustomer",
+    "pages/add_customer/add_customer",
+    "pages/selectCustomer/selectCustomer",
+    "pages/newGroup/newGroup",
+    "pages/ActiveCustomers/ActiveCustomers",
+    "pages/addMyAct/addMyAct",
+    "pages/addCooperateAct/addCooperateAct",
+    "pages/selectStaff/selectStaff",
+    "pages/selectExpert/selectExpert",
+    "pages/selectListedComp/selectListedComp",
+    "pages/activityDetail/activityDetail",
+    "pages/activityAddLabel/activityAddLabel",
+    "pages/fundDetails/fundDetails",
+    "pages/packetDetails/packetDetails",
+    "pages/salonActDetail/salonActDetail"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "客户服务管理平台",
+    "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "活动",
+        "iconPath": "./image/F-hd.png",
+        "selectedIconPath": "./image/H-hd.png"
+      },
+      {
+        "pagePath": "pages/customer/customer",
+        "text": "客户",
+        "iconPath": "./image/F-ku.png",
+        "selectedIconPath": "./image/H-ku.png"
+      },
+      {
+        "pagePath": "pages/personal/personal",
+        "text": "我的",
+        "iconPath":"./image/F-user.png",
+        "selectedIconPath":"./image/H-user.png"
+      }
+    ],
+    "color":"#9FA3BB",
+    "selectedColor":"#282C3F",
+    "borderStyle":"black",
+    "backgroundColor":"#ffffff"
+  }
+}

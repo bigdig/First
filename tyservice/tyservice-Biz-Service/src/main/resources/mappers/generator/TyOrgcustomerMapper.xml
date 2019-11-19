@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyOrgcustomerMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyOrgcustomer">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
+      <result column="cust_tel" jdbcType="VARCHAR" property="custTel" />
+      <result column="cust_level" jdbcType="VARCHAR" property="custLevel" />
+      <result column="saler_id" jdbcType="VARCHAR" property="salerId" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="domain" jdbcType="VARCHAR" property="domain" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="cust_bakmobile" jdbcType="VARCHAR" property="custBakmobile" />
+      <result column="mark" jdbcType="VARCHAR" property="mark" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="active_datetime" jdbcType="INTEGER" property="activeDatetime" />
+      <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+      <result column="rec_sms" jdbcType="VARCHAR" property="recSms" />
+      <result column="rec_email" jdbcType="VARCHAR" property="recEmail" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="is_accept_rpt" jdbcType="VARCHAR" property="isAcceptRpt" />
+      <result column="rpt_send_group" jdbcType="VARCHAR" property="rptSendGroup" />
+      <result column="rpt_send_group_name" jdbcType="VARCHAR" property="rptSendGroupName" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyOrgcustomerBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+      <result column="service_saler" jdbcType="VARCHAR" property="serviceSaler" />
+      <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+      <result column="cust_email" jdbcType="VARCHAR" property="custEmail" />
+      <result column="cust_tel" jdbcType="VARCHAR" property="custTel" />
+      <result column="cust_level" jdbcType="VARCHAR" property="custLevel" />
+      <result column="saler_id" jdbcType="VARCHAR" property="salerId" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+      <result column="industry" jdbcType="VARCHAR" property="industry" />
+      <result column="domain" jdbcType="VARCHAR" property="domain" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="department" jdbcType="VARCHAR" property="department" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="cust_mobile" jdbcType="VARCHAR" property="custMobile" />
+      <result column="cust_bakmobile" jdbcType="VARCHAR" property="custBakmobile" />
+      <result column="mark" jdbcType="VARCHAR" property="mark" />
+      <result column="remark" jdbcType="VARCHAR" property="remark" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="active_datetime" jdbcType="INTEGER" property="activeDatetime" />
+      <result column="id_no" jdbcType="VARCHAR" property="idNo" />
+      <result column="rec_sms" jdbcType="VARCHAR" property="recSms" />
+      <result column="rec_email" jdbcType="VARCHAR" property="recEmail" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="sign_num" jdbcType="VARCHAR" property="signNum" />
+      <result column="score" jdbcType="DOUBLE" property="score" />
+      <result column="is_accept_rpt" jdbcType="VARCHAR" property="isAcceptRpt" />
+      <result column="rpt_send_group" jdbcType="VARCHAR" property="rptSendGroup" />
+      <result column="rpt_send_group_name" jdbcType="VARCHAR" property="rptSendGroupName" />
+  </resultMap>
+  <resultMap id="custdictMap" type="org.ibase4j.core.support.DictItem">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="cust_name" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_orgcustomer where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyOrgcustomer">
+    insert into ty_orgcustomer (
+    id
+	,org_name
+	,service_saler
+	,cust_name
+	,cust_email
+	,cust_tel
+	,cust_level
+	,saler_id
+	,org_id
+	,industry
+	,domain
+	,title
+	,department
+	,area
+	,cust_mobile
+	,cust_bakmobile
+	,mark
+	,remark
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,active_datetime
+	,id_no
+	,rec_sms
+	,rec_email
+	,delete_flag
+	,is_accept_rpt
+	,rpt_send_group
+	,rpt_send_group_name
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{orgName,jdbcType=VARCHAR}
+    	,#{serviceSaler,jdbcType=VARCHAR}
+    	,#{custName,jdbcType=VARCHAR}
+    	,#{custEmail,jdbcType=VARCHAR}
+    	,#{custTel,jdbcType=VARCHAR}
+    	,#{custLevel,jdbcType=VARCHAR}
+    	,#{salerId,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    	,#{industry,jdbcType=VARCHAR}
+    	,#{domain,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{department,jdbcType=VARCHAR}
+    	,#{area,jdbcType=VARCHAR}
+    	,#{custMobile,jdbcType=VARCHAR}
+    	,#{custBakmobile,jdbcType=VARCHAR}
+    	,#{mark,jdbcType=VARCHAR}
+    	,#{remark,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{activeDatetime,jdbcType=INTEGER}
+    	,#{idNo,jdbcType=VARCHAR}
+    	,#{recSms,jdbcType=VARCHAR}
+    	,#{recEmail,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{isAcceptRpt,jdbcType=VARCHAR}
+    	,#{rptSendGroup,jdbcType=VARCHAR}
+    	,#{rptSendGroupName,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateBatchMark" parameterType="java.util.Map">
+    update ty_orgcustomer 
+      <trim prefix="set" suffixOverrides=",">
+      <if test="newLabelName == ''.toString() ">
+        mark = trim(replace(' '||mark||' ',' '||#{oldLabelName}||' ',' ')),
+      </if>
+      <if test="newLabelName != '' ">
+        mark = trim(replace(' '||mark||' ',' '||#{oldLabelName}||' ',' '||#{newLabelName}||' ')),
+      </if>
+      </trim>
+    where instr(' '||mark||' ',' '||#{oldLabelName}||' ')>0
+  </update>  
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyOrgcustomer">
+    update ty_orgcustomer
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null ">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceSaler != null ">
+        service_saler = #{serviceSaler,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null ">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custEmail != null ">
+        cust_email = #{custEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="custTel != null ">
+        cust_tel = #{custTel,jdbcType=VARCHAR},
+      </if>
+      <if test="custLevel != null ">
+        cust_level = #{custLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="salerId != null ">
+        saler_id = #{salerId,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null ">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="domain != null ">
+        domain = #{domain,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null ">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null ">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="custMobile != null ">
+        cust_mobile = #{custMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="custBakmobile != null ">
+        cust_bakmobile = #{custBakmobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null ">
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null ">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="activeDatetime != null ">
+        active_datetime = #{activeDatetime,jdbcType=INTEGER},
+      </if>
+      <if test="idNo != null ">
+        id_no = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="recEmail != null ">
+        rec_email = #{recEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="recSms != null ">
+        rec_sms = #{recSms,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="isAcceptRpt != null ">
+        is_accept_rpt = #{isAcceptRpt,jdbcType=VARCHAR},
+      </if>
+      <if test="rptSendGroup != null ">
+        rpt_send_group = #{rptSendGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="rptSendGroupName != null ">
+        rpt_send_group_name = #{rptSendGroupName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateServiceSaler" parameterType="java.lang.String">
+    update ty_orgcustomer set service_saler = (select staff_name from ty_stafflist where id = #{id,jdbcType=VARCHAR})
+    where saler_id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByOrgId" parameterType="java.util.Map">
+    update ty_orgcustomer
+    set service_saler = #{serviceSaler,jdbcType=VARCHAR},saler_id = #{salerId,jdbcType=VARCHAR}
+    where org_id = #{orgId,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,org_name,service_saler,cust_name,cust_email,cust_tel,cust_level,saler_id,org_id,industry,domain,title,department,area,cust_mobile,cust_bakmobile,mark,remark,create_by,create_time,update_by,update_time,active_datetime,id_no,rec_sms,rec_email,delete_flag,is_accept_rpt,rpt_send_group,rpt_send_group_name
+    from ty_orgcustomer
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,org_name,service_saler,cust_name,cust_email,cust_tel,cust_level,saler_id,org_id,industry,domain,title,department,area,cust_mobile,cust_bakmobile,mark,remark,create_by,create_time,update_by,update_time,active_datetime,id_no,rec_sms,rec_email,delete_flag,is_accept_rpt,rpt_send_group,rpt_send_group_name
+    from ty_orgcustomer
+   where delete_flag = '0'
+    order by id
+  </select>
+  <select id="queryCustdict" resultMap="custdictMap" parameterType="java.util.Map">
+    select id,cust_name from ty_orgcustomer
+    where 1=1
+    <if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+    order by id
+  </select>
+  <select id="queryByCondition" parameterType="java.util.Map" resultMap="ExResultMap">
+    select id,org_name,service_saler,cust_name,cust_email,cust_tel,cust_level,saler_id,org_id,industry,domain,title,department,area,cust_mobile,cust_bakmobile,mark,remark,create_by,create_time,update_by,update_time,active_datetime,id_no,rec_sms,rec_email,delete_flag,is_accept_rpt,rpt_send_group,rpt_send_group_name
+    from ty_orgcustomer t1 where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id = t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+    <if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+	<if test="serviceSaler != null and serviceSaler != ''">and service_saler like '%'||#{serviceSaler}||'%'</if>
+	<if test="custEmail != null and custEmail != ''">and cust_email like '%'||#{custEmail}||'%'</if>
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="custNameAccurate != null and custNameAccurate != ''">and cust_name =#{custNameAccurate}</if>
+	<if test="custTel != null and custTel != ''">and cust_tel like '%'||#{custTel}||'%'</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile like '%'||#{custMobile}||'%'</if>
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="department != null and department != ''">and department like '%'||#{department}||'%'</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="domain != null and domain != ''">and domain like '%'||#{domain}||'%'</if>
+	<if test="groupId != null and groupId !='' ">
+		and exists (select * from ty_custgroupdetail t4 where t4.group_id = #{groupId} and t4.cust_id=t1.id)
+	</if>
+	<if test="custStatus != null and custStatus !='' ">
+		 and  exists (select * from ty_serviceorg t5 where t5.cust_status = #{custStatus} and t5.id=t1.org_id)
+	</if>
+	<if test="mark != null and mark != ''">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3 where t3.label_id in
+			(select t2.id from ty_label t2 where t2.label_name like '%'||#{mark}||'%'))
+	</if>
+	<!-- 多标签与计算 -->
+	<if test="marks != null and marks.size() > 0 and markCal=='and'">
+		<foreach collection="marks" index="index" item="item" open=""
+			separator="" close="">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3
+		            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item})) 
+		</foreach>
+	</if>
+	<!-- 多标签或计算 -->
+	<if test="marks != null and marks.size() > 0 and markCal=='or'">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3
+					where t3.label_id in
+					(select t4.id from ty_label t4 where t4.label_name in
+						<foreach collection="marks" index="index" item="item" open="("
+							separator="," close=")">
+							#{item}
+						</foreach>
+					)
+				)
+	</if>
+	<if test="area != null and area != ''">
+		and area like '%'||#{area}||'%'
+	</if>
+	<if test="keyword != null">
+		and (org_name like '%'||#{keyword}||'%'  or service_saler like '%'||#{keyword}||'%' or cust_name like '%'||#{keyword}||'%' or cust_tel like '%'||#{keyword}||'%' or title like '%'||#{keyword}||'%' or department like '%'||#{keyword}||'%' or mark like '%'||#{keyword}||'%')
+	</if>
+	<if test="idNo != null and idNo != ''">and id_no like '%'||#{idNo}||'%'</if>
+	<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+	<if test="activeDatetime != null and activeDatetime != ''">and active_datetime > #{activeDatetime}</if>
+	<if test="salerList != null and salerList.size>0">
+		and saler_id in
+		<foreach collection="salerList" item="salerId" index="index"
+            open="(" close=")" separator=",">
+            #{salerId}
+        </foreach>
+	</if>
+	<if test="custidList != null and custidList.size>0">
+		and id in
+		<foreach collection="custidList" item="id" index="index"
+            open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+	</if>
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_orgcustomer t1 where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="orgName != null and orgName != ''">and exists(select 1 from ty_serviceorg t2 where t2.id = t1.org_id and t2.org_name like '%'||#{orgName}||'%') </if>
+	<if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+	<if test="serviceSaler != null and serviceSaler != ''">and service_saler like '%'||#{serviceSaler}||'%'</if>
+	<if test="custEmail != null and custEmail != ''">and cust_email like '%'||#{custEmail}||'%'</if>
+	<if test="custName != null and custName != ''">and cust_name like '%'||#{custName}||'%'</if>
+	<if test="custTel != null and custTel != ''">and cust_tel like '%'||#{custTel}||'%'</if>
+	<if test="custMobile != null and custMobile != ''">and cust_mobile like '%'||#{custMobile}||'%'</if>
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="department != null and department != ''">and department like '%'||#{department}||'%'</if>
+	<if test="industry != null and industry != ''">and industry like '%'||#{industry}||'%'</if>
+	<if test="domain != null and domain != ''">and domain like '%'||#{domain}||'%'</if>
+	<if test="groupId != null and groupId !='' ">
+		and exists (select * from ty_custgroupdetail t4 where t4.group_id = #{groupId} and t4.cust_id=t1.id)
+	</if>
+	<if test="mark != null and mark != ''">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3 where t3.label_id in
+			(select t2.id from ty_label t2 where t2.label_name like '%'||#{mark}||'%'))
+	</if>
+	<!-- 多标签与计算 -->
+	<if test="marks != null and marks.size() > 0 and markCal=='and'">
+		<foreach collection="marks" index="index" item="item" open=""
+			separator="" close="">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3
+		            where t3.label_id in (select t4.id from ty_label t4 where t4.label_name =#{item}))
+		</foreach>
+	</if>
+	<!-- 多标签或计算 -->
+	<if test="marks != null and marks.size() > 0 and markCal=='or'">
+		and id in (select distinct t3.customer_id from ty_customerlabel t3
+					where t3.label_id in
+					(select t4.id from ty_label t4 where t4.label_name in
+						<foreach collection="marks" index="index" item="item" open="("
+							separator="," close=")">
+							#{item}
+						</foreach>
+					)
+				)
+	</if>
+	<if test="area != null and area != ''">
+		and area like '%'||#{area}||'%'
+	</if>
+	<if test="keyword != null">
+		and (org_name like '%'||#{keyword}||'%'  or service_saler like '%'||#{keyword}||'%' or cust_name like '%'||#{keyword}||'%' or cust_tel like '%'||#{keyword}||'%' or title like '%'||#{keyword}||'%' or department like '%'||#{keyword}||'%' or mark like '%'||#{keyword}||'%')
+	</if>
+	<if test="activeDatetime != null and activeDatetime != ''">and active_datetime > #{activeDatetime}</if>
+	<if test="salerId != null and salerId != ''">and saler_id = #{salerId}</if>
+	<if test="salerList != null and salerList.size>0">
+		and saler_id in
+		<foreach collection="salerList" item="salerId" index="index"
+            open="(" close=")" separator=",">
+            #{salerId}
+        </foreach>
+	</if>
+	<if test="custStatus != null and custStatus !='' ">
+		 and  exists (select * from ty_serviceorg t5 where t5.cust_status = #{custStatus} and t5.id=t1.org_id)
+	</if>
+	<if test="noSigncontract != null and noSigncontract !='' ">
+		 and exists (select * from ty_serviceorg t5 where t5.cust_status <![CDATA[<>]]> '3' and t5.id=t1.org_id)
+	</if>
+	<if test="orderBy != null and orderBy != ''">order by ${orderBy}</if>
+  </select>
+  <!-- 用于增量拉取内容变动 -->
+  <select id="queryLatestModifiedRecords" resultMap="ExResultMap">
+        select id,org_name,service_saler,cust_name,cust_email,cust_tel,cust_level,saler_id,org_id,industry,domain,title,department,area,cust_mobile,cust_bakmobile,mark,remark,create_by,create_time,update_by,update_time,active_datetime,id_no,rec_sms,rec_email,delete_flag,is_accept_rpt,rpt_send_group,rpt_send_group_name
+   			from ty_orgcustomer t1 where 1=1
+      <if test="lastestTime != null and lastestTime != ''"> and update_time <![CDATA[>]]> to_date(#{lastestTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')</if>
+  </select>
+  
+  <select id="queryMyActiveCustCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+    select count(1) from ty_orgcustomer
+    where active_datetime > #{activeDatetime}
+      and saler_id = #{staffId}
+	  and delete_flag = '0'
+  </select>
+    <select id="queryCustActive" parameterType="java.util.Map" resultMap="ExResultMap">
+        select * from(
+			select tmp.id,tmp.cust_name,count(distinct activity_id) as sign_num from (
+  				select a.id,a.cust_name,t.activity_id from ty_activitysign t ,ty_orgcustomer a
+       			where a.id=t.cust_id 
+       			<if test="activeDatetime != null and activeDatetime != ''"> and a.active_datetime > #{activeDatetime} </if>
+       			<if test="salerId != null and salerId != ''"> and a.saler_id = #{salerId}</if>
+  			)tmp group by tmp.id, tmp.cust_name
+		)t2 order by t2.sign_num desc
+  </select>
+   <select id="queryCustomerWithMarksByProc" parameterType="java.util.Map" statementType="CALLABLE">
+		{call queryCustListPro( 
+			#{userId,mode=IN,jdbcType=VARCHAR},
+			#{custName,mode=IN,jdbcType=VARCHAR},
+			#{orgName,mode=IN,jdbcType=VARCHAR},
+			#{serviceSaler,mode=IN,jdbcType=VARCHAR},
+			#{department,mode=IN,jdbcType=VARCHAR},
+			#{title,mode=IN,jdbcType=VARCHAR},
+			#{industry,mode=IN,jdbcType=VARCHAR},
+			#{domain,mode=IN,jdbcType=VARCHAR},
+			#{custMobile,mode=IN,jdbcType=VARCHAR},
+			#{area,mode=IN,jdbcType=VARCHAR},
+			#{custEmail,mode=IN,jdbcType=VARCHAR},
+			#{idNo,mode=IN,jdbcType=VARCHAR},
+			#{marks,mode=IN,jdbcType=VARCHAR},
+			#{filterMarks,mode=IN,jdbcType=VARCHAR},
+			#{markCal,mode=IN,jdbcType=VARCHAR},
+			#{groupId,mode=IN,jdbcType=VARCHAR},
+			#{keyword,mode=IN,jdbcType=VARCHAR},
+			#{pageNum,mode=IN,jdbcType=INTEGER},
+			#{pageSize,mode=IN,jdbcType=INTEGER},
+			#{total,mode=OUT,jdbcType=INTEGER},
+			#{customerList,jdbcType=CURSOR,mode=OUT,javaType=ResultSet,resultMap=com.tfzq.ty.dao.generator.TyOrgcustomerMapper.ExResultMap}
+			)}
+  </select>
+  <select id="queryByConditionFromProcResult" parameterType="java.util.Map" resultMap="ExResultMap">
+    select t.id,t.org_name,t.service_saler,t.cust_name,t.cust_email,t.cust_tel,t.cust_level,t.saler_id,t.org_id,t.industry,t.domain,t.title,t.department,t.area,t.cust_mobile,t.cust_bakmobile,t.mark,t.remark,t.create_by,t.create_time,t.update_by,t.update_time,t.active_datetime,t.id_no,t.rec_sms,t.rec_email,t.delete_flag,t1.score,is_accept_rpt,rpt_send_group,rpt_send_group_name
+    from ty_orgcustomer t,ty_customer_query t1 
+   where t.id = t1.customer_id and t1.user_id = #{userId}
+    order by t1.score desc,t.update_time desc,t.id desc
+  </select>
+  
+</mapper>

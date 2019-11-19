@@ -1,0 +1,31 @@
+<!-- <view class='box'>
+    <view>
+       <checkbox-group bindtap="checkboxChange" data-index="{{index}}"> 
+        <label class="box_list" wx:key="{{item}}" wx:for="{{items}}" wx:for-index="i">
+          <checkbox value="{{item.id}}" data-index="{{i}}" data-id="{{item.id}}" checked='{{item.checked}}' hidden='falst'/> 
+          <image wx:if="{{item.checked}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+          <view wx:else class='box_list_yuan'></view>
+          <text class='marginLeft20'>{{item.name}}</text> 
+          <text class='marginLeft20'>{{item.company}}</text>
+        </label>
+       </checkbox-group> 
+    </view>
+</view>-->
+<button class='submit font30' bindtap='submit'>完成</button>
+<scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px' class="list" bindscrolltolower="bindDownLoad">  
+  <view class='box'>
+    <view wx:key="{{item}}" wx:for="{{custId}}" data-id="{{item.id}}" data-checked='{{item.checked}}' bindtap="checkboxChange" class='box_list'>
+      <image wx:if="{{item.checked}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+      <view wx:else class='box_list_yuan'></view>
+      <view style='display:inline-block;'>
+        <text class='marginLeft20'>{{item.custName}}</text> 
+        <text class='marginLeft20'>{{item.orgName}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+<view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+       加载中...
+    </loading>
+</view>

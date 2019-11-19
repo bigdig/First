@@ -1,0 +1,32 @@
+
+<view class="box">    
+  <view class='box_search'>
+    <input type='text' class='font24 box_search_input' placeholder="支持客户姓名、机构名、销售姓名搜索" placeholder-style='color:#ACAFC4' value="{{inputVal}}" bindblur='inputBlur'/>
+    <icon type="search" size="15" class='box_search_icon'/>
+  </view> 
+    
+<scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px' class="list" bindscrolltolower="bindDownLoad">
+        <view class='box_list' wx:key="{{item}}" wx:for="{{custLists}}">
+          <text wx:if="{{item.showOrgname}}" class='box_title font28'>{{item.orgName}}</text>
+          <view wx:if="{{item.showOrgname}}" style='display:inline-block' bindtap="selectChange" data-orgName="{{item.orgName}}" data-checked="{{companyMap[item.orgName]}}">
+               <image wx:if="{{companyMap[item.orgName]}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+               <view wx:else class='box_list_yuan'></view>
+          </view>
+          <!-- 数据遍历 -->
+          <view class='box_item font28'>
+            <text class='box_item_text'>{{item.custName}}</text>
+              <view style='display:inline-block' bindtap="checkboxChange" data-orgName="{{item.orgName}}" data-checkbox="{{item.checked}}" data-id='{{item.id}}' >
+                   <image wx:if="{{item.checked}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+                   <view wx:else class='box_list_yuan'></view>
+              </view>
+          </view>
+        </view>
+   </scroll-view>
+</view>
+<button class='submit font30' bindtap='submit' disabled="{{disableSubmit}}" hidden="{{actCustomersFlag}}">下一步</button>
+<button class='submit font30' bindtap='cfmSelCustomers' disabled="{{disableConfm}}" hidden="{{!actCustomersFlag}}">确定</button>
+<view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+       加载中...
+    </loading>
+</view>

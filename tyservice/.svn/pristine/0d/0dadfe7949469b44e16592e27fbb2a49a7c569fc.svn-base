@@ -1,0 +1,39 @@
+<view class="mcontainer">
+    <view class="item">
+         <image src="../../image/logo.png" class="image"/> 
+    </view>
+    <view class="item">
+       <view class="login-item">
+       	    <view class="login-item-info font22 color9FA3BB">OA账号</view>
+            <view><input class='font32 color272A34' bindinput="usernameInput" placeholder='请输入OA账号' placeholder-style="color:#E0E2EC" bindfocus="selected" bindblur="Unselected" style='border-bottom:{{selected}}'/></view>
+            <!-- <view class="font32 colorFC6D51 marginTop20" wx:if='{{telError}}'>输入手机号错误</view> -->
+       </view>
+       <view class="login-item">
+            <view class="login-item-info font22 color9FA3BB">密码</view>
+            <view class="login-pwd">
+            
+            <input  class='font32 color272A34' password="true"  bindinput="passwordInput" placeholder='请输入密码' placeholder-style="color:#E0E2EC" bindfocus="pwdSelected" bindblur="pwdUnselected" style='border-bottom:{{pwdUnselected}};width:100%;'/>
+            </view>
+            <view class="font32 colorFC6D51 marginTop20" wx:if='{{passwordError}}'>{{passwordErrorText}}</view>
+       </view>
+       <view class='login-item'>
+           <view class='selectChange' bindtap="selectChange"  data-checked="{{checked}}">
+               <image wx:if="{{checked}}" class='img_checkbox' src='../../image/checkbox.png'></image> 
+               <view wx:else class='box_list_yuan'></view>
+          </view>
+          <text class='font24 box_login'>AD登录</text> 
+       </view>
+       <view class="login-item">
+          <text class='color9CA0B8 font22'>请输入您的OA账号和密码登录</text>
+       </view>
+       <!--<view class="login-item">
+            <image src='../../image/loginbuttom.png' class='imageButtom'></image>
+            <view class="login-btn font28" bindtap="loginBtnClick">登录</view>
+       </view>-->
+       <view class="login-item">
+            <button class='login-button font28' open-type="getUserInfo" bindgetuserinfo="loginBtnClick">
+               登录
+            </button>
+       </view>
+    </view>    
+</view>

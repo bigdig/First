@@ -1,0 +1,24 @@
+/* pages/36wode_shoucang/index.wxss */
+page{ background-color: #fff; font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.list_hover{ color: #FBA703;}
+
+.center{ padding: 20rpx 35rpx;}
+
+.list_box{}
+
+.list{ height: 142rpx; padding: 17rpx 0; box-sizing: border-box; border-bottom: #E5E5E5 solid 2rpx;}
+.list > view:first-child{ height: 58rpx; line-height: 58rpx;}
+.show_title{ width: 610rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;}
+.f_right{ width: 66rpx; text-align: center; float: right; color:#FF9900;}
+.list > view:last-child{ line-height: 50rpx; font-size: 28rpx;}
+.tongzhi{ color: #999;}
+.wenjian{ color: #3271FF;}
+
+
+
+
+.no_list{ padding-top: 100rpx; text-align: center; color: #999; font-size: 32rpx;}
+.no_list image{ width: 320rpx;}
+

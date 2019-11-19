@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.mapper.InfContentMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.entity.InfContent">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="summary" jdbcType="VARCHAR" property="summary" />
+      <result column="thumbnail" jdbcType="VARCHAR" property="thumbnail" />
+      <result column="user_ip" jdbcType="VARCHAR" property="userIp" />
+      <result column="user_agent" jdbcType="VARCHAR" property="userAgent" />
+      <result column="order_number" jdbcType="INTEGER" property="orderNumber" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="collect_count" jdbcType="INTEGER" property="collectCount" />
+      <result column="vote_up" jdbcType="INTEGER" property="voteUp" />
+      <result column="vote_down" jdbcType="INTEGER" property="voteDown" />
+      <result column="rate" jdbcType="INTEGER" property="rate" />
+      <result column="rate_count" jdbcType="INTEGER" property="rateCount" />
+      <result column="comment_status" jdbcType="VARCHAR" property="commentStatus" />
+      <result column="comment_count" jdbcType="INTEGER" property="commentCount" />
+      <result column="comment_time" jdbcType="TIMESTAMP" property="commentTime" />
+      <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+      <result column="weixin_flag" jdbcType="VARCHAR" property="weixinFlag" />
+      <result column="weixin_time" jdbcType="TIMESTAMP" property="weixinTime" />
+      <result column="edit_type" jdbcType="VARCHAR" property="editType" />
+      <result column="hot_flag" jdbcType="VARCHAR" property="hotFlag" />
+      <result column="meta_keywords" jdbcType="VARCHAR" property="metaKeywords" />
+      <result column="meta_description" jdbcType="VARCHAR" property="metaDescription" />
+      <result column="category_id" jdbcType="VARCHAR" property="categoryId" />
+      <result column="editmodel_id" jdbcType="VARCHAR" property="editmodelId" />
+      <result column="subject_id" jdbcType="VARCHAR" property="subjectId" />
+      <result column="source_files" jdbcType="VARCHAR" property="sourceFiles" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+      <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="company_id" jdbcType="VARCHAR" property="companyId" />
+      <result column="source_contentid" jdbcType="VARCHAR" property="sourceContentid" />
+      <result column="attachment" jdbcType="VARCHAR" property="attachment" />
+      <result column="attach_name" jdbcType="VARCHAR" property="attachName" />
+      <result column="reject_msg" jdbcType="VARCHAR" property="rejectMsg" />
+      <result column="reject_time" jdbcType="TIMESTAMP" property="rejectTime" />
+      <result column="publish_flag" jdbcType="VARCHAR" property="publishFlag" />
+      <result column="view_pwd" jdbcType="VARCHAR" property="viewPwd" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from inf_content where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.entity.InfContent">
+    insert into inf_content (
+    id
+	,title
+	,summary
+	,thumbnail
+	,user_ip
+	,user_agent
+	,order_number
+	,status
+	,collect_count
+	,vote_up
+	,vote_down
+	,rate
+	,rate_count
+	,comment_status
+	,comment_count
+	,comment_time
+	,view_count
+	,weixin_flag
+	,weixin_time
+	,edit_type
+	,hot_flag
+	,meta_keywords
+	,meta_description
+	,category_id
+	,editmodel_id
+	,subject_id
+	,source_files
+	,delete_flag
+	,remarks
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+	,user_name
+	,company_id
+	,source_contentid
+	,attachment
+	,attach_name
+	,reject_msg
+	,reject_time
+	,view_pwd
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{title,jdbcType=VARCHAR}
+    	,#{summary,jdbcType=VARCHAR}
+    	,#{thumbnail,jdbcType=VARCHAR}
+    	,#{userIp,jdbcType=VARCHAR}
+    	,#{userAgent,jdbcType=VARCHAR}
+    	,#{orderNumber,jdbcType=INTEGER}
+    	,#{status,jdbcType=VARCHAR}
+    	,#{collectCount,jdbcType=INTEGER}
+    	,#{voteUp,jdbcType=INTEGER}
+    	,#{voteDown,jdbcType=INTEGER}
+    	,#{rate,jdbcType=INTEGER}
+    	,#{rateCount,jdbcType=INTEGER}
+    	,#{commentStatus,jdbcType=VARCHAR}
+    	,#{commentCount,jdbcType=INTEGER}
+    	,#{commentTime,jdbcType=TIMESTAMP}
+    	,#{viewCount,jdbcType=INTEGER}
+    	,#{weixinFlag,jdbcType=VARCHAR}
+    	,#{weixinTime,jdbcType=TIMESTAMP}
+    	,#{editType,jdbcType=VARCHAR}
+    	,#{hotFlag,jdbcType=VARCHAR}
+    	,#{metaKeywords,jdbcType=VARCHAR}
+    	,#{metaDescription,jdbcType=VARCHAR}
+    	,#{categoryId,jdbcType=VARCHAR}
+    	,#{editmodelId,jdbcType=VARCHAR}
+    	,#{subjectId,jdbcType=VARCHAR}
+    	,#{sourceFiles,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    	,#{remarks,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{companyId,jdbcType=VARCHAR}
+    	,#{sourceContentid,jdbcType=VARCHAR}
+    	,#{attachment,jdbcType=VARCHAR}
+    	,#{attachName,jdbcType=VARCHAR}
+    	,#{rejectMsg,jdbcType=VARCHAR}
+    	,#{rejectTime,jdbcType=TIMESTAMP}
+   		,#{viewPwd,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.entity.InfContent">
+    update inf_content
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null ">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="summary != null ">
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="thumbnail != null ">
+        thumbnail = #{thumbnail,jdbcType=VARCHAR},
+      </if>
+      <if test="userIp != null ">
+        user_ip = #{userIp,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null ">
+        user_agent = #{userAgent,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNumber != null ">
+        order_number = #{orderNumber,jdbcType=INTEGER},
+      </if>
+      <if test="status != null ">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="collectCount != null ">
+        collect_count = #{collectCount,jdbcType=INTEGER},
+      </if>
+      <if test="voteUp != null ">
+        vote_up = #{voteUp,jdbcType=INTEGER},
+      </if>
+      <if test="voteDown != null ">
+        vote_down = #{voteDown,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null ">
+        rate = #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="rateCount != null ">
+        rate_count = #{rateCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentStatus != null ">
+        comment_status = #{commentStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="commentCount != null ">
+        comment_count = #{commentCount,jdbcType=INTEGER},
+      </if>
+      <if test="commentTime != null ">
+        comment_time = #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="viewCount != null ">
+        view_count = #{viewCount,jdbcType=INTEGER},
+      </if>
+      <if test="weixinFlag != null ">
+        weixin_flag = #{weixinFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinTime != null ">
+        weixin_time = #{weixinTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="editType != null ">
+        edit_type = #{editType,jdbcType=VARCHAR},
+      </if>
+      <if test="hotFlag != null ">
+        hot_flag = #{hotFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="metaKeywords != null ">
+        meta_keywords = #{metaKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="metaDescription != null ">
+        meta_description = #{metaDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null ">
+        category_id = #{categoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="editmodelId != null ">
+        editmodel_id = #{editmodelId,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null ">
+        subject_id = #{subjectId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceFiles != null ">
+        source_files = #{sourceFiles,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null ">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="companyId != null ">
+        company_id = #{companyId,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceContentid != null ">
+        source_contentid = #{sourceContentid,jdbcType=VARCHAR},
+      </if>
+      <if test="attachment != null ">
+        attachment = #{attachment,jdbcType=VARCHAR},
+      </if>
+      <if test="attachName != null ">
+        attach_name = #{attachName,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectMsg != null ">
+        reject_msg = #{rejectMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectTime != null ">
+        reject_time = #{rejectTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="viewPwd != null ">
+        view_pwd = #{viewPwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,title,summary,thumbnail,user_ip,user_agent,order_number,status,collect_count,vote_up,vote_down,rate,rate_count,comment_status,comment_count,comment_time,view_count,weixin_flag,weixin_time,edit_type,hot_flag,meta_keywords,meta_description,category_id,editmodel_id,subject_id,source_files,delete_flag,remarks,create_by,create_time,update_by,update_time,user_name,company_id,source_contentid,attachment,attach_name,reject_msg,reject_time,view_pwd
+    from inf_content
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,title,summary,thumbnail,user_ip,user_agent,order_number,status,collect_count,vote_up,vote_down,rate,rate_count,comment_status,comment_count,comment_time,view_count,weixin_flag,weixin_time,edit_type,hot_flag,meta_keywords,meta_description,category_id,editmodel_id,subject_id,source_files,delete_flag,remarks,create_by,create_time,update_by,update_time,user_name,company_id,source_contentid,attachment,attach_name,reject_msg,reject_time,view_pwd
+    from inf_content
+    order by id
+  </select>
+  <!-- 用于增量拉取内容变动 -->
+  <select id="selectByTanent" resultMap="BaseResultMap">
+	 select t.* from (
+	    select id,title,summary,thumbnail,user_ip,user_agent,order_number,status,collect_count,vote_up,vote_down,rate,rate_count,comment_status,comment_count,comment_time,view_count,weixin_flag,weixin_time,edit_type,hot_flag,meta_keywords,meta_description,category_id,editmodel_id,subject_id,source_files,delete_flag,remarks,create_by,create_time,update_by,update_time,user_name,company_id,source_contentid,attachment,attach_name,reject_msg,reject_time,view_pwd
+	    ,(select count(1) from inf_channelcontent b where a.id=b.content_id and b.channel_number=#{channelNumber}) as publish_flag
+	    from inf_content a
+	    where company_id = #{companyId,jdbcType=VARCHAR}
+	      <if test="lastestTime != null and lastestTime != ''"> and update_time <![CDATA[>]]> to_date(#{lastestTime,jdbcType=VARCHAR},'yyyy-mm-dd hh24:mi:ss')</if>
+	    order by update_time asc
+	  ) t where rownum <![CDATA[<=]]>#{recordSize}
+  </select>
+
+  <select id="findByCondition" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from inf_content a where 1=1
+	<if test="title != null and title != ''">and title = #{title}</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from inf_content a where 1=1
+	<if test="title != null and title != ''">and title like '%'||#{title}||'%'</if>
+	<if test="status != null and status != ''">and status=#{status}</if>
+	<if test="createBy != null and createBy != ''">and create_by =#{createBy}</if>
+	<if test="categoryId != null and categoryId != ''">and category_id = #{categoryId}</if>
+	<if test="editmodelId != null and editmodelId != ''">and editmodel_id = #{editmodelId}</if>
+	<if test="hotFlag != null and hotFlag != ''">and hot_flag=#{hotFlag}</if>
+	<if test="deleteFlag != null">and delete_flag=#{deleteFlag}</if>
+	<if test="companyId != null and companyId != ''">and company_id = #{companyId}</if>
+	<if test="subjectId != null and subjectId != ''">
+		and exists (select 1  from inf_album f where a.id = f.content_id and f.subject_id = #{subjectId})
+	</if>
+	<if test="subjects != null and subjects.size>0">
+		and exists (select 1 from inf_album m where  a.id = m.content_id and m.subject_id in
+		<foreach collection="subjects" item="subject" index="index"
+            open="(" close=")" separator=",">
+            #{subject}
+        </foreach>)
+	</if>
+	<if test="calMonth != null and calMonth != ''">
+		and to_char(update_time,'yyyy-mm') = #{calMonth}
+	</if>
+	<if test="calDay != null and calDay != ''">
+		and to_char(update_time,'yyyy-mm-dd') = #{calDay}
+	</if>
+	
+	<if test="pageId != null and pageId !=''">
+		and id in (select content_id from inf_homecontent b where b.page_id=#{pageId} )
+	</if>
+	<if test="channelNumber != null and channelNumber !=''">
+		and exists (select 1 from inf_channelcontent b where a.id=b.content_id and b.channel_number=#{channelNumber})
+	</if>
+	<if test="statusList != null and statusList.size>0">
+		and status in
+		<foreach collection="statusList" item="stus" index="index"
+            open="(" close=")" separator=",">
+            #{stus}
+        </foreach>
+	</if>
+	<if test="userList != null and userList.size>0">
+		and create_by in
+		<foreach collection="userList" item="createBy" index="index"
+            open="(" close=")" separator=",">
+            #{createBy}
+        </foreach>
+	</if>
+  </select>
+</mapper>

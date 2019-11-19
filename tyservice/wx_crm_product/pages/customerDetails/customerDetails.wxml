@@ -1,0 +1,115 @@
+<view class='box'>
+     <view class='box_KP'>
+        <text class='box_KP_companyName font28'>{{companyName}}</text>
+        <view wx:if="{{itemDetail.custStatus && itemDetail.custStatus == '3'}}">
+            <text class='box_KP_userName font34'>{{userName}}<text class='box_KP_stateText1 font28'>已签约</text>
+            </text>
+            <image src='../../image/yiqianyue.png' class='box_KP_img'></image>
+            <!--<view wx:else>
+                 <text class='box_KP_stateText font28' style='padding-left:500rpx'>未签约</text>
+            </view>-->
+         </view>
+         <view wx:else>
+            <text class='box_KP_userName font34'>{{userName}}<text class='box_KP_stateText font28'>未签约</text>
+            </text>
+         </view>
+         <text class='box_KP_department font24'>{{department == null ? '-' : department}}</text>
+         <text class='box_KP_position font24'>{{position == null ? '-' : position}}</text>
+         <view class='box_phone'>
+             <image class='icon_phone' src='../../image/phone.png'></image>
+             <text class='box_KP_phone font28'>{{phone}}</text>
+         </view>
+         <view class='box_email'>
+            <image class='icon_email' src='../../image/email.png'></image>
+            <text class='box_KP_email font28'>{{email}}</text>
+         </view> 
+     </view>
+     <view class='box_fund' wx:if="{{tyfund}}">
+         <view class='box_fund_title'>
+             <text class='font28'>基金管理</text>
+             <text class='font28 box_fundNumber'>({{fundList.length}})</text>
+         </view>
+         <view class='box_fund_list' wx:key="{{item}}" wx:for="{{fundList}}">
+             <navigator url="../fundDetails/fundDetails?windcode={{item.windcode}}">
+                <view class='box_fund_list_nav'>
+                    <text class='font28 box_fund_list_text'>{{item.fullname}}</text>
+                    <image src='../../image/details.png' class='img_details'></image>
+                </view> 
+             </navigator>
+         </view>
+     </view>
+     <view class='box_sale'>
+          <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>对口销售</text>
+                <text class='font28 box_sale_list_value'>{{serviceSaler}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>所在地</text>
+                <text class='font28 box_sale_list_value'>{{area}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>研究行业</text>
+                <text class='font28 box_sale_list_value'>{{industry}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>关注领域</text>
+                <text class='font28 box_sale_list_value'>{{domain}}</text>
+         </view>
+         <view class='box_sale_list'>
+                <text class='font28 box_sale_list_text'>座机号</text>
+                <text class='font28 box_sale_list_value'>{{custTel}}</text>
+         </view>
+         <view class='box_sale_list'>
+            <text class='font28 box_sale_list_text'>不再接收营销信息推送</text>
+            <checkbox-group bindchange="checkboxChange">
+              <label class="checkedbox">
+                <checkbox value="{{checkedbox}}" checked="{{checkedbox}}" hidden="false"/>
+                <image src='../../image/checkbox.png' class='img_checkbox' wx:if="{{checkedbox}}"></image>
+                <view class='checkedbox_yuan' wx:else></view>
+              </label>
+            </checkbox-group>
+         </view>
+     </view>
+     <view style='height:20rpx;background:#F3F2F7;'></view>
+     <view class='box_label'>
+        <view class='box_label_title'>
+           <text class='font28'>标签</text>
+        </view>
+          <view class='box_label_list' wx:key="{{item}}" wx:for="{{industryLabel}}">
+                <text class='box_label_list_title font28'>{{item.catName}}</text>
+                <view class='box_label_list_text'>
+                    <text wx:key="{{item}}" wx:for="{{item.children}}" class='box_label_industryLabel font20'>{{item.labelName}}</text>
+                </view>
+         </view>
+         <view class='box_botton' style='padding-top:2rpx'>
+            <button class='box_botton_submit font32' bindtap='addLabel'>+</button>
+         </view>
+     </view>
+     <view style='height:20rpx;background:#F3F2F7;'></view>
+     <view class='box_record'>
+        <view class='box_record_header'>
+            <text class='font28'>服务记录</text>
+            <text class='font24 box_record_header_seach' bindtap='stastSelect'>{{stastSelect}}</text>
+            <!-- <image src='../../image/seach.png' class='img_seach'></image> -->
+        </view>
+        <view wx:key="{{item}}" wx:for="{{recordList}}" class='box_record_recordList font24'>
+            <text class='yuan'></text>
+            <text class='box_record_recordList_text'>{{item}}</text>
+        </view>
+     </view>
+     <view class='box_botton'>
+        <button class='box_botton_submit font32' bindtap='addrecord'>+</button>
+      </view>
+      <view style='height:100rpx'></view>
+</view>
+<button class='submit font30' bindtap='sms'>发送消息</button>
+<view class='model' wx:if="{{modelShow}}" bindtap='noShow'>
+      <view class='model_box'>
+          <view class='model_box_list' data-id='' data-state='全部' bindtap='tablist'>
+              全部
+          </view>
+          <view class='model_box_list' wx:for="{{activitype}}" wx:key="{{item}}" data-id='{{item.id}}' data-state='{{item.text}}' bindtap='tablist'>
+              {{item.text}}
+          </view>
+      </view>
+</view>

@@ -1,0 +1,56 @@
+<view class="box">
+    <view class="box_information">
+        <view class="box_list">
+	        <text class="box_list_text font28">客户姓名</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="userName" value="{{userName}}"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">手机号</text>
+	        <input placeholder='请填写' type='number' maxlength="11" class='font28' placeholder-style='color:#616686' bindinput="custMobile" value="{{custMobile}}"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">邮箱</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="custEmail"  value="{{custEmail}}"></input>
+        </view>
+    </view>
+    <view class="box_information">
+        <view class="box_list">
+	        <text class="box_list_text font28">所属机构</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="orgName" value="{{orgName}}"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">部门</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="department" value="{{department}}"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">职位</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="title" value="{{title}}"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">对口销售</text>
+          <text class='font28 marketing'>{{marketing}}</text>
+	        <!-- <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="marketing"></input> -->
+        </view>
+    </view>
+    <view class="box_information">
+        <view class="box_list">
+	        <text class="box_list_text font28">研究行业</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="industry"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">关注领域</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="field"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">座机号</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="custTel"></input>
+        </view>
+        <view class="box_list">
+	        <text class="box_list_text font28">标签</text>
+	        <input placeholder='请填写' class='font28' placeholder-style='color:#616686' bindinput="label"></input>
+        </view>
+    </view>
+    <button class='font30 submit' bindtap='submit'>
+       完成
+    </button>
+</view>

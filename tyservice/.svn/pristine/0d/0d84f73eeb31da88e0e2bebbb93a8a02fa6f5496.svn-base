@@ -1,0 +1,48 @@
+<view class='tab'>
+   <text class='tab_customer font26' style='color:{{cColorText}};border-bottom:{{cBorderBottom}}' bindtap='tab_customer'>客户</text>
+    <text class='tab_mechanism font26' bindtap='tab_mechanism' style='color:{{mColorText}};border-bottom:{{mBorderBottom}}'>机构</text>
+    <image src="../../image/HD-add.png" class='tab_add' hidden='{{!taber}}' bindtap='add_customer'></image>
+    <image src='../../image/sys.png' class='tab_sys' bindtap="scanImg"></image>
+</view>
+<view class='box'>
+  <view class='box_search'>
+      <input type='text' class='font24 box_search_input' placeholder="搜索" placeholder-style='color:#ACAFC4' bindblur="inputBlur"/>
+      <icon type="search" size="15" class='box_search_icon'/>
+  </view>
+  <view wx:if="{{taber}}" style='background-color: #F3F2F7; '>
+      <view class='box_list' wx:key="{{item}}" wx:for="{{customerList}}">
+          <view class='box_list_row'>
+            <image src='{{item.img}}' class='box_icon'></image> 
+            <text class='box_list_text font28' bindtap='customerDetails' data-url='{{item.url}}' data-id="{{item.id}}">{{item.text}}</text>
+          </view> 
+      </view>
+      <!-- 分组 -->
+      <view style='margin-top:20rpx;'>
+          <view class='box_list' wx:key="{{item}}" wx:for="{{groupList}}">
+              <view class='box_list_row'>
+                <image src='../../image/bku.png' class='box_icon'></image> 
+                <text class='box_list_text font28' bindtap='customerGroup'  data-id="{{item.id}}" data-group="{{item.custGroupname}}">{{item.custGroupname}}</text>
+              </view>
+          </view>
+      </view>
+      <!-- 新建分组 -->
+      <view class='newList'>
+          <view class='box_list'>
+              <view class='box_list_row' bindtap='add_grouping'>
+                <image src='../../image/bku-add.png' class='box_icon'></image> 
+                <text class='box_list_text font28 color3296FA'>新建分组...</text>
+              </view> 
+          </view>
+      </view>
+  </view>
+  <view wx:else>
+      <view class='box_list' wx:key="{{item}}" wx:for="{{mechanismList}}">
+          <view class='box_list_row'>
+            <image src='{{item.img}}' class='box_icon'></image> 
+            <text class='box_list_text font28' bindtap='mechanismDetails' data-url='{{item.url}}' data-id="{{item.id}}">{{item.text}}</text>
+          </view> 
+      </view>
+  </view>
+</view>
+
+<button hidden="{{whiteDeadlineOrgNum == 0 || !whiteDeadlineOrgShow }}" class='submit font30' bindtap="">白名单到期机构{{whiteDeadlineOrgNum}}个</button>

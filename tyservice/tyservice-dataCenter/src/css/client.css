@@ -1,0 +1,81 @@
+.client-header{
+	text-align: center;
+	width:100%;
+}
+.div{
+	padding-top: 5px;
+	margin-left: 15px;
+}
+.client-header>div{
+	    display: inline-block;
+    line-height: 48px;
+    color: #BEBEBE;
+    border-bottom: 1px solid transparent;
+}
+.client-header .active{
+	color:#FA924C;
+	border-bottom: 1px solid #FA924C;
+}
+.first{
+	    margin-right: 20%;
+}
+.m-top{
+	margin-top:20px;
+}
+.cli-list li{
+	background-color: #fff;
+	padding:9px 15px;
+	color: #B2B2B2;
+	    border-bottom: 1px solid #EFEFEF;
+}
+.cli-list li input{
+	display: inline-block;
+	margin-left: 20px;
+}
+.cli-list li>span:first-child{
+	display: inline-block;
+	width:200px;
+	text-align: right;
+	width: 20%;
+	padding-top: 5px;
+	vertical-align: top;
+	padding-bottom: 5px;
+}
+.inline{
+    line-height: 30px;
+    display: inline-block;
+    vertical-align: top;
+}
+.width{
+	width:68%;
+	display: inline-block;
+}
+.cli-list li>span:nth-child(2){
+	display: inline-block;
+	margin-left: 20px;
+	padding-top:5px;
+	padding-bottom: 5px;
+	    color: #444;
+}
+.input-txt{
+	color: #313131;
+}
+.vertical{
+	vertical-align: top;
+}
+.client-a{
+	text-decoration: none;
+    margin-left: 25px;
+        color: #444;
+    display: inline-block;
+    /* height: 34px; */
+    /* line-height: 34px; */
+    line-height: 30px;
+    vertical-align: middle;
+}
+a{
+	text-decoration: none;
+}
+.phone{
+	color: #FA924C;
+}

@@ -1,0 +1,67 @@
+<wxs module="util">
+    var subName = function(val) {
+      if(val==undefined || val==''){
+        return '';
+      }else if(val.length<3){
+        return val;
+      }else{
+        return val.substring(val.length-2);
+      }
+    }
+    module.exports.subName = subName;
+</wxs>
+<view class='tab'>
+   <text class='tab_customer font26' style='color:{{cColorText}};border-bottom:{{cBorderBottom}}' bindtap='tab_customer'>所有协作</text>
+    <text class='tab_mechanism font26' bindtap='tab_mechanism' style='color:{{mColorText}};border-bottom:{{mBorderBottom}}'>个人服务</text>
+    <text  wx:if="{{isSeller}}"  class='tab_mechanism font26' bindtap='tab_signInAct' style='color:{{signColorText}};border-bottom:{{signBorderBottom}}'>客户参与</text>
+    <text  wx:if="{{!isSeller}}" class='tab_mechanism font26' bindtap='tab_groupAct' style='color:{{groupColorText}};border-bottom:{{groupBorderBottom}}'>团队参与</text>
+    <image src="../../image/HD-add.png" class='tab_add'  bindtap="addActivity"></image>
+    <!--<image src="../../image/HD-add.png" class='tab_add' hidden='{{!taber}}' bindtap="addActivity"></image>-->
+</view>
+<view class='box'>
+    <view class='box_screen'>
+       <view class='box_screen_text' wx:key="{{item}}" wx:for="{{screenList}}" wx:for-index="idx">
+          <view catchtap="showDictInfo" data-id="{{item.id}}">  
+            <text class='' >{{showDict[idx] == null ? item.text : showDict[idx].text}}</text>
+            <image src='../../image/seach.png' class='box_screen_icon'></image>
+          </view>
+       </view>
+    </view>
+     <swiper interval="1000" duration="1000" bindchange="swiper" current="{{currentTab}}">
+      <block wx:key="{{item}}" wx:for="{{swiperList}}">
+        <swiper-item class="swiperItem" item-id="{{item.id}}" wx:if="{{item.id < '3' || (item.id == '3' && isSeller) || (item.id == '4' && !isSeller)}}"> 
+            <view class='swiperItem_box' catchtap="toActDetail" data-hassubact="{{item.subActList && item.subActList.length > 0}}" data-actCate="{{item.activityCate}}" data-id="{{item.id}}" style='border-left:{{swiperBorderleft[item.priorityLevel]}};' wx:key="{{item}}" wx:for="{{item.list}}" wx:for-index="idx">
+               <text class="font28 swiperItem_box_company">{{item.title == null ? "" : item.title}}</text>
+               <text class="font20 swiperItem_box_pattern">{{item.activityTypeText == null ? "" : item.activityTypeText}}</text>
+               <text class="font20 swiperItem_box_num">{{item.totalLimit == null ? "不限人数" : "限"+item.totalLimit+"人"}}</text>
+               <view></view>
+               <text class="font20 swiperItem_box_time">{{item.beginDate+" / "+item.beginTime +"  --   "+item.endDate+" / "+item.endTime}}</text>
+               <text class="font20 swiperItem_box_state" style="color:{{item.activityStatus == 0 ? '#FE8166' : '#A5A9BF'}}">{{item.activityStatusText == null ? "" : item.activityStatusText}}</text>
+               <text class="font20 swiperItem_box_img" style="background-color:{{swiperBgColor[idx%4]}}">{{item.createName == null ? "" : util.subName(item.createName)}}</text>
+            </view>
+            <view class='font20 swiper_more'>
+              <text bindtap='showActivity' >显示更多</text>
+            </view>
+        </swiper-item>
+      </block>
+    </swiper>  
+</view>
+ <!-- 遮罩层 -->
+<view class='mask_box' hidden="{{dictHiddenFlag}}" animation="{{dictAnimation}}" catchtap="hidedict">
+    <view class='mask_box_list'>
+        <view  style="border-bottom:{{tempAllDictChooseFlag ? '' : mask_box_allBottom}}" >
+            <text class='mask_box_list_text font26' style="color:{{tempAllDictChooseFlag ? '' : mask_box_allColor}}" bindtap="clearDic">全部</text>
+        </view>   
+        <view wx:for="{{tempDict}}" bindtap="chooseDic" data-dictnum="{{item.id}}" wx:key="{{item}}" wx:for-index="idx" style="border-bottom:{{item.choose ? mask_box_itemBottom : ''}}">
+            <text class='mask_box_list_text font26' style="color:{{item.choose ? mask_box_itemColor : ''}}">{{item.text}}</text>
+        </view>
+    </view>
+</view>  
+<!--添加 遮罩层 -->
+<view class='mask_add' wx:if="{{mask_add}}" catchtap="hideAddAct">
+    <view class='mask_add_box'>
+         <view class='mask_add_xz' bindtap="addCooporateAct">添加协作活动</view>
+         <view class='mask_add_my' bindtap="addMyAct">添加个人服务</view>
+         <view class='mask_add_qx' bindtap="cancleAddAct">取消</view>
+    </view>
+</view>

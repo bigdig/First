@@ -1,0 +1,51 @@
+<view class="box">
+    <view class='box_search'>
+      <input type='text' class='font24 box_search_input' placeholder="支持股票名称、代码、市场类别、市场名称、行业等" placeholder-style='color:#ACAFC4'
+             value="{{keyword}}" bindblur="searchConfrm" />
+      <icon type="search" size="15" class='box_search_icon'/>
+    </view>
+    <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px' class="list" bindscrolltolower="bindDownLoad">
+      <!--<view wx:if="{{!isMutilSelect}}">
+
+        <view class='box_list'>
+            <radio-group bindchange="radioChange" class="box_list_item">
+              <label class="checkbox" wx:key="{{item}}" wx:for="{{existStaffList}}" class='box_item font28'>
+                <text class='box_item_text'>{{item.staffName}} -{{item.deptName}} - {{item.position}}</text>
+                <radio color="#FE8166" value="{{item.id}}" checked="{{item.checked}}" class='box_checkbox' />
+              </label>
+              
+              <label class="checkbox" wx:key="{{item}}" wx:for="{{staffList}}" class='box_item font28'>
+                <text class='box_item_text'>{{item.staffName}} -{{item.deptName}} - {{item.position}}</text>
+                <radio color="#FE8166" value="{{item.id}}" checked="{{item.checked}}" class='box_checkbox' />
+              </label>
+            </radio-group>
+        </view>
+      </view>-->
+      <view>
+
+          <view class='box_list'>
+            <checkbox-group bindchange="existCheckboxChange" class="box_list_item">
+              <label class="checkbox" wx:key="{{item}}" wx:for="{{existListedComps}}" class='box_item font28'>
+                <text class='box_item_text'>{{item.marketKind ? item.marketKind : ''}} -{{item.stockCode ? item.marketKind : ''}} - {{item.stockShortname ? item.stockShortname : ''}}</text>
+                <checkbox color="#FE8166" value="{{item.id}}" checked="{{item.checked}}" class='box_checkbox' />
+              </label>
+            </checkbox-group>
+        </view>
+
+          <view class='box_list'>
+            <checkbox-group bindchange="checkboxChange" class="box_list_item">
+              <label class="checkbox" wx:key="{{item}}" wx:for="{{listedComps}}" class='box_item font28'>
+                <text class='box_item_text'>{{item.marketKind ? item.marketKind : ''}} -{{item.stockCode ? item.marketKind : ''}} - {{item.stockShortname ? item.stockShortname : ''}}</text>
+                <checkbox color="#FE8166" value="{{item.id}}" checked="{{item.checked}}" class='box_checkbox' />
+              </label>
+            </checkbox-group>
+        </view>
+      </view>
+    </scroll-view>
+</view>
+<button class='submit font30' bindtap="confmListedComp">确认</button>
+<view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+       加载中...
+    </loading>
+</view>

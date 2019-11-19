@@ -1,0 +1,18 @@
+<view class="box">
+     <text class='box_number font28'>已选择{{num}}个客户</text>
+     <view class='box_title'>
+        <text class='font28'>添加现有组：</text>
+        <view class="service_selection flex">
+            <view wx:key="{{item}}" wx:for="{{allGoodsFilte}}" data-checked="{{item.checked}}" data-id="{{item.id}}" class="{{item.checked?'is_checked':''}} box_item" bindtap='tab'>  
+              {{item.name}}
+            </view>  
+        </view>  
+    </view>
+    <view class='box_add'>
+        <text class='font28'>新建组：</text>
+        <view class="box_section font28">
+          <input bindblur="bindTextAreaBlur" placeholder="请输入组名..." placeholder-style='color:#9FA3BB' disabled="{{disabled}}" />
+        </view>
+    </view>
+</view>
+<button class='submit' bindtap='submit'>新建分组</button>

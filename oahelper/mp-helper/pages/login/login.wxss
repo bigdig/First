@@ -1,0 +1,70 @@
+.logo {
+  text-align: center;
+}
+
+.logo image {
+  display: block;
+  margin: 100rpx auto;
+  width: 260rpx;
+  height: 260rpx;
+}
+
+.form{
+  width: 90%;
+}
+
+.form_label {
+  height: 28rpx;
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(169, 169, 186, 1);
+  line-height: 28rpx;
+}
+
+.form_item {
+  height: 80rpx;
+  background: rgba(255, 255, 255, 1);
+  border-radius: 12rpx;
+  opacity: 0.8;
+  border: 1px solid rgba(136, 136, 136, 1);
+}
+
+
+.commit_button {
+  height: 100rpx;
+  background: rgba(251, 167, 3, 1);
+  border-radius: 10rpx;
+  border: 1px solid;
+  width: 80%;
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  line-height: 85rpx;
+  margin-top: 30rpx;
+}
+/* 未选中的 背景样式 */
+checkbox .wx-checkbox-input{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx; /* 背景的宽 */
+   height: 40rpx; /* 背景的高 */
+}
+/* 选中后的 背景样式 （红色背景 无边框 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked{
+   border: none;
+   background: rgba(251, 167, 3, 1);
+}
+/* 选中后的 对勾样式 （白色对勾 可根据UI需求自己修改） */
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+   border-radius: 50%;/* 圆角 */
+   width: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   height: 40rpx;/* 选中后对勾大小，不要超过背景的尺寸 */
+   line-height: 40rpx;
+   text-align: center;
+   font-size:30rpx; /* 对勾大小 30rpx */
+   color:#fff; /* 对勾颜色 白色 */
+   background: transparent;
+   transform:translate(-50%, -50%) scale(1);
+   -webkit-transform:translate(-50%, -50%) scale(1);
+}

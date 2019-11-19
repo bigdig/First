@@ -1,0 +1,11 @@
+<template name="search">
+  <view class='search_box'>
+    <view class='search'>
+      <view bindtap='toSearch' class="icon iconfont icon-htmal5icon25"></view>
+      <input placeholder-class="phcolor" bindinput='bindSearch' placeholder="请输入搜索关键词" value='{{search_text}}' />
+      <view bindtap='clearSearch' wx:if="{{search_text}}" class='search_del'>×</view>
+    </view>
+    <!-- <view bindtap='cancelSearch' wx:if="{{if_search}}" class='search_qx'>取消</view> -->
+    <view bindtap='toSearch' class='search_qx'>搜索</view>
+  </view>
+</template>

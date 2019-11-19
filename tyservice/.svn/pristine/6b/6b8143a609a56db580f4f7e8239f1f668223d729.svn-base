@@ -1,0 +1,24 @@
+
+<view class="box">
+    <view class='box_search'>
+      <input type='text' class='font24 box_search_input' placeholder="支持客户姓名、机构名、销售姓名搜索" placeholder-style='color:#ACAFC4' value="{{inputVal}}" bindblur='inputBlur'/>
+      <icon type="search" size="15" class='box_search_icon'/>
+    </view>
+<scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px' class="list" bindscrolltolower="bindDownLoad">
+    <view class='box_list' wx:key="{{item}}" wx:for="{{custLists}}">
+      <text wx:if="{{item.showOrgname}}" class='box_title font28'>{{item.orgName}}</text>
+      <view class='box_item font28'>
+          <navigator url="../customerDetails/customerDetails?id={{item.id}}">
+            <text class='box_item_text'>{{item.custName}}</text>
+            <image src='../../image/details.png' class='img_details'></image>
+          </navigator>
+      </view>
+    </view>
+    </scroll-view>
+</view>
+<button class='submit font30' bindtap='submit'>发送消息</button> 
+<view class="body-view">
+    <loading hidden="{{hidden}}" bindchange="loadingChange">
+       加载中...
+    </loading>
+</view>

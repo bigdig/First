@@ -1,0 +1,49 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/index",
+    "pages/login/index",
+    "pages/vote-detail/index",
+    "pages/my-vote/index",
+    "pages/3shouye/index",
+    "pages/my-card/index",
+    "pages/card/index",
+    "pages/meeting-record/index",
+    "pages/activity-detail/index",
+    "pages/my-activity/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#F88634",
+    "navigationBarTitleText": "办公小助手",
+    "navigationBarTextStyle": "light",
+    "backgroundColor": "#f6f6f6",
+    "onReachBottomDistance": 100
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "主页",
+        "iconPath": "img/home_page_blur.png",
+        "selectedIconPath": "img/home_page.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "客户",
+        "iconPath": "img/customer_blur.png",
+        "selectedIconPath": "img/customer.png"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "text": "我的",
+        "iconPath": "img/user_blur.png",
+        "selectedIconPath": "img/user.png"
+      }
+    ],
+    "color": "#9FA3BB",
+    "selectedColor": "#FD8337",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff"
+  }
+}

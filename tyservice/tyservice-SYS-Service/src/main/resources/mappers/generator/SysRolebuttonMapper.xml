@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.ibase4j.dao.generator.SysRolebuttonMapper">
+  <resultMap id="BaseResultMap" type="org.ibase4j.model.generator.SysRolebutton">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+      <result column="page_route" jdbcType="VARCHAR" property="pageRoute" />
+      <result column="auth_type" jdbcType="VARCHAR" property="authType" />
+      <result column="enable" jdbcType="VARCHAR" property="enable" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_rolebutton where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="org.ibase4j.model.generator.SysRolebutton">
+    insert into sys_rolebutton (
+    id
+	,role_id
+	,page_route
+	,auth_type
+	,enable
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{roleId,jdbcType=VARCHAR}
+    	,#{pageRoute,jdbcType=VARCHAR}
+    	,#{authType,jdbcType=VARCHAR}
+    	,#{enable,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="org.ibase4j.model.generator.SysRolebutton">
+    update sys_rolebutton
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="roleId != null ">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="pageRoute != null ">
+        page_route = #{pageRoute,jdbcType=VARCHAR},
+      </if>
+      <if test="authType != null ">
+        auth_type = #{authType,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null ">
+        enable = #{enable,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,role_id,page_route,auth_type,enable
+    from sys_rolebutton
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,role_id,page_route,auth_type,enable
+    from sys_rolebutton
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from sys_rolebutton where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

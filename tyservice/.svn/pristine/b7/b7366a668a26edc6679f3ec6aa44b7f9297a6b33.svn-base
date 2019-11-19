@@ -1,0 +1,33 @@
+<div class="col-12 fixed bg-blue-dark">
+    <br>
+    <ul class="menu-leaf">
+        <li ng-repeat="menu in menuBeans">
+            <a href="javascript:void(0)"
+               ng-click="link(menu)"
+               ng-class="{'active':menu.isActive}">
+                <span bo-class="menu.iconcls.split(',')[0]">
+                    <i class="font-18 icon"
+                       bo-class="menu.iconcls.split(',')[1]"></i>
+                    &nbsp;
+                </span>
+                <span bo-text="menu.menuName"></span>
+            </a>
+        </li>
+    </ul>
+</div>
+<div class="col-88 padding20">
+    <div ng-hide="welcome.isHide">
+        <page-nav nav-name="{{system.name}}"
+                  nav-pic="{{userInfo.dept.pic}}"
+                  nav-currentName="{{currentName}}"
+                  nav-hide="{{welcome.isHide}}"
+                  logout="logout"></page-nav>
+        <div class="text-center">
+            <br>
+            <img src="../img/daixiao.jpg" />
+        </div>
+    </div>
+    <div ui-view="datamanager-head"></div>
+    <div ui-view="datamanager-main"></div>
+    <div ui-view="datamanager-data"></div>
+</div>

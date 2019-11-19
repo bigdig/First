@@ -1,0 +1,29 @@
+/* pages/15toupiao_detail/index.wxss */
+page{
+font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.top{ padding: 30rpx 35rpx; background-color: #fff;}
+.top view:first-child{ padding: 10rpx 0; line-height: 64rpx; font-size: 48rpx;}
+.top view:last-child{ line-height: 46rpx; color: #999; font-size: 30rpx;}
+
+.center{ margin-top: 20rpx; margin-bottom: 60rpx; background-color: #fff;}
+
+.q_title , .center_list{ padding: 25rpx 0; line-height: 54rpx; font-size: 34rpx; border-bottom: #E5E5E5 solid 2rpx;}
+
+.q_title{ padding: 25rpx 35rpx;}
+
+.a_body{ padding: 0 35rpx;}
+.center_list{ padding-left: 70rpx; color: #888; position: relative;}
+
+.no_line{ border-bottom: transparent solid 2rpx;}
+
+.center_list_ico , .center_list_ico_in{ width: 44rpx; height: 44rpx; margin-right: 25rpx; border-radius: 50%; position: absolute; left: 0; top: 28rpx;}
+.center_list_ico{ border: #C9C9C9 solid 2rpx;}
+.center_list_ico_in{ border: #FF9900 solid 2rpx;}
+.center_list_ico_in::after{ content: ""; width: 20rpx; height: 20rpx; border-radius: 50%; background-color: #FF9900; position: absolute; left: 14rpx; top: 14rpx;}
+
+.input_content{ display: block; height: 190rpx; margin-top: 10rpx; font-size: 32rpx;}
+
+
+.send_btn{ margin-bottom: 60rpx;}

@@ -1,0 +1,18 @@
+.box{
+    border-top:2rpx solid #F3F2F7;
+}
+.box-list{
+    width:707rpx;
+    margin-left:41rpx;
+    height:84rpx;
+    line-height: 84rpx;
+    border-bottom:1px solid #F3F2F7;
+}
+.box-list-text{
+  color: #282C3F;
+}
+.box-list-num{
+  color: #282C3F;
+  float: right;
+  padding-right: 78rpx;
+}

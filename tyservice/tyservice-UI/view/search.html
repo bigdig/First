@@ -1,0 +1,19 @@
+<div>
+    <input type="search"
+           class="com-bo"
+           ng-model="value"
+           placeholder="{{placeholder}}"
+           ng-required="{{required}}"
+           maxlength="{{maxlength}}"
+           ng-keyup="selectKeyup()"
+           ng-blur="selectBlur()"/>
+    <div id="{{id}}"
+         class="lenovo tags bg-gray border-blue-dark-color">
+        <ul class="op">
+            <li class="node padding10"
+                ng-repeat="data in dataList"
+                ng-click="onSelect(data)"
+                ng-bind="data.text"></li>
+        </ul>
+    </div>
+</div>

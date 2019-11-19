@@ -1,0 +1,34 @@
+<view class='box'>
+     <view class='box_title'>
+        <view class="box_title_checkbox">
+            <checkbox wx:if="{{showActStatus}}" data-status="{{actInfo.activityStatus}}" bindtap="updateActStatus" checked="{{actInfo.activityStatus == 1 || actInfo.activityStatus == 2}}"></checkbox>
+            <text class='box_title_text'>{{actInfo.title}}</text>
+        </view>
+        <view class="box_infomation_share_close_btn">
+             <image class='box_title_share' src='../../image/guanbi.png' bindtap="shareAct"></image>
+             <image class='box_title_delete' src='../../image/delete.png' bindtap="deleteAct" wx:if="{{actInfo.deleteFlag == '0' && usreId == actInfo.createBy}}"></image>
+        </view>
+         <view></view>
+         <view class='box_title_label font24'>{{actInfo.activityTypeText}}</view>
+     </view>
+     <view class='box_information'>
+          <view class='swiperItem_box' catchtap="toActDetail" data-actCate="{{item.activityCate}}" data-id="{{item.id}}"  wx:key="{{item}}" wx:for="{{actInfo.subActList}}" wx:for-index="idx">
+               <text class="font28 swiperItem_box_company">{{item.title == null ? "" : item.title}}</text>
+               <view></view>
+               <text class="font20 swiperItem_box_time">{{(actInfo.beginDateText == null ? "" : actInfo.beginDateText)+" / "+(actInfo.beginTimeText == null ? "" :actInfo.beginTimeText ) +"  --   "+(actInfo.endDateText == null ? "" :actInfo.endDateText)+" / "+(actInfo.endTimeText == null ? "" : actInfo.endTimeText)}}</text>
+               <text class="font20 swiperItem_box_state" style="color:{{item.activityStatus == 0 ? '#FE8166' : '#A5A9BF'}}">{{item.activityStatusText == null ? "" : item.activityStatusText}}</text>
+               <image class="enterNextImg" src="./../../image/details.png"></image>
+            </view>
+     </view>
+</view>
+<view class="inviteMask" hidden="{{hiddenModal}}" catchtap="hideShareModal"></view> 
+<view class="inviteShare" hidden="{{hiddenModal}}">  
+          <view class="inviteShareTitle">分享给好友</view>
+          <view class="weixinContainer">
+            <image class="weixinImg" src="./../../image/weixin.png"></image> 
+          </view>
+          <view class="inviteBtn"> 
+            <button class="inviteShareCancel"  bindtap='closeMask'>取消</button>
+            <button class="inviteShareDetermine"  open-type='share' bindtap='closeMask'>确认</button>
+          </view>
+  </view>

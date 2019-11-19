@@ -1,0 +1,116 @@
+<ion-view>
+    <ion-header-bar class="bar-subheader gray" ng-show="header_bar" style="top:0px;">
+        <div class="tab tab-active"
+             style="margin-left: 30%;margin-right: 10%;"
+             ng-click="tabTab(1,$event)">客户搜索
+        </div>
+        <div class="tab" ng-click="tabTab(2,$event)">机构搜索</div>
+    </ion-header-bar>
+    <div style="background:#F9F9F9;position: absolute;top: 50px;
+    z-index: 10;
+    width: 100%;" id="write" ng-show="page1">
+        <input type="text" placeholder="请输入客户名称"
+               class="out" ng-model="write" style="  -webkit-appearance: none;">
+        <i class="icon ion-navicon" style="font-size: 29px;
+		    padding-left: 12px;
+		        position: relative;
+                top: 3px;
+		    vertical-align: middle;color:#979797;" ng-click="pop('offset')"></i>
+    </div>
+    <div style="background:#F9F9F9;position: absolute;top: 50px;
+    z-index: 10;
+    width: 100%;" id="write2" ng-show="page2">
+        <input type="text" placeholder="请输入机构名称"
+               class="out" ng-model="write2" style="  -webkit-appearance: none;">
+        <i class="icon ion-navicon" style="font-size: 29px;
+        position: relative;
+        top:3px;
+		    padding-left: 12px;
+		    vertical-align: middle;color:#979797;" ng-click="pop('offset2')"></i>
+    </div>
+    <!-- 面板 -->
+    <div class="mylist" ng-show="panel" style="border-bottom: 1px solid #E4E4E4;">
+        <div class="flex" ng-show="page1">
+            <span class="font">客户姓名</span>
+            <input type="text" id="custName">
+        </div>
+        <div class="flex" ng-show="page1">
+            <span class="font">所属机构</span>
+            <input type="text" id="custOrgName">
+        </div>
+        <div class="flex" ng-show="page2">
+            <span class="font">机构名称</span>
+            <input type="text" id="orgName">
+        </div>
+        <div class="flex" ng-show="page1">
+            <span class="font">客户标签</span>
+            <input type="text" id="mark">
+
+        </div>
+        <div style="display: flex;" ng-show="page2">
+            <span class="font">所属区域</span>
+            <div class="listLi last" id="Area">
+                <!--<div ng-click="activation($event)" class="list-first active">全部</div>-->
+                <div ng-click="activation($event)" ng-repeat="key in allArea"
+                     ng-class="{'active':$index==0,'list-first':$index==0}">{{key}}
+                </div>
+            </div>
+        </div>
+        <div class="btn">
+            <button class="button button-light btn1" ng-click="cancel()">
+                取消
+            </button>
+            <button class="button button-light btn2" ng-click="search()">
+                查询
+            </button>
+        </div>
+
+    </div>
+
+    <div class="load" style="display:none;">
+        <ion-spinner icon="circles" class="spinner-energized"></ion-spinner>
+    </div>
+    <ion-slide-box>
+        <ion-slide ng-show="page1" does-continue="false">
+            <ion-content class="bg" id="offset">
+                <!-- 这部分是 -->
+                <ion-list >
+                    <ion-item class="item-icon-right" ng-repeat="key in response" ng-click="detail(key.id,key.orgId)">
+                        {{key.custName}}&nbsp;&nbsp;{{key.orgName}}
+                        <i class="icon ion-ios-arrow-forward" style="color: #D0D0D0;
+    font-size: 27px;
+    font-weight: normal;"></i>
+                    </ion-item>
+                </ion-list>
+                <ion-infinite-scroll
+                        on-infinite="loadMore()"
+                        ng-if="moredata"
+                        distance="1%">
+                </ion-infinite-scroll>
+            </ion-content>
+        </ion-slide>
+        <ion-slide ng-show="page2"  does-continue="false">
+            <ion-content class="bg" id="offset2">
+            <ion-list>
+                <ion-item class="item-icon-right" ng-repeat="key in response2" ng-click="detail(key.id,key.orgId)">
+                    {{key.custName}}&nbsp;&nbsp;{{key.orgName}}
+                    <i class="icon ion-ios-arrow-forward" style="color: #D0D0D0;
+    font-size: 27px;
+    font-weight: normal;"></i>
+                </ion-item>
+                <ion-infinite-scroll
+                        on-infinite="loadMore()"
+                        ng-if="moredata2"
+                        distance="1%">
+                </ion-infinite-scroll>
+            </ion-list>
+            </ion-content>
+        </ion-slide>
+        <!--<div ng-show="resultLength" class="result" style="-->
+        <!--display: inline-block;-->
+        <!--width: 100%;-->
+        <!--text-align: center;bottom:5%;">-->
+        <!--共搜出<a class="num">{{num}}</a>条-->
+        <!--</div>-->
+    </ion-slide-box>
+</ion-view>

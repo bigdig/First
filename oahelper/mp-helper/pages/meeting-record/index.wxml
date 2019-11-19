@@ -1,0 +1,11 @@
+<!--pages/meeting-record/index.wxml-->
+<view class="container">
+  <view class="record" wx:for="{{meeting_records}}" wx:for-index="record_index" wx:for-item="record">
+    <view class="item">
+      <text class="date">{{record.meeting_date}}</text>
+      <text class="attend">{{record.attendence_way}}</text>
+      <text class="remark" wx:if="{{record.present_way}}">({{record.present_way}})</text>
+    </view>
+  </view>
+
+</view>

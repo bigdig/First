@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDccallMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDccall">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="call_date" jdbcType="VARCHAR" property="callDate" />
+      <result column="call_title" jdbcType="VARCHAR" property="callTitle" />
+      <result column="begin_time" jdbcType="DATE" property="beginTime" />
+      <result column="end_time" jdbcType="DATE" property="endTime" />
+      <result column="person_num" jdbcType="INTEGER" property="personNum" />
+      <result column="total_duration" jdbcType="INTEGER" property="totalDuration" />
+      <result column="avg_duration" jdbcType="INTEGER" property="avgDuration" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dccall where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDccall">
+    insert into ty_dccall (
+    id
+	,call_date
+	,call_title
+	,begin_time
+	,end_time
+	,person_num
+	,total_duration
+	,avg_duration
+	,update_time
+	,update_by
+	,create_time
+	,create_by
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{callDate,jdbcType=VARCHAR}
+    	,#{callTitle,jdbcType=VARCHAR}
+    	,#{beginTime,jdbcType=DATE}
+    	,#{endTime,jdbcType=DATE}
+    	,#{personNum,jdbcType=INTEGER}
+    	,#{totalDuration,jdbcType=INTEGER}
+    	,#{avgDuration,jdbcType=INTEGER}
+    	,#{updateTime,jdbcType=DATE}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=DATE}
+    	,#{createBy,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDccall">
+    update ty_dccall
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="callDate != null ">
+        call_date = #{callDate,jdbcType=VARCHAR},
+      </if>
+      <if test="callTitle != null ">
+        call_title = #{callTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="beginTime != null ">
+        begin_time = #{beginTime,jdbcType=DATE},
+      </if>
+      <if test="endTime != null ">
+        end_time = #{endTime,jdbcType=DATE},
+      </if>
+      <if test="personNum != null ">
+        person_num = #{personNum,jdbcType=INTEGER},
+      </if>
+      <if test="totalDuration != null ">
+        total_duration = #{totalDuration,jdbcType=INTEGER},
+      </if>
+      <if test="avgDuration != null ">
+        avg_duration = #{avgDuration,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,call_date,call_title,begin_time,end_time,person_num,total_duration,avg_duration,update_time,update_by,create_time,create_by
+    from ty_dccall
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,call_date,call_title,begin_time,end_time,person_num,total_duration,avg_duration,update_time,update_by,create_time,create_by
+    from ty_dccall
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dccall where 1=1
+	<if test="startDate != null and startDate != ''">
+		and t.call_date  &gt;=  #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		and t.call_date  &lt;=  #{endDate}
+	</if>
+	<if test="callTitle != null and callTitle != ''">and t.call_title like '%'||#{callTitle}||'%'</if>
+	<if test="staffName != null and staffName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t2.staff_name like '%'||#{staffName}||'%')
+	</if>
+	<if test="deptName != null and deptName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t3.dept_name like '%'||#{deptName}||'%')
+	</if>
+	
+  </select>
+</mapper>

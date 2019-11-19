@@ -1,0 +1,159 @@
+<div>
+    <form name="search"
+          ng-submit="searchPerson()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search">
+            <li>
+                <input type="search"
+                       ng-model="person.keyword"
+                       maxlength="16"
+                       placeholder="账户、姓名、联系方式">
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editPersonTemplate">
+    <form name="person_form"
+          ng-submit="editPerson()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="personInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <dept-list children="deptList"
+                               model="personInfo"
+                               name="deptName"
+                               tag="dept"
+                               required="true"
+                               value="personInfo.deptName"></dept-list>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="person_form.person_account.$dirty && person_form.person_account.$invalid">
+                        <span ng-show="person_form.person_account.$error.required">
+                            请输入账户
+                        </span>
+                        <span ng-show="person_form.person_account.$error.pattern">
+                            2-16位字母、数字或下划线
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="person_account"
+                           ng-model="personInfo.account"
+                           placeholder="账户"
+                           ng-pattern="/^\w{2,16}$/"
+                           minlength="2"
+                           maxlength="16"
+                           required/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="person_form.person_password.$dirty && person_form.person_password.$invalid">
+                        <span ng-show="person_form.person_password.$error.pattern">
+                            6-16位字母、数字或下划线
+                        </span>
+                    </div>
+                    <input type="password"
+                           name="person_password"
+                           ng-model="personInfo.password"
+                           placeholder="密码"
+                           ng-pattern="/^\w{6,16}$/"
+                           minlength="6"
+                           maxlength="16"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="person_form.person_userName.$dirty && person_form.person_userName.$invalid">
+                        <span ng-show="person_form.person_userName.$error.required">
+                            请输入姓名
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="person_userName"
+                           ng-model="personInfo.userName"
+                           placeholder="姓名"
+                           maxlength="16"
+                           required/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="person_form.person_phone.$dirty && person_form.person_phone.$invalid">
+                        <span ng-show="person_form.person_phone.$error.pattern">
+                            无效的电话号码格式;例如027-83889140或15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="person_phone"
+                           ng-model="personInfo.phone"
+                           placeholder="联系电话(格式：[区号-直拨号]或手机号[大陆11位，其他12-15位])"
+                           maxlength="20"
+                           ng-pattern="/^((\d{3,5}-\d{7,8}(-\d{2-4})?)|(\d{11,15}))$/"/>
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="person_form.person_remark.$dirty && dept_form.person_remark.$invalid">
+                <span class="error"
+                      ng-show="person_form.person_remark.$error.maxlength">
+                     总字数不超过500
+                </span>
+            </div>
+            <textarea name="person_remark"
+                      ng-maxlength="500"
+                      rows="5"
+                      ng-model="personInfo.remark"
+                      placeholder="备注"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="person_form.$invalid || personInfo.loading"
+                   value="{{personInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="editPersonRoleTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">设置账户角色</h3>
+        <p ng-bind="'账户：'+personInfo.account"></p>
+        <div class="line-gray-light bg-gray"></div>
+        <br>
+        <ul class="search">
+            <li class="left-li">角色</li>
+            <li class="right-li customer-list">
+                <ul>
+                    <li ng-repeat="role in roles">
+                        <input type="checkbox"
+                               ng-model="role.isSelected"
+                               ng-checked="role.isSelected">
+                        <label></label>
+                        &nbsp;&nbsp;<span ng-bind="role.roleName"></span>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+        <br>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               value="{{personInfo.btnName}}"
+               ng-disabled="personInfo.loading"
+               ng-click="roleSave()"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDcrecostockMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDcrecostock">
+      <result column="market_no" jdbcType="VARCHAR" property="marketNo" />
+      <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+      <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+      <result column="team" jdbcType="VARCHAR" property="team" />
+      <result column="recommend_time" jdbcType="VARCHAR" property="recommendTime" />
+      <result column="recommend_type" jdbcType="VARCHAR" property="recommendType" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="firstindustryname" jdbcType="VARCHAR" property="firstindustryname" />
+      <result column="firstindustrycode" jdbcType="VARCHAR" property="firstindustrycode" />
+      <result column="out_oftime" jdbcType="VARCHAR" property="outOftime" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="team_id" jdbcType="VARCHAR" property="teamId" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyDcrecostockBean">
+      <result column="market_no" jdbcType="VARCHAR" property="marketNo" />
+      <result column="stock_code" jdbcType="VARCHAR" property="stockCode" />
+      <result column="stock_name" jdbcType="VARCHAR" property="stockName" />
+      <result column="team" jdbcType="VARCHAR" property="team" />
+      <result column="recommend_time" jdbcType="VARCHAR" property="recommendTime" />
+      <result column="recommend_type" jdbcType="VARCHAR" property="recommendType" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="firstindustryname" jdbcType="VARCHAR" property="firstindustryname" />
+      <result column="firstindustrycode" jdbcType="VARCHAR" property="firstindustrycode" />
+      <result column="out_oftime" jdbcType="VARCHAR" property="outOftime" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="team_id" jdbcType="VARCHAR" property="teamId" />
+      <result column="delete_flag" jdbcType="VARCHAR" property="deleteFlag" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dcrecostock where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDcrecostock">
+    insert into ty_dcrecostock (
+    market_no
+	,stock_code
+	,stock_name
+	,team
+	,recommend_time
+	,recommend_type
+	,create_time
+	,create_by
+	,id
+	,firstindustryname
+	,firstindustrycode
+	,out_oftime
+	,update_time
+	,update_by
+	,team_id
+	,delete_flag
+    )values (
+    #{marketNo,jdbcType=VARCHAR}
+    	,#{stockCode,jdbcType=VARCHAR}
+    	,#{stockName,jdbcType=VARCHAR}
+    	,#{team,jdbcType=VARCHAR}
+    	,#{recommendTime,jdbcType=VARCHAR}
+    	,#{recommendType,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=DATE}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{id,jdbcType=VARCHAR}
+    	,#{firstindustryname,jdbcType=VARCHAR}
+    	,#{firstindustrycode,jdbcType=VARCHAR}
+    	,#{outOftime,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=DATE}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{teamId,jdbcType=VARCHAR}
+    	,#{deleteFlag,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDcrecostock">
+    update ty_dcrecostock
+    <trim prefix="set" suffixOverrides=",">
+      <if test="marketNo != null ">
+        market_no = #{marketNo,jdbcType=VARCHAR},
+      </if>
+      <if test="stockCode != null ">
+        stock_code = #{stockCode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockName != null ">
+        stock_name = #{stockName,jdbcType=VARCHAR},
+      </if>
+      <if test="team != null ">
+        team = #{team,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendTime != null ">
+        recommend_time = #{recommendTime,jdbcType=VARCHAR},
+      </if>
+      <if test="recommendType != null ">
+        recommend_type = #{recommendType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="firstindustryname != null ">
+        firstindustryname = #{firstindustryname,jdbcType=VARCHAR},
+      </if>
+      <if test="firstindustrycode != null ">
+        firstindustrycode = #{firstindustrycode,jdbcType=VARCHAR},
+      </if>
+      <if test="outOftime != null ">
+        out_oftime = #{outOftime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="teamId != null ">
+        team_id = #{teamId,jdbcType=VARCHAR},
+      </if>
+      <if test="deleteFlag != null ">
+        delete_flag = #{deleteFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select market_no,stock_code,stock_name,team,recommend_time,recommend_type,create_time,create_by,id,firstindustryname,firstindustrycode,out_oftime,update_time,update_by,team_id,delete_flag
+    from ty_dcrecostock
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="queryBySpeakId" parameterType="java.lang.String" resultMap="ExResultMap">
+    select market_no,stock_code,stock_name,team,recommend_time,recommend_type,create_time,create_by,id,firstindustryname,firstindustrycode,out_oftime,update_time,update_by,team_id,delete_flag
+    from ty_dcrecostock t1
+    where t1.id in (select stock_id from ty_activitystock t2 where t2.activity_id=#{speakId})
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select market_no,stock_code,stock_name,team,recommend_time,recommend_type,create_time,create_by,id,firstindustryname,firstindustrycode,out_oftime,update_time,update_by,team_id,delete_flag
+    from ty_dcrecostock
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dcrecostock where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+  <select id="queryByCondition" parameterType="java.util.Map" resultMap="ExResultMap">
+	select market_no,stock_code,stock_name,team,recommend_time,recommend_type,create_time,create_by,id,firstindustryname,firstindustrycode,out_oftime,update_time,update_by,team_id,delete_flag
+	  from ty_dcrecostock where 1=1
+	<if test="deleteFlag != null and deleteFlag != ''">and delete_flag =#{deleteFlag}</if>
+	<if test="stockName != null and stockName != ''">and stock_name =#{stockName}</if>
+	<if test="stockCode != null and stockCode != ''">and stock_code =#{stockCode}</if>
+	<if test="marketNo != null and marketNo != ''">and market_no =#{marketNo}</if>
+  </select>
+</mapper>

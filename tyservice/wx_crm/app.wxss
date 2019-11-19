@@ -1,0 +1,59 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
+.marginTop20{
+  margin-top: 20rpx;
+}
+.font18{
+  font-size: 18rpx !important;
+}
+.font20{
+  font-size: 20rpx !important;
+}
+.font22{
+  font-size: 22rpx !important;
+}
+.font24{
+  font-size: 24rpx !important;
+}
+.font26{
+  font-size: 26rpx !important;
+}
+.font28{
+  font-size: 28rpx !important;
+}
+.font30{
+  font-size: 30rpx !important;
+}
+.font32{
+  font-size: 32rpx !important;
+}
+.font34{
+  font-size: 34rpx !important;
+}
+.font36{
+  font-size: 36rpx !important;
+}
+.color9FA3BB{
+  color: #9FA3BB;
+}
+.color272A34{
+  color: #272A34;
+}
+.color9CA0B8{
+  color: #9CA0B8;
+}
+.colorFC6D51{
+  color: #FC6D51;
+}
+.color3296FA{
+  color: #3296FA;
+}

@@ -1,0 +1,188 @@
+<form name="search"
+      ng-submit="searchResearch()">
+    <input type="submit"
+           value="查询"
+           ng-disabled="loading.isShow"
+           class="text-orange font-18 padding40 btn-search bg-red-light"/>
+    <ul class="search more">
+        <li>
+            <ng-datepicker value="research.startDateTime"
+                           name="beginDateStart"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="false"
+                           limitdate="{{research.endDateTime}}"
+                           placeholder="起始日期"></ng-datepicker>
+        </li>
+        <li>
+            <ng-datepicker value="research.endDateTime"
+                           name="beginDateEnd"
+                           locale="zh-cn"
+                           format="YYYY-MM-DD"
+                           view-format="YYYY-MM-DD"
+                           min="true"
+                           limitdate="{{research.startDateTime}}"
+                           placeholder="截止日期"></ng-datepicker>
+        </li>
+        <li>
+            <input type="search"
+                   ng-model="research.title"
+                   maxlength="16"
+                   placeholder="服务内容">
+        </li>
+        <li>
+            <search model="research"
+                    value="research.deptName"
+                    name="deptName"
+                    maxlength="20"
+                    servicelist="researchTeams"
+                    placeholder="研究团队"></search>
+        </li>
+        <li>
+            <search model="research"
+                    value="research.staffName"
+                    name="staffName"
+                    maxlength="20"
+                    servicelist="researchers"
+                    placeholder="研究员"></search>
+        </li>
+        <li>
+            <input type="search"
+                   placeholder="地点"
+                   ng-model="research.locale"/>
+        </li>
+    </ul>
+</form>
+<script type="text/ng-template"
+        id="editResearchTemplate">
+    <form name="research_form"
+          ng-submit="editResearch()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="researchInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="researchInfo.dirty && research_form.sal_date.$invalid">
+                        <span ng-show="research_form.sal_date.$error.required">
+                            请选择日期
+                        </span>
+                    </div>
+                    <ng-datepicker name="sal_date"
+                                   dirty="researchInfo.dirty"
+                                   value="researchInfo.researchDate"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   required="true"
+                                   placeholder="日期"></ng-datepicker>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="research_form.sal_researcher.$dirty && research_form.sal_researcher.$invalid">
+                        <span ng-show="research_form.sal_researcher.$error.required">
+                            请选择研究员
+                        </span>
+                        <span ng-show="research_form.sal_researcher.$error.unique">
+                            无效的研究员
+                        </span>
+                    </div>
+                    <combobox name="sal_researcher"
+                              placeholder="研究员"
+                              model="researchInfo"
+                              id="researcherId"
+                              no="researchers"
+                              value="researchInfo.researchers"
+                              multiple="true"
+                              required="true"
+                              servicelist="salResearchers"></combobox>
+                </li>
+                <li>
+                    <input type="search"
+                           maxlength="50"
+                           placeholder="地点"
+                           name="sal_area"
+                           ng-model="researchInfo.locale">
+                </li>
+            </ul>
+            <div class="error text-white bg-red-opacity"
+                 ng-show="research_form.sal_content.$dirty && research_form.sal_content.$invalid">
+                <span class="error"
+                      ng-show="research_form.sal_content.$error.required">
+                     请输入服务内容
+                </span>
+                <span class="error"
+                      ng-show="research_form.sal_content.$error.maxlength">
+                     总字数不超过1000
+                </span>
+            </div>
+            <textarea name="sal_content"
+                      ng-maxlength="1000"
+                      rows="5"
+                      ng-model="researchInfo.title"
+                      required
+                      placeholder="服务内容"></textarea>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="button"
+                   ng-show="researchInfo.btnName=='添加'"
+                   value="文件批量添加"
+                   ng-dialog="uploadExcelTemplate"
+                   ng-dialog-show-close="false"
+                   ng-dialog-close-by-escape="false"
+                   ng-dialog-close-by-document="false"
+                   ng-dialog-scope="this.$parent"
+                   ng-dialog-class="ngdialog-theme-default"
+                   ng-dialog-pre-close-callback="uploadPreCloseCallback"
+                   ng-dialog-on-open-callback="uploadOpenedCallback"
+                   ng-dialog-close-previous
+                   class="btn-search text-orange light font-18">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="research_form.$invalid || researchInfo.loading"
+                   value="{{researchInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="meetingCustomerTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">已参与客户</h3>
+        <table width="100%"
+               cellpadding="8"
+               cellspacing="0"
+               class="data">
+            <tr>
+                <th>客户名称</th>
+                <th>手机号</th>
+                <th>机构</th>
+                <th>状态</th>
+            </tr>
+            <tr ng-repeat="cust in custList">
+                <td bo-text="cust.custName"></td>
+                <td bo-text="cust.custMobile"></td>
+                <td bo-text="cust.orgName"></td>
+                <td bo-text="cust.signStatusText"></td>
+            </tr>
+        </table>
+        <p class="text-center"
+           ng-if="!custList.length">暂无数据</p>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               value="添加客户"
+               ng-click="addCustomers()"
+               class="btn-search text-orange light font-18">
+        <input type="button"
+               value="关闭"
+               ng-click="closeThisDialog()"
+               class="text-orange padding60 light border-gray-color"/>
+    </div>
+</script>

@@ -1,0 +1,9 @@
+<view class='box'>
+    <text class='box_text font20' wx:key="{{item}}" wx:for="{{detail}}">{{item.text}}</text>
+</view>
+<view>
+    <view wx:key="{{item}}" wx:for="{{detailList}}" class='detailList'>
+        <text class='box_text font28'>{{item.stockname}}</text>
+        <text class='box_text font28'>{{item.stkvaluetonav}}%</text>
+    </view>
+</view>

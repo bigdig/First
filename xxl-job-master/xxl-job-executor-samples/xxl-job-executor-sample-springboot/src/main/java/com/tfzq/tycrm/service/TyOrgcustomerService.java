@@ -1,0 +1,13 @@
+package com.tfzq.tycrm.service;
+
+import com.ddfc.base.BaseService;
+import com.tfzq.tycrm.entity.TyOrgcustomer;
+/**
+ *   @author pengtao 
+ */
+
+public interface TyOrgcustomerService extends BaseService<TyOrgcustomer> {
+	
+	//其他自定义的方法
+	int calLabelScore();
+}

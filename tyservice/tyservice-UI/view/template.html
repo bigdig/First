@@ -1,0 +1,226 @@
+<div class="padding20">
+    <p class="font-16">
+        新建消息模板
+        <a href="javascript:void(0)" ng-click="openEditor()">
+            <i class="icon"
+               title="{{templatForm.title}}"
+               ng-class="{'icon-chevron-up':templatForm.isEditor,'icon-chevron-down':!templatForm.isEditor}"></i>
+        </a>
+    </p>
+    <div class="template_form"
+         ng-class="{'opened':templatForm.isEditor}">
+        <form name="template_form"
+              ng-submit="addTemplate()">
+            <table width="100%" cellpadding="0" cellspacing="12">
+                <tr>
+                    <td width="56"
+                        align="right">创建类型
+                    </td>
+                    <td>
+                        <input type="checkbox"
+                               ng-model="templateInfo.sms"
+                               ng-checked="templateInfo.sms"/><label></label>
+                        短信&nbsp;&nbsp;
+                        <input type="checkbox"
+                               ng-model="templateInfo.mail"
+                               ng-checked="templateInfo.mail"/><label></label>
+                        邮件
+                    </td>
+                    <td width="140">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td align="right">主题</td>
+                    <td>
+                        <div class="error text-white bg-red-opacity"
+                             style="margin-left: 130px"
+                             ng-show="template_form.template_title.$dirty && template_form.template_title.$invalid">
+                            <span ng-show="template_form.template_title.$error.required">
+                                请输入主题
+                            </span>
+                        </div>
+                        <input name="template_title"
+                               ng-disabled="!templateInfo.mail"
+                               placeholder="请输入主题"
+                               ng-model="templateInfo.tmpTitle"
+                               ng-required="templateInfo.mail"
+                               maxlength="100"
+                               type="search"/>
+                    </td>
+                    <td>
+                        <input type="submit"
+                               ng-bind="templateInfo.btnText"
+                               value="{{templateInfo.btnName}}"
+                               ng-disabled="loading.isShow || template_form.$invalid || (!templateInfo.sms && !templateInfo.mail)"
+                               class="text-orange font-18 bg-red-light"/>
+                    </td>
+                </tr>
+                <tr valign="top">
+                    <td align="right">内容</td>
+                    <td>
+                        <div class="tool_bar padding20">
+                            <input type="button"
+                                   class="text-orange light"
+                                   value="插入姓名"
+                                   ng-disabled="!templateInfo.sms && !templateInfo.mail"
+                                   ng-click="insertFlag('template_content','姓名','tmpContent',templateInfo)"/>
+                            &nbsp;&nbsp;
+                            <input type="button"
+                                   class="text-orange light"
+                                   value="插入日期"
+                                   ng-disabled="!templateInfo.sms && !templateInfo.mail"
+                                   ng-click="insertFlag('template_content','日期','tmpContent',templateInfo)"/>
+                        </div>
+                        <div class="error text-white bg-red-opacity"
+                             style="margin-left: 170px"
+                             ng-show="template_form.template_content.$dirty && template_form.template_content.$invalid">
+                            <span ng-show="template_form.template_content.$error.required">
+                                请输入内容
+                            </span>
+                            <span ng-show="template_form.template_content.$error.maxlength">
+                                总字数不超过1000
+                            </span>
+                            <span ng-show="template_form.template_content.$error.pattern">
+                                不被接受的字符
+                            </span>
+                        </div>
+                        <div class="tool_content"
+                             ng-class="{'ng-invalid':template_form.template_content.$invalid}">
+                        <textarea id="template_content"
+                                  rows="4"
+                                  name="template_content"
+                                  ng-disabled="!templateInfo.sms && !templateInfo.mail"
+                                  placeholder="请输入内容,总字数不超过1000;内容禁止出现【】和[]字符"
+                                  ng-model="templateInfo.tmpContent"
+                                  ng-maxlength="1000"
+                                  ng-pattern="/^[^【】\[\]]+$/"
+                                  ng-required="templateInfo.sms || templateInfo.mail"></textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <hr/>
+    <div class="font-16 template">
+        消息模板
+    </div>
+    <ul>
+        <li ng-repeat="template in templateList">
+            <form name="form_tmp{{$index}}"
+                  ng-submit="modifyTemplate(template)">
+                <table width="100%" cellpadding="0" cellspacing="12">
+                    <tr>
+                        <td>
+                            <p style="margin-left: 1px">
+                                <input type="checkbox"
+                                       ng-checked="template.sms"
+                                       ng-model="template.sms"
+                                       ng-disabled="template.disabled"/><label></label>
+                                短信&nbsp;&nbsp;
+                                <input type="checkbox"
+                                       ng-checked="template.mail"
+                                       ng-model="template.mail"
+                                       ng-disabled="template.disabled"/><label></label>
+                                邮件
+                            </p>
+                            <div class="list-template">
+                                <div class="error text-white bg-red-opacity"
+                                     style="margin-left: 130px"
+                                     ng-show="form_tmp{{$index}}.tmpTitle_{{$index}}.$dirty && form_tmp{{$index}}.tmpTitle_{{$index}}.$invalid">
+                            <span ng-show="form_tmp{{$index}}.tmpTitle_{{$index}}.$error.required">
+                                请输入主题
+                            </span>
+                                </div>
+                                <input name="tmpTitle_{{$index}}"
+                                       ng-if="template.mail"
+                                       ng-disabled="template.disabled"
+                                       placeholder="请输入主题"
+                                       ng-model="template.tmpTitle"
+                                       ng-required="!template.disabled && template.mail"
+                                       maxlength="100"
+                                       type="search"/>
+                                <div class="tool_bar padding20"
+                                     ng-hide="template.disabled">
+                                    <input type="button"
+                                           class="text-orange light"
+                                           value="插入姓名"
+                                           ng-disabled="(!template.sms && !template.mail) || template.disabled"
+                                           ng-click="insertFlag('tmpContent_'+$index,'姓名','tmpContent',template)"/>
+                                    &nbsp;&nbsp;
+                                    <input type="button"
+                                           class="text-orange light"
+                                           value="插入日期"
+                                           ng-disabled="(!template.sms && !template.mail) || template.disabled"
+                                           ng-click="insertFlag('tmpContent_'+$index,'日期','tmpContent',template)"/>
+                                </div>
+                                <div class="error text-white bg-red-opacity"
+                                     style="margin-left: 170px"
+                                     ng-show="form_tmp{{$index}}.tmpContent_{{$index}}.$dirty && form_tmp{{$index}}.tmpContent_{{$index}}.$invalid">
+                            <span ng-show="form_tmp{{$index}}.tmpContent_{{$index}}.$error.required">
+                                请输入内容
+                            </span>
+                                    <span ng-show="form_tmp{{$index}}.tmpContent_{{$index}}.$error.maxlength">
+                                总字数不超过1000
+                            </span>
+                                    <span ng-show="form_tmp{{$index}}.tmpContent_{{$index}}.$error.pattern">
+                                不被接受的字符
+                            </span>
+                                </div>
+                                <div class="tool_content"
+                                     ng-class="{'ng-invalid':form_tmp{{$index}}.tmpContent_{{$index}}.$invalid}">
+                        <textarea id="tmpContent_{{$index}}"
+                                  name="tmpContent_{{$index}}"
+                                  ng-disabled="(!template.sms && !template.mail) || template.disabled"
+                                  placeholder="请输入内容,总字数不超过1000;内容禁止出现【】和[]字符"
+                                  ng-model="template.tmpContent"
+                                  ng-maxlength="1000"
+                                  ng-pattern="/^[^【】\[\]]+$/"
+                                  ng-required="!template.disabled && (template.sms || template.mail)"
+                                  class="text_height"></textarea>
+                                </div>
+                            </div>
+                        </td>
+                        <td valign="top" width="140">
+                            <p>&nbsp;</p>
+                            <label ng-show="template.showEditor">
+                                <input type="button"
+                                       value="编辑"
+                                       ng-disabled="template.disabledButton"
+                                       ng-click="showEditor(template, true)"
+                                       class="light text-orange"/>
+                                <input type="button"
+                                       value="删除"
+                                       ng-disabled="template.loading"
+                                       ng-click="deleteTemplate(template)"
+                                       class="light padding10"/>
+                            </label>
+                            <label ng-hide="template.showEditor">
+                                <input type="submit"
+                                       value="{{template.btnName}}"
+                                       ng-disabled="template.loading || form_tmp{{$index}}.$invalid || (!template.sms && !template.mail)"
+                                       style="width: auto"
+                                       class="light text-orange"/>
+                                <input type="button"
+                                       value="取消"
+                                       ng-click="showEditor(template, false)"
+                                       class="light text-orange padding10"/>
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </li>
+    </ul>
+    <h4 class="text-center"
+        ng-if="!templateList.length && !loading.isShow">暂无数据</h4>
+    <img src="../img/loading.gif"
+         width="26"
+         class="loading"
+         ng-show="loading.isShow">
+    <br><br><br>
+    <div class="back bg-red-opacity">
+        <a href="javascript:void(0)" ng-click="backTop()">
+            <i class="icon icon-chevron-thin-up font-30 text-white"></i>
+        </a>
+    </div>
+</div>

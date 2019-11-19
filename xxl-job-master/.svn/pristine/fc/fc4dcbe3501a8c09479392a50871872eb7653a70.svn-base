@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.tycrm.mapper.TyStafflistMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.tycrm.entity.TyStafflist">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
+      <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+      <result column="position" jdbcType="VARCHAR" property="position" />
+      <result column="tel" jdbcType="VARCHAR" property="tel" />
+      <result column="area" jdbcType="VARCHAR" property="area" />
+      <result column="email" jdbcType="VARCHAR" property="email" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+      <result column="position_id" jdbcType="VARCHAR" property="positionId" />
+      <result column="area_id" jdbcType="VARCHAR" property="areaId" />
+      <result column="work_areaid" jdbcType="VARCHAR" property="workAreaid" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+      <result column="wx_openid" jdbcType="VARCHAR" property="wxOpenid" />
+  </resultMap>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,dept_name,staff_name,position,tel,area,email,user_id,dept_id,position_id,area_id,work_areaid,create_by,create_time,update_by,update_time,wx_openid
+    from ty_stafflist
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+</mapper>

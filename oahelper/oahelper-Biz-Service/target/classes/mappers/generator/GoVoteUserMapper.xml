@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoVoteUserMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoVoteUser">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_id" jdbcType="VARCHAR" property="voteId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="vote_item_id" jdbcType="VARCHAR" property="voteItemId" />
+      <result column="vote_item_content" jdbcType="VARCHAR" property="voteItemContent" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoVoteUserBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="vote_id" jdbcType="VARCHAR" property="voteId" />
+      <result column="user_id" jdbcType="VARCHAR" property="userId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="vote_item_id" jdbcType="VARCHAR" property="voteItemId" />
+      <result column="vote_item_content" jdbcType="VARCHAR" property="voteItemContent" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_vote_user where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoVoteUser">
+    insert into go_vote_user (
+    id
+	,vote_id
+	,user_id
+	,user_name
+	,vote_item_id
+	,vote_item_content
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{voteId,jdbcType=VARCHAR}
+    	,#{userId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{voteItemId,jdbcType=VARCHAR}
+    	,#{voteItemContent,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoVoteUser">
+    update go_vote_user
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="voteId != null ">
+        vote_id = #{voteId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null ">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="voteItemId != null ">
+        vote_item_id = #{voteItemId,jdbcType=VARCHAR},
+      </if>
+      <if test="voteItemContent != null ">
+        vote_item_content = #{voteItemContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,vote_id,user_id,user_name,vote_item_id,vote_item_content,create_by,create_time,update_by,update_time
+    from go_vote_user
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,vote_id,user_id,user_name,vote_item_id,vote_item_content,create_by,create_time,update_by,update_time
+    from go_vote_user
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,vote_id,user_id,user_name,vote_item_id,vote_item_content,create_by,create_time,update_by,update_time
+    from go_vote_user
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteId != null and voteId != ''">and vote_id like '%'||#{voteId}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="voteItemId != null and voteItemId != ''">and vote_item_id like '%'||#{voteItemId}||'%'</if>
+	<if test="voteItemContent != null and voteItemContent != ''">and vote_item_content like '%'||#{voteItemContent}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_vote_user where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="voteId != null and voteId != ''">and vote_id like '%'||#{voteId}||'%'</if>
+	<if test="userId != null and userId != ''">and user_id = #{userId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="voteItemId != null and voteItemId != ''">and vote_item_id like '%'||#{voteItemId}||'%'</if>
+	<if test="voteItemContent != null and voteItemContent != ''">and vote_item_content like '%'||#{voteItemContent}||'%'</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or vote_id like '%'||#{keyword}||'%' or user_id like '%'||#{keyword}||'%' or user_name like '%'||#{keyword}||'%' or vote_item_id like '%'||#{keyword}||'%' or vote_item_content like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.pr.dao.generator.GoCardApplyMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.pr.model.generator.GoCardApply">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="usere_id" jdbcType="VARCHAR" property="usereId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+      <result column="card_name_en" jdbcType="VARCHAR" property="cardNameEn" />
+      <result column="card_department" jdbcType="VARCHAR" property="cardDepartment" />
+      <result column="card_department_en" jdbcType="VARCHAR" property="cardDepartmentEn" />
+      <result column="card_profession" jdbcType="VARCHAR" property="cardProfession" />
+      <result column="card_profession_en" jdbcType="VARCHAR" property="cardProfessionEn" />
+      <result column="card_post" jdbcType="VARCHAR" property="cardPost" />
+      <result column="card_post_en" jdbcType="VARCHAR" property="cardPostEn" />
+      <result column="card_mobile" jdbcType="VARCHAR" property="cardMobile" />
+      <result column="card_email" jdbcType="VARCHAR" property="cardEmail" />
+      <result column="card_phone" jdbcType="VARCHAR" property="cardPhone" />
+      <result column="card_fax" jdbcType="VARCHAR" property="cardFax" />
+      <result column="card_address" jdbcType="VARCHAR" property="cardAddress" />
+      <result column="card_quantity" jdbcType="INTEGER" property="cardQuantity" />
+      <result column="card_picture" jdbcType="VARCHAR" property="cardPicture" />
+      <result column="card_status" jdbcType="VARCHAR" property="cardStatus" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.pr.model.pr.GoCardApplyBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="usere_id" jdbcType="VARCHAR" property="usereId" />
+      <result column="user_name" jdbcType="VARCHAR" property="userName" />
+      <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+      <result column="card_name_en" jdbcType="VARCHAR" property="cardNameEn" />
+      <result column="card_department" jdbcType="VARCHAR" property="cardDepartment" />
+      <result column="card_department_en" jdbcType="VARCHAR" property="cardDepartmentEn" />
+      <result column="card_profession" jdbcType="VARCHAR" property="cardProfession" />
+      <result column="card_profession_en" jdbcType="VARCHAR" property="cardProfessionEn" />
+      <result column="card_post" jdbcType="VARCHAR" property="cardPost" />
+      <result column="card_post_en" jdbcType="VARCHAR" property="cardPostEn" />
+      <result column="card_mobile" jdbcType="VARCHAR" property="cardMobile" />
+      <result column="card_email" jdbcType="VARCHAR" property="cardEmail" />
+      <result column="card_phone" jdbcType="VARCHAR" property="cardPhone" />
+      <result column="card_fax" jdbcType="VARCHAR" property="cardFax" />
+      <result column="card_address" jdbcType="VARCHAR" property="cardAddress" />
+      <result column="card_quantity" jdbcType="INTEGER" property="cardQuantity" />
+      <result column="card_picture" jdbcType="VARCHAR" property="cardPicture" />
+      <result column="card_status" jdbcType="VARCHAR" property="cardStatus" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from go_card_apply where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.pr.model.generator.GoCardApply">
+    insert into go_card_apply (
+    id
+	,usere_id
+	,user_name
+	,card_name
+	,card_name_en
+	,card_department
+	,card_department_en
+	,card_profession
+	,card_profession_en
+	,card_post
+	,card_post_en
+	,card_mobile
+	,card_email
+	,card_phone
+	,card_fax
+	,card_address
+	,card_quantity
+	,card_picture
+	,card_status
+	,create_by
+	,create_time
+	,update_by
+	,update_time
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{usereId,jdbcType=VARCHAR}
+    	,#{userName,jdbcType=VARCHAR}
+    	,#{cardName,jdbcType=VARCHAR}
+    	,#{cardNameEn,jdbcType=VARCHAR}
+    	,#{cardDepartment,jdbcType=VARCHAR}
+    	,#{cardDepartmentEn,jdbcType=VARCHAR}
+    	,#{cardProfession,jdbcType=VARCHAR}
+    	,#{cardProfessionEn,jdbcType=VARCHAR}
+    	,#{cardPost,jdbcType=VARCHAR}
+    	,#{cardPostEn,jdbcType=VARCHAR}
+    	,#{cardMobile,jdbcType=VARCHAR}
+    	,#{cardEmail,jdbcType=VARCHAR}
+    	,#{cardPhone,jdbcType=VARCHAR}
+    	,#{cardFax,jdbcType=VARCHAR}
+    	,#{cardAddress,jdbcType=VARCHAR}
+    	,#{cardQuantity,jdbcType=INTEGER}
+    	,#{cardPicture,jdbcType=VARCHAR}
+    	,#{cardStatus,jdbcType=VARCHAR}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=TIMESTAMP}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.pr.model.generator.GoCardApply">
+    update go_card_apply
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="usereId != null ">
+        usere_id = #{usereId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null ">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardName != null ">
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNameEn != null ">
+        card_name_en = #{cardNameEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cardDepartment != null ">
+        card_department = #{cardDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="cardDepartmentEn != null ">
+        card_department_en = #{cardDepartmentEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cardProfession != null ">
+        card_profession = #{cardProfession,jdbcType=VARCHAR},
+      </if>
+      <if test="cardProfessionEn != null ">
+        card_profession_en = #{cardProfessionEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPost != null ">
+        card_post = #{cardPost,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPostEn != null ">
+        card_post_en = #{cardPostEn,jdbcType=VARCHAR},
+      </if>
+      <if test="cardMobile != null ">
+        card_mobile = #{cardMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="cardEmail != null ">
+        card_email = #{cardEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="cardPhone != null ">
+        card_phone = #{cardPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="cardFax != null ">
+        card_fax = #{cardFax,jdbcType=VARCHAR},
+      </if>
+      <if test="cardAddress != null ">
+        card_address = #{cardAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cardQuantity != null ">
+        card_quantity = #{cardQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="cardPicture != null ">
+        card_picture = #{cardPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="cardStatus != null ">
+        card_status = #{cardStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,usere_id,user_name,card_name,card_name_en,card_department,card_department_en,card_profession,card_profession_en,card_post,card_post_en,card_mobile,card_email,card_phone,card_fax,card_address,card_quantity,card_picture,card_status,create_by,create_time,update_by,update_time
+    from go_card_apply
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,usere_id,user_name,card_name,card_name_en,card_department,card_department_en,card_profession,card_profession_en,card_post,card_post_en,card_mobile,card_email,card_phone,card_fax,card_address,card_quantity,card_picture,card_status,create_by,create_time,update_by,update_time
+    from go_card_apply
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,usere_id,user_name,card_name,card_name_en,card_department,card_department_en,card_profession,card_profession_en,card_post,card_post_en,card_mobile,card_email,card_phone,card_fax,card_address,card_quantity,card_picture,card_status,create_by,create_time,update_by,update_time
+    from go_card_apply
+    where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="usereId != null and usereId != ''">and usere_id like '%'||#{usereId}||'%'</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="cardName != null and cardName != ''">and card_name like '%'||#{cardName}||'%'</if>
+	<if test="cardNameEn != null and cardNameEn != ''">and card_name_en like '%'||#{cardNameEn}||'%'</if>
+	<if test="cardDepartment != null and cardDepartment != ''">and card_department like '%'||#{cardDepartment}||'%'</if>
+	<if test="cardDepartmentEn != null and cardDepartmentEn != ''">and card_department_en like '%'||#{cardDepartmentEn}||'%'</if>
+	<if test="cardProfession != null and cardProfession != ''">and card_profession like '%'||#{cardProfession}||'%'</if>
+	<if test="cardProfessionEn != null and cardProfessionEn != ''">and card_profession_en like '%'||#{cardProfessionEn}||'%'</if>
+	<if test="cardPost != null and cardPost != ''">and card_post like '%'||#{cardPost}||'%'</if>
+	<if test="cardPostEn != null and cardPostEn != ''">and card_post_en like '%'||#{cardPostEn}||'%'</if>
+	<if test="cardMobile != null and cardMobile != ''">and card_mobile like '%'||#{cardMobile}||'%'</if>
+	<if test="cardEmail != null and cardEmail != ''">and card_email like '%'||#{cardEmail}||'%'</if>
+	<if test="cardPhone != null and cardPhone != ''">and card_phone like '%'||#{cardPhone}||'%'</if>
+	<if test="cardFax != null and cardFax != ''">and card_fax like '%'||#{cardFax}||'%'</if>
+	<if test="cardAddress != null and cardAddress != ''">and card_address like '%'||#{cardAddress}||'%'</if>
+	<if test="cardQuantity != null and cardQuantity != ''">and card_quantity=#{cardQuantity}</if>
+	<if test="cardPicture != null and cardPicture != ''">and card_picture like '%'||#{cardPicture}||'%'</if>
+	<if test="cardStatus != null and cardStatus != ''">and card_status=#{cardStatus}</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from go_card_apply where 1=1
+	<if test="id != null and id != ''">and id like '%'||#{id}||'%'</if>
+	<if test="usereId != null and usereId != ''">and usere_id = #{usereId}</if>
+	<if test="userName != null and userName != ''">and user_name like '%'||#{userName}||'%'</if>
+	<if test="cardName != null and cardName != ''">and card_name like '%'||#{cardName}||'%'</if>
+	<if test="cardNameEn != null and cardNameEn != ''">and card_name_en like '%'||#{cardNameEn}||'%'</if>
+	<if test="cardDepartment != null and cardDepartment != ''">and card_department like '%'||#{cardDepartment}||'%'</if>
+	<if test="cardDepartmentEn != null and cardDepartmentEn != ''">and card_department_en like '%'||#{cardDepartmentEn}||'%'</if>
+	<if test="cardProfession != null and cardProfession != ''">and card_profession like '%'||#{cardProfession}||'%'</if>
+	<if test="cardProfessionEn != null and cardProfessionEn != ''">and card_profession_en like '%'||#{cardProfessionEn}||'%'</if>
+	<if test="cardPost != null and cardPost != ''">and card_post like '%'||#{cardPost}||'%'</if>
+	<if test="cardPostEn != null and cardPostEn != ''">and card_post_en like '%'||#{cardPostEn}||'%'</if>
+	<if test="cardMobile != null and cardMobile != ''">and card_mobile like '%'||#{cardMobile}||'%'</if>
+	<if test="cardEmail != null and cardEmail != ''">and card_email like '%'||#{cardEmail}||'%'</if>
+	<if test="cardPhone != null and cardPhone != ''">and card_phone like '%'||#{cardPhone}||'%'</if>
+	<if test="cardFax != null and cardFax != ''">and card_fax like '%'||#{cardFax}||'%'</if>
+	<if test="cardAddress != null and cardAddress != ''">and card_address like '%'||#{cardAddress}||'%'</if>
+	<if test="cardQuantity != null and cardQuantity != ''">and card_quantity=#{cardQuantity}</if>
+	<if test="cardPicture != null and cardPicture != ''">and card_picture like '%'||#{cardPicture}||'%'</if>
+	<if test="cardStatus != null and cardStatus != ''">and card_status=#{cardStatus}</if>
+	<if test="keyword != null">
+		and (id like '%'||#{keyword}||'%'  or usere_id like '%'||#{keyword}||'%' or user_name like '%'||#{keyword}||'%' or card_name like '%'||#{keyword}||'%' or card_name_en like '%'||#{keyword}||'%' or card_department like '%'||#{keyword}||'%' or card_department_en like '%'||#{keyword}||'%' or card_profession like '%'||#{keyword}||'%' or card_profession_en like '%'||#{keyword}||'%' or card_post like '%'||#{keyword}||'%' or card_post_en like '%'||#{keyword}||'%' or card_mobile like '%'||#{keyword}||'%' or card_email like '%'||#{keyword}||'%' or card_phone like '%'||#{keyword}||'%' or card_fax like '%'||#{keyword}||'%' or card_address like '%'||#{keyword}||'%' or card_quantity like '%'||#{keyword}||'%' or card_picture like '%'||#{keyword}||'%' or card_status like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

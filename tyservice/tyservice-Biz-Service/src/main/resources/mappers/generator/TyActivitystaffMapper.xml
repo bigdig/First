@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyActivitystaffMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyActivitystaff">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+      <result column="staff_id" jdbcType="VARCHAR" property="staffId" />
+      <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+  </resultMap>
+  
+  <resultMap id="ExResultMap" type="com.tfzq.ty.model.ty.TyActivitystaffBean">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="activity_id" jdbcType="VARCHAR" property="activityId" />
+      <result column="staff_id" jdbcType="VARCHAR" property="staffId" />
+      <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+      <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+  </resultMap>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_activitystaff where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByActId" parameterType="java.lang.String">
+    delete from ty_activitystaff where activity_id = #{actId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyActivitystaff">
+    insert into ty_activitystaff (
+    id
+	,activity_id
+	,staff_id
+	,staff_name
+	,dept_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{activityId,jdbcType=VARCHAR}
+    	,#{staffId,jdbcType=VARCHAR}
+    	,#{staffName,jdbcType=VARCHAR}
+    	,#{deptId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyActivitystaff">
+    update ty_activitystaff
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="activityId != null ">
+        activity_id = #{activityId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffId != null ">
+        staff_id = #{staffId,jdbcType=VARCHAR},
+      </if>
+      <if test="staffName != null ">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null ">
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,activity_id,staff_id,staff_name,dept_id
+    from ty_activitystaff
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,activity_id,staff_id,staff_name,dept_id
+    from ty_activitystaff
+    order by id
+  </select>
+  <select id="selectByCondition" resultMap="ExResultMap">
+    select id,activity_id,staff_id,staff_name,dept_id
+    from ty_activitystaff
+    where 1=1
+	<if test="activityId != null and activityId != ''">and activity_id like '%'||#{activityId}||'%'</if>
+	<if test="staffId != null and staffId != ''">and staff_id like '%'||#{staffId}||'%'</if>
+      order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_activitystaff where 1=1
+	<if test="activityId != null and activityId != ''">and activity_id like '%'||#{activityId}||'%'</if>
+	<if test="staffId != null and staffId != ''">and staff_id like '%'||#{staffId}||'%'</if>
+	<if test="keyword != null">
+		and (activity_id like '%'||#{keyword}||'%'  or staff_id like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

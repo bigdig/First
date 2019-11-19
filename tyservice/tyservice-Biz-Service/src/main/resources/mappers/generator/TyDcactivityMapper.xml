@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDcactivityMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDcactivity">
+      <result column="act_type" jdbcType="VARCHAR" property="actType" />
+      <result column="act_id" jdbcType="VARCHAR" property="actId" />
+      <result column="userid" jdbcType="VARCHAR" property="userid" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dcactivity where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByActId" parameterType="java.lang.String">
+    delete from ty_dcactivity where act_id = #{actId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDcactivity">
+    insert into ty_dcactivity (
+    act_type
+	,act_id
+	,userid
+    )values (
+    #{actType,jdbcType=VARCHAR}
+    	,#{actId,jdbcType=VARCHAR}
+    	,#{userid,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDcactivity">
+    update ty_dcactivity
+    <trim prefix="set" suffixOverrides=",">
+      <if test="actType != null ">
+        act_type = #{actType,jdbcType=VARCHAR},
+      </if>
+      <if test="actId != null ">
+        act_id = #{actId,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null ">
+        userid = #{userid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select act_type,act_id,userid
+    from ty_dcactivity
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select act_type,act_id,userid
+    from ty_dcactivity
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dcactivity where 1=1
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

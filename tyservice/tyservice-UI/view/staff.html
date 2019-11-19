@@ -1,0 +1,179 @@
+<div class="padding20">
+    <form name="search"
+          ng-submit="searchStaff()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <dept-list children="deptListSearch"
+                           model="staff"
+                           name="deptName"
+                           tag="searchDept"
+                           value="staff.deptName"></dept-list>
+            </li>
+            <li>
+                <input type="search"
+                       ng-model="staff.staffName"
+                       maxlength="16"
+                       placeholder="姓名"/>
+            </li>
+            <li>
+                <select ng-model="staff.workAreaid">
+                    <option value="">区域</option>
+                    <option ng-repeat="area in sysWorkAreaList"
+                            ng-selected="area.id==staff.workAreaid"
+                            value="{{area.id}}">{{area.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="staff.deleteFlag">
+                    <option value="">状态</option>
+                    <option ng-repeat="status in staffStatus"
+                            ng-selected="status.id==staff.deleteFlag"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editStaffTemplate">
+    <form name="staff_form"
+          ng-submit="editStaff()"
+          ng-click="hide($event)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="staffInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_name.$dirty && staff_form.staff_name.$invalid">
+                        <span ng-show="staff_form.staff_name.$error.required">
+                            请输入姓名
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="staff_name"
+                           ng-model="staffInfo.staffName"
+                           maxlength="16"
+                           required
+                           placeholder="姓名"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_account.$dirty && staff_form.staff_account.$invalid">
+                        <span ng-show="staff_form.staff_account.$error.required">
+                            请输入账户
+                        </span>
+                        <span ng-show="staff_form.staff_account.$error.pattern">
+                            2-16位字母、数字或下划线
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="staff_account"
+                           ng-model="staffInfo.userId"
+                           ng-pattern="/^\w{2,16}$/"
+                           minlength="2"
+                           maxlength="16"
+                           required
+                           placeholder="账户"/>
+                </li>
+                <li>
+                    <dept-list children="deptList"
+                               model="staffInfo"
+                               name="deptName"
+                               tag="dept"
+                               required="true"
+                               value="staffInfo.deptName"></dept-list>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_pos.$dirty && staff_form.staff_pos.$invalid">
+                        <span ng-show="staff_form.staff_pos.$error.required">
+                            请选择职位
+                        </span>
+                        <span ng-show="staff_form.staff_pos.$error.unique">
+                            无效的职位
+                        </span>
+                    </div>
+                    <combobox name="staff_pos"
+                              placeholder="职位"
+                              model="staffInfo"
+                              id="positionId"
+                              no="position"
+                              value="staffInfo.position"
+                              required="true"
+                              servicelist="sysPositions"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_work.$dirty && staff_form.staff_work.$invalid">
+                        <span ng-show="staff_form.staff_work.$error.select">
+                            请选择区域
+                        </span>
+                    </div>
+                    <select name="staff_work"
+                            ng-model="staffInfo.workAreaid"
+                            option-select="staff_work">
+                        <option value="">区域</option>
+                        <option ng-repeat="work in sysWorkAreaList"
+                                ng-selected="work.id==staffInfo.workAreaid"
+                                value="{{work.id}}">{{work.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_tel.$dirty && staff_form.staff_tel.$invalid">
+                        <span ng-show="staff_form.staff_tel.$error.required">
+                            请输入手机
+                        </span>
+                        <span ng-show="staff_form.staff_tel.$error.pattern">
+                            无效的手机号码格式;例如15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="staff_tel"
+                           ng-model="staffInfo.tel"
+                           maxlength="15"
+                           ng-pattern="/^\d{11,15}$/"
+                           required
+                           placeholder="手机(格式:大陆11位，其他12-15位)"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="staff_form.staff_mail.$dirty && staff_form.staff_mail.$invalid">
+                        <span ng-show="staff_form.staff_mail.$error.required">
+                            请输入邮箱
+                        </span>
+                        <span ng-show="staff_form.staff_mail.$error.pattern">
+                            无效的邮箱格式
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="staff_mail"
+                           ng-model="staffInfo.email"
+                           ng-pattern="/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/"
+                           maxlength="64"
+                           required
+                           placeholder="邮箱"/>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   value="{{staffInfo.btnName}}"
+                   ng-disabled="staff_form.$invalid || staffInfo.loading"/>
+        </div>
+    </form>
+</script>
+

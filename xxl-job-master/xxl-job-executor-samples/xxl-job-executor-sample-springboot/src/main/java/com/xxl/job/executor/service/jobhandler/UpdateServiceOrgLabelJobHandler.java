@@ -1,0 +1,62 @@
+package com.xxl.job.executor.service.jobhandler;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import com.ddfc.service.RedisUtil;
+import com.ddfc.util.DateUtil;
+import com.tfzq.tycrm.entity.TyActivity;
+import com.tfzq.tycrm.entity.TyActivitysign;
+import com.tfzq.tycrm.entity.TyCustomerlabel;
+import com.tfzq.tycrm.entity.TyLabel;
+import com.tfzq.tycrm.entity.TyServiceorg;
+import com.tfzq.tycrm.service.TyActivityService;
+import com.tfzq.tycrm.service.TyCustomerlabelService;
+import com.tfzq.tycrm.service.TyLabelService;
+import com.tfzq.tycrm.service.TyServiceorgService;
+import com.tfzq.utils.Constants;
+import com.xxl.job.core.biz.model.ReturnT;
+import com.xxl.job.core.handler.IJobHandler;
+import com.xxl.job.core.handler.annotation.JobHandler;
+import com.xxl.job.core.log.XxlJobLogger;
+
+/**
+ * 任务Handler示例（Bean模式）
+ *
+ * 开发步骤： 1、继承"IJobHandler"：“com.xxl.job.core.handler.IJobHandler”；
+ * 2、注册到Spring容器：添加“@Component”注解，被Spring容器扫描为Bean实例；
+ * 3、注册到执行器工厂：添加“@JobHandler(value="自定义jobhandler名称")”注解，
+ * 注解value值对应的是调度中心新建任务的JobHandler属性的值。 4、执行日志：需要通过 "XxlJobLogger.log" 打印执行日志；
+ *
+ * @author xuxueli 2015-12-19 19:43:36
+ */
+@JobHandler(value = "updateServiceorgLabel")
+@Component
+public class UpdateServiceOrgLabelJobHandler extends IJobHandler {
+    private Logger logger = LoggerFactory.getLogger(UpdateServiceOrgLabelJobHandler.class);
+
+    @Autowired
+    private TyServiceorgService tyServiceorgService;
+
+	@Override
+	public ReturnT<String> execute(String param) throws Exception {
+
+		XxlJobLogger.log("更新机构的标签! ");
+		tyServiceorgService.updateServiceOrgMarkByProc();
+		return SUCCESS;
+	}
+	
+	
+}

@@ -1,0 +1,52 @@
+/* pages/customerInformation/customerInformation.wxss */
+.box{
+  border-top: 1rpx solid #F3F2F7;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 100rpx;
+}
+.box_list{
+  height: 80rpx;
+  line-height: 80rpx;
+  margin-left: 40rpx;
+  border-bottom: 1rpx solid #F3F2F7;
+  display: block;
+  font-size: 28rpx;
+  color: #282C3F;
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden; 
+  white-space: nowrap;
+}
+.marginLeft20{
+  margin-left: 20rpx;
+}
+.submit{
+  position: fixed;
+  bottom: 0;
+  background-color: #ffffff;
+  text-align: center;
+  width: 100%;
+  height: 100rpx;
+  line-height: 100rpx;
+  color: #3296FA;
+  box-shadow: 0 -5rpx 10rpx #F3F2F7;
+  z-index: 10;
+}
+.img_checkbox{
+  width: 40rpx;
+  height: 40rpx;
+  display: inline-block;
+  position: relative;
+  top: 10rpx;
+}
+.box_list_yuan{
+  width: 35rpx;
+  height: 35rpx;
+  display: inline-block;
+  position: relative;
+  top: 10rpx;
+  border-radius: 50%;
+  border: 2rpx solid #F3F2F7;
+}

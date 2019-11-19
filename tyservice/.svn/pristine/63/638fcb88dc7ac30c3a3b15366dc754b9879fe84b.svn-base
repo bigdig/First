@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDcmorningconMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDcmorningcon">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="con_date" jdbcType="VARCHAR" property="conDate" />
+      <result column="speak_title" jdbcType="VARCHAR" property="speakTitle" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="flag" jdbcType="VARCHAR" property="flag" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dcmorningcon where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDcmorningcon">
+    insert into ty_dcmorningcon (
+    id
+	,con_date
+	,speak_title
+	,update_time
+	,update_by
+	,flag
+	,create_time
+	,create_by
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{conDate,jdbcType=VARCHAR}
+    	,#{speakTitle,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=DATE}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{flag,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=DATE}
+    	,#{createBy,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDcmorningcon">
+    update ty_dcmorningcon
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="conDate != null ">
+        con_date = #{conDate,jdbcType=VARCHAR},
+      </if>
+      <if test="speakTitle != null ">
+        speak_title = #{speakTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null ">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,con_date,speak_title,update_time,update_by,flag,create_time,create_by
+    from ty_dcmorningcon
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,con_date,speak_title,update_time,update_by,flag,create_time,create_by
+    from ty_dcmorningcon
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dcmorningcon where 1=1
+	<if test="startDate != null and startDate != ''">
+		and con_date  &gt;=  #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		and con_date  &lt;=  #{endDate}
+	</if>
+	<if test="speakTitle != null and speakTitle != ''">
+		and speak_title  like '%'||#{speakTitle}||'%'
+	</if>
+	<if test="staffName != null and staffName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t2.staff_name like '%'||#{staffName}||'%')
+	</if>
+	<if test="deptName != null and deptName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t3.dept_name like '%'||#{deptName}||'%')
+	</if>
+	<if test="keyword != null">
+		and ()
+	</if>
+  </select>
+</mapper>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyDctopicMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyDctopic">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="topic_date" jdbcType="VARCHAR" property="topicDate" />
+      <result column="topic_type" jdbcType="VARCHAR" property="topicType" />
+      <result column="topic_content" jdbcType="VARCHAR" property="topicContent" />
+      <result column="update_time" jdbcType="DATE" property="updateTime" />
+      <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+      <result column="create_time" jdbcType="DATE" property="createTime" />
+      <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+      <result column="org_id" jdbcType="VARCHAR" property="orgId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_dctopic where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyDctopic">
+    insert into ty_dctopic (
+    id
+	,topic_date
+	,topic_type
+	,topic_content
+	,update_time
+	,update_by
+	,create_time
+	,create_by
+	,org_id
+    )values (
+    #{id,jdbcType=VARCHAR}
+    	,#{topicDate,jdbcType=VARCHAR}
+    	,#{topicType,jdbcType=VARCHAR}
+    	,#{topicContent,jdbcType=VARCHAR}
+    	,#{updateTime,jdbcType=DATE}
+    	,#{updateBy,jdbcType=VARCHAR}
+    	,#{createTime,jdbcType=DATE}
+    	,#{createBy,jdbcType=VARCHAR}
+    	,#{orgId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyDctopic">
+    update ty_dctopic
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="topicDate != null ">
+        topic_date = #{topicDate,jdbcType=VARCHAR},
+      </if>
+      <if test="topicType != null ">
+        topic_type = #{topicType,jdbcType=VARCHAR},
+      </if>
+      <if test="topicContent != null ">
+        topic_content = #{topicContent,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null ">
+        update_time = #{updateTime,jdbcType=DATE},
+      </if>
+      <if test="updateBy != null ">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null ">
+        create_time = #{createTime,jdbcType=DATE},
+      </if>
+      <if test="createBy != null ">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="orgId != null ">
+        org_id = #{orgId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,topic_date,topic_type,topic_content,update_time,update_by,create_time,create_by,org_id
+    from ty_dctopic
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,topic_date,topic_type,topic_content,update_time,update_by,create_time,create_by,org_id
+    from ty_dctopic
+    order by id
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_dctopic t where 1=1
+	<if test="startDate != null and startDate != ''">
+		and t.topic_date  &gt;=  #{startDate}
+	</if>
+	<if test="endDate != null and endDate != ''">
+		and t.topic_date  &lt;=  #{endDate}
+	</if>
+	<if test="topicType != null and topicType != ''">and t.topic_type=#{topicType}</if>
+	<if test="topicContent != null and topicContent != ''">and t.topic_content like '%'||#{topicContent}||'%'</if>
+	<if test="orgId != null and orgId != ''">and t.org_id like '%'||#{orgId}||'%'</if>
+	<if test="staffName != null and staffName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t2.staff_name like '%'||#{staffName}||'%')
+	</if>
+	<if test="deptName != null and deptName != ''">
+		and id in (select distinct t1.act_id from TY_DCACTIVITY t1 left join TY_STAFFLIST t2 on t1.userid=t2.id 
+		left join SYS_DEPT t3 on t2.dept_id=t3.id 
+		where t3.parent_id='2002' and t3.dept_name like '%'||#{deptName}||'%')
+	</if>
+	<if test="orgName != null and orgName != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.org_name like '%'||#{orgName}||'%')
+	</if>
+	<if test="teamCat != null and teamCat != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.team_cat like '%'||#{teamCat}||'%')
+	</if>
+	<if test="serviceSaler != null and serviceSaler != ''">
+		and exists (select * from ty_serviceorg t4 where t4.id=t.org_id and t4.service_saler like '%'||#{serviceSaler}||'%')
+	</if>
+	<if test="custName != null and custName != ''">
+		and exists (select * from ty_dctopiccust t5 left join ty_orgcustomer t6 on t5.cust_id=t6.id where t5.topic_id=t.id and t6.cust_name like '%'||#{custName}||'%')
+	</if>
+	<if test="keyword != null">
+		and (topic_date like '%'||#{keyword}||'%'  or topic_type like '%'||#{keyword}||'%' or topic_content like '%'||#{keyword}||'%' or org_id like '%'||#{keyword}||'%')
+	</if>
+  </select>
+</mapper>

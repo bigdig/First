@@ -1,0 +1,10 @@
+/* pages/16wenjian/index.wxss */
+page{ background-color: #fff;
+font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+.center{ padding: 20rpx 30rpx 110rpx 30rpx;}
+.list{ line-height: 96rpx; border-bottom: #E5E5E5 solid 2rpx;}
+.list .iconfont{ display: inline-block; vertical-align: middle; margin-right: 15rpx; color: #FFB82A; font-size: 1.2em;}
+.list_hover{ color: #FBA703;}
+
+

@@ -1,0 +1,15 @@
+<view class="box">
+    <view class='box_search'>
+      <input type='text' class='font24 box_search_input' placeholder="搜索" placeholder-style='color:#ACAFC4' bindblur='inputBlur' value='{{inputVal}}'/>
+      <icon type="search" size="15" class='box_search_icon'/>
+    </view>
+   <scroll-view scroll-top="{{scrollTop}}" scroll-y="true" style='height:{{scrollHeight}}px' class="list" bindscrolltolower="bindDownLoad"  bindscroll="scroll">  
+    <view class='box_list'>
+       <view wx:key="{{item}}" wx:for="{{mechLists}}" class='box_item font28'>
+          <navigator url="../mechanismDetails/mechanismDetails?id={{item.id}}">
+             <text  class='box_item_text'>{{item.orgName}}</text>
+          </navigator>
+       </view>
+    </view>
+    </scroll-view>
+</view>

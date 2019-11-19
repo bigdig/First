@@ -1,0 +1,156 @@
+
+#user  nobody;
+user  root;
+worker_processes  2;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+	client_max_body_size 100m;
+
+    #gzip  on;
+	
+	upstream tyserviceManage { 
+		server 127.0.0.1:8088;
+		keepalive 350;
+	}
+
+
+	
+	server {
+        listen       80;
+        server_name  tyservice.tfzq.com;
+
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 静态页面目录
+        root       /home/tyservice/tyservice-UI;
+        # 默认首页
+        index      index.html;
+
+        location = / {
+            index      index.html;
+            root       /home/tyservice/tyservice-UI;
+        }
+		location ^~ /dataCenter {
+            index      index.html;
+            root       /home/tyservice;
+        }
+		#location ^~ /n1/mailAttach/ {
+        #    root       /home/tyfile/;
+        #}
+        location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/tyservice/tyservice-UI;
+			#expires 1h;
+        }
+     	
+        location ~ (login|dpauth|logout|regin|unauthorized|forbidden)$ {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://tyserviceManage/tyservice-WebMng/$1?$query_string;
+			proxy_cookie_path  /tyservice-WebMng/ /;
+			#
+			proxy_redirect http://119.97.174.12/tyservice-WebMng/ /;
+			proxy_redirect http://119.97.174.12/tyservice-WebMng/ http://119.97.174.12/;
+		}
+		location ~ (bizspace|ty|sys|uploadfile)/(.*) {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://tyserviceManage/tyservice-WebMng/$1/$2?$query_string;
+			proxy_cookie_path  /tyservice-WebMng/ /;
+			#
+			proxy_redirect http://119.97.174.12/tyservice-WebMng/ /;
+			proxy_redirect http://119.97.174.12/tyservice-WebMng/ http://119.97.174.12/;
+		}
+
+	}
+	
+	server {
+		listen 443 ssl;
+		server_name  tyservice.tfzq.com;
+		ssl                  on; 
+		ssl_certificate     /usr/local/nginx/ssl/server.pem;
+		ssl_certificate_key /usr/local/nginx/ssl/server.key;
+		ssl_ciphers HIGH:!ADH:!MD5;
+		
+		#charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        # 静态页面目录
+        root       /home/tyservice/tyservice-UI;
+        # 默认首页
+        index      index.html;
+
+        location = / {
+            index      index.html;
+            root       /home/tyservice/tyservice-UI;
+        }
+		
+		location ^~ /n1/mailAttach/ {
+            root       /home/tyfile/;
+        }
+		
+		location ^~ /dataCenter {
+            index      index.html;
+            root       /home/tyservice;
+        }
+        location ~* \.(css|js|jpg|jpeg|gif|png|swf|htm|html|json|xml|svg|woff|ttf|eot|map|ico)$ {
+            #root       /home/tyservice/tyservice-UI;
+			#expires 1h;
+        }
+     	
+        location ~ (login|dpauth|logout|regin|unauthorized|forbidden)$ {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://tyserviceManage/tyservice-WebMng/$1?$query_string;
+			proxy_cookie_path  /tyservice-WebMng/ /;
+			proxy_redirect http://tyservice.tfzq.com/tyservice-WebMng/ https://tyservice.tfzq.com/;
+		}
+		location ~ (openapi|bizspace|ty|sys|uploadfile)/(.*) {
+		    proxy_set_header Host $host;
+			proxy_set_header X-Real-IP $remote_addr;
+			proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+			proxy_pass http://tyserviceManage/tyservice-WebMng/$1/$2?$query_string;
+			proxy_cookie_path  /tyservice-WebMng/ /;
+			proxy_redirect http://tyservice.tfzq.com/tyservice-WebMng/ https://tyservice.tfzq.com/;
+		}
+
+	}
+	
+	
+}

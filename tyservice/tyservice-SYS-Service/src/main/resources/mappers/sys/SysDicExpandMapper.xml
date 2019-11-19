@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.ibase4j.dao.sys.SysDicExpandMapper">
+  <resultMap id="BaseResultMap" type="org.ibase4j.model.generator.SysDic">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="index_id" jdbcType="VARCHAR" property="indexId" />
+    <result column="code_" jdbcType="VARCHAR" property="code" />
+    <result column="code_text" jdbcType="VARCHAR" property="codeText" />
+    <result column="sort_no" jdbcType="INTEGER" property="sortNo" />
+    <result column="editable_" jdbcType="BIT" property="editable" />
+    <result column="enable_" jdbcType="BIT" property="enable" />
+    <result column="remark_" jdbcType="VARCHAR" property="remark" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+	<select id="queryDicIndex" parameterType="java.util.Map" resultType="java.lang.String">
+		select id from sys_dic_index where 1=1
+		<if test="keyword != null">
+		and (key_ like '%'||#{keyword}||'%' or name_ like '%'||#{keyword}||'%')
+		</if>
+	</select>
+	<select id="queryDic" parameterType="java.util.Map" resultType="java.lang.String">
+		select id from sys_dic where 1=1
+		<if test="key != null">
+		and exists (select 1 from sys_dic_index where sys_dic.index_id=sys_dic_index.id
+		and sys_dic_index.key_=#{key})
+		</if>
+	</select>
+	<select id="selectByIndexId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id, index_id, code_, code_text, sort_no, editable_, enable_, remark_, create_by, 
+    create_time, update_by, update_time
+    from sys_dic
+    where index_id = #{id,jdbcType=VARCHAR}
+    order by sort_no
+  </select>
+	
+</mapper>

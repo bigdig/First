@@ -1,0 +1,45 @@
+/* pages/33wode/index.wxss */
+page{ background-color: #fff; font-family: "PingFangSC-Medium", "PingFangSC-Regular", "sans-serif", "STHeitiSC-Light", "微软雅黑", "Microsoft YaHei";
+}
+
+.top_nav_hover , .center_li_hover{ color: #FBA703;}
+
+.top{ height: 128rpx; padding: 15rpx 35rpx; box-sizing: border-box; color: #fff; background:linear-gradient(360deg,rgba(255,153,0,1) 0%,rgba(255,184,42,1) 100%);
+display: flex;}
+.header{ width: 90rpx; height: 90rpx; border-radius: 100%; overflow: hidden;}
+.header image{ width: 100%;}
+.user_msg{ margin-left: 30rpx;}
+.user_msg > view:first-child{ height: 54rpx; line-height: 54rpx; font-size: 40rpx; overflow: hidden;}
+.user_msg > view:last-child{ height: 44rpx; line-height: 44rpx; font-size: 28rpx; overflow: hidden;}
+
+.top_nav_box{ padding-bottom: 20rpx; background-color: rgba(245,245,245,1);}
+.top_nav{ padding: 30rpx 35rpx 0 35rpx; background-color: #fff; display: flex; flex-wrap: wrap;}
+.top_nav_li{ width: 33.333%; padding-bottom: 30rpx; text-align: center;}
+.top_nav_li > view:first-child{ height: 112rrpx; display: flex; justify-content: center; align-items: center;}
+.top_nav_li > view:first-child image{ width: 90rpx;}
+.top_nav_li > view:last-child{ line-height: 46rpx; font-size: 28rpx;}
+
+
+
+
+.center{ padding: 0 35rpx; background-color: #fff;}
+
+.center_li{ padding-right: 40rpx; height: 100rpx; line-height: 98rpx; border-bottom: #E5E5E5 solid 2rpx; position: relative;}
+.center_li::after{ content: ""; width: 20rpx; height: 20rpx; border: #C7C7CC solid 4rpx; border-color: #C7C7CC #C7C7CC transparent transparent; position: absolute; right: 15rpx; top: 34rpx;
+-webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+}
+.center_li image{ width: 48rpx; margin-right: 15rpx;}
+
+
+
+
+
+
+
+
+
+
+
+
+

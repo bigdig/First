@@ -1,0 +1,322 @@
+<div class="padding20">
+    <form name="search"
+          ng-submit="searchInstitutional()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search more">
+            <li>
+                <search model="institutional"
+                        value="institutional.orgName"
+                        name="orgName"
+                        maxlength="64"
+                        servicelist="searchOrgs"
+                        placeholder="机构名称"></search>
+            </li>
+            <li>
+                <select ng-model="institutional.teamCat">
+                    <option value="">区域</option>
+                    <option ng-repeat="area in searchArea"
+                            ng-selected="institutional.teamCat==area.text"
+                            value="{{area.text}}">{{area.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <search model="institutional"
+                        value="institutional.serviceSaler"
+                        name="serviceSaler"
+                        maxlength="16"
+                        servicelist="searchStafflist"
+                        placeholder="对口销售"></search>
+            </li>
+            <li>
+                <select ng-model="institutional.orgLevel">
+                    <option value="">机构级别</option>
+                    <option ng-repeat="level in searchLevels"
+                            ng-selected="institutional.orgLevel==level.id"
+                            value="{{level.id}}">{{level.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.custStatus">
+                    <option value="">机构状态</option>
+                    <option ng-repeat="status in searchStatuss"
+                            ng-selected="institutional.custStatus==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.custCat">
+                    <option value="">机构类型</option>
+                    <option ng-repeat="cat in searchCats"
+                            ng-selected="cat.selected"
+                            value="{{cat.id}}">{{cat.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.preporgStatus">
+                    <option value="">状态</option>
+                    <option ng-repeat="status in preporgStatus"
+                            ng-selected="institutional.preporgStatus==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+            <li>
+                <select ng-model="institutional.orgExists">
+                    <option value="">机构是否存在</option>
+                    <option ng-repeat="status in orgExists"
+                            ng-selected="institutional.orgExists==status.id"
+                            value="{{status.id}}">{{status.text}}
+                    </option>
+                </select>
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editInstitutionalTemplate">
+    <form name="ins_form"
+          ng-click="hide($event)"
+          ng-submit="editInstitutional(1)"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="institutionalInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_name.$dirty && ins_form.ins_name.$invalid">
+                        <span ng-show="ins_form.ins_name.$error.required">
+                            请输入机构名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_name"
+                           ng-model="institutionalInfo.orgName"
+                           maxlength="64"
+                           required
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="机构名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_staff.$dirty && ins_form.ins_staff.$invalid">
+                        <span ng-show="ins_form.ins_staff.$error.required">
+                            请选择对口销售
+                        </span>
+                        <span ng-show="ins_form.ins_staff.$error.unique">
+                            无效的对口销售
+                        </span>
+                    </div>
+                    <combobox name="ins_staff"
+                              placeholder="对口销售"
+                              model="institutionalInfo"
+                              id="salerId"
+                              no="serviceSaler"
+                              value="institutionalInfo.serviceSaler"
+                              multiple="true"
+                              required="true"
+                              disabled="institutionalInfo.preporgStatus!='0'"
+                              servicelist="tyStafflists"></combobox>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_status.$dirty && ins_form.ins_status.$invalid">
+                        <span ng-show="ins_form.ins_status.$error.select">
+                            请选择机构状态
+                        </span>
+                    </div>
+                    <select name="ins_status"
+                            ng-model="institutionalInfo.custStatus"
+                            ng-disabled="institutionalInfo.preporgStatus!='0'"
+                            option-select="ins_status">
+                        <option value="">机构状态</option>
+                        <option ng-repeat="status in searchStatuss"
+                                ng-selected="status.id==institutionalInfo.custStatus"
+                                value="{{status.id}}">{{status.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div ng-if="institutionalInfo.custStatus=='3'"
+                         class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_level.$dirty && ins_form.ins_level.$invalid">
+                        <span ng-show="ins_form.ins_level.$error.select">
+                            请选择机构级别
+                        </span>
+                    </div>
+                    <select ng-if="institutionalInfo.custStatus=='3'"
+                            name="ins_level"
+                            ng-model="institutionalInfo.orgLevel"
+                            ng-disabled="institutionalInfo.preporgStatus!='0'"
+                            option-select="ins_level">
+                        <option value="">机构级别</option>
+                        <option ng-repeat="level in searchLevels"
+                                ng-selected="level.id==institutionalInfo.orgLevel"
+                                value="{{level.id}}">{{level.text}}
+                        </option>
+                    </select>
+                    <select ng-if="institutionalInfo.custStatus!='3'"
+                            ng-init="institutionalInfo.orgLevel ? institutionalInfo.orgLevel='4' : institutionalInfo.orgLevel=''"
+                            ng-model="institutionalInfo.orgLevel"
+                            option-select="ins_level"
+                            ng-disabled="institutionalInfo.preporgStatus!='0'"
+                            name="ins_level">
+                        <option value="">机构级别</option>
+                        <option ng-selected="institutionalInfo.orgLevel=='4'"
+                                value="4">其他</option>
+                        </option>
+                    </select>
+                </li>
+                <li ng-if="institutionalInfo.custStatus!='3'">
+                    <ng-datepicker name="white_deadline"
+                                   value="institutionalInfo.whiteDeadline"
+                                   locale="zh-cn"
+                                   format="YYYY-MM-DD"
+                                   view-format="YYYY-MM-DD"
+                                   disabled="institutionalInfo.preporgStatus!='0'"
+                                   placeholder="白名单到期日"></ng-datepicker>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_kind.$dirty && ins_form.ins_kind.$invalid">
+                        <span ng-show="ins_form.ins_kind.$error.select">
+                            请选择机构类型
+                        </span>
+                    </div>
+                    <select name="ins_kind"
+                            ng-model="institutionalInfo.custCat"
+                            ng-disabled="institutionalInfo.preporgStatus!='0'"
+                            option-select="ins_kind">
+                        <option value="">机构类型</option>
+                        <option ng-repeat="cat in searchCats"
+                                ng-selected="cat.id==institutionalInfo.custCat"
+                                value="{{cat.id}}">{{cat.text}}
+                        </option>
+                    </select>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_simName.$dirty && ins_form.ins_simName.$invalid">
+                        <span ng-show="ins_form.ins_simName.$error.required">
+                            请输入机构简称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_simName"
+                           ng-model="institutionalInfo.orgSimpleName"
+                           maxlength="64"
+                           required
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="机构简称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_address.$dirty && ins_form.ins_address.$invalid">
+                        <span ng-show="ins_form.ins_address.$error.required">
+                            请输入地址
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_address"
+                           ng-model="institutionalInfo.address"
+                           maxlength="100"
+                           required
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="地址"/>
+                </li>
+                <li>
+                    <input type="search"
+                           name="ins_contactor"
+                           ng-model="institutionalInfo.contactorName"
+                           maxlength="16"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="联系人"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_contel.$dirty && ins_form.ins_contel.$invalid">
+                        <span ng-show="ins_form.ins_contel.$error.pattern">
+                            无效的电话号码格式;例如027-83889140或15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_contel"
+                           ng-model="institutionalInfo.contactorTel"
+                           maxlength="20"
+                           ng-pattern="/^((1(3|4|5|7|8)\d{9})|(\d{3,4}-\d{7,8}(-\d{2,4})?)|(00852\d{8}))$/"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="联系人电话(格式：[区号-直拨号]或手机号[大陆11位，香港13位])"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_telephone.$dirty && ins_form.ins_telephone.$invalid">
+                        <span ng-show="ins_form.ins_telephone.$error.pattern">
+                            无效的电话号码格式;例如027-83889140或15972204485或0085289376123
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_telephone"
+                           ng-model="institutionalInfo.companyTel"
+                           maxlength="20"
+                           ng-pattern="/^((1(3|4|5|7|8)\d{9})|(\d{3,4}-\d{7,8}(-\d{2,4})?)|(00852\d{8}))$/"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="电话(格式：[区号-直拨号]或手机号[大陆11位，香港13位])"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="ins_form.ins_mail.$dirty && ins_form.ins_mail.$invalid">
+                        <span ng-show="ins_form.ins_mail.$error.pattern">
+                            邮箱格式错误
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="ins_mail"
+                           ng-model="institutionalInfo.companyMail"
+                           maxlength="50"
+                           ng-pattern="/^([a-zA-Z0-9._-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           placeholder="邮箱"/>
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="institutionalInfo.recEmail"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           ng-checked="institutionalInfo.recEmail"/><label></label>
+                    接受邮件通知
+                </li>
+                <li>
+                    <input type="checkbox"
+                           ng-model="institutionalInfo.recSms"
+                           ng-disabled="institutionalInfo.preporgStatus!='0'"
+                           ng-checked="institutionalInfo.recSms"/><label></label>
+                    接受短信通知
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <div class="ngdialog-buttons text-center"
+                 ng-show="institutionalInfo.preporgStatus=='0'">
+                <input type="submit"
+                       class="bg-red text-white"
+                       value="通过"
+                       ng-disabled="ins_form.$invalid || institutionalInfo.loading"/>
+                &nbsp;&nbsp;
+                <input type="reset"
+                       class="text-orange light border-gray-color"
+                       ng-click="editInstitutional(2)"
+                       value="不通过"
+                       ng-disabled="institutionalInfo.loading"/>
+            </div>
+        </div>
+    </form>
+</script>

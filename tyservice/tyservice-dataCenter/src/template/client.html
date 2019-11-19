@@ -1,0 +1,133 @@
+<ion-view>
+    <!--  <ion-nav-back-button class="button-clear"
+    ng-click="canGoBack && goBack()">
+       <i class="ion-chevron-left"></i>
+     </ion-nav-back-button> -->
+    <!-- <div class="bar bar-subheader"> -->
+    <ion-header-bar class="bar-subheader gray" style="padding: 0;" ng-show="TabHeader">
+        <div class="client-header">
+            <div class="first" ng-click="tab(1)" ng-class='{"active":clientHeaderClass}'>客户信息</div>
+            <div ng-click="tab(2)" ng-class='{"active":!clientHeaderClass}'>机构信息</div>
+
+        </div>
+        </div>
+    </ion-header-bar>
+    <ion-content style="background:#F9F9F9; top:50px;" id="clientTop">
+        <ul class="cli-list" ng-show="clientInfo">
+            <li>
+                <span>客户姓名</span>
+                <span class="width">{{custDetail.custName || "-"}}</span>
+            </li>
+            <li>
+                <span class="vertical">手机号</span>
+                <a href="tel:{{custDetail.custMobile}}"
+                   class=" client-a width">{{custDetail.custMobile || "-"}}</a>
+            </li>
+            <li>
+                <span>邮箱</span>
+                <span class="width">{{custDetail.custEmail || "-"}}</span>
+            </li>
+            <li class="m-top">
+                <span>所属机构</span>
+                <span class="width">{{custDetail.orgName || "-"}}</span>
+            </li>
+            <li>
+                <span>部门</span>
+                <span class="width">{{custDetail.department || "-"}}</span>
+            </li>
+            <li>
+                <span>职位</span>
+                <span class="width">{{custDetail.title || "-"}}</span>
+            </li>
+            <li>
+                <span>对口销售</span>
+                <span class="width">{{custDetail.serviceSaler || "-"}}</span>
+            </li>
+            <li>
+                <span>所在地</span>
+                <span class="width">{{custDetail.area || "-"}}</span>
+            </li>
+            <li>
+                <span>研究行业</span>
+                <span class="width">{{custDetail.industry || "-"}}</span>
+            </li>
+            <li>
+                <span>关注领域</span>
+                <span class="width">{{custDetail.domain || "-"}}</span>
+            </li>
+            <li style="margin-bottom: 20px;">
+                <span>座机号</span>
+                <span class="width">{{custDetail.custTel || "-"}}</span>
+            </li>
+
+            <li ng-repeat="key in len">
+                <span style="text-align: left;">{{key.catName}}标签</span>
+               <div class="width div">
+                    <span ng-repeat="label in key.subList"
+                          style="color:#444;margin-right:8px;">{{label.labelName || "-"}}</span>
+               </div>
+            </li>
+            <li class="m-top">
+                <span>互动服务</span>
+                <span class="width">-</span>
+            </li>
+
+        </ul>
+        <ul ng-show="typeInfo" class="cli-list">
+            <li>
+                <span>机构名称</span>
+                <span class="width">{{orgData.orgName ||"-"}}</span>
+            </li>
+            <li>
+                <span>机构简介</span>
+                <span class="width">{{orgData.orgSimpleName ||"-"}}</span>
+                <a ng-click="state()" class="phone inline" style="position: absolute;
+    right: 12px;">全部机构联系人</a>
+            </li>
+            <li>
+                <span>电话</span>
+                <span class="width">{{orgData.companyTel ||"-"}}</span>
+            </li>
+            <li>
+                <span>邮箱</span>
+                <span  class="width">{{orgData.companyMail||"-"}}</span>
+            </li>
+
+            <li class="m-top">
+                <span>对口销售</span>
+                <span  class="width">{{orgData.serviceSaler||"-"}}</span>
+            </li>
+            <li>
+                <span>区域</span>
+                <span  class="width">{{orgData.teamCat||"-"}}</span>
+            </li>
+            <li>
+                <span>机构状态</span>
+                <span  class="width">{{orgData.custStatusName||"-"}}</span>
+            </li>
+            <li>
+                <span>机构类型</span>
+                <span  class="width">{{orgData.custCatName||"-"}}</span>
+            </li>
+            <li>
+                <span>机构级别</span>
+                <span  class="width">{{orgData.orgLevelName||"-"}}</span>
+            </li>
+            <li>
+                <span>联系人</span>
+                <span  class="width">{{orgData.contactorName||"-"}}</span>
+            </li>
+            <li>
+                <span>联系电话</span>
+                <span  class="width">{{orgData.contactorTel||"-"}}</span>
+            </li>
+            <li>
+                <span>地址</span>
+                <span style=" width:56%;
+    vertical-align: top;">{{orgData.address||"-"}}</span>
+            </li>
+
+
+        </ul>
+    </ion-content>
+</ion-view>

@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tfzq.ty.dao.generator.TyCustgroupdetailMapper">
+  <resultMap id="BaseResultMap" type="com.tfzq.ty.model.generator.TyCustgroupdetail">
+      <result column="id" jdbcType="VARCHAR" property="id" />
+      <result column="group_id" jdbcType="VARCHAR" property="groupId" />
+      <result column="cust_id" jdbcType="VARCHAR" property="custId" />
+  </resultMap>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ty_custgroupdetail where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  
+  <delete id="deleteByGroupId" parameterType="java.lang.String">
+    delete from ty_custgroupdetail where group_id = #{groupId,jdbcType=VARCHAR}
+  </delete>
+  
+  <insert id="insert" parameterType="com.tfzq.ty.model.generator.TyCustgroupdetail">
+    insert into ty_custgroupdetail (
+    id
+	,group_id
+	,cust_id
+    )values (
+    	#{id,jdbcType=VARCHAR}
+    	,#{groupId,jdbcType=VARCHAR}
+    	,#{custId,jdbcType=VARCHAR}
+    )
+  </insert>
+  <insert id="batchAdd" parameterType="java.util.List">
+		MERGE INTO ty_custgroupdetail detail
+		USING (
+			<foreach collection="list" item="item" index="index" separator="union all">
+				select
+				#{item.id,jdbcType=VARCHAR} as id
+				,#{item.groupId,jdbcType=VARCHAR} as group_id
+				,#{item.custId,jdbcType=VARCHAR} as cust_id
+				from dual
+			</foreach>
+			) temp ON (detail.group_id = temp.group_id and detail.cust_id = temp.cust_id )
+		WHEN matched THEN
+		UPDATE set detail.id = temp.id
+		WHEN not matched THEN
+		INSERT (
+			id
+			,group_id
+			,cust_id
+		)VALUES(
+	    	temp.id,
+	    	temp.group_id,
+	    	temp.cust_id
+		)
+  </insert>
+  
+  <update id="updateByPrimaryKey" parameterType="com.tfzq.ty.model.generator.TyCustgroupdetail">
+    update ty_custgroupdetail
+    <trim prefix="set" suffixOverrides=",">
+      <if test="id != null ">
+        id = #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null ">
+        group_id = #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="custId != null ">
+        cust_id = #{custId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select id,group_id,cust_id
+    from ty_custgroupdetail
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="getCustIdByGroupId" parameterType="java.lang.String" resultType="java.lang.String">
+    select cust_id
+    from ty_custgroupdetail
+    where group_id = #{groupId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id,group_id,cust_id
+    from ty_custgroupdetail
+    order by id
+  </select>
+  <select id="queryByCondition" parameterType="java.util.Map" resultType="java.lang.String">
+	select id,group_id,cust_id
+		where 1=1
+	<if test="groupId != null and groupId != ''">and group_id = #{groupId}</if>
+	<if test="custIds != null and custIds.size>0">
+		and cust_id in
+		<foreach collection="custIds" item="custId" index="index" open="(" close=")" separator=",">
+             #{custId}
+        </foreach>
+	</if>
+  </select>
+  <select id="queryIds" parameterType="java.util.Map" resultType="java.lang.String">
+	select id from ty_custgroupdetail where 1=1
+	<if test="groupId != null and groupId != ''">and group_id = #{groupId}</if>
+	<if test="custIds != null and custIds.size>0">
+		and cust_id in
+		<foreach collection="custIds" item="custId" index="index"
+            open="(" close=")" separator=",">
+             #{custId}
+        </foreach>
+	</if>
+  </select>
+</mapper>

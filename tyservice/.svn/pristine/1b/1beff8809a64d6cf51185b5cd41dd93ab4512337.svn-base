@@ -1,0 +1,62 @@
+<div class="padding20">
+    <div class="text-center"
+         ng-hide="welcome.isHide">
+        <br><br><br><br>
+        <img src="../img/welcome.png"/>
+        <br><br><br><br>
+        <h2 class="text-orange"
+            bo-text="'欢迎来到'+system.name">
+        </h2>
+    </div>
+    <div class="res-head"
+         ng-show="welcome.isHide">
+        <ul class="tag">
+            <li ng-repeat="menu in tabMenus">
+                <a href="javascript:void(0)"
+                   ng-click="tabMenu(menu)"
+                   ng-class="{'active':menu.active}"
+                   class="text-blue-light font-16"
+                   bo-text="menu.name"></a>
+            </li>
+        </ul>
+    </div>
+    <p></p>
+    <div ui-view="home-main"></div>
+    <div ui-view="home-data"></div>
+</div>
+<script type="text/ng-template"
+        id="activityCustomerTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">参与客户</h3>
+        <table width="100%"
+               cellpadding="8"
+               cellspacing="0"
+               class="data">
+            <tr>
+                <th>客户名称</th>
+                <th>手机号</th>
+                <th>机构</th>
+                <th>职位</th>
+                <th>所在地</th>
+                <th>对口销售</th>
+            </tr>
+            <tr ng-repeat="cust in custList">
+                <td bo-text="cust.custName"></td>
+                <td bo-text="cust.custMobile"></td>
+                <td bo-text="cust.orgName"></td>
+                <td bo-text="cust.title"></td>
+                <td bo-text="cust.area"></td>
+                <td bo-text="cust.serviceSaler"></td>
+            </tr>
+        </table>
+        <p class="text-center"
+            ng-if="!custList.length">暂无数据</p>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="button"
+               value="关闭"
+               ng-click="closeThisDialog()"
+               class="text-orange padding60 light border-gray-color"/>
+    </div>
+</script>

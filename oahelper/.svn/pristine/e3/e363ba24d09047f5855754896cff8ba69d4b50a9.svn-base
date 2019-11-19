@@ -1,0 +1,90 @@
+.user-infor{
+    height: 135px;
+}
+.avator-img{
+    display: block;
+    width: 80%;
+    max-width: 100px;
+    height: auto;
+}
+.card-user-infor-name{
+    font-size: 2em;
+    color: #2d8cf0;
+}
+.card-title{
+    color: #abafbd;
+}
+.made-child-con-middle{
+    height: 100%;
+}
+.to-do-list-con{
+    height: 655px;
+    overflow: auto;
+}
+.to-do-item{
+    padding: 2px;
+}
+.infor-card-con{
+    height: 100px;
+}
+.infor-card-icon-con{
+    height: 100%;
+    color: white;
+    border-radius: 3px 0 0 3px;
+}
+.map-con{
+    height: 305px;
+}
+.map-incon{
+    height: 100%;
+}
+.data-source-row{
+    height: 200px;
+}
+.line-chart-con{
+    height: 275px;
+}
+.home-main a {
+        color:#495060;
+}
+.home-main a:hover {
+        color:#2d8cf0;
+}
+
+.news-item-text{
+    word-break:keep-all;
+    white-space:nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    cursor: pointer;
+    height: 30px;
+
+    .height-100{
+        height: 100%;
+    }
+    .infor-icon-row{
+        color: #c8c8c8;
+    }
+
+    .groupLabel{
+        font-weight: bold;
+    }
+    .timeLabel{
+        text-align: right;
+    }
+    /**1 中
+        16 敏
+        45 正
+        46 负
+        **/
+    .cat1{
+        color:#2b85e4;
+    }    .cat16{
+        color:#c09853;
+    }    .cat45{
+        color:#183691;
+    }    .cat46{
+        color:#b94a48;
+    }
+}

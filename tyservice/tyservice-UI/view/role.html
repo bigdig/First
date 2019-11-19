@@ -1,0 +1,119 @@
+<div>
+    <form name="search"
+          ng-submit="searchRole()">
+        <input type="submit"
+               value="查询"
+               ng-disabled="loading.isShow"
+               class="text-orange font-18 padding40 btn-search bg-red-light"/>
+        <ul class="search">
+            <li>
+                <input type="search"
+                       ng-model="role.keyword"
+                       maxlength="20"
+                       placeholder="角色名称"/>
+            </li>
+        </ul>
+    </form>
+</div>
+<script type="text/ng-template"
+        id="editRoleTemplate">
+    <form name="role_form"
+          ng-submit="editRole()"
+          novalidate>
+        <div class="ngdialog-message">
+            <h2 class="text-center"
+                ng-bind="roleInfo.pageTitle"></h2>
+            <br>
+            <ul class="search">
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="role_form.role_name.$dirty && role_form.role_name.$invalid">
+                        <span ng-show="role_form.role_name.$error.required">
+                            请输入角色名称
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="role_name"
+                           ng-model="roleInfo.roleName"
+                           maxlength="20"
+                           required
+                           placeholder="角色名称"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="role_form.role_code.$dirty && role_form.role_code.$invalid">
+                        <span ng-show="role_form.role_code.$error.required">
+                            请输入角色编码
+                        </span>
+                        <span ng-show="role_form.role_code.$error.pattern">
+                            不被接受的字符
+                        </span>
+                    </div>
+                    <input type="search"
+                           name="role_code"
+                           ng-model="roleInfo.roleCode"
+                           maxlength="15"
+                           ng-pattern="/^\w{1,15}$/"
+                           required
+                           placeholder="角色编码"/>
+                </li>
+                <li>
+                    <div class="error text-white bg-red-opacity"
+                         ng-show="role_form.role_dept.$dirty && role_form.role_dept.$invalid">
+                        <span ng-show="role_form.role_dept.$error.select">
+                            请选择所属公司
+                        </span>
+                    </div>
+                    <select ng-model="roleInfo.deptId"
+                            name="role_dept"
+                            option-select="role_dept">
+                        <option value="">公司</option>
+                        <option ng-repeat="company in companies"
+                                ng-selected="company.selected"
+                                value="{{company.id}}">{{company.text}}
+                        </option>
+                    </select>
+                </li>
+            </ul>
+            <br>
+            <br>
+        </div>
+        <div class="ngdialog-buttons text-center">
+            <input type="submit"
+                   class="bg-red text-white"
+                   ng-disabled="role_form.$invalid || roleInfo.loading"
+                   value="{{roleInfo.btnName}}"/>
+        </div>
+    </form>
+</script>
+<script type="text/ng-template"
+        id="editMenuTemplate">
+    <div class="ngdialog-message">
+        <h3 class="text-center">设置角色菜单</h3>
+        <p ng-bind="'角色：'+roleInfo.roleName"></p>
+        <div class="line-gray-light bg-gray"></div>
+        <br>
+        <ul class="search">
+            <li class="left-li">菜单</li>
+            <li class="right-li customer-list">
+                <ul class="tree">
+                    <node-tree children="tree" callfunc="callbackFunc"></node-tree>
+                </ul>
+            </li>
+        </ul>
+        <br>
+        <br>
+    </div>
+    <div class="ngdialog-buttons text-center">
+        <input type="submit"
+               class="bg-red text-white"
+               ng-disabled="roleInfo.loading"
+               value="{{roleInfo.btnName}}"
+               ng-click="menuSave()"/>
+        &nbsp;&nbsp;
+        <input type="reset"
+               class="text-orange light border-gray-color"
+               ng-click="closeThisDialog()"
+               value="取消"/>
+    </div>
+</script>
